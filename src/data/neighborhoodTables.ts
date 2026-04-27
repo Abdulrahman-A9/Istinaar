@@ -1,0 +1,654 @@
+export interface NeighborhoodTableRow {
+  id: string;
+  slug: string;
+  name: string;
+  city: string;
+  districtCluster: string;
+  center: {
+    lat: number;
+    lng: number;
+  };
+  polygon: Array<{ x: number; y: number }>;
+  landAreaKm2: number;
+  lastVerifiedAt: string;
+}
+
+export interface PlaceTableRow {
+  id: string;
+  googlePlaceId: string;
+  neighborhoodId: string;
+  name: string;
+  category: "cafe" | "restaurant" | "bakery" | "retail" | "clinic" | "laundry" | "pharmacy" | "service" | "destination";
+  mappedBusinessType: "مقاهٍ" | "مطاعم" | "مخابز" | "تجزئة" | "عيادات" | "مغاسل" | "صيدليات" | "خدمات" | "وجهات";
+  rating: number;
+  userRatingsTotal: number;
+  address: string;
+  isOperational: boolean;
+  lat: number;
+  lng: number;
+  mapPoint: {
+    x: number;
+    y: number;
+  };
+  priceLevel: 1 | 2 | 3 | 4;
+  source: "google_places_seed" | "field_survey_seed";
+  lastSyncedAt: string;
+}
+
+export interface NeighborhoodAnalyticsRow {
+  neighborhoodId: string;
+  totalPlaces: number;
+  averageRating: number;
+  totalReviews: number;
+  competitionScore: number;
+  demandScore: number;
+  topCategory: string;
+  categoryCounts: Record<string, number>;
+  sourceCoverage: "منخفضة" | "متوسطة" | "مرتفعة";
+  updatedAt: string;
+}
+
+export const neighborhoodsTable: NeighborhoodTableRow[] = [
+  {
+    id: "NBH001",
+    slug: "al-jamieen",
+    name: "حي الجامعيين",
+    city: "حائل",
+    districtCluster: "شريط الجامعة",
+    center: { lat: 27.5231, lng: 41.6884 },
+    polygon: [
+      { x: 14, y: 18 },
+      { x: 86, y: 12 },
+      { x: 90, y: 46 },
+      { x: 75, y: 81 },
+      { x: 20, y: 88 },
+      { x: 10, y: 49 },
+    ],
+    landAreaKm2: 4.8,
+    lastVerifiedAt: "2026-03-28",
+  },
+  {
+    id: "NBH002",
+    slug: "al-naqrah",
+    name: "حي النقرة",
+    city: "حائل",
+    districtCluster: "المحور التجاري الشمالي",
+    center: { lat: 27.5188, lng: 41.7035 },
+    polygon: [
+      { x: 16, y: 14 },
+      { x: 83, y: 16 },
+      { x: 92, y: 42 },
+      { x: 81, y: 84 },
+      { x: 24, y: 86 },
+      { x: 8, y: 41 },
+    ],
+    landAreaKm2: 5.4,
+    lastVerifiedAt: "2026-03-28",
+  },
+  {
+    id: "NBH003",
+    slug: "mashar",
+    name: "حي مشار",
+    city: "حائل",
+    districtCluster: "المنطقة السياحية",
+    center: { lat: 27.5434, lng: 41.6699 },
+    polygon: [
+      { x: 11, y: 22 },
+      { x: 74, y: 12 },
+      { x: 92, y: 34 },
+      { x: 84, y: 72 },
+      { x: 48, y: 88 },
+      { x: 16, y: 70 },
+      { x: 8, y: 42 },
+    ],
+    landAreaKm2: 7.1,
+    lastVerifiedAt: "2026-03-26",
+  },
+  {
+    id: "NBH004",
+    slug: "al-musayf",
+    name: "حي المصيف",
+    city: "حائل",
+    districtCluster: "الوجهات العائلية",
+    center: { lat: 27.5412, lng: 41.6951 },
+    polygon: [
+      { x: 18, y: 16 },
+      { x: 78, y: 10 },
+      { x: 89, y: 28 },
+      { x: 84, y: 74 },
+      { x: 29, y: 90 },
+      { x: 12, y: 58 },
+    ],
+    landAreaKm2: 6.2,
+    lastVerifiedAt: "2026-03-27",
+  },
+  {
+    id: "NBH005",
+    slug: "downtown",
+    name: "وسط المدينة",
+    city: "حائل",
+    districtCluster: "النطاق التاريخي",
+    center: { lat: 27.5125, lng: 41.6906 },
+    polygon: [
+      { x: 19, y: 12 },
+      { x: 79, y: 14 },
+      { x: 88, y: 44 },
+      { x: 79, y: 79 },
+      { x: 26, y: 86 },
+      { x: 12, y: 54 },
+    ],
+    landAreaKm2: 3.9,
+    lastVerifiedAt: "2026-03-29",
+  },
+  {
+    id: "NBH006",
+    slug: "al-maghwah",
+    name: "حي المغواة",
+    city: "حائل",
+    districtCluster: "الخدمات اليومية",
+    center: { lat: 27.5008, lng: 41.7194 },
+    polygon: [
+      { x: 15, y: 18 },
+      { x: 86, y: 15 },
+      { x: 94, y: 48 },
+      { x: 80, y: 83 },
+      { x: 21, y: 88 },
+      { x: 9, y: 44 },
+    ],
+    landAreaKm2: 5.1,
+    lastVerifiedAt: "2026-03-25",
+  },
+];
+
+export const placesTable: PlaceTableRow[] = [
+  {
+    id: "PLC001",
+    googlePlaceId: "jamieen-cafe-1",
+    neighborhoodId: "NBH001",
+    name: "ركن الجامعة",
+    category: "cafe",
+    mappedBusinessType: "مقاهٍ",
+    rating: 4.5,
+    userRatingsTotal: 426,
+    address: "طريق الجامعة، حي الجامعيين",
+    isOperational: true,
+    lat: 27.5235,
+    lng: 41.6891,
+    mapPoint: { x: 36, y: 38 },
+    priceLevel: 2,
+    source: "google_places_seed",
+    lastSyncedAt: "2026-03-28",
+  },
+  {
+    id: "PLC002",
+    googlePlaceId: "jamieen-bakery-1",
+    neighborhoodId: "NBH001",
+    name: "مخبز المسار",
+    category: "bakery",
+    mappedBusinessType: "مخابز",
+    rating: 4.3,
+    userRatingsTotal: 217,
+    address: "شارع الخدمات، حي الجامعيين",
+    isOperational: true,
+    lat: 27.5241,
+    lng: 41.6878,
+    mapPoint: { x: 59, y: 42 },
+    priceLevel: 1,
+    source: "google_places_seed",
+    lastSyncedAt: "2026-03-28",
+  },
+  {
+    id: "PLC003",
+    googlePlaceId: "jamieen-restaurant-1",
+    neighborhoodId: "NBH001",
+    name: "بوابة الطلاب",
+    category: "restaurant",
+    mappedBusinessType: "مطاعم",
+    rating: 4.1,
+    userRatingsTotal: 301,
+    address: "امتداد طريق الجامعة، حي الجامعيين",
+    isOperational: true,
+    lat: 27.5222,
+    lng: 41.6902,
+    mapPoint: { x: 69, y: 58 },
+    priceLevel: 2,
+    source: "field_survey_seed",
+    lastSyncedAt: "2026-03-27",
+  },
+  {
+    id: "PLC004",
+    googlePlaceId: "jamieen-clinic-1",
+    neighborhoodId: "NBH001",
+    name: "عيادات الجامعيين السريعة",
+    category: "clinic",
+    mappedBusinessType: "عيادات",
+    rating: 4.4,
+    userRatingsTotal: 184,
+    address: "طريق الجامعة الفرعي، حي الجامعيين",
+    isOperational: true,
+    lat: 27.5228,
+    lng: 41.6885,
+    mapPoint: { x: 44, y: 67 },
+    priceLevel: 3,
+    source: "google_places_seed",
+    lastSyncedAt: "2026-03-28",
+  },
+  {
+    id: "PLC005",
+    googlePlaceId: "naqrah-rest-1",
+    neighborhoodId: "NBH002",
+    name: "ساحة النقرة",
+    category: "restaurant",
+    mappedBusinessType: "مطاعم",
+    rating: 4.6,
+    userRatingsTotal: 512,
+    address: "المحور التجاري، حي النقرة",
+    isOperational: true,
+    lat: 27.5194,
+    lng: 41.7042,
+    mapPoint: { x: 33, y: 34 },
+    priceLevel: 3,
+    source: "google_places_seed",
+    lastSyncedAt: "2026-03-28",
+  },
+  {
+    id: "PLC006",
+    googlePlaceId: "naqrah-sweets-1",
+    neighborhoodId: "NBH002",
+    name: "ركن الحلوى",
+    category: "bakery",
+    mappedBusinessType: "مخابز",
+    rating: 4.2,
+    userRatingsTotal: 241,
+    address: "شارع الأسواق، حي النقرة",
+    isOperational: true,
+    lat: 27.5183,
+    lng: 41.7032,
+    mapPoint: { x: 58, y: 43 },
+    priceLevel: 2,
+    source: "field_survey_seed",
+    lastSyncedAt: "2026-03-27",
+  },
+  {
+    id: "PLC007",
+    googlePlaceId: "naqrah-cafe-1",
+    neighborhoodId: "NBH002",
+    name: "كوفي الحي",
+    category: "cafe",
+    mappedBusinessType: "مقاهٍ",
+    rating: 4.0,
+    userRatingsTotal: 189,
+    address: "شارع الكورنيش التجاري، حي النقرة",
+    isOperational: true,
+    lat: 27.5190,
+    lng: 41.7051,
+    mapPoint: { x: 64, y: 63 },
+    priceLevel: 2,
+    source: "google_places_seed",
+    lastSyncedAt: "2026-03-28",
+  },
+  {
+    id: "PLC008",
+    googlePlaceId: "naqrah-retail-1",
+    neighborhoodId: "NBH002",
+    name: "ممر النقرة التجاري",
+    category: "retail",
+    mappedBusinessType: "تجزئة",
+    rating: 4.3,
+    userRatingsTotal: 355,
+    address: "الممر التجاري، حي النقرة",
+    isOperational: true,
+    lat: 27.5181,
+    lng: 41.7028,
+    mapPoint: { x: 41, y: 72 },
+    priceLevel: 3,
+    source: "field_survey_seed",
+    lastSyncedAt: "2026-03-28",
+  },
+  {
+    id: "PLC009",
+    googlePlaceId: "mashar-dest-1",
+    neighborhoodId: "NBH003",
+    name: "مزار مشار",
+    category: "destination",
+    mappedBusinessType: "وجهات",
+    rating: 4.7,
+    userRatingsTotal: 611,
+    address: "الطريق السياحي، حي مشار",
+    isOperational: true,
+    lat: 27.5430,
+    lng: 41.6694,
+    mapPoint: { x: 39, y: 30 },
+    priceLevel: 3,
+    source: "google_places_seed",
+    lastSyncedAt: "2026-03-26",
+  },
+  {
+    id: "PLC010",
+    googlePlaceId: "mashar-camp-1",
+    neighborhoodId: "NBH003",
+    name: "مخيم الروابي",
+    category: "destination",
+    mappedBusinessType: "وجهات",
+    rating: 4.5,
+    userRatingsTotal: 278,
+    address: "منطقة الجلسات، حي مشار",
+    isOperational: true,
+    lat: 27.5442,
+    lng: 41.6707,
+    mapPoint: { x: 63, y: 52 },
+    priceLevel: 4,
+    source: "field_survey_seed",
+    lastSyncedAt: "2026-03-25",
+  },
+  {
+    id: "PLC011",
+    googlePlaceId: "mashar-cafe-1",
+    neighborhoodId: "NBH003",
+    name: "جلسات مشار كافيه",
+    category: "cafe",
+    mappedBusinessType: "مقاهٍ",
+    rating: 4.4,
+    userRatingsTotal: 149,
+    address: "الطريق الصاعد، حي مشار",
+    isOperational: true,
+    lat: 27.5426,
+    lng: 41.6688,
+    mapPoint: { x: 48, y: 66 },
+    priceLevel: 3,
+    source: "google_places_seed",
+    lastSyncedAt: "2026-03-26",
+  },
+  {
+    id: "PLC012",
+    googlePlaceId: "mashar-rest-1",
+    neighborhoodId: "NBH003",
+    name: "مطعم الإطلالة",
+    category: "restaurant",
+    mappedBusinessType: "مطاعم",
+    rating: 4.6,
+    userRatingsTotal: 196,
+    address: "واجهة الوادي، حي مشار",
+    isOperational: true,
+    lat: 27.5438,
+    lng: 41.6712,
+    mapPoint: { x: 27, y: 57 },
+    priceLevel: 3,
+    source: "field_survey_seed",
+    lastSyncedAt: "2026-03-26",
+  },
+  {
+    id: "PLC013",
+    googlePlaceId: "musayf-cafe-1",
+    neighborhoodId: "NBH004",
+    name: "كوفي النسيم",
+    category: "cafe",
+    mappedBusinessType: "مقاهٍ",
+    rating: 4.3,
+    userRatingsTotal: 268,
+    address: "الممشى العائلي، حي المصيف",
+    isOperational: true,
+    lat: 27.5408,
+    lng: 41.6942,
+    mapPoint: { x: 37, y: 35 },
+    priceLevel: 2,
+    source: "google_places_seed",
+    lastSyncedAt: "2026-03-27",
+  },
+  {
+    id: "PLC014",
+    googlePlaceId: "musayf-seating-1",
+    neighborhoodId: "NBH004",
+    name: "جلسات المصيف",
+    category: "destination",
+    mappedBusinessType: "وجهات",
+    rating: 4.4,
+    userRatingsTotal: 187,
+    address: "الحديقة المركزية، حي المصيف",
+    isOperational: true,
+    lat: 27.5419,
+    lng: 41.6961,
+    mapPoint: { x: 61, y: 44 },
+    priceLevel: 3,
+    source: "field_survey_seed",
+    lastSyncedAt: "2026-03-27",
+  },
+  {
+    id: "PLC015",
+    googlePlaceId: "musayf-rest-1",
+    neighborhoodId: "NBH004",
+    name: "مطعم الروضة العائلي",
+    category: "restaurant",
+    mappedBusinessType: "مطاعم",
+    rating: 4.5,
+    userRatingsTotal: 321,
+    address: "الشارع الهادئ، حي المصيف",
+    isOperational: true,
+    lat: 27.5410,
+    lng: 41.6958,
+    mapPoint: { x: 48, y: 67 },
+    priceLevel: 3,
+    source: "google_places_seed",
+    lastSyncedAt: "2026-03-27",
+  },
+  {
+    id: "PLC016",
+    googlePlaceId: "downtown-market-1",
+    neighborhoodId: "NBH005",
+    name: "سوق المركز",
+    category: "retail",
+    mappedBusinessType: "تجزئة",
+    rating: 4.2,
+    userRatingsTotal: 744,
+    address: "الشارع التاريخي، وسط المدينة",
+    isOperational: true,
+    lat: 27.5121,
+    lng: 41.6901,
+    mapPoint: { x: 35, y: 38 },
+    priceLevel: 2,
+    source: "google_places_seed",
+    lastSyncedAt: "2026-03-29",
+  },
+  {
+    id: "PLC017",
+    googlePlaceId: "downtown-cafe-1",
+    neighborhoodId: "NBH005",
+    name: "مقهى البلد",
+    category: "cafe",
+    mappedBusinessType: "مقاهٍ",
+    rating: 4.1,
+    userRatingsTotal: 398,
+    address: "الساحة التراثية، وسط المدينة",
+    isOperational: true,
+    lat: 27.5127,
+    lng: 41.6912,
+    mapPoint: { x: 55, y: 45 },
+    priceLevel: 2,
+    source: "google_places_seed",
+    lastSyncedAt: "2026-03-29",
+  },
+  {
+    id: "PLC018",
+    googlePlaceId: "downtown-gifts-1",
+    neighborhoodId: "NBH005",
+    name: "بيت الهدايا",
+    category: "retail",
+    mappedBusinessType: "تجزئة",
+    rating: 4.4,
+    userRatingsTotal: 155,
+    address: "شارع الثقافة، وسط المدينة",
+    isOperational: true,
+    lat: 27.5130,
+    lng: 41.6908,
+    mapPoint: { x: 46, y: 64 },
+    priceLevel: 3,
+    source: "field_survey_seed",
+    lastSyncedAt: "2026-03-29",
+  },
+  {
+    id: "PLC019",
+    googlePlaceId: "downtown-bakery-1",
+    neighborhoodId: "NBH005",
+    name: "مخبز السوق القديم",
+    category: "bakery",
+    mappedBusinessType: "مخابز",
+    rating: 4.0,
+    userRatingsTotal: 211,
+    address: "شارع الحرف، وسط المدينة",
+    isOperational: true,
+    lat: 27.5118,
+    lng: 41.6897,
+    mapPoint: { x: 65, y: 59 },
+    priceLevel: 1,
+    source: "google_places_seed",
+    lastSyncedAt: "2026-03-29",
+  },
+  {
+    id: "PLC020",
+    googlePlaceId: "maghwah-rest-1",
+    neighborhoodId: "NBH006",
+    name: "مطعم السريع",
+    category: "restaurant",
+    mappedBusinessType: "مطاعم",
+    rating: 4.0,
+    userRatingsTotal: 229,
+    address: "الطريق الرئيسي، حي المغواة",
+    isOperational: true,
+    lat: 27.5012,
+    lng: 41.7189,
+    mapPoint: { x: 34, y: 36 },
+    priceLevel: 1,
+    source: "google_places_seed",
+    lastSyncedAt: "2026-03-25",
+  },
+  {
+    id: "PLC021",
+    googlePlaceId: "maghwah-store-1",
+    neighborhoodId: "NBH006",
+    name: "تموينات المغواة",
+    category: "retail",
+    mappedBusinessType: "تجزئة",
+    rating: 4.3,
+    userRatingsTotal: 177,
+    address: "شارع الحي، حي المغواة",
+    isOperational: true,
+    lat: 27.5004,
+    lng: 41.7198,
+    mapPoint: { x: 56, y: 43 },
+    priceLevel: 1,
+    source: "field_survey_seed",
+    lastSyncedAt: "2026-03-24",
+  },
+  {
+    id: "PLC022",
+    googlePlaceId: "maghwah-laundry-1",
+    neighborhoodId: "NBH006",
+    name: "مغسلة المشرق",
+    category: "laundry",
+    mappedBusinessType: "مغاسل",
+    rating: 4.1,
+    userRatingsTotal: 88,
+    address: "الممر الخدمي، حي المغواة",
+    isOperational: true,
+    lat: 27.5010,
+    lng: 41.7203,
+    mapPoint: { x: 66, y: 61 },
+    priceLevel: 1,
+    source: "google_places_seed",
+    lastSyncedAt: "2026-03-25",
+  },
+  {
+    id: "PLC023",
+    googlePlaceId: "maghwah-pharmacy-1",
+    neighborhoodId: "NBH006",
+    name: "صيدلية المغواة",
+    category: "pharmacy",
+    mappedBusinessType: "صيدليات",
+    rating: 4.5,
+    userRatingsTotal: 104,
+    address: "شارع الخدمات الطبية، حي المغواة",
+    isOperational: true,
+    lat: 27.5002,
+    lng: 41.7182,
+    mapPoint: { x: 46, y: 71 },
+    priceLevel: 2,
+    source: "field_survey_seed",
+    lastSyncedAt: "2026-03-25",
+  },
+];
+
+function roundNumber(value: number, digits = 1) {
+  const factor = 10 ** digits;
+  return Math.round(value * factor) / factor;
+}
+
+function buildNeighborhoodAnalytics(neighborhoodId: string): NeighborhoodAnalyticsRow {
+  const scopedPlaces = placesTable.filter((place) => place.neighborhoodId === neighborhoodId);
+  const totalPlaces = scopedPlaces.length;
+  const totalReviews = scopedPlaces.reduce((sum, place) => sum + place.userRatingsTotal, 0);
+  const averageRating = totalPlaces > 0 ? roundNumber(scopedPlaces.reduce((sum, place) => sum + place.rating, 0) / totalPlaces, 1) : 0;
+  const categoryCounts = scopedPlaces.reduce<Record<string, number>>((accumulator, place) => {
+    accumulator[place.mappedBusinessType] = (accumulator[place.mappedBusinessType] ?? 0) + 1;
+    return accumulator;
+  }, {});
+  const topCategory = Object.entries(categoryCounts).sort((left, right) => right[1] - left[1])[0]?.[0] ?? "-";
+  const neighborhood = neighborhoodsTable.find((item) => item.id === neighborhoodId);
+  const competitionDensity = neighborhood ? totalPlaces / Math.max(neighborhood.landAreaKm2, 1) : totalPlaces;
+  const competitionScore = Math.min(100, Math.round(competitionDensity * 11 + averageRating * 8));
+  const demandScore = Math.min(100, Math.round(averageRating * 12 + Math.min(totalReviews / 18, 45)));
+  const sourceCoverage = totalPlaces >= 4 ? "مرتفعة" : totalPlaces >= 3 ? "متوسطة" : "منخفضة";
+
+  return {
+    neighborhoodId,
+    totalPlaces,
+    averageRating,
+    totalReviews,
+    competitionScore,
+    demandScore,
+    topCategory,
+    categoryCounts,
+    sourceCoverage,
+    updatedAt: scopedPlaces.map((place) => place.lastSyncedAt).sort().reverse()[0] ?? "-",
+  };
+}
+
+export const analyticsTable: NeighborhoodAnalyticsRow[] = neighborhoodsTable.map((neighborhood) => buildNeighborhoodAnalytics(neighborhood.id));
+
+export function getNeighborhoodBySlug(slug: string) {
+  return neighborhoodsTable.find((neighborhood) => neighborhood.slug === slug) ?? null;
+}
+
+export function getNeighborhoodSlugByName(name: string) {
+  return neighborhoodsTable.find((neighborhood) => neighborhood.name === name)?.slug ?? null;
+}
+
+export function getNeighborhoodPlacesBySlug(slug: string) {
+  const neighborhood = getNeighborhoodBySlug(slug);
+  if (!neighborhood) {
+    return [];
+  }
+
+  return placesTable.filter((place) => place.neighborhoodId === neighborhood.id);
+}
+
+export function getNeighborhoodAnalyticsBySlug(slug: string) {
+  const neighborhood = getNeighborhoodBySlug(slug);
+  if (!neighborhood) {
+    return null;
+  }
+
+  return analyticsTable.find((item) => item.neighborhoodId === neighborhood.id) ?? null;
+}
+
+export function getNeighborhoodDetailBySlug(slug: string) {
+  const neighborhood = getNeighborhoodBySlug(slug);
+  if (!neighborhood) {
+    return null;
+  }
+
+  return {
+    neighborhood,
+    places: getNeighborhoodPlacesBySlug(slug),
+    analytics: getNeighborhoodAnalyticsBySlug(slug),
+  };
+}
