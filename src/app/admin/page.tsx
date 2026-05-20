@@ -392,15 +392,15 @@ export default function AdminPage() {
     },
     {
       key: "portal",
-      label: "بوابة الأمانة",
+      label: "لوحة الذكاء الاستثماري",
       icon: Landmark,
-      href: "/amanah-portal",
+      href: "/investment-intelligence",
     },
     {
       key: "executive",
-      label: "العرض التنفيذي",
+      label: "التقارير التنفيذية",
       icon: FileText,
-      href: "/amanah-executive",
+      href: "/investment-intelligence?tab=executive",
     },
   ];
 
@@ -440,11 +440,11 @@ export default function AdminPage() {
             <p className="text-xs text-slate-400 mb-2">Amanah Administration</p>
             <h2 className="text-2xl font-black text-navy mb-3">الوصول يتطلب حساب أمانة مخول</h2>
             <p className="text-sm text-gray-600 leading-8 mb-6">
-              يمكنك تسجيل الدخول من بوابة الأمانة أولاً، ثم الانتقال إلى هذه الصفحة لإدارة التشغيل اليومي والمحتوى والتقارير التنفيذية.
+              يمكنك تسجيل الدخول من لوحة الذكاء الاستثماري أولاً، ثم الانتقال إلى هذه الصفحة لإدارة التشغيل اليومي والمحتوى والتقارير التنفيذية.
             </p>
             <div className="flex flex-wrap gap-3 justify-end">
-              <Link href="/amanah-portal" className="btn-gold">
-                افتح بوابة الأمانة
+              <Link href="/investment-intelligence" className="btn-gold">
+                افتح لوحة الذكاء الاستثماري
                 <ArrowUpLeft size={16} />
               </Link>
               <Link href="/" className="btn-primary">العودة إلى الرئيسية</Link>
@@ -479,7 +479,7 @@ export default function AdminPage() {
               <p className="text-slate-500 text-sm md:text-base text-right mt-3 leading-8">واجهة تشغيل احترافية تجمع المؤشرات والسجلات والتقارير والموافقات في مستوى عرض واحد واضح ورسمي.</p>
             </div>
             <div className="flex flex-wrap items-center gap-3 self-stretch lg:self-auto">
-              <Link href="/amanah-executive" className="px-4 py-3 rounded-2xl text-sm font-semibold border border-slate-200 text-slate-600 hover:bg-slate-50">العرض التنفيذي</Link>
+              <Link href="/investment-intelligence?tab=executive" className="px-4 py-3 rounded-2xl text-sm font-semibold border border-slate-200 text-slate-600 hover:bg-slate-50">التقارير التنفيذية</Link>
               <button className="btn-primary px-5 py-3">
                 <Plus size={16} />
                 إجراء تنفيذي جديد
@@ -731,9 +731,9 @@ export default function AdminPage() {
                         <p className="text-xs text-slate-400 mb-1">{brief.title}</p>
                         <p className="font-black text-navy mb-2">{brief.angle}</p>
                         <p className="text-sm text-gray-600 leading-7 mb-3">{brief.recommendation}</p>
-                        <Link href="/amanah-executive" className="inline-flex items-center gap-2 text-xs font-bold" style={{ color: "#0A2342" }}>
+                        <Link href="/investment-intelligence?tab=executive" className="inline-flex items-center gap-2 text-xs font-bold" style={{ color: "#0A2342" }}>
                           <ArrowUpLeft size={13} />
-                          افتح صفحة العرض التنفيذي
+                          افتح التبويب التنفيذي
                         </Link>
                       </div>
                     ))}

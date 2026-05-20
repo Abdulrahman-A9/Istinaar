@@ -1,15 +1,16 @@
 "use client";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Bell, Menu, X, MapPin } from "lucide-react";
+import { Bell, MapPin, Menu, X } from "lucide-react";
 import { useAppStore } from "@/store/appStore";
 
 const navLinks = [
   { href: "/", label: "الرئيسية" },
   { href: "/lands", label: "الأراضي" },
   { href: "/opportunities", label: "الفرص" },
-  { href: "/amanah-portal", label: "بوابة الأمانة" },
+  { href: "/investment-intelligence", label: "لوحة الذكاء الاستثماري" },
   { href: "/investor-journey", label: "رحلة المستثمر" },
   { href: "/consulting", label: "الاستشارات" },
 ];
@@ -17,96 +18,91 @@ const navLinks = [
 export default function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const alerts = useAppStore((s) => s.alerts);
-  const currentUser = useAppStore((s) => s.currentUser);
-  const unread = alerts.filter((a) => !a.read).length;
+  const alerts = useAppStore((state) => state.alerts);
+  const currentUser = useAppStore((state) => state.currentUser);
+  const unread = alerts.filter((alert) => !alert.read).length;
   const isAuthority = currentUser?.role === "authority";
   const primaryHref = isAuthority ? "/admin" : currentUser ? "/dashboard" : "/account";
   const primaryLabel = isAuthority ? "إدارة الأمانة" : currentUser ? "لوحة التحكم" : "ابدأ الآن";
-  const visibleNavLinks = isAuthority ? navLinks.filter((link) => link.href !== "/amanah-portal") : navLinks;
   const accountLabel = isAuthority ? "الحساب" : currentUser ? currentUser.fullName.split(" ")[0] : "الحساب";
 
   return (
-    <nav style={{ backgroundColor: "rgba(10,35,66,0.72)" }} className="sticky top-0 z-50 border-b border-white/10 shadow-[0_12px_40px_rgba(10,35,66,0.18)] backdrop-blur-xl">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Left: Auth buttons */}
+    <nav style={{ backgroundColor: "rgba(11,31,51,0.82)" }} className="sticky top-0 z-50 border-b border-white/10 shadow-[0_12px_40px_rgba(11,31,51,0.18)] backdrop-blur-xl">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-3">
-            <Link href={currentUser ? "/dashboard" : "/account"} className="relative p-2 text-white hover:text-yellow-400 transition-colors">
+            <Link href={currentUser ? "/dashboard" : "/account"} className="relative p-2 text-white transition-colors hover:text-[#D4B469]">
               <Bell size={20} />
-              {currentUser && unread > 0 && (
-                <span className="absolute -top-1 -left-1 w-4 h-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center font-bold">
+              {currentUser && unread > 0 ? (
+                <span className="absolute -left-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
                   {unread}
                 </span>
-              )}
+              ) : null}
             </Link>
-            <Link href={primaryHref}
-              className="hidden sm:block text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
-              style={{ backgroundColor: "#C9A84C", color: "#0A2342" }}>
+            <Link
+              href={primaryHref}
+              className="hidden rounded-lg px-4 py-2 text-sm font-semibold transition-colors sm:block"
+              style={{ backgroundColor: "#B6913E", color: "#0B1F33" }}
+            >
               {primaryLabel}
             </Link>
-            <Link href="/account"
-              className="hidden sm:block text-sm font-medium px-3 py-2 border border-white/30 text-white rounded-lg hover:bg-white/10 transition-colors">
+            <Link href="/account" className="hidden rounded-lg border border-white/30 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-white/10 sm:block">
               {accountLabel}
             </Link>
           </div>
 
-          {/* Center: Nav links */}
-          <div className="hidden md:flex items-center gap-1 rounded-2xl border border-white/10 px-2 py-1" style={{ backgroundColor: "rgba(255,255,255,0.05)" }}>
-            {visibleNavLinks.map((link) => (
-              <Link key={link.href} href={link.href}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  pathname === link.href
-                    ? "text-yellow-400 bg-white/10"
-                    : "text-white/80 hover:text-white hover:bg-white/10"
-                }`}>
+          <div className="hidden items-center gap-1 rounded-2xl border border-white/10 px-2 py-1 md:flex" style={{ backgroundColor: "rgba(255,255,255,0.05)" }}>
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                  pathname === link.href ? "bg-white/10 text-[#D4B469]" : "text-white/80 hover:bg-white/10 hover:text-white"
+                }`}
+              >
                 {link.label}
               </Link>
             ))}
           </div>
 
-          {/* Right: Logo */}
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#C9A84C" }}>
-              <MapPin size={16} color="#0A2342" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ backgroundColor: "#B6913E" }}>
+              <MapPin size={16} color="#0B1F33" />
             </div>
             <div>
-              <p className="text-white font-bold text-sm leading-tight">استنار | Istinaar</p>
-              <p className="text-white/60 text-xs leading-tight">منصة استدلالية لدعم القرار الاستثماري</p>
+              <p className="text-sm font-bold leading-tight text-white">استنار | Istinaar</p>
+              <p className="text-xs leading-tight text-white/60">منصة الذكاء الاستثماري ودعم القرار</p>
             </div>
           </div>
 
-          {/* Mobile menu button */}
-          <button className="md:hidden text-white p-2" onClick={() => setMobileOpen(!mobileOpen)}>
+          <button className="p-2 text-white md:hidden" onClick={() => setMobileOpen((value) => !value)}>
             {mobileOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <div className="md:hidden border-t border-white/10" style={{ backgroundColor: "rgba(10,35,66,0.92)" }}>
-          <div className="px-4 py-3 space-y-1">
-            {visibleNavLinks.map((link) => (
-              <Link key={link.href} href={link.href}
+      {mobileOpen ? (
+        <div className="border-t border-white/10 md:hidden" style={{ backgroundColor: "rgba(11,31,51,0.94)" }}>
+          <div className="space-y-1 px-4 py-3">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className={`block px-3 py-2 rounded-lg text-sm font-medium ${
-                  pathname === link.href ? "text-yellow-400" : "text-white/80"
-                }`}>
+                className={`block rounded-lg px-3 py-2 text-sm font-medium ${pathname === link.href ? "text-[#D4B469]" : "text-white/80"}`}
+              >
                 {link.label}
               </Link>
             ))}
-            <Link href={primaryHref} onClick={() => setMobileOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-semibold text-yellow-400">
+            <Link href={primaryHref} onClick={() => setMobileOpen(false)} className="block rounded-lg px-3 py-2 text-sm font-semibold text-[#D4B469]">
               {primaryLabel}
             </Link>
-            <Link href="/account" onClick={() => setMobileOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-medium text-white/70">
+            <Link href="/account" onClick={() => setMobileOpen(false)} className="block rounded-lg px-3 py-2 text-sm font-medium text-white/70">
               الحساب
             </Link>
           </div>
         </div>
-      )}
+      ) : null}
     </nav>
   );
 }

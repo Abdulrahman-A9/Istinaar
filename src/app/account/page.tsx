@@ -47,8 +47,8 @@ export default function AccountPage() {
   };
 
   const roleLabel = currentUser?.role === "authority" ? "مسؤول أمانة" : currentUser?.role === "consultant" ? "مستشار" : "مستثمر";
-  const primaryWorkspaceHref = currentUser?.role === "authority" ? "/amanah-portal" : "/dashboard";
-  const primaryWorkspaceLabel = currentUser?.role === "authority" ? "افتح بوابة الأمانة" : "افتح لوحة المستثمر";
+  const primaryWorkspaceHref = currentUser?.role === "authority" ? "/investment-intelligence" : "/dashboard";
+  const primaryWorkspaceLabel = currentUser?.role === "authority" ? "افتح لوحة الذكاء الاستثماري" : "افتح لوحة المستثمر";
 
   return (
     <div className="min-h-screen px-4 py-12" style={{ background: "linear-gradient(180deg, #F5F7FB 0%, #EEF2F7 100%)" }}>
@@ -67,7 +67,7 @@ export default function AccountPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               {[
                 { title: "ملف موحد بحسب الدور", desc: "تجميع الطلبات، المحفوظات، والتنبيهات أو خدمات القرار المؤسسي داخل حساب واحد." },
-                { title: "جاهزية تشغيلية", desc: "انتقال مباشر بين الحساب، اللوحة الاستثمارية، وبوابة الأمانة دون خطوات متفرقة." },
+                { title: "جاهزية تشغيلية", desc: "انتقال مباشر بين الحساب، المسار الاستثماري، ولوحة الذكاء الاستثماري دون تشتت." },
                 { title: "دخول تجريبي منضبط", desc: "إمكانية عرض النسخة التنفيذية أو المؤسسية بسرعة دون كسر المسار الرسمي." },
                 { title: "توافق بصري كامل", desc: "هيكل واضح للمستثمر والجهة التنظيمية ضمن لغة مؤسسية موحدة." },
               ].map((item) => (
@@ -155,7 +155,7 @@ export default function AccountPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {[
                   currentUser.role === "authority"
-                    ? { title: "بوابة الأمانة", desc: "الدخول إلى خدمات تقييم الفرص، مرصد الأولويات، وتقارير القيادات.", href: "/amanah-portal", icon: <LayoutDashboard size={18} /> }
+                    ? { title: "لوحة الذكاء الاستثماري", desc: "الدخول إلى التحليل، الاستدلال، الجهات التنظيمية، والتقارير التنفيذية داخل منصة واحدة.", href: "/investment-intelligence", icon: <LayoutDashboard size={18} /> }
                     : { title: "لوحة المستثمر", desc: "متابعة الطلبات والاستشارات والتنبيهات التنفيذية.", href: "/dashboard", icon: <LayoutDashboard size={18} /> },
                   currentUser.role === "authority"
                     ? { title: "الفرص الاستثمارية", desc: "مراجعة الفرص الحالية وربطها بمسار التقييم الداخلي قبل الطرح.", href: "/opportunities", icon: <FileBadge2 size={18} /> }

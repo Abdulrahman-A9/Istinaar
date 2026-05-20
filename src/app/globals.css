@@ -1,12 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --navy: #0A2342;
-  --navy-dark: #061629;
-  --gold: #C9A84C;
-  --gold-light: #E2C06A;
-  --background: #F8F9FB;
-  --foreground: #1a1a2e;
+  --navy: #0b1f33;
+  --navy-deep: #102a43;
+  --navy-dark: #071726;
+  --gold: #b6913e;
+  --gold-light: #d4b469;
+  --sand: #e9dfc8;
+  --ivory: #f7f5ef;
+  --slate: #667085;
+  --success: #157347;
+  --warning: #b7791f;
+  --risk: #b42318;
+  --background: #f7f5ef;
+  --foreground: #102a43;
 }
 
 @theme inline {
@@ -14,6 +21,8 @@
   --color-foreground: var(--foreground);
   --color-navy: var(--navy);
   --color-gold: var(--gold);
+  --color-sand: var(--sand);
+  --color-slate: var(--slate);
 }
 
 * {
@@ -30,10 +39,13 @@ body {
 }
 
 .text-navy { color: var(--navy); }
+.text-slate { color: var(--slate); }
 .bg-navy { background-color: var(--navy); }
+.bg-navy-deep { background-color: var(--navy-deep); }
 .bg-navy-dark { background-color: var(--navy-dark); }
 .text-gold { color: var(--gold); }
 .bg-gold { background-color: var(--gold); }
+.bg-ivory { background-color: var(--ivory); }
 .border-gold { border-color: var(--gold); }
 .border-navy { border-color: var(--navy); }
 
@@ -78,9 +90,9 @@ body {
 .btn-outline:hover { background-color: var(--gold); color: var(--navy); }
 
 .card {
-  background: white;
+  background: linear-gradient(180deg, #ffffff 0%, #fcfbf8 100%);
   border-radius: 1rem;
-  box-shadow: 0 2px 12px rgba(10,35,66,0.08);
+  box-shadow: 0 12px 36px rgba(11, 31, 51, 0.08);
   overflow: hidden;
 }
 
@@ -163,10 +175,10 @@ body {
 }
 
 .soft-card {
-  background: linear-gradient(180deg, #ffffff 0%, #f9fbfe 100%);
-  border: 1px solid rgba(10, 35, 66, 0.08);
+  background: linear-gradient(180deg, #ffffff 0%, #fcfbf8 100%);
+  border: 1px solid rgba(11, 31, 51, 0.08);
   border-radius: 1rem;
-  box-shadow: 0 10px 30px rgba(10, 35, 66, 0.06);
+  box-shadow: 0 16px 42px rgba(11, 31, 51, 0.06);
 }
 
 @keyframes hero-glow-cycle {
