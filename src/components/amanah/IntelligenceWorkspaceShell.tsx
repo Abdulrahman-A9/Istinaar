@@ -38,14 +38,18 @@ type IntelligenceWorkspaceShellProps = {
 
 function ShellNavLink({ item }: { item: ShellNavItem }) {
   const Icon = item.icon;
-  const className = `group flex w-full items-center justify-between gap-3 rounded-[1.15rem] px-4 py-3 text-sm font-semibold transition-all ${
+  const className = `nav-chip group flex w-full items-center justify-between gap-3 rounded-[1.15rem] px-4 py-3 text-sm font-semibold transition-all ${
     item.isActive ? "shadow-[0_16px_32px_rgba(182,145,62,0.18)]" : "text-white/72 hover:bg-white/6 hover:text-white"
   }`;
   const style = item.isActive ? { backgroundColor: "#E9DFC8", color: "#0B1F33" } : {};
+  const iconClassName = item.isActive
+    ? "border-[#B6913E]/20 bg-[#0B1F33]/6"
+    : "border-white/10 bg-white/4 group-hover:border-white/15";
+
   const content = (
     <>
       <div className="flex items-center gap-3">
-        <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/4 group-hover:border-white/15">
+        <span className={`flex h-9 w-9 items-center justify-center rounded-xl border ${iconClassName}`}>
           <Icon size={17} />
         </span>
         <span>{item.label}</span>
@@ -90,15 +94,24 @@ export default function IntelligenceWorkspaceShell({
   children,
 }: IntelligenceWorkspaceShellProps) {
   return (
-    <div className="min-h-screen" style={{ background: "linear-gradient(180deg, #F7F5EF 0%, #F2EFE7 46%, #EEF1F4 100%)" }}>
+    <div className="dashboard-shell min-h-screen" style={{ background: "linear-gradient(180deg, #F7F5EF 0%, #F2EFE7 46%, #EEF1F4 100%)" }}>
       <div className="mx-auto flex min-h-screen max-w-[1680px]">
-        <aside className="hidden w-[310px] shrink-0 flex-col border-l border-white/10 p-5 lg:flex" style={{ background: "linear-gradient(180deg, #071726 0%, #0B1F33 48%, #102A43 100%)" }}>
-          <div className="rounded-[2rem] border border-white/10 p-5 text-right" style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%)" }}>
-            <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-[1.35rem]" style={{ backgroundColor: "#B6913E", color: "#0B1F33" }}>
-              <span className="text-xl font-black">ا</span>
+        <aside
+          className="hidden w-[310px] shrink-0 flex-col border-l border-white/10 p-5 lg:flex"
+          style={{ background: "linear-gradient(180deg, #071726 0%, #0B1F33 48%, #102A43 100%)" }}
+        >
+          <div
+            className="rise-in rounded-[2rem] border border-white/10 p-5 text-right"
+            style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%)" }}
+          >
+            <div
+              className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-[1.35rem] shadow-[0_18px_40px_rgba(182,145,62,0.24)]"
+              style={{ background: "linear-gradient(135deg, #E9DFC8 0%, #B6913E 100%)", color: "#0B1F33" }}
+            >
+              <span className="text-sm font-black tracking-[0.18em]">IS</span>
             </div>
             <p className="text-xs font-bold tracking-[0.18em] text-[#E9DFC8]">{eyebrow}</p>
-            <h1 className="mt-2 text-2xl font-black text-white">{title}</h1>
+            <h1 className="display-title mt-2 text-2xl font-black text-white">{title}</h1>
             <p className="mt-1 text-sm text-white/60">{subtitle}</p>
             <p className="mt-4 text-sm leading-8 text-white/74">{description}</p>
           </div>
@@ -124,7 +137,7 @@ export default function IntelligenceWorkspaceShell({
           </div>
 
           <div className="mt-6 space-y-3">
-            <div className="rounded-[1.5rem] border border-white/10 bg-white/4 px-4 py-4 text-right">
+            <div className="rise-in stagger-1 rounded-[1.5rem] border border-white/10 bg-white/4 px-4 py-4 text-right">
               <div className="mb-3 flex items-center justify-between gap-3">
                 <span className="rounded-full border border-[#B6913E]/40 px-3 py-1 text-[11px] font-bold text-[#E9DFC8]">{statusBadge}</span>
                 <p className="text-xs text-white/35">{commandLabel}</p>
@@ -138,7 +151,7 @@ export default function IntelligenceWorkspaceShell({
               href="https://foras.sa"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 rounded-[1.2rem] border px-4 py-3 text-sm font-bold"
+              className="nav-chip flex items-center justify-center gap-2 rounded-[1.2rem] border px-4 py-3 text-sm font-bold"
               style={{ borderColor: "rgba(182,145,62,0.34)", color: "#E9DFC8" }}
             >
               <ArrowUpLeft size={16} />
@@ -148,10 +161,10 @@ export default function IntelligenceWorkspaceShell({
         </aside>
 
         <main className="flex-1 p-4 md:p-6 xl:p-8">
-          <div className="rounded-[2rem] border border-white/65 bg-white/75 p-4 shadow-[0_22px_80px_rgba(11,31,51,0.08)] backdrop-blur">
+          <div className="rise-in rounded-[2rem] border border-white/65 bg-white/75 p-4 shadow-[0_22px_80px_rgba(11,31,51,0.08)] backdrop-blur">
             <div className="mb-6 rounded-[1.6rem] border border-[rgba(11,31,51,0.08)] bg-[linear-gradient(135deg,#FFFFFF_0%,#FBF9F4_58%,#F2EFE7_100%)] p-5 md:p-6">
               <div className="flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
-                <div className="text-right">
+                <div className="executive-divider pr-5 text-right">
                   <div className="mb-3 flex items-center justify-end gap-2 text-xs text-slate-500">
                     <span>{title}</span>
                     <ChevronLeft size={14} />
@@ -159,12 +172,12 @@ export default function IntelligenceWorkspaceShell({
                     <ChevronLeft size={14} />
                     <span>{eyebrow}</span>
                   </div>
-                  <h2 className="text-3xl font-black text-navy md:text-[2.2rem]">{title}</h2>
+                  <h2 className="display-title text-3xl font-black text-navy md:text-[2.2rem]">{title}</h2>
                   <p className="mt-2 max-w-3xl text-sm leading-8 text-slate-600 md:text-[0.96rem]">{description}</p>
                 </div>
 
                 <div className="min-w-[270px] text-right">
-                  <div className="rounded-[1.45rem] border border-[rgba(182,145,62,0.2)] bg-[linear-gradient(135deg,rgba(233,223,200,0.55)_0%,rgba(255,255,255,0.92)_100%)] p-4">
+                  <div className="panel-hover rounded-[1.45rem] border border-[rgba(182,145,62,0.2)] bg-[linear-gradient(135deg,rgba(233,223,200,0.55)_0%,rgba(255,255,255,0.92)_100%)] p-4">
                     <p className="text-xs font-bold tracking-[0.18em] text-[#B6913E]">{commandLabel}</p>
                     <p className="mt-2 text-lg font-black text-navy">{commandValue}</p>
                     <p className="mt-2 text-sm leading-7 text-slate-600">{statusDescription}</p>
@@ -177,7 +190,7 @@ export default function IntelligenceWorkspaceShell({
                 {filters.map((filter) => (
                   <span
                     key={filter.label}
-                    className="inline-flex items-center gap-2 rounded-full border border-[rgba(11,31,51,0.08)] bg-white px-4 py-2 text-xs font-semibold text-slate-600"
+                    className="panel-hover inline-flex items-center gap-2 rounded-full border border-[rgba(11,31,51,0.08)] bg-white px-4 py-2 text-xs font-semibold text-slate-600"
                   >
                     <span style={{ color: "#0B1F33" }}>{filter.value}</span>
                     <span>{filter.label}</span>

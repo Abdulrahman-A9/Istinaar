@@ -26,7 +26,7 @@
 }
 
 * {
-  font-family: 'Tajawal', sans-serif;
+  font-family: var(--font-ui), "IBM Plex Sans Arabic", "Tajawal", sans-serif;
 }
 
 html {
@@ -36,6 +36,13 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .display-title {
+  font-family: var(--font-display), "Tajawal", "IBM Plex Sans Arabic", sans-serif;
+  letter-spacing: -0.015em;
 }
 
 .text-navy { color: var(--navy); }
@@ -181,6 +188,88 @@ body {
   box-shadow: 0 16px 42px rgba(11, 31, 51, 0.06);
 }
 
+.dashboard-shell {
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 16% 12%, rgba(182, 145, 62, 0.12), transparent 26%),
+    radial-gradient(circle at 82% 9%, rgba(16, 42, 67, 0.1), transparent 24%),
+    linear-gradient(180deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0) 18%);
+}
+
+.panel-hover {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+.panel-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 50px rgba(11, 31, 51, 0.09);
+  border-color: rgba(182, 145, 62, 0.18);
+}
+
+.rise-in {
+  animation: rise-in 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.stagger-1 { animation-delay: 40ms; }
+.stagger-2 { animation-delay: 90ms; }
+.stagger-3 { animation-delay: 140ms; }
+
+.nav-chip {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-chip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.08) 42%, transparent 100%);
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.nav-chip:hover::after {
+  opacity: 1;
+}
+
+.executive-divider {
+  position: relative;
+}
+
+.executive-divider::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0.35rem;
+  bottom: 0.35rem;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(182,145,62,0.18) 0%, rgba(182,145,62,0.9) 58%, rgba(182,145,62,0.22) 100%);
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes hero-glow-cycle {
   0% {
     opacity: 0.18;
@@ -203,6 +292,17 @@ body {
   mix-blend-mode: screen;
   pointer-events: none;
   animation: hero-glow-cycle 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-glow,
+  .rise-in,
+  .panel-hover,
+  .nav-chip {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
 }
 
 .hero-glow-primary {

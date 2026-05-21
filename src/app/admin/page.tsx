@@ -94,14 +94,11 @@ const applicationStatusMeta = {
 } as const;
 
 const navItems = [
-  { key: "overview", label: "الرئيسية", icon: LayoutDashboard },
-  { key: "workflow", label: "مسار القرار", icon: Sparkles },
-  { key: "lands", label: "إدارة الأراضي", icon: Map },
-  { key: "applications", label: "إدارة الطلبات", icon: ClipboardList },
-  { key: "opportunities", label: "إدارة الفرص", icon: BriefcaseBusiness },
-  { key: "partnerships", label: "إدارة الشراكات", icon: Handshake },
-  { key: "consulting", label: "الاستشارات", icon: ShieldCheck },
-  { key: "reports", label: "التقارير", icon: ChartColumn },
+  { key: "overview", label: "مركز التشغيل", icon: LayoutDashboard },
+  { key: "requests", label: "الطلبات والاعتمادات", icon: ClipboardList },
+  { key: "assets", label: "الأصول والفرص", icon: Map },
+  { key: "relations", label: "الشراكات والاستشارات", icon: Handshake },
+  { key: "governance", label: "الحوكمة والمتابعة", icon: ChartColumn },
 ] as const;
 
 type ActiveTab = typeof navItems[number]["key"];
@@ -370,14 +367,11 @@ export default function AdminPage() {
   );
 
   const currentTitle = {
-    overview: "نظرة عامة على الإدارة",
-    workflow: "مسار القرار التنفيذي",
-    lands: "إدارة الأراضي",
-    applications: "إدارة الطلبات الواردة",
-    opportunities: "إدارة الفرص الاستثمارية",
-    partnerships: "إدارة الشراكات والموافقات",
-    consulting: "Workflow المراجعة البشرية",
-    reports: "التقارير والإحصائيات",
+    overview: "مركز التشغيل اليومي",
+    requests: "الطلبات والاعتمادات",
+    assets: "الأصول والفرص",
+    relations: "الشراكات والاستشارات",
+    governance: "الحوكمة والمتابعة",
   }[activeTab];
 
   const primaryNavItem = navItems[0];
@@ -554,7 +548,7 @@ export default function AdminPage() {
                 title="أحدث الطلبات الاستشارية"
                 subtitle="Latest Advisory Queue"
                 icon={<ShieldCheck size={22} />}
-                action={<button onClick={() => setActiveTab("consulting")} className="inline-flex items-center gap-2 text-xs font-bold" style={{ color: "#0A2342" }}><ArrowUpLeft size={13} />فتح مركز المراجعة</button>}
+                action={<button onClick={() => setActiveTab("relations")} className="inline-flex items-center gap-2 text-xs font-bold" style={{ color: "#0A2342" }}><ArrowUpLeft size={13} />فتح مركز المراجعة</button>}
               >
                 <div className="space-y-3">
                   {advisoryRequests.slice(0, 3).map((request) => {
@@ -622,7 +616,7 @@ export default function AdminPage() {
                 title="مركز العمليات الموحد"
                 subtitle="Unified Operations"
                 icon={<BadgeDollarSign size={20} />}
-                action={<button onClick={() => setActiveTab("partnerships")} className="inline-flex items-center gap-2 text-xs font-bold" style={{ color: "#0A2342" }}><ArrowUpLeft size={13} />فتح إدارة الشراكات</button>}
+                action={<button onClick={() => setActiveTab("relations")} className="inline-flex items-center gap-2 text-xs font-bold" style={{ color: "#0A2342" }}><ArrowUpLeft size={13} />فتح إدارة الشراكات</button>}
               >
                 <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-1 gap-4">
                   <div className="rounded-[1.4rem] border border-slate-200 bg-slate-50 p-5 text-right">
@@ -643,7 +637,7 @@ export default function AdminPage() {
           </div>
         )}
 
-        {activeTab === "workflow" && (
+        {activeTab === "requests" && (
           <div className="space-y-6">
             <ShellCard title="مسار القرار داخل الأمانة" subtitle="Executive Workflow" icon={<Sparkles size={20} />}>
               <div className="grid grid-cols-1 xl:grid-cols-4 gap-4">
@@ -744,7 +738,7 @@ export default function AdminPage() {
           </div>
         )}
 
-        {activeTab === "lands" && (
+        {activeTab === "assets" && (
           <ShellCard title="سجل الأراضي الموسمية" subtitle="Land Registry" icon={<Map size={20} />} action={<button className="btn-gold text-sm px-4 py-2"><Plus size={14} />إضافة أرض جديدة</button>}>
             <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4 md:p-5 mb-5">
               <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
@@ -819,7 +813,7 @@ export default function AdminPage() {
           </ShellCard>
         )}
 
-        {activeTab === "applications" && (
+        {activeTab === "requests" && (
           <ShellCard title="إدارة الطلبات الواردة" subtitle="Incoming Applications" icon={<ClipboardList size={20} />}>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -849,7 +843,7 @@ export default function AdminPage() {
           </ShellCard>
         )}
 
-        {activeTab === "opportunities" && (
+        {activeTab === "assets" && (
           <ShellCard title="إدارة الفرص الاستثمارية" subtitle="Opportunity Management" icon={<BriefcaseBusiness size={20} />} action={<button className="btn-gold text-sm px-4 py-2"><Plus size={14} />إضافة فرصة جديدة</button>}>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -881,7 +875,7 @@ export default function AdminPage() {
           </ShellCard>
         )}
 
-        {activeTab === "partnerships" && (
+        {activeTab === "relations" && (
           <div className="grid grid-cols-1 xl:grid-cols-[1.05fr_0.95fr] gap-6">
             <div className="space-y-6">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -969,7 +963,7 @@ export default function AdminPage() {
           </div>
         )}
 
-        {activeTab === "consulting" && (
+        {activeTab === "relations" && (
           <div className="grid grid-cols-1 xl:grid-cols-[1.05fr_0.95fr] gap-6">
             <div className="space-y-6">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -1147,7 +1141,7 @@ export default function AdminPage() {
           </div>
         )}
 
-        {activeTab === "reports" && (
+        {activeTab === "governance" && (
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
             <ShellCard title="عدد الطلبات الشهرية" subtitle="Monthly Volume" icon={<ChartColumn size={20} />}>
               <div className="h-72">

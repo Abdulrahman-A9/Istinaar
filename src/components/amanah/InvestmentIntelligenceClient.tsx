@@ -2,21 +2,29 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   AlertTriangle,
   Bell,
   Building2,
-  Database,
+  CheckCircle2,
+  Clock3,
   FileSpreadsheet,
   FileText,
   Landmark,
   LayoutDashboard,
-  LineChart,
+  Layers3,
   MapPinned,
+  PencilLine,
+  Plus,
+  RefreshCw,
+  Save,
+  Send,
   ShieldCheck,
+  SlidersHorizontal,
   Sparkles,
   Target,
+  Upload,
 } from "lucide-react";
 import {
   Bar,
@@ -31,9 +39,7 @@ import {
   YAxis,
 } from "recharts";
 import IntelligenceWorkspaceShell from "@/components/amanah/IntelligenceWorkspaceShell";
-import { neighborhoodInsights } from "@/data/commercialInsights";
 import { historicalMarketData } from "@/data/historicalMarket";
-import lands from "@/data/lands";
 import { opportunities } from "@/data/opportunities";
 import {
   getAmanahDecisionWorkflow,
@@ -47,35 +53,90 @@ import { getOpportunityRisk } from "@/lib/opportunities";
 import { useAppStore } from "@/store/appStore";
 
 const tabs = [
-  { key: "overview", label: "نظرة تنفيذية", icon: LayoutDashboard },
+  { key: "overview", label: "النظرة التنفيذية", icon: LayoutDashboard },
   { key: "opportunities", label: "الفرص الاستثمارية", icon: Target },
   { key: "spatial", label: "التحليل المكاني", icon: MapPinned },
   { key: "inference", label: "محرك الاستدلال", icon: Sparkles },
-  { key: "dossier", label: "الكراسة الذكية", icon: FileText },
-  { key: "executive", label: "التقارير التنفيذية", icon: Landmark, badge: "عرض" },
-  { key: "alerts", label: "التنبيهات الذكية", icon: Bell },
-  { key: "economics", label: "المؤشرات الاقتصادية", icon: LineChart },
-  { key: "regulatory", label: "الجهات التنظيمية", icon: ShieldCheck },
-  { key: "data-center", label: "مركز البيانات", icon: Database },
+  { key: "studio", label: "استوديو القرار", icon: FileText },
+  { key: "regulatory", label: "الجاهزية التنظيمية", icon: ShieldCheck },
+  { key: "executive", label: "التقارير التنفيذية", icon: Landmark, badge: "قيادي" },
 ] as const;
 
 type TabKey = (typeof tabs)[number]["key"];
+type WorkspaceMode = "executive" | "internal";
+type WorkflowState = "draft" | "analysis" | "review" | "approved" | "executive";
+
+type InvestmentIntelligenceClientProps = {
+  initialTab?: string;
+};
+
+type OpportunityRecord = {
+  id: string;
+  title: string;
+  neighborhood: string;
+  sector: string;
+  roi: string;
+  readinessScore: number;
+  recommendation: string;
+  status: WorkflowState;
+};
+
+type DossierRecord = {
+  id: string;
+  title: string;
+  source: string;
+  summary: string;
+  status: WorkflowState;
+};
+
+type IndicatorRecord = {
+  id: string;
+  label: string;
+  value: string;
+};
+
+type ExecutiveNoteRecord = {
+  id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+};
+
+type BriefRecord = {
+  id: string;
+  title: string;
+  summary: string;
+  recommendation: string;
+  indicators: string[];
+  status: WorkflowState;
+};
+
+const workflowMeta: Record<
+  WorkflowState,
+  { label: string; tone: string; surface: string; icon: typeof Clock3 }
+> = {
+  draft: { label: "مسودة", tone: "#667085", surface: "#F2F4F7", icon: PencilLine },
+  analysis: { label: "تحت التحليل", tone: "#B7791F", surface: "#FFF7E8", icon: RefreshCw },
+  review: { label: "جاهز للمراجعة", tone: "#1D4ED8", surface: "#EEF4FF", icon: FileSpreadsheet },
+  approved: { label: "معتمد داخلياً", tone: "#157347", surface: "#ECFDF3", icon: CheckCircle2 },
+  executive: { label: "جاهز للعرض التنفيذي", tone: "#0B1F33", surface: "#E9DFC8", icon: Landmark },
+};
 
 function SurfaceCard({
   title,
   subtitle,
   children,
-  accent,
+  action,
 }: {
   title: string;
   subtitle?: string;
   children: React.ReactNode;
-  accent?: string;
+  action?: React.ReactNode;
 }) {
   return (
-    <section className="rounded-[1.6rem] border border-[rgba(11,31,51,0.08)] bg-[linear-gradient(180deg,#FFFFFF_0%,#FCFBF8_100%)] p-5 shadow-[0_16px_42px_rgba(11,31,51,0.05)]">
+    <section className="panel-hover rise-in rounded-[1.6rem] border border-[rgba(11,31,51,0.08)] bg-[linear-gradient(180deg,#FFFFFF_0%,#FCFBF8_100%)] p-5 shadow-[0_16px_42px_rgba(11,31,51,0.05)]">
       <div className="mb-4 flex items-start justify-between gap-4">
-        <div className="h-10 w-1 rounded-full" style={{ backgroundColor: accent ?? "#B6913E" }} />
+        <div>{action}</div>
         <div className="text-right">
           {subtitle ? <p className="mb-1 text-xs text-slate-400">{subtitle}</p> : null}
           <h3 className="text-lg font-black text-navy">{title}</h3>
@@ -98,7 +159,7 @@ function KpiCard({
   tone: string;
 }) {
   return (
-    <div className="rounded-[1.5rem] border border-[rgba(11,31,51,0.08)] bg-[linear-gradient(180deg,#FFFFFF_0%,#FAF8F3_100%)] p-4 shadow-[0_14px_30px_rgba(11,31,51,0.05)]">
+    <div className="panel-hover rise-in rounded-[1.5rem] border border-[rgba(11,31,51,0.08)] bg-[linear-gradient(180deg,#FFFFFF_0%,#FAF8F3_100%)] p-4 shadow-[0_14px_30px_rgba(11,31,51,0.05)]">
       <div className="mb-3 h-1.5 w-16 rounded-full" style={{ backgroundColor: tone }} />
       <p className="text-sm font-semibold text-slate-500">{label}</p>
       <p className="mt-2 text-3xl font-black text-navy">{value}</p>
@@ -107,31 +168,42 @@ function KpiCard({
   );
 }
 
-function ProgressRow({
-  label,
-  value,
-  tone,
-}: {
-  label: string;
-  value: number;
-  tone: string;
-}) {
+function WorkflowBadge({ status }: { status: WorkflowState }) {
+  const meta = workflowMeta[status];
+  const Icon = meta.icon;
+
   return (
-    <div className="space-y-2">
-      <div className="flex items-center justify-between gap-3 text-sm">
-        <span className="font-black text-navy">{value}%</span>
-        <span className="text-slate-600">{label}</span>
-      </div>
-      <div className="h-2.5 rounded-full bg-[#EEF1F4]">
-        <div className="h-full rounded-full" style={{ width: `${value}%`, backgroundColor: tone }} />
-      </div>
-    </div>
+    <span
+      className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold"
+      style={{ backgroundColor: meta.surface, color: meta.tone }}
+    >
+      <Icon size={13} />
+      {meta.label}
+    </span>
   );
 }
 
-type InvestmentIntelligenceClientProps = {
-  initialTab?: string;
-};
+function ActionButton({
+  children,
+  variant = "secondary",
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: "primary" | "secondary" | "ghost" }) {
+  const className = {
+    primary: "bg-[#0B1F33] text-white hover:bg-[#102A43]",
+    secondary: "bg-[#B6913E] text-[#0B1F33] hover:bg-[#c7a85a]",
+    ghost: "border border-[rgba(11,31,51,0.1)] bg-white text-navy hover:bg-[#F7F5EF]",
+  }[variant];
+
+  return (
+    <button
+      type="button"
+      {...props}
+      className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold transition duration-200 ${className} ${props.className ?? ""}`}
+    >
+      {children}
+    </button>
+  );
+}
 
 export default function InvestmentIntelligenceClient({
   initialTab,
@@ -139,66 +211,145 @@ export default function InvestmentIntelligenceClient({
   const router = useRouter();
   const pathname = usePathname();
   const currentUser = useAppStore((state) => state.currentUser);
+
+  const resolvedInitialTab = tabs.some((tab) => tab.key === initialTab)
+    ? (initialTab as TabKey)
+    : "overview";
+
+  const [activeTab, setActiveTab] = useState<TabKey>(resolvedInitialTab);
+  const [workspaceMode, setWorkspaceMode] = useState<WorkspaceMode>("executive");
   const [presentationMode, setPresentationMode] = useState(false);
 
-  const requestedTab = initialTab;
-  const activeTab = tabs.some((tab) => tab.key === requestedTab) ? (requestedTab as TabKey) : "overview";
+  const assessments = useMemo(() => getAmanahOpportunityAssessments(), []);
+  const proposals = useMemo(() => getAmanahProposedOpportunities(), []);
+  const priorities = useMemo(() => getAmanahPriorityAreas(), []);
+  const blueprints = useMemo(() => getAmanahRequirementBlueprints(), []);
+  const briefs = useMemo(() => getAmanahLeadershipBriefs(), []);
+  const workflow = useMemo(() => getAmanahDecisionWorkflow(), []);
 
-  const assessments = getAmanahOpportunityAssessments();
-  const proposals = getAmanahProposedOpportunities();
-  const priorities = getAmanahPriorityAreas();
-  const blueprints = getAmanahRequirementBlueprints();
-  const briefs = getAmanahLeadershipBriefs();
-  const workflow = getAmanahDecisionWorkflow();
+  const [opportunityItems, setOpportunityItems] = useState<OpportunityRecord[]>(() =>
+    assessments.slice(0, 6).map((item, index) => ({
+      id: item.id,
+      title: item.title,
+      neighborhood: item.neighborhood,
+      sector: opportunities.find((opportunity) => opportunity.id === item.id)?.category ?? "متعدد الاستخدام",
+      roi: `${opportunities.find((opportunity) => opportunity.id === item.id)?.roi ?? 0}%`,
+      readinessScore: item.readinessScore,
+      recommendation: item.recommendation,
+      status: index < 2 ? "approved" : index < 4 ? "review" : "analysis",
+    }))
+  );
+  const [dossiers, setDossiers] = useState<DossierRecord[]>(() => [
+    {
+      id: "DOS-1",
+      title: "كراسة سوق الأغذية الحضرية",
+      source: "رفع داخلي",
+      summary: "تحليل أولي يربط الكثافة السكانية وحركة المساء مع فرصة طرح مجمع غذائي متوسط الحجم.",
+      status: "review",
+    },
+    {
+      id: "DOS-2",
+      title: "ملف تطوير واجهة طريق المطار",
+      source: "تغذية من فريق الأصول",
+      summary: "يحتاج مواءمة تنظيمية أعمق قبل اعتماده للعرض التنفيذي النهائي.",
+      status: "analysis",
+    },
+  ]);
+  const [economicIndicators, setEconomicIndicators] = useState<IndicatorRecord[]>(() =>
+    historicalMarketData.slice(0, 4).map((item, index) => ({
+      id: `ECO-${index + 1}`,
+      label: `نمو ${item.neighborhood}`,
+      value: `${item.annualGrowth}%`,
+    }))
+  );
+  const [executiveNotes, setExecutiveNotes] = useState<ExecutiveNoteRecord[]>([
+    {
+      id: "NOTE-1",
+      title: "ملاحظة أولويات الربع",
+      content: "تركيز العروض القادمة يجب أن يبدأ من الأحياء ذات الجاهزية الأعلى مع إظهار معوقات التنظيم بشكل مباشر.",
+      createdAt: "اليوم",
+    },
+  ]);
+  const [briefings, setBriefings] = useState<BriefRecord[]>(() =>
+    briefs.slice(0, 4).map((brief, index) => ({
+      id: brief.id,
+      title: brief.title,
+      summary: brief.summary,
+      recommendation: brief.recommendation,
+      indicators: brief.indicators,
+      status: index === 0 ? "executive" : index === 1 ? "approved" : "review",
+    }))
+  );
+  const [analysisConfig, setAnalysisConfig] = useState({
+    source: "بيانات السوق التاريخية",
+    lastGenerated: "قبل 14 دقيقة",
+    approved: false,
+    weights: {
+      readiness: 35,
+      demand: 25,
+      risk: 20,
+      seasonality: 20,
+    },
+  });
+  const [spatialLayerVersion, setSpatialLayerVersion] = useState(3);
 
-  const topAssessment = assessments[0];
+  const [newOpportunity, setNewOpportunity] = useState({
+    title: "",
+    neighborhood: priorities[0]?.neighborhood ?? "النقرة",
+    sector: "ضيافة",
+    roi: "",
+  });
+  const [newDossierTitle, setNewDossierTitle] = useState("");
+  const [newIndicator, setNewIndicator] = useState({ label: "", value: "" });
+  const [newNoteTitle, setNewNoteTitle] = useState("");
+  const [newNoteContent, setNewNoteContent] = useState("");
+  const [newBriefTitle, setNewBriefTitle] = useState("");
+  const [newBriefSummary, setNewBriefSummary] = useState("");
+
+  useEffect(() => {
+    setActiveTab(resolvedInitialTab);
+  }, [resolvedInitialTab]);
+
+  const topAssessment = opportunityItems[0];
   const topPriority = priorities[0];
-  const topProposal = proposals[0];
-  const highestDemandInsight = [...neighborhoodInsights].sort((left, right) => right.footfall - left.footfall)[0];
-  const totalExpectedRoi = Math.round(opportunities.reduce((sum, item) => sum + item.roi, 0) / opportunities.length);
+  const topBrief = briefings[0];
+  const readyCount = opportunityItems.filter((item) => item.status === "approved" || item.status === "executive").length;
   const highRiskCount = opportunities.filter((item) => getOpportunityRisk(item).score >= 55).length;
-  const readyCount = assessments.filter((item) => item.readinessScore >= 82).length;
+  const totalExpectedRoi = Math.round(opportunities.reduce((sum, item) => sum + item.roi, 0) / opportunities.length);
   const executiveWarnings = [
-    topAssessment?.blockers[0],
-    topProposal?.rationale,
+    assessments[0]?.blockers[0],
+    proposals[0]?.rationale,
     workflow.cases.find((item) => item.readinessScore < 72)?.nextAction,
   ].filter(Boolean) as string[];
 
   const readinessDistribution = [
-    { name: "جاهزة", value: assessments.filter((item) => item.readinessScore >= 82).length, color: "#157347" },
-    { name: "تحت المعالجة", value: assessments.filter((item) => item.readinessScore >= 68 && item.readinessScore < 82).length, color: "#B7791F" },
-    { name: "إعادة ضبط", value: assessments.filter((item) => item.readinessScore < 68).length, color: "#B42318" },
+    { name: "معتمد", value: opportunityItems.filter((item) => item.status === "approved" || item.status === "executive").length, color: "#157347" },
+    { name: "قيد المراجعة", value: opportunityItems.filter((item) => item.status === "review").length, color: "#1D4ED8" },
+    { name: "تحت التحليل", value: opportunityItems.filter((item) => item.status === "analysis" || item.status === "draft").length, color: "#B7791F" },
   ];
 
   const riskDistribution = opportunities.slice(0, 5).map((item) => ({
-    name: item.title.split(" ").slice(0, 3).join(" "),
+    name: item.title.split(" ").slice(0, 2).join(" "),
     value: getOpportunityRisk(item).score,
   }));
 
-  const sectorComparison = opportunities.slice(0, 5).map((item) => ({
-    name: item.category,
-    roi: item.roi,
-    demand: item.marketDemand,
-  }));
-
-  const economicSeries = historicalMarketData.map((item) => ({
+  const spatialComparison = priorities.slice(0, 5).map((item) => ({
     name: item.neighborhood,
-    growth: item.annualGrowth,
-    demand: item.series[item.series.length - 1]?.demandIndex ?? 0,
+    demand: item.demandLevel,
+    competition: item.competitionLevel,
   }));
 
-  const dataSources = [
-    { title: "أصول الأراضي", value: `${lands.length} سجل`, note: "مرتبطة بالجاهزية، التكلفة، والطلب." },
-    { title: "الفرص الاستثمارية", value: `${opportunities.length} فرصة`, note: "مصنفة حسب القطاع، العائد، والمخاطر." },
-    { title: "الرصد المكاني", value: `${neighborhoodInsights.length} حي`, note: "يشمل الحركة، المنافسة، والموسمية." },
-    { title: "سير القرار", value: `${workflow.cases.length} حالة`, note: "مسارات قرار وقيمة مباشرة للأمانة." },
-  ];
+  const economicSeries = economicIndicators.map((item) => ({
+    name: item.label.replace("نمو ", ""),
+    value: Number(item.value.replace("%", "")) || 0,
+  }));
 
-  const filters = [
-    { label: "المنطقة", value: "حائل" },
-    { label: "النطاق", value: "القطاع الاستثماري" },
-    { label: "الموسم", value: "الربع الحالي" },
-    { label: "الحالة", value: "الفرص النشطة" },
+  const workflowStatusSummary = [
+    { label: "مسودات", value: opportunityItems.filter((item) => item.status === "draft").length },
+    { label: "تحليل", value: opportunityItems.filter((item) => item.status === "analysis").length },
+    { label: "مراجعة", value: opportunityItems.filter((item) => item.status === "review").length },
+    { label: "معتمد", value: opportunityItems.filter((item) => item.status === "approved").length },
+    { label: "جاهز للعرض", value: opportunityItems.filter((item) => item.status === "executive").length },
   ];
 
   const workspaceItems = [
@@ -211,9 +362,127 @@ export default function InvestmentIntelligenceClient({
     ...tab,
     isActive: activeTab === tab.key,
     onSelect: () => {
+      setActiveTab(tab.key);
       router.replace(`${pathname}?tab=${tab.key}`);
     },
   }));
+
+  const filters = [
+    { label: "المنطقة", value: "حائل" },
+    { label: "الموسم", value: "الربع الحالي" },
+    { label: "الوضع", value: workspaceMode === "executive" ? "قراءة تنفيذية" : "عمل داخلي" },
+    { label: "الحالة", value: "7 تبويبات فقط داخل اللوحة" },
+  ];
+
+  const selectOpportunityStatus = (id: string, status: WorkflowState) => {
+    setOpportunityItems((current) => current.map((item) => (item.id === id ? { ...item, status } : item)));
+  };
+
+  const selectBriefStatus = (id: string, status: WorkflowState) => {
+    setBriefings((current) => current.map((item) => (item.id === id ? { ...item, status } : item)));
+  };
+
+  const addOpportunity = () => {
+    if (!newOpportunity.title.trim() || !newOpportunity.roi.trim()) {
+      return;
+    }
+
+    setOpportunityItems((current) => [
+      {
+        id: `NEW-${Date.now()}`,
+        title: newOpportunity.title,
+        neighborhood: newOpportunity.neighborhood,
+        sector: newOpportunity.sector,
+        roi: `${newOpportunity.roi.replace("%", "")}%`,
+        readinessScore: 68,
+        recommendation: "أضيفت كمسودة وتحتاج إسناد التحليل الأولي قبل اعتمادها للمراجعة.",
+        status: "draft",
+      },
+      ...current,
+    ]);
+
+    setNewOpportunity({
+      title: "",
+      neighborhood: priorities[0]?.neighborhood ?? "النقرة",
+      sector: "ضيافة",
+      roi: "",
+    });
+  };
+
+  const uploadDossier = () => {
+    if (!newDossierTitle.trim()) {
+      return;
+    }
+
+    setDossiers((current) => [
+      {
+        id: `DOS-${Date.now()}`,
+        title: newDossierTitle,
+        source: "رفع داخلي",
+        summary: "تمت إضافة الملف بانتظار التحليل المختصر وربطه بمسار القرار.",
+        status: "analysis",
+      },
+      ...current,
+    ]);
+    setNewDossierTitle("");
+  };
+
+  const addIndicator = () => {
+    if (!newIndicator.label.trim() || !newIndicator.value.trim()) {
+      return;
+    }
+
+    setEconomicIndicators((current) => [
+      { id: `IND-${Date.now()}`, label: newIndicator.label, value: newIndicator.value },
+      ...current,
+    ]);
+    setNewIndicator({ label: "", value: "" });
+  };
+
+  const addExecutiveNote = () => {
+    if (!newNoteTitle.trim() || !newNoteContent.trim()) {
+      return;
+    }
+
+    setExecutiveNotes((current) => [
+      { id: `NOTE-${Date.now()}`, title: newNoteTitle, content: newNoteContent, createdAt: "الآن" },
+      ...current,
+    ]);
+    setNewNoteTitle("");
+    setNewNoteContent("");
+  };
+
+  const createBrief = () => {
+    if (!newBriefTitle.trim() || !newBriefSummary.trim()) {
+      return;
+    }
+
+    setBriefings((current) => [
+      {
+        id: `BRIEF-${Date.now()}`,
+        title: newBriefTitle,
+        summary: newBriefSummary,
+        recommendation: "يحال للمراجعة الداخلية قبل تثبيته ضمن العرض القيادي.",
+        indicators: ["جاهزية أولية", "يحتاج اعتماد"],
+        status: "review",
+      },
+      ...current,
+    ]);
+    setNewBriefTitle("");
+    setNewBriefSummary("");
+  };
+
+  const regenerateInference = () => {
+    setAnalysisConfig((current) => ({ ...current, lastGenerated: "الآن" }));
+  };
+
+  const approveInference = () => {
+    setAnalysisConfig((current) => ({ ...current, approved: true }));
+  };
+
+  const updateSpatialLayer = () => {
+    setSpatialLayerVersion((current) => current + 1);
+  };
 
   if (!currentUser || currentUser.role !== "authority") {
     return (
@@ -226,7 +495,7 @@ export default function InvestmentIntelligenceClient({
             </span>
             <h1 className="mt-6 text-4xl font-black leading-tight">منصة القرار والتحليل والاستدلال الاستثماري للأمانة</h1>
             <p className="mt-5 max-w-2xl text-sm leading-8 text-white/75">
-              هذه المساحة مخصصة للحسابات المخولة داخل الأمانة، وتجمع القراءة التنفيذية، الفرص، التحليل المكاني، الجهات التنظيمية، والتقارير القيادية داخل منصة واحدة.
+              هذه المساحة مخصصة للحسابات الداخلية المخولة، وتجمع التحليل، إدخال القرار، اعتماد التوصيات، وتجهيز العرض التنفيذي داخل تجربة واحدة واضحة.
             </p>
           </section>
 
@@ -249,99 +518,97 @@ export default function InvestmentIntelligenceClient({
   return (
     <IntelligenceWorkspaceShell
       title="لوحة الذكاء الاستثماري"
-      subtitle={tabs.find((tab) => tab.key === activeTab)?.label ?? "نظرة تنفيذية"}
-      description="منصة حكومية موحدة لقراءة الفرص، دعم القرار، ربط الجاهزية التنظيمية، وتحويل البيانات المكانية والقطاعية إلى توصيات تنفيذية قابلة للعرض على القيادات."
+      subtitle={tabs.find((tab) => tab.key === activeTab)?.label ?? "النظرة التنفيذية"}
+      description="مساحة موحدة للقرار الاستثماري تجمع الفرص، التحليل المكاني، الاستدلال، الجاهزية التنظيمية، والتقارير التنفيذية مع طبقة تشغيل خفيفة لا تربك المسؤولين."
       eyebrow="استنار | منصة الذكاء الاستثماري ودعم القرار"
-      commandLabel="الحالة الحالية"
-      commandValue="النسخة التنفيذية V3 - جاهزة للعرض المؤسسي"
-      statusTitle="القرار أصبح ضمن منصة واحدة"
-      statusDescription="تم دمج بوابة الأمانة والعرض التنفيذي في تجربة واحدة؛ التشغيل بقي داخل إدارة الأمانة، والتحليل والقيادة أصبحا داخل هذه اللوحة."
-      statusBadge="جاهز للعرض"
+      commandLabel="الوضع الحالي"
+      commandValue={workspaceMode === "executive" ? "قراءة تنفيذية للمسؤولين" : "عمل داخلي للمختصين"}
+      statusTitle="الهيكل الجديد مختصر وواضح"
+      statusDescription="7 تبويبات فقط داخل اللوحة، وكل أعمال الإدخال والتحرير والاعتماد مضمنة داخل الصفحات بدلاً من تضخيم النظام بأقسام زائدة."
+      statusBadge="V3"
       workspaceItems={workspaceItems}
       moduleItems={moduleItems}
       filters={filters}
       actionArea={
-        activeTab === "executive" ? (
-          <button
-            type="button"
-            onClick={() => setPresentationMode((value) => !value)}
-            className="w-full rounded-[1.2rem] border px-4 py-3 text-sm font-bold"
-            style={{
-              borderColor: presentationMode ? "#B6913E" : "rgba(11,31,51,0.08)",
-              backgroundColor: presentationMode ? "#E9DFC8" : "#FFFFFF",
-              color: "#0B1F33",
-            }}
-          >
-            {presentationMode ? "إلغاء وضع الاجتماعات" : "تفعيل وضع الاجتماعات"}
-          </button>
-        ) : (
-          <div className="grid grid-cols-2 gap-2">
-            <Link href="/admin" className="rounded-[1.2rem] border border-[rgba(11,31,51,0.08)] bg-white px-4 py-3 text-center text-sm font-bold text-navy">
-              إدارة الأمانة
-            </Link>
-            <button
-              type="button"
-              onClick={() => router.replace(`${pathname}?tab=executive`)}
-              className="rounded-[1.2rem] px-4 py-3 text-sm font-bold"
-              style={{ backgroundColor: "#B6913E", color: "#0B1F33" }}
+        <div className="space-y-3">
+          <div className="flex flex-wrap justify-end gap-2">
+            <ActionButton
+              variant={workspaceMode === "executive" ? "secondary" : "ghost"}
+              onClick={() => setWorkspaceMode("executive")}
             >
-              عرض قيادي
-            </button>
+              وضع القراءة التنفيذية
+            </ActionButton>
+            <ActionButton
+              variant={workspaceMode === "internal" ? "secondary" : "ghost"}
+              onClick={() => setWorkspaceMode("internal")}
+            >
+              وضع العمل الداخلي
+            </ActionButton>
           </div>
-        )
+          {activeTab === "executive" ? (
+            <div className="flex justify-end">
+              <ActionButton
+                variant={presentationMode ? "primary" : "ghost"}
+                onClick={() => setPresentationMode((current) => !current)}
+              >
+                <Landmark size={16} />
+                {presentationMode ? "إيقاف وضع الاجتماعات" : "تفعيل وضع الاجتماعات"}
+              </ActionButton>
+            </div>
+          ) : null}
+        </div>
       }
     >
-      {activeTab === "overview" && (
-        <div className="space-y-6">
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-            <KpiCard label="عدد الفرص النشطة" value={`${opportunities.length}`} note="الفرص الحالية المرتبطة بالقرار الاستثماري." tone="#0B1F33" />
-            <KpiCard label="مؤشر الجاهزية" value={`${Math.round(assessments.reduce((sum, item) => sum + item.readinessScore, 0) / assessments.length)}%`} note="متوسط جاهزية الانتقال للمسار الرسمي." tone="#157347" />
-            <KpiCard label="متوسط ROI المتوقع" value={`${totalExpectedRoi}%`} note="متوسط العائد على مستوى الفرص المعروضة." tone="#B6913E" />
-            <KpiCard label="الفرص عالية المخاطر" value={`${highRiskCount}`} note="تتطلب تخفيفاً أو إعادة صياغة قبل التوصية." tone="#B42318" />
-            <KpiCard label="الفرص الجاهزة للطرح" value={`${readyCount}`} note="جاهزية مرتفعة مع مبررات واضحة للرفع." tone="#157347" />
-          </div>
+      <div className={`space-y-6 ${presentationMode && activeTab === "executive" ? "mx-auto max-w-5xl" : ""}`}>
+        {activeTab === "overview" && (
+          <>
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              <KpiCard label="الفرص الجاهزة للتقدم" value={`${readyCount}`} note="فرص عبرت المراجعة الأولية أو أصبحت جاهزة للعرض التنفيذي." tone="#157347" />
+              <KpiCard label="متوسط ROI المتوقع" value={`${totalExpectedRoi}%`} note="مبني على متوسط العوائد للفرص الاستثمارية الحالية في المنصة." tone="#B6913E" />
+              <KpiCard label="الأحياء ذات الأولوية" value={`${priorities.filter((item) => item.priorityScore >= 80).length}`} note="أحياء تستحق المعالجة المباشرة لارتفاع الطلب وانخفاض المنافسة النسبية." tone="#0B1F33" />
+              <KpiCard label="الفرص عالية المخاطر" value={`${highRiskCount}`} note="تحتاج معالجة تنظيمية أو إعادة ضبط في الطرح قبل العرض القيادي." tone="#B42318" />
+            </div>
 
-          <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
-            <SurfaceCard title="ملخص تنفيذي مباشر" subtitle="Executive Summary Strip">
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="rounded-[1.35rem] border border-[rgba(11,31,51,0.08)] bg-[#0B1F33] p-5 text-white">
-                  <p className="text-xs font-bold tracking-[0.18em] text-[#E9DFC8]">فرصة اليوم</p>
-                  <h4 className="mt-3 text-xl font-black">{topAssessment.title}</h4>
-                  <p className="mt-2 text-sm text-white/75">{topAssessment.neighborhood}</p>
-                  <p className="mt-4 text-sm leading-7 text-white/80">{topAssessment.recommendation}</p>
-                </div>
-
-                <div className="rounded-[1.35rem] border border-[rgba(182,145,62,0.18)] bg-[linear-gradient(135deg,#FBF7EC_0%,#FFFFFF_100%)] p-5">
-                  <p className="text-xs font-bold tracking-[0.18em] text-[#B6913E]">حي الأولوية</p>
-                  <h4 className="mt-3 text-xl font-black text-navy">{topPriority.neighborhood}</h4>
-                  <p className="mt-2 text-sm text-slate-600">درجة الأولوية {topPriority.priorityScore}%</p>
-                  <p className="mt-4 text-sm leading-7 text-slate-600">{topPriority.note}</p>
-                </div>
-              </div>
-            </SurfaceCard>
-
-            <SurfaceCard title="تحذيرات استراتيجية" subtitle="Strategic Warnings" accent="#B42318">
-              <div className="space-y-3">
-                {executiveWarnings.map((warning) => (
-                  <div key={warning} className="rounded-[1.2rem] border border-[rgba(180,35,24,0.12)] bg-[rgba(180,35,24,0.05)] px-4 py-4 text-right">
-                    <div className="mb-2 flex items-center justify-between gap-3">
-                      <span className="rounded-full bg-white px-3 py-1 text-[11px] font-bold text-[#B42318]">تنبيه</span>
-                      <AlertTriangle size={16} color="#B42318" />
+            <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
+              <SurfaceCard title="ملخص القرار الحالي" subtitle="ما الذي تغير فعلاً؟">
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="rounded-[1.4rem] bg-[#F7F5EF] p-4 text-right">
+                    <p className="text-xs text-slate-500">أقوى فرصة حالياً</p>
+                    <h4 className="mt-2 text-xl font-black text-navy">{topAssessment?.title}</h4>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">{topAssessment?.recommendation}</p>
+                    <div className="mt-4 flex justify-end">
+                      <WorkflowBadge status={topAssessment?.readinessScore && topAssessment.readinessScore >= 82 ? "approved" : "review"} />
                     </div>
-                    <p className="text-sm leading-7 text-slate-700">{warning}</p>
                   </div>
-                ))}
-              </div>
-            </SurfaceCard>
-          </div>
+                  <div className="rounded-[1.4rem] bg-[#F7F5EF] p-4 text-right">
+                    <p className="text-xs text-slate-500">أولوية الحي</p>
+                    <h4 className="mt-2 text-xl font-black text-navy">{topPriority?.neighborhood}</h4>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">{topPriority?.note}</p>
+                    <p className="mt-4 text-sm font-black text-[#B6913E]">مؤشر الأولوية {topPriority?.priorityScore}%</p>
+                  </div>
+                </div>
+              </SurfaceCard>
 
-          <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
-            <SurfaceCard title="توزيع الجاهزية" subtitle="Readiness Distribution">
-              <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-                <div className="h-64">
+              <SurfaceCard title="تنبيهات تستحق العرض" subtitle="مختصرة وواضحة" action={<Bell className="text-[#B6913E]" size={18} />}>
+                <div className="space-y-3">
+                  {executiveWarnings.map((warning) => (
+                    <div key={warning} className="rounded-[1.2rem] border border-[rgba(180,35,24,0.12)] bg-[#FFF8F6] p-4 text-right">
+                      <div className="flex items-start justify-between gap-3">
+                        <AlertTriangle className="mt-1 text-[#B42318]" size={16} />
+                        <p className="text-sm leading-7 text-slate-700">{warning}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </SurfaceCard>
+            </div>
+
+            <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
+              <SurfaceCard title="توزيع الجاهزية" subtitle="حالة المسار داخل اللوحة">
+                <div className="h-72">
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
-                      <Pie data={readinessDistribution} dataKey="value" nameKey="name" innerRadius={62} outerRadius={92} paddingAngle={4}>
+                      <Pie data={readinessDistribution} dataKey="value" nameKey="name" innerRadius={65} outerRadius={92}>
                         {readinessDistribution.map((entry) => (
                           <Cell key={entry.name} fill={entry.color} />
                         ))}
@@ -350,419 +617,484 @@ export default function InvestmentIntelligenceClient({
                     </PieChart>
                   </ResponsiveContainer>
                 </div>
-                <div className="space-y-4">
+                <div className="grid gap-3 md:grid-cols-3">
                   {readinessDistribution.map((entry) => (
-                    <ProgressRow key={entry.name} label={entry.name} value={Math.round((entry.value / assessments.length) * 100)} tone={entry.color} />
+                    <div key={entry.name} className="rounded-[1.2rem] bg-[#F7F5EF] p-3 text-right">
+                      <p className="text-xs text-slate-500">{entry.name}</p>
+                      <p className="mt-1 text-xl font-black text-navy">{entry.value}</p>
+                    </div>
                   ))}
                 </div>
+              </SurfaceCard>
+
+              <SurfaceCard title="نبض المؤشرات الاقتصادية" subtitle="أقل عدد ممكن من المؤشرات ذات القيمة">
+                <div className="h-72">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={economicSeries}>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E7E5E4" />
+                      <XAxis dataKey="name" tickLine={false} axisLine={false} />
+                      <YAxis tickLine={false} axisLine={false} />
+                      <Tooltip />
+                      <Bar dataKey="value" radius={[10, 10, 0, 0]} fill="#0B1F33" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </SurfaceCard>
+            </div>
+          </>
+        )}
+
+        {activeTab === "opportunities" && (
+          <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
+            <SurfaceCard title="سجل الفرص الاستثمارية" subtitle="إدخال وتحديث واعتماد داخل نفس الصفحة">
+              <div className="space-y-4">
+                {opportunityItems.map((item) => (
+                  <div key={item.id} className="rounded-[1.35rem] border border-[rgba(11,31,51,0.08)] bg-[#FFFEFC] p-4">
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div className="flex flex-wrap gap-2">
+                        {workspaceMode === "internal" ? (
+                          <>
+                            <ActionButton variant="ghost" onClick={() => selectOpportunityStatus(item.id, "analysis")}>
+                              <RefreshCw size={15} />
+                              تحليل
+                            </ActionButton>
+                            <ActionButton variant="ghost" onClick={() => selectOpportunityStatus(item.id, "review")}>
+                              <FileSpreadsheet size={15} />
+                              مراجعة
+                            </ActionButton>
+                            <ActionButton variant="secondary" onClick={() => selectOpportunityStatus(item.id, "approved")}>
+                              <CheckCircle2 size={15} />
+                              اعتماد
+                            </ActionButton>
+                          </>
+                        ) : null}
+                      </div>
+                      <div className="text-right">
+                        <div className="flex items-center justify-end gap-3">
+                          <WorkflowBadge status={item.status} />
+                          <h3 className="text-lg font-black text-navy">{item.title}</h3>
+                        </div>
+                        <p className="mt-2 text-sm text-slate-500">{item.neighborhood} • {item.sector} • ROI {item.roi}</p>
+                        <p className="mt-3 text-sm leading-7 text-slate-600">{item.recommendation}</p>
+                        <div className="mt-3 flex justify-end gap-3 text-xs font-bold text-slate-500">
+                          <span>جاهزية {item.readinessScore}%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </SurfaceCard>
 
-            <SurfaceCard title="مقارنة القطاع والطلب" subtitle="Sector Comparison">
-              <div className="h-72">
+            <div className="space-y-6">
+              <SurfaceCard title="حالات الـ workflow" subtitle="الفرص لا تتحرك بلا حالة واضحة">
+                <div className="space-y-3">
+                  {workflowStatusSummary.map((item) => (
+                    <div key={item.label} className="flex items-center justify-between rounded-[1.1rem] bg-[#F7F5EF] px-4 py-3">
+                      <p className="text-lg font-black text-navy">{item.value}</p>
+                      <p className="text-sm font-semibold text-slate-600">{item.label}</p>
+                    </div>
+                  ))}
+                </div>
+              </SurfaceCard>
+
+              {workspaceMode === "internal" ? (
+                <SurfaceCard title="إضافة فرصة جديدة" subtitle="هذا هو مركز الإدخال، وليس قسماً مستقلاً" action={<Plus className="text-[#B6913E]" size={18} />}>
+                  <div className="grid gap-3">
+                    <input value={newOpportunity.title} onChange={(event) => setNewOpportunity((current) => ({ ...current, title: event.target.value }))} placeholder="اسم الفرصة" className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
+                    <div className="grid gap-3 md:grid-cols-2">
+                      <select value={newOpportunity.neighborhood} onChange={(event) => setNewOpportunity((current) => ({ ...current, neighborhood: event.target.value }))} className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right">
+                        {priorities.slice(0, 6).map((item) => (
+                          <option key={item.neighborhood} value={item.neighborhood}>{item.neighborhood}</option>
+                        ))}
+                      </select>
+                      <input value={newOpportunity.roi} onChange={(event) => setNewOpportunity((current) => ({ ...current, roi: event.target.value }))} placeholder="ROI المتوقع" className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
+                    </div>
+                    <input value={newOpportunity.sector} onChange={(event) => setNewOpportunity((current) => ({ ...current, sector: event.target.value }))} placeholder="القطاع" className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
+                    <div className="flex justify-end">
+                      <ActionButton variant="primary" onClick={addOpportunity}>
+                        <Plus size={15} />
+                        إضافة الفرصة
+                      </ActionButton>
+                    </div>
+                  </div>
+                </SurfaceCard>
+              ) : null}
+            </div>
+          </div>
+        )}
+
+        {activeTab === "spatial" && (
+          <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+            <SurfaceCard title="تركيز الأولويات المكانية" subtitle="عرض نظيف يجيب أين نتحرك أولاً">
+              <div className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={sectorComparison} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
-                    <XAxis dataKey="name" tick={{ fill: "#667085", fontSize: 11 }} axisLine={false} tickLine={false} />
-                    <YAxis tick={{ fill: "#667085", fontSize: 12 }} axisLine={false} tickLine={false} />
+                  <BarChart data={spatialComparison}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E7E5E4" />
+                    <XAxis dataKey="name" tickLine={false} axisLine={false} />
+                    <YAxis tickLine={false} axisLine={false} />
                     <Tooltip />
-                    <Bar dataKey="roi" fill="#B6913E" radius={[8, 8, 0, 0]} name="ROI" />
-                    <Bar dataKey="demand" fill="#0B1F33" radius={[8, 8, 0, 0]} name="الطلب" />
+                    <Bar dataKey="demand" name="الطلب" radius={[10, 10, 0, 0]} fill="#0B1F33" />
+                    <Bar dataKey="competition" name="المنافسة" radius={[10, 10, 0, 0]} fill="#B6913E" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
-            </SurfaceCard>
-          </div>
-        </div>
-      )}
-
-      {activeTab === "opportunities" && (
-        <div className="space-y-6">
-          <div className="grid gap-4 xl:grid-cols-3">
-            {assessments.slice(0, 6).map((assessment) => (
-              <div key={assessment.id} className="rounded-[1.6rem] border border-[rgba(11,31,51,0.08)] bg-white p-5 shadow-[0_16px_36px_rgba(11,31,51,0.05)]">
-                <div className="flex items-center justify-between gap-3">
-                  <span className="rounded-full px-3 py-1 text-xs font-bold" style={{ backgroundColor: `${assessment.readinessTone}15`, color: assessment.readinessTone }}>
-                    {assessment.priorityLabel}
-                  </span>
-                  <div className="text-right">
-                    <p className="text-base font-black text-navy">{assessment.title}</p>
-                    <p className="text-xs text-slate-500">{assessment.neighborhood}</p>
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <ProgressRow label={assessment.readinessLabel} value={assessment.readinessScore} tone={assessment.readinessTone} />
-                </div>
-                <p className="mt-4 text-sm leading-7 text-slate-600">{assessment.recommendation}</p>
-                <div className="mt-4 grid gap-3 md:grid-cols-2">
-                  <div className="rounded-[1.1rem] bg-[#F7F5EF] p-3 text-right">
-                    <p className="mb-1 text-xs text-slate-400">مبررات داعمة</p>
-                    <ul className="space-y-1 text-xs leading-6 text-slate-700">
-                      {assessment.reasons.slice(0, 2).map((reason) => <li key={reason}>{reason}</li>)}
-                    </ul>
-                  </div>
-                  <div className="rounded-[1.1rem] bg-[#FBF1F0] p-3 text-right">
-                    <p className="mb-1 text-xs text-slate-400">عوائق مباشرة</p>
-                    <ul className="space-y-1 text-xs leading-6 text-slate-700">
-                      {assessment.blockers.slice(0, 2).map((blocker) => <li key={blocker}>{blocker}</li>)}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <SurfaceCard title="توزيع المخاطر على الفرص الرائدة" subtitle="Risk Distribution" accent="#B42318">
-            <div className="h-72">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={riskDistribution} layout="vertical" margin={{ top: 10, right: 20, left: 20, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#E5E7EB" />
-                  <XAxis type="number" tick={{ fill: "#667085", fontSize: 12 }} axisLine={false} tickLine={false} />
-                  <YAxis type="category" dataKey="name" tick={{ fill: "#667085", fontSize: 11 }} axisLine={false} tickLine={false} width={130} />
-                  <Tooltip />
-                  <Bar dataKey="value" radius={[0, 10, 10, 0]} name="مؤشر المخاطر">
-                    {riskDistribution.map((entry) => (
-                      <Cell key={entry.name} fill={entry.value >= 55 ? "#B42318" : entry.value >= 40 ? "#B7791F" : "#157347"} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </SurfaceCard>
-        </div>
-      )}
-
-      {activeTab === "spatial" && (
-        <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-          <SurfaceCard title="مسرح التحليل المكاني" subtitle="Spatial Intelligence Center">
-            <div className="rounded-[1.6rem] border border-[rgba(11,31,51,0.08)] bg-[linear-gradient(135deg,#102A43_0%,#0B1F33_100%)] p-5 text-white">
-              <div className="mb-5 flex items-center justify-between gap-3">
-                <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-[#E9DFC8]">حائل | طبقة فرص</span>
-                <p className="text-xs text-white/60">Demand / Supply / Seasonality</p>
-              </div>
-              <div className="grid gap-3 md:grid-cols-3">
-                {priorities.slice(0, 6).map((area) => (
-                  <div
-                    key={area.neighborhood}
-                    className="rounded-[1.25rem] border border-white/8 p-4 text-right"
-                    style={{
-                      background:
-                        area.priorityScore >= 80
-                          ? "linear-gradient(180deg, rgba(21,115,71,0.22) 0%, rgba(255,255,255,0.06) 100%)"
-                          : area.priorityScore >= 68
-                            ? "linear-gradient(180deg, rgba(182,145,62,0.22) 0%, rgba(255,255,255,0.06) 100%)"
-                            : "linear-gradient(180deg, rgba(180,35,24,0.16) 0%, rgba(255,255,255,0.06) 100%)",
-                    }}
-                  >
-                    <p className="text-sm font-black">{area.neighborhood}</p>
-                    <p className="mt-1 text-xs text-white/68">{area.statusLabel}</p>
-                    <div className="mt-4 space-y-2">
-                      <ProgressRow label="الطلب" value={area.demandLevel} tone="#E9DFC8" />
-                      <ProgressRow label="الموسمية" value={area.seasonalStrength} tone="#B6913E" />
+              <div className="mt-4 grid gap-3">
+                {priorities.slice(0, 4).map((item) => (
+                  <div key={item.neighborhood} className="rounded-[1.2rem] bg-[#F7F5EF] p-4 text-right">
+                    <div className="flex items-center justify-between gap-3">
+                      <p className="text-sm font-black text-[#B6913E]">{item.priorityScore}%</p>
+                      <h4 className="text-base font-black text-navy">{item.neighborhood}</h4>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </SurfaceCard>
-
-          <div className="space-y-6">
-            <SurfaceCard title="تركيز جغرافي مباشر" subtitle="Neighborhood Focus">
-              <div className="space-y-4">
-                {priorities.slice(0, 4).map((area) => (
-                  <div key={area.neighborhood} className="rounded-[1.2rem] bg-[#F7F5EF] p-4 text-right">
-                    <div className="mb-3 flex items-center justify-between gap-3">
-                      <span className="text-sm font-black text-navy">{area.priorityScore}%</span>
-                      <div>
-                        <p className="font-black text-navy">{area.neighborhood}</p>
-                        <p className="text-xs text-slate-500">{area.statusLabel}</p>
-                      </div>
-                    </div>
-                    <p className="text-sm leading-7 text-slate-600">{area.note}</p>
+                    <p className="mt-2 text-sm leading-7 text-slate-600">{item.note}</p>
                   </div>
                 ))}
               </div>
             </SurfaceCard>
 
-            <SurfaceCard title="أعلى كثافة طلب" subtitle="Demand Overlay">
-              <div className="rounded-[1.3rem] bg-[#0B1F33] p-5 text-right text-white">
-                <p className="text-xs font-bold tracking-[0.18em] text-[#E9DFC8]">{highestDemandInsight.neighborhood}</p>
-                <p className="mt-3 text-2xl font-black">{highestDemandInsight.footfall}% حركة</p>
-                <p className="mt-3 text-sm leading-7 text-white/72">{highestDemandInsight.notes}</p>
-              </div>
-            </SurfaceCard>
-          </div>
-        </div>
-      )}
-
-      {activeTab === "inference" && (
-        <div className="space-y-6">
-          <SurfaceCard title="محرك التوصية الاستدلالية" subtitle="Inferred Opportunity Engine">
-            <div className="grid gap-4 xl:grid-cols-3">
-              {proposals.map((proposal) => (
-                <div key={proposal.id} className="rounded-[1.5rem] border border-[rgba(11,31,51,0.08)] bg-white p-5 shadow-[0_14px_32px_rgba(11,31,51,0.05)]">
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="rounded-full bg-[#F7F5EF] px-3 py-1 text-xs font-bold text-[#B6913E]">{proposal.readinessWindow}</span>
-                    <div className="text-right">
-                      <p className="font-black text-navy">{proposal.title}</p>
-                      <p className="text-xs text-slate-500">{proposal.neighborhood}</p>
-                    </div>
-                  </div>
-                  <p className="mt-4 text-sm leading-7 text-slate-600">{proposal.rationale}</p>
-                  <div className="mt-4 grid gap-3 md:grid-cols-2">
-                    <div className="rounded-[1.1rem] bg-[#F7F5EF] p-3 text-center">
-                      <p className="text-xs text-slate-400">الطلب</p>
-                      <p className="mt-1 text-xl font-black text-navy">{proposal.demandScore}%</p>
-                    </div>
-                    <div className="rounded-[1.1rem] bg-[#FBF1F0] p-3 text-center">
-                      <p className="text-xs text-slate-400">التشبع</p>
-                      <p className="mt-1 text-xl font-black text-navy">{proposal.saturationScore}%</p>
-                    </div>
-                  </div>
-                  <div className="mt-4 rounded-[1.1rem] border border-dashed border-[rgba(11,31,51,0.12)] px-4 py-3 text-right">
-                    <p className="text-xs text-slate-400">الأصل المرجعي</p>
-                    <p className="mt-1 text-sm font-bold text-navy">{proposal.anchorAsset}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </SurfaceCard>
-        </div>
-      )}
-
-      {activeTab === "dossier" && (
-        <div className="grid gap-6 xl:grid-cols-[1fr_1fr]">
-          <SurfaceCard title="محاكاة الكراسة الذكية" subtitle="Smart Dossier">
-            <div className="rounded-[1.5rem] border border-[rgba(11,31,51,0.08)] bg-[linear-gradient(135deg,#FBF7EC_0%,#FFFFFF_100%)] p-5 text-right">
-              <div className="mb-4 flex items-center justify-between gap-3">
-                <span className="rounded-full bg-[#E9DFC8] px-3 py-1 text-xs font-bold text-navy">جاهز للتحليل</span>
-                <FileSpreadsheet size={18} color="#B6913E" />
-              </div>
-              <h4 className="text-xl font-black text-navy">كراسة فرصة {topAssessment.title}</h4>
-              <p className="mt-3 text-sm leading-7 text-slate-600">
-                محاكاة أولية لرفع ملف فرصة استثمارية، ثم استخراج ملخص تنفيذي، متطلبات، مؤشرات تكلفة، وإشارات ملاءمة المستثمر بصورة تبدو كنظام تحليلي حي.
-              </p>
-              <div className="mt-5 grid gap-3 md:grid-cols-2">
-                <div className="rounded-[1.1rem] bg-white p-4">
-                  <p className="text-xs text-slate-400">ملخص تنفيذي</p>
-                  <p className="mt-2 text-sm leading-7 text-slate-700">{topAssessment.recommendation}</p>
-                </div>
-                <div className="rounded-[1.1rem] bg-white p-4">
-                  <p className="text-xs text-slate-400">الملاءمة</p>
-                  <p className="mt-2 text-sm leading-7 text-slate-700">ملائم للمستثمر متوسط الجاهزية الذي يبحث عن عائد سريع نسبياً مع مخاطرة تشغيلية منضبطة.</p>
-                </div>
-              </div>
-            </div>
-          </SurfaceCard>
-
-          <SurfaceCard title="استخراج المتطلبات والتكلفة" subtitle="Requirements & Cost">
-            <div className="space-y-4">
-              {blueprints.slice(0, 3).map((blueprint) => (
-                <div key={blueprint.opportunityId} className="rounded-[1.25rem] border border-[rgba(11,31,51,0.08)] bg-white p-4 text-right">
-                  <div className="mb-3 flex items-center justify-between gap-3">
-                    <span className="rounded-full px-3 py-1 text-xs font-bold" style={{ backgroundColor: `${blueprint.complexityTone}18`, color: blueprint.complexityTone }}>
-                      {blueprint.complexityLabel}
-                    </span>
-                    <p className="font-black text-navy">{blueprint.opportunityTitle}</p>
-                  </div>
-                  <ul className="space-y-2 text-sm leading-7 text-slate-600">
-                    {blueprint.steps.slice(0, 3).map((step) => (
-                      <li key={step.title}>{step.title}: {step.detail}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </SurfaceCard>
-        </div>
-      )}
-
-      {activeTab === "executive" && (
-        <div className={`space-y-6 ${presentationMode ? "mx-auto max-w-6xl" : ""}`}>
-          <div className={`grid gap-6 ${presentationMode ? "lg:grid-cols-1" : "xl:grid-cols-[1.05fr_0.95fr]"}`}>
-            <SurfaceCard title="لماذا المنصة مهمة" subtitle="Executive Narrative">
-              <div className="space-y-4 text-right">
-                <p className={`${presentationMode ? "text-base leading-9" : "text-sm leading-8"} text-slate-700`}>
-                  استنار في نسخته الثالثة يحول مسار القرار من صفحات متفرقة إلى منصة واحدة تجمع التحليل والجاهزية والمشهد التنفيذي، بما يسمح للأمانة بقراءة الفرص قبل الطرح بلغة قيادية واضحة.
-                </p>
-                <div className="grid gap-4 md:grid-cols-3">
-                  <div className="rounded-[1.2rem] bg-[#0B1F33] p-4 text-white">
-                    <p className="text-xs text-[#E9DFC8]">القيمة المباشرة</p>
-                    <p className="mt-2 text-lg font-black">تقليل التشتت</p>
-                  </div>
+            <div className="space-y-6">
+              <SurfaceCard title="طبقات التحليل المكاني" subtitle="تحديث الطبقة يظل فعلاً داخل الصفحة" action={<Layers3 className="text-[#B6913E]" size={18} />}>
+                <div className="space-y-3 text-right">
                   <div className="rounded-[1.2rem] bg-[#F7F5EF] p-4">
-                    <p className="text-xs text-slate-400">محور القرار</p>
-                    <p className="mt-2 text-lg font-black text-navy">قراءة أولويات حائل</p>
+                    <p className="text-xs text-slate-500">نسخة الطبقة الحالية</p>
+                    <p className="mt-1 text-2xl font-black text-navy">V{spatialLayerVersion}</p>
+                    <p className="mt-2 text-sm leading-7 text-slate-600">تتضمن الطلب، المنافسة، الموسمية، وربط الأصول البلدية القريبة.</p>
                   </div>
-                  <div className="rounded-[1.2rem] bg-[#FBF1F0] p-4">
-                    <p className="text-xs text-slate-400">المخرج التنفيذي</p>
-                    <p className="mt-2 text-lg font-black text-navy">توصية قابلة للعرض</p>
+                  {workspaceMode === "internal" ? (
+                    <div className="flex justify-end">
+                      <ActionButton variant="primary" onClick={updateSpatialLayer}>
+                        <MapPinned size={15} />
+                        تحديث طبقة الحي
+                      </ActionButton>
+                    </div>
+                  ) : null}
+                </div>
+              </SurfaceCard>
+
+              <SurfaceCard title="حلول مباشرة للمسؤول" subtitle="لا نعرض خريطة استعراضية بلا قرار">
+                <div className="space-y-3">
+                  <div className="rounded-[1.2rem] border border-[rgba(11,31,51,0.08)] p-4 text-right">
+                    <p className="text-sm font-black text-navy">أين نبدأ؟</p>
+                    <p className="mt-2 text-sm leading-7 text-slate-600">البدء من {topPriority?.neighborhood} لأن الطلب مرتفع والمنافسة قابلة للإدارة.</p>
+                  </div>
+                  <div className="rounded-[1.2rem] border border-[rgba(11,31,51,0.08)] p-4 text-right">
+                    <p className="text-sm font-black text-navy">ما الذي نؤجله؟</p>
+                    <p className="mt-2 text-sm leading-7 text-slate-600">تأجيل الأحياء ذات التشبع المرتفع حتى يكتمل تحديث القراءة التنظيمية والبدائل القطاعية.</p>
                   </div>
                 </div>
-              </div>
-            </SurfaceCard>
+              </SurfaceCard>
+            </div>
+          </div>
+        )}
 
-            <SurfaceCard title="قيمة مباشرة للأمانة" subtitle="Municipality Value">
-              <div className="space-y-3">
-                {briefs.slice(0, 3).map((brief) => (
-                  <div key={brief.id} className="rounded-[1.2rem] border border-[rgba(11,31,51,0.08)] bg-white p-4 text-right">
-                    <p className="text-xs text-[#B6913E]">{brief.angle}</p>
-                    <p className="mt-2 font-black text-navy">{brief.title}</p>
-                    <p className="mt-2 text-sm leading-7 text-slate-600">{brief.summary}</p>
+        {activeTab === "inference" && (
+          <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+            <SurfaceCard title="مخرجات محرك الاستدلال" subtitle="توصيات مفهومة مع سبب واضح">
+              <div className="space-y-4">
+                {proposals.slice(0, 4).map((item) => (
+                  <div key={item.id} className="rounded-[1.35rem] border border-[rgba(11,31,51,0.08)] bg-[#FFFEFC] p-4 text-right">
+                    <div className="flex items-center justify-between gap-3">
+                      <p className="text-sm font-black text-[#B6913E]">{item.demandScore}% طلب</p>
+                      <h3 className="text-lg font-black text-navy">{item.title}</h3>
+                    </div>
+                    <p className="mt-2 text-sm text-slate-500">{item.neighborhood} • أصل مرجعي: {item.anchorAsset}</p>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">{item.rationale}</p>
+                    <p className="mt-3 text-sm font-semibold text-slate-600">{item.expectedImpact}</p>
                   </div>
                 ))}
               </div>
             </SurfaceCard>
-          </div>
 
+            <div className="space-y-6">
+              <SurfaceCard title="إدارة التحليلات" subtitle="القدرة الثانية مدمجة هنا، لا كقسم مستقل" action={<SlidersHorizontal className="text-[#B6913E]" size={18} />}>
+                <div className="space-y-4 text-right">
+                  <div className="rounded-[1.2rem] bg-[#F7F5EF] p-4">
+                    <p className="text-xs text-slate-500">مصدر التقييم</p>
+                    <p className="mt-1 text-base font-black text-navy">{analysisConfig.source}</p>
+                    <p className="mt-2 text-sm text-slate-600">آخر إعادة توليد: {analysisConfig.lastGenerated}</p>
+                  </div>
+
+                  {workspaceMode === "internal" ? (
+                    <>
+                      <select value={analysisConfig.source} onChange={(event) => setAnalysisConfig((current) => ({ ...current, source: event.target.value }))} className="w-full rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right">
+                        <option>بيانات السوق التاريخية</option>
+                        <option>البيانات المكانية</option>
+                        <option>قراءة الأصول البلدية</option>
+                      </select>
+
+                      <div className="grid gap-3 md:grid-cols-2">
+                        <label className="rounded-[1.2rem] bg-[#F7F5EF] p-3 text-right text-sm">
+                          <span className="mb-2 block font-bold text-navy">وزن الجاهزية</span>
+                          <input type="number" value={analysisConfig.weights.readiness} onChange={(event) => setAnalysisConfig((current) => ({ ...current, weights: { ...current.weights, readiness: Number(event.target.value) || 0 } }))} className="w-full rounded-xl border border-[rgba(11,31,51,0.1)] bg-white px-3 py-2 text-right" />
+                        </label>
+                        <label className="rounded-[1.2rem] bg-[#F7F5EF] p-3 text-right text-sm">
+                          <span className="mb-2 block font-bold text-navy">وزن الطلب</span>
+                          <input type="number" value={analysisConfig.weights.demand} onChange={(event) => setAnalysisConfig((current) => ({ ...current, weights: { ...current.weights, demand: Number(event.target.value) || 0 } }))} className="w-full rounded-xl border border-[rgba(11,31,51,0.1)] bg-white px-3 py-2 text-right" />
+                        </label>
+                      </div>
+
+                      <div className="flex flex-wrap justify-end gap-2">
+                        <ActionButton variant="ghost" onClick={regenerateInference}>
+                          <RefreshCw size={15} />
+                          إعادة توليد الاستدلال
+                        </ActionButton>
+                        <ActionButton variant="secondary" onClick={approveInference}>
+                          <Save size={15} />
+                          اعتماد التوصية
+                        </ActionButton>
+                      </div>
+                    </>
+                  ) : null}
+
+                  <div className="rounded-[1.2rem] border border-[rgba(11,31,51,0.08)] p-4">
+                    <p className="text-sm font-black text-navy">الحالة الحالية</p>
+                    <p className="mt-2 text-sm leading-7 text-slate-600">
+                      {analysisConfig.approved
+                        ? "تم اعتماد التوصية الحالية داخلياً ويمكن حفظها داخل الـ briefing التنفيذي."
+                        : "التوصية الحالية ما زالت بحاجة اعتماد داخلي قبل تصعيدها إلى العرض التنفيذي."}
+                    </p>
+                  </div>
+                </div>
+              </SurfaceCard>
+
+              <SurfaceCard title="المخاطر المقارنة" subtitle="فقط ما يخدم القرار">
+                <div className="h-72">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={riskDistribution}>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E7E5E4" />
+                      <XAxis dataKey="name" tickLine={false} axisLine={false} />
+                      <YAxis tickLine={false} axisLine={false} />
+                      <Tooltip />
+                      <Bar dataKey="value" radius={[10, 10, 0, 0]} fill="#B42318" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </SurfaceCard>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "studio" && (
           <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
-            <SurfaceCard title="موجز القرار الحالي" subtitle="Decision Brief">
-              <div className="space-y-4">
-                {workflow.cases.slice(0, 4).map((item) => (
-                  <div key={item.id} className="rounded-[1.2rem] bg-[#F7F5EF] p-4 text-right">
-                    <div className="mb-2 flex items-center justify-between gap-3">
-                      <span className="rounded-full px-3 py-1 text-xs font-bold" style={{ backgroundColor: `${item.stageTone}18`, color: item.stageTone }}>
-                        {item.stageLabel}
-                      </span>
-                      <p className="font-black text-navy">{item.title}</p>
+            <div className="space-y-6">
+              <SurfaceCard title="الكراسات والملفات" subtitle="رفع ملف وتحويله إلى مسار قرار" action={<Upload className="text-[#B6913E]" size={18} />}>
+                {workspaceMode === "internal" ? (
+                  <div className="mb-4 grid gap-3">
+                    <input value={newDossierTitle} onChange={(event) => setNewDossierTitle(event.target.value)} placeholder="اسم الكراسة أو الملف" className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
+                    <div className="flex justify-end">
+                      <ActionButton variant="primary" onClick={uploadDossier}>
+                        <Upload size={15} />
+                        رفع ملف جديد
+                      </ActionButton>
                     </div>
-                    <p className="text-sm leading-7 text-slate-600">{item.nextAction}</p>
-                    <p className="mt-2 text-xs text-slate-500">قيمة الأمانة: {item.municipalityValue}</p>
+                  </div>
+                ) : null}
+                <div className="space-y-3">
+                  {dossiers.map((item) => (
+                    <div key={item.id} className="rounded-[1.2rem] bg-[#F7F5EF] p-4 text-right">
+                      <div className="flex items-center justify-between gap-3">
+                        <WorkflowBadge status={item.status} />
+                        <h4 className="text-base font-black text-navy">{item.title}</h4>
+                      </div>
+                      <p className="mt-2 text-sm text-slate-500">{item.source}</p>
+                      <p className="mt-3 text-sm leading-7 text-slate-600">{item.summary}</p>
+                    </div>
+                  ))}
+                </div>
+              </SurfaceCard>
+
+              <SurfaceCard title="ملاحظات تنفيذية" subtitle="مدخلة داخل اللوحة لا في قسم زائد">
+                {workspaceMode === "internal" ? (
+                  <div className="mb-4 grid gap-3">
+                    <input value={newNoteTitle} onChange={(event) => setNewNoteTitle(event.target.value)} placeholder="عنوان الملاحظة" className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
+                    <textarea value={newNoteContent} onChange={(event) => setNewNoteContent(event.target.value)} placeholder="الملاحظة التنفيذية" rows={4} className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
+                    <div className="flex justify-end">
+                      <ActionButton variant="secondary" onClick={addExecutiveNote}>
+                        <Save size={15} />
+                        حفظ الملاحظة
+                      </ActionButton>
+                    </div>
+                  </div>
+                ) : null}
+                <div className="space-y-3">
+                  {executiveNotes.map((item) => (
+                    <div key={item.id} className="rounded-[1.2rem] border border-[rgba(11,31,51,0.08)] p-4 text-right">
+                      <p className="text-xs text-slate-500">{item.createdAt}</p>
+                      <h4 className="mt-1 text-base font-black text-navy">{item.title}</h4>
+                      <p className="mt-2 text-sm leading-7 text-slate-600">{item.content}</p>
+                    </div>
+                  ))}
+                </div>
+              </SurfaceCard>
+            </div>
+
+            <div className="space-y-6">
+              <SurfaceCard title="المؤشرات الاقتصادية المستخدمة" subtitle="إضافة مؤشر واحد مفيد خير من عشرة بلا أثر">
+                {workspaceMode === "internal" ? (
+                  <div className="mb-4 grid gap-3 md:grid-cols-2">
+                    <input value={newIndicator.label} onChange={(event) => setNewIndicator((current) => ({ ...current, label: event.target.value }))} placeholder="اسم المؤشر" className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
+                    <input value={newIndicator.value} onChange={(event) => setNewIndicator((current) => ({ ...current, value: event.target.value }))} placeholder="القيمة" className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
+                    <div className="md:col-span-2 flex justify-end">
+                      <ActionButton variant="primary" onClick={addIndicator}>
+                        <Plus size={15} />
+                        إضافة مؤشر اقتصادي
+                      </ActionButton>
+                    </div>
+                  </div>
+                ) : null}
+                <div className="grid gap-3 md:grid-cols-2">
+                  {economicIndicators.map((item) => (
+                    <div key={item.id} className="rounded-[1.2rem] bg-[#F7F5EF] p-4 text-right">
+                      <p className="text-xs text-slate-500">{item.label}</p>
+                      <p className="mt-2 text-2xl font-black text-navy">{item.value}</p>
+                    </div>
+                  ))}
+                </div>
+              </SurfaceCard>
+
+              <SurfaceCard title="ما الذي يقدمه استوديو القرار؟" subtitle="وظيفة مباشرة وليست استعراضاً">
+                <div className="grid gap-3">
+                  <div className="rounded-[1.2rem] bg-[#F7F5EF] p-4 text-right">
+                    <p className="text-sm font-black text-navy">يوحد الإدخال</p>
+                    <p className="mt-2 text-sm leading-7 text-slate-600">رفع الملفات، إضافة المؤشرات، وتسجيل الملاحظات التنفيذية في صفحة واحدة فقط.</p>
+                  </div>
+                  <div className="rounded-[1.2rem] bg-[#F7F5EF] p-4 text-right">
+                    <p className="text-sm font-black text-navy">يحفظ النظام نظيفاً</p>
+                    <p className="mt-2 text-sm leading-7 text-slate-600">بدلاً من ثلاث أو أربع أقسام فرعية، صارت كل أدوات الإدخال في مكان واحد مرتب.</p>
+                  </div>
+                </div>
+              </SurfaceCard>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "regulatory" && (
+          <div className="grid gap-6">
+            <SurfaceCard title="الجاهزية التنظيمية" subtitle="معوقات، اشتراطات، ومسار التمرير الرسمي">
+              <div className="grid gap-4 xl:grid-cols-2">
+                {blueprints.slice(0, 4).map((item) => (
+                  <div key={item.opportunityId} className="rounded-[1.35rem] border border-[rgba(11,31,51,0.08)] bg-[#FFFEFC] p-4 text-right">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="rounded-full px-3 py-1 text-xs font-bold" style={{ backgroundColor: `${item.complexityTone}18`, color: item.complexityTone }}>
+                        {item.complexityLabel}
+                      </span>
+                      <h3 className="text-base font-black text-navy">{item.opportunityTitle}</h3>
+                    </div>
+                    <div className="mt-4 space-y-3">
+                      {item.steps.map((step) => (
+                        <div key={step.title} className="rounded-[1.1rem] bg-[#F7F5EF] p-3">
+                          <div className="flex items-center justify-between gap-3">
+                            <p className="text-xs font-bold text-[#B6913E]">{step.source}</p>
+                            <p className="text-sm font-black text-navy">{step.title}</p>
+                          </div>
+                          <p className="mt-2 text-sm leading-7 text-slate-600">{step.detail}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
             </SurfaceCard>
-
-            <SurfaceCard title="الخطاب القيادي" subtitle="Talking Points for Leadership">
-              <div className="space-y-4">
-                <div className="rounded-[1.25rem] border border-[rgba(182,145,62,0.18)] bg-[linear-gradient(135deg,#FBF7EC_0%,#FFFFFF_100%)] p-5 text-right">
-                  <p className="text-xs font-bold tracking-[0.18em] text-[#B6913E]">التوصية الحالية</p>
-                  <p className="mt-3 text-lg font-black text-navy">التركيز على فرص الجاهزية المرتفعة في حي {topPriority.neighborhood}</p>
-                  <p className="mt-3 text-sm leading-7 text-slate-600">
-                    نوصي بإبراز الحي كأولوية رفع، مع حماية القرار بتنبيهات المخاطر الحالية، ثم ربط كل فرصة بمسارها التنظيمي قبل الانتقال إلى الطرح.
-                  </p>
-                </div>
-                <div className="rounded-[1.25rem] bg-[#0B1F33] p-5 text-right text-white">
-                  <p className="text-xs font-bold tracking-[0.18em] text-[#E9DFC8]">حدود المنصة</p>
-                  <p className="mt-3 text-sm leading-8 text-white/80">
-                    النسخة الحالية تنفيذية تجريبية بالكامل، وتعتمد على بيانات وهمية ومحاكاة تحليلية محلية بهدف العرض الحكومي وصياغة تجربة قرار متقدمة.
-                  </p>
-                </div>
-              </div>
-            </SurfaceCard>
           </div>
-        </div>
-      )}
+        )}
 
-      {activeTab === "alerts" && (
-        <div className="grid gap-6 xl:grid-cols-3">
-          {executiveWarnings.concat(topAssessment.blockers).slice(0, 6).map((warning, index) => (
-            <div key={`${warning}-${index}`} className="rounded-[1.5rem] border border-[rgba(180,35,24,0.12)] bg-[linear-gradient(180deg,#FFFFFF_0%,#FBF1F0_100%)] p-5 text-right shadow-[0_14px_32px_rgba(11,31,51,0.05)]">
-              <div className="mb-4 flex items-center justify-between gap-3">
-                <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-[#B42318]">تنبيه ذكي</span>
-                <Bell size={16} color="#B42318" />
-              </div>
-              <p className="font-black text-navy">إشارة رقم {index + 1}</p>
-              <p className="mt-3 text-sm leading-7 text-slate-600">{warning}</p>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {activeTab === "economics" && (
-        <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-          <SurfaceCard title="المؤشرات الاقتصادية القطاعية" subtitle="Economic Indicators">
-            <div className="h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={economicSeries} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
-                  <XAxis dataKey="name" tick={{ fill: "#667085", fontSize: 11 }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fill: "#667085", fontSize: 12 }} axisLine={false} tickLine={false} />
-                  <Tooltip />
-                  <Bar dataKey="growth" fill="#B6913E" radius={[8, 8, 0, 0]} name="النمو السنوي" />
-                  <Bar dataKey="demand" fill="#0B1F33" radius={[8, 8, 0, 0]} name="الطلب الحالي" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </SurfaceCard>
-
-          <SurfaceCard title="قراءة سريعة حسب الأحياء" subtitle="Quick Economic Read">
-            <div className="space-y-4">
-              {historicalMarketData.slice(0, 4).map((item) => (
-                <div key={item.neighborhood} className="rounded-[1.2rem] bg-[#F7F5EF] p-4 text-right">
-                  <div className="mb-2 flex items-center justify-between gap-3">
-                    <span className="text-sm font-black text-navy">{item.annualGrowth}%</span>
-                    <p className="font-black text-navy">{item.neighborhood}</p>
-                  </div>
-                  <p className="text-sm leading-7 text-slate-600">{item.highlight}</p>
+        {activeTab === "executive" && (
+          <div className={`grid gap-6 ${presentationMode ? "xl:grid-cols-1" : "xl:grid-cols-[1fr_1fr]"}`}>
+            <div className="space-y-6">
+              <SurfaceCard title="ملخصات القيادة" subtitle="هنا تم دمج العرض التنفيذي داخل اللوحة">
+                <div className="space-y-4">
+                  {briefings.map((item) => (
+                    <div key={item.id} className="rounded-[1.35rem] border border-[rgba(11,31,51,0.08)] bg-[#FFFEFC] p-4 text-right">
+                      <div className="flex items-center justify-between gap-3">
+                        {workspaceMode === "internal" ? (
+                          <div className="flex gap-2">
+                            <ActionButton variant="ghost" onClick={() => selectBriefStatus(item.id, "approved")}>
+                              <Save size={15} />
+                              اعتماد
+                            </ActionButton>
+                            <ActionButton variant="secondary" onClick={() => selectBriefStatus(item.id, "executive")}>
+                              <Send size={15} />
+                              إرسال للإدارة
+                            </ActionButton>
+                          </div>
+                        ) : null}
+                        <div className="text-right">
+                          <div className="flex items-center justify-end gap-3">
+                            <WorkflowBadge status={item.status} />
+                            <h3 className="text-lg font-black text-navy">{item.title}</h3>
+                          </div>
+                          <p className="mt-3 text-sm leading-7 text-slate-600">{item.summary}</p>
+                          <p className="mt-3 text-sm font-semibold text-[#0B1F33]">{item.recommendation}</p>
+                        </div>
+                      </div>
+                      <div className="mt-4 flex flex-wrap justify-end gap-2">
+                        {item.indicators.map((indicator) => (
+                          <span key={indicator} className="rounded-full bg-[#F7F5EF] px-3 py-1 text-xs font-semibold text-slate-600">
+                            {indicator}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </SurfaceCard>
-        </div>
-      )}
+              </SurfaceCard>
 
-      {activeTab === "regulatory" && (
-        <div className="space-y-6">
-          <SurfaceCard title="طبقة الجاهزية التنظيمية" subtitle="Regulatory Path">
-            <div className="grid gap-4 xl:grid-cols-2">
-              {blueprints.map((blueprint) => (
-                <div key={blueprint.opportunityId} className="rounded-[1.5rem] border border-[rgba(11,31,51,0.08)] bg-white p-5 text-right shadow-[0_14px_30px_rgba(11,31,51,0.05)]">
-                  <div className="mb-4 flex items-center justify-between gap-3">
-                    <span className="rounded-full px-3 py-1 text-xs font-bold" style={{ backgroundColor: `${blueprint.complexityTone}18`, color: blueprint.complexityTone }}>
-                      {blueprint.complexityLabel}
-                    </span>
-                    <div>
-                      <p className="font-black text-navy">{blueprint.opportunityTitle}</p>
-                      <p className="text-xs text-slate-500">مسار موافقات متدرج</p>
+              {presentationMode ? (
+                <SurfaceCard title="وضع الاجتماعات" subtitle="سردية قرار مختصرة للمسؤولين">
+                  <div className="space-y-4 text-right">
+                    <div className="rounded-[1.3rem] bg-[#F7F5EF] p-5">
+                      <p className="text-sm font-black text-navy">لماذا المنصة مهمة الآن؟</p>
+                      <p className="mt-3 text-sm leading-8 text-slate-600">لأنها تختصر الانتقال من البيانات المتفرقة إلى قرار استثماري واحد: فرصة، حي، جاهزية، توصية، ثم brief جاهز للعرض.</p>
+                    </div>
+                    <div className="rounded-[1.3rem] bg-[#F7F5EF] p-5">
+                      <p className="text-sm font-black text-navy">ما القيمة المباشرة للأمانة؟</p>
+                      <p className="mt-3 text-sm leading-8 text-slate-600">تقليل التشتت بين التشغيل والتحليل والقيادة، وتوحيد رحلة اعتماد الفرص في مسار مفهوم للمسؤول.</p>
+                    </div>
+                    <div className="rounded-[1.3rem] bg-[#F7F5EF] p-5">
+                      <p className="text-sm font-black text-navy">ما التوصية الحالية؟</p>
+                      <p className="mt-3 text-sm leading-8 text-slate-600">{topBrief?.recommendation ?? "اعتماد أولويتين فقط في هذا الربع مع إبقاء بقية الفرص تحت التحليل المرحلي."}</p>
                     </div>
                   </div>
+                </SurfaceCard>
+              ) : null}
+            </div>
+
+            {!presentationMode ? (
+              <div className="space-y-6">
+                {workspaceMode === "internal" ? (
+                  <SurfaceCard title="إنشاء briefing جديد" subtitle="الإجراء واضح وفي مكانه الصحيح">
+                    <div className="grid gap-3">
+                      <input value={newBriefTitle} onChange={(event) => setNewBriefTitle(event.target.value)} placeholder="عنوان التقرير" className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
+                      <textarea value={newBriefSummary} onChange={(event) => setNewBriefSummary(event.target.value)} placeholder="الملخص التنفيذي" rows={4} className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
+                      <div className="flex justify-end">
+                        <ActionButton variant="primary" onClick={createBrief}>
+                          <Plus size={15} />
+                          إنشاء brief
+                        </ActionButton>
+                      </div>
+                    </div>
+                  </SurfaceCard>
+                ) : null}
+
+                <SurfaceCard title="سير القرار المتصل" subtitle="من الفرصة إلى العرض القيادي">
                   <div className="space-y-3">
-                    {blueprint.steps.map((step) => (
-                      <div key={step.title} className="rounded-[1.1rem] bg-[#F7F5EF] p-3">
-                        <p className="text-sm font-bold text-navy">{step.title}</p>
-                        <p className="mt-1 text-xs leading-6 text-slate-600">{step.detail}</p>
-                        <p className="mt-1 text-[11px] text-slate-400">{step.source}</p>
+                    {workflow.steps.map((step) => (
+                      <div key={step.id} className="rounded-[1.2rem] bg-[#F7F5EF] p-4 text-right">
+                        <div className="flex items-center justify-between gap-3">
+                          <p className="text-xs font-bold text-[#B6913E]">{step.duration}</p>
+                          <h4 className="text-base font-black text-navy">{step.title}</h4>
+                        </div>
+                        <p className="mt-2 text-sm leading-7 text-slate-600">{step.description}</p>
+                        <p className="mt-2 text-xs text-slate-500">المالك: {step.owner}</p>
                       </div>
                     ))}
                   </div>
-                </div>
-              ))}
-            </div>
-          </SurfaceCard>
-        </div>
-      )}
-
-      {activeTab === "data-center" && (
-        <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
-          <SurfaceCard title="طبقات البيانات المعتمدة" subtitle="Data Center">
-            <div className="grid gap-4 md:grid-cols-2">
-              {dataSources.map((source) => (
-                <div key={source.title} className="rounded-[1.25rem] border border-[rgba(11,31,51,0.08)] bg-white p-4 text-right">
-                  <p className="text-xs text-slate-400">{source.title}</p>
-                  <p className="mt-2 text-2xl font-black text-navy">{source.value}</p>
-                  <p className="mt-2 text-sm leading-7 text-slate-600">{source.note}</p>
-                </div>
-              ))}
-            </div>
-          </SurfaceCard>
-
-          <SurfaceCard title="حوكمة البيانات في النسخة التنفيذية" subtitle="Prototype Governance">
-            <div className="space-y-4 text-right">
-              <div className="rounded-[1.2rem] bg-[#0B1F33] p-5 text-white">
-                <p className="text-xs font-bold tracking-[0.18em] text-[#E9DFC8]">الوضع الحالي</p>
-                <p className="mt-3 text-lg font-black">بيانات محلية ومحاكاة تحليلية فقط</p>
-                <p className="mt-3 text-sm leading-7 text-white/78">لا يوجد backend ولا APIs تشغيلية، والهدف هو إظهار لغة منتج حكومي متقدم دون تعقيد تقني خلفي.</p>
+                </SurfaceCard>
               </div>
-              <div className="rounded-[1.2rem] bg-[#F7F5EF] p-5">
-                <p className="text-sm leading-8 text-slate-600">
-                  مركز البيانات في النسخة الحالية يوضح مصادر الإدخال، علاقتها بالتحليل، وجاهزية الانتقال لاحقاً إلى طبقة مؤسسية حقيقية عند الحاجة.
-                </p>
-              </div>
-            </div>
-          </SurfaceCard>
-        </div>
-      )}
+            ) : null}
+          </div>
+        )}
+      </div>
     </IntelligenceWorkspaceShell>
   );
 }
