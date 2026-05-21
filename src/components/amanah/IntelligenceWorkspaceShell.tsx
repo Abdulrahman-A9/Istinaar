@@ -94,10 +94,10 @@ export default function IntelligenceWorkspaceShell({
   children,
 }: IntelligenceWorkspaceShellProps) {
   return (
-    <div className="dashboard-shell min-h-screen" style={{ background: "linear-gradient(180deg, #F7F5EF 0%, #F2EFE7 46%, #EEF1F4 100%)" }}>
+    <div className="dashboard-shell min-h-screen" style={{ background: "linear-gradient(180deg, #F6F4EE 0%, #F2F0EA 48%, #EEF1F5 100%)" }}>
       <div className="mx-auto flex min-h-screen max-w-[1680px]">
         <aside
-          className="hidden w-[310px] shrink-0 flex-col border-l border-white/10 p-5 lg:flex"
+          className="hidden w-[292px] shrink-0 flex-col border-l border-white/10 p-5 xl:flex"
           style={{ background: "linear-gradient(180deg, #071726 0%, #0B1F33 48%, #102A43 100%)" }}
         >
           <div
@@ -160,10 +160,10 @@ export default function IntelligenceWorkspaceShell({
           </div>
         </aside>
 
-        <main className="flex-1 p-4 md:p-6 xl:p-8">
+        <main className="min-w-0 flex-1 p-4 md:p-6 xl:p-8">
           <div className="rise-in rounded-[2rem] border border-white/65 bg-white/75 p-4 shadow-[0_22px_80px_rgba(11,31,51,0.08)] backdrop-blur">
             <div className="mb-6 rounded-[1.6rem] border border-[rgba(11,31,51,0.08)] bg-[linear-gradient(135deg,#FFFFFF_0%,#FBF9F4_58%,#F2EFE7_100%)] p-5 md:p-6">
-              <div className="flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
+              <div className="space-y-5">
                 <div className="executive-divider pr-5 text-right">
                   <div className="mb-3 flex items-center justify-end gap-2 text-xs text-slate-500">
                     <span>{title}</span>
@@ -175,27 +175,27 @@ export default function IntelligenceWorkspaceShell({
                   <h2 className="display-title text-3xl font-black text-navy md:text-[2.2rem]">{title}</h2>
                   <p className="mt-2 max-w-3xl text-sm leading-8 text-slate-600 md:text-[0.96rem]">{description}</p>
                 </div>
-
-                <div className="min-w-[270px] text-right">
-                  <div className="panel-hover rounded-[1.45rem] border border-[rgba(182,145,62,0.2)] bg-[linear-gradient(135deg,rgba(233,223,200,0.55)_0%,rgba(255,255,255,0.92)_100%)] p-4">
+                <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_330px] xl:items-start">
+                  <div className="flex min-w-0 flex-wrap justify-end gap-2">
+                    {filters.map((filter) => (
+                      <span
+                        key={filter.label}
+                        className="panel-hover inline-flex items-center gap-2 rounded-full border border-[rgba(11,31,51,0.08)] bg-white px-4 py-2 text-xs font-semibold text-slate-600"
+                      >
+                        <span style={{ color: "#0B1F33" }}>{filter.value}</span>
+                        <span>{filter.label}</span>
+                      </span>
+                    ))}
+                  </div>
+                  <div className="text-right">
+                    <div className="panel-hover rounded-[1.45rem] border border-[rgba(182,145,62,0.24)] bg-[linear-gradient(135deg,rgba(233,223,200,0.42)_0%,rgba(255,255,255,0.96)_100%)] p-4">
                     <p className="text-xs font-bold tracking-[0.18em] text-[#B6913E]">{commandLabel}</p>
                     <p className="mt-2 text-lg font-black text-navy">{commandValue}</p>
                     <p className="mt-2 text-sm leading-7 text-slate-600">{statusDescription}</p>
                   </div>
-                  {actionArea ? <div className="mt-3">{actionArea}</div> : null}
+                  </div>
                 </div>
-              </div>
-
-              <div className="mt-5 flex flex-wrap justify-end gap-2">
-                {filters.map((filter) => (
-                  <span
-                    key={filter.label}
-                    className="panel-hover inline-flex items-center gap-2 rounded-full border border-[rgba(11,31,51,0.08)] bg-white px-4 py-2 text-xs font-semibold text-slate-600"
-                  >
-                    <span style={{ color: "#0B1F33" }}>{filter.value}</span>
-                    <span>{filter.label}</span>
-                  </span>
-                ))}
+                {actionArea ? <div className="flex justify-end">{actionArea}</div> : null}
               </div>
             </div>
 

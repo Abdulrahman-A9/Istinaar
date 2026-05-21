@@ -876,7 +876,7 @@ export default function AdminPage() {
         )}
 
         {activeTab === "relations" && (
-          <div className="grid grid-cols-1 xl:grid-cols-[1.05fr_0.95fr] gap-6">
+          <div className="space-y-6">
             <div className="space-y-6">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
@@ -1013,7 +1013,7 @@ export default function AdminPage() {
               </ShellCard>
             </div>
 
-            <div className="space-y-6">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 items-start">
               {selectedRequest ? (
                 <>
                   <ShellCard title={selectedRequest.projectName} subtitle="Consulting Detail" icon={<ShieldCheck size={20} />}>
@@ -1105,37 +1105,39 @@ export default function AdminPage() {
                     </div>
                   </ShellCard>
 
-                  <ShellCard title="إضافة ملاحظة جديدة" subtitle="Workflow Notes" icon={<MessageSquarePlus size={20} />}>
-                    <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-3 mb-3">
-                      <textarea value={noteContent} onChange={(event) => setNoteContent(event.target.value)} rows={3} className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none resize-none" placeholder="أضف ملاحظة تشغيلية أو ميدانية أو موجهة للعميل..." />
-                      <div className="space-y-3 min-w-[160px]">
-                        <select value={noteVisibility} onChange={(event) => setNoteVisibility(event.target.value as "internal" | "client")} className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none">
-                          {Object.entries(advisoryNoteVisibilityMeta).map(([key, meta]) => <option key={key} value={key}>{meta.label}</option>)}
-                        </select>
-                        <button onClick={handleAddNote} className="btn-gold w-full justify-center py-3">إضافة</button>
+                  <div className="xl:col-span-2">
+                    <ShellCard title="إضافة ملاحظة جديدة" subtitle="Workflow Notes" icon={<MessageSquarePlus size={20} />}>
+                      <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-3 mb-3">
+                        <textarea value={noteContent} onChange={(event) => setNoteContent(event.target.value)} rows={3} className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none resize-none" placeholder="أضف ملاحظة تشغيلية أو ميدانية أو موجهة للعميل..." />
+                        <div className="space-y-3 min-w-[160px]">
+                          <select value={noteVisibility} onChange={(event) => setNoteVisibility(event.target.value as "internal" | "client")} className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none">
+                            {Object.entries(advisoryNoteVisibilityMeta).map(([key, meta]) => <option key={key} value={key}>{meta.label}</option>)}
+                          </select>
+                          <button onClick={handleAddNote} className="btn-gold w-full justify-center py-3">إضافة</button>
+                        </div>
                       </div>
-                    </div>
-                    <div className="space-y-3">
-                      {selectedRequest.workflowNotes.map((note) => {
-                        const visibilityMeta = getAdvisoryNoteVisibilityMeta(note.visibility);
-                        return (
-                          <div key={note.id} className="rounded-xl border border-gray-100 px-4 py-3">
-                            <div className="flex items-center justify-between mb-2">
-                              <span className="rounded-full px-2.5 py-1 text-xs font-semibold" style={{ backgroundColor: visibilityMeta.surface, color: visibilityMeta.tone }}>{visibilityMeta.label}</span>
-                              <div>
-                                <p className="text-sm font-bold text-navy">{note.authorName}</p>
-                                <p className="text-xs text-gray-400">{note.createdAt}</p>
+                      <div className="space-y-3">
+                        {selectedRequest.workflowNotes.map((note) => {
+                          const visibilityMeta = getAdvisoryNoteVisibilityMeta(note.visibility);
+                          return (
+                            <div key={note.id} className="rounded-xl border border-gray-100 px-4 py-3">
+                              <div className="flex items-center justify-between mb-2">
+                                <span className="rounded-full px-2.5 py-1 text-xs font-semibold" style={{ backgroundColor: visibilityMeta.surface, color: visibilityMeta.tone }}>{visibilityMeta.label}</span>
+                                <div>
+                                  <p className="text-sm font-bold text-navy">{note.authorName}</p>
+                                  <p className="text-xs text-gray-400">{note.createdAt}</p>
+                                </div>
                               </div>
+                              <p className="text-sm text-gray-600 leading-7">{note.content}</p>
                             </div>
-                            <p className="text-sm text-gray-600 leading-7">{note.content}</p>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </ShellCard>
+                          );
+                        })}
+                      </div>
+                    </ShellCard>
+                  </div>
                 </>
               ) : (
-                <div className="card p-8 text-center text-gray-500">لا توجد طلبات استشارية حالياً.</div>
+                <div className="xl:col-span-2 card p-8 text-center text-gray-500">لا توجد طلبات استشارية حالياً.</div>
               )}
             </div>
           </div>
