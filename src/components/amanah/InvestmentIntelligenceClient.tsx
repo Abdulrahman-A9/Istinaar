@@ -645,61 +645,19 @@ export default function InvestmentIntelligenceClient({
         )}
 
         {activeTab === "opportunities" && (
-          <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-            <SurfaceCard title="سجل الفرص الاستثمارية" subtitle="إدخال وتحديث واعتماد داخل نفس الصفحة">
-              <div className="space-y-4">
-                {opportunityItems.map((item) => (
-                  <div key={item.id} className="rounded-[1.35rem] border border-[rgba(11,31,51,0.08)] bg-[#FFFEFC] p-4">
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div className="flex flex-wrap gap-2">
-                        {workspaceMode === "internal" ? (
-                          <>
-                            <ActionButton variant="ghost" onClick={() => selectOpportunityStatus(item.id, "analysis")}>
-                              <RefreshCw size={15} />
-                              تحليل
-                            </ActionButton>
-                            <ActionButton variant="ghost" onClick={() => selectOpportunityStatus(item.id, "review")}>
-                              <FileSpreadsheet size={15} />
-                              مراجعة
-                            </ActionButton>
-                            <ActionButton variant="secondary" onClick={() => selectOpportunityStatus(item.id, "approved")}>
-                              <CheckCircle2 size={15} />
-                              اعتماد
-                            </ActionButton>
-                          </>
-                        ) : null}
-                      </div>
-                      <div className="text-right">
-                        <div className="flex items-center justify-end gap-3">
-                          <WorkflowBadge status={item.status} />
-                          <h3 className="text-lg font-black text-navy">{item.title}</h3>
-                        </div>
-                        <p className="mt-2 text-sm text-slate-500">{item.neighborhood} • {item.sector} • ROI {item.roi}</p>
-                        <p className="mt-3 text-sm leading-7 text-slate-600">{item.recommendation}</p>
-                        <div className="mt-3 flex justify-end gap-3 text-xs font-bold text-slate-500">
-                          <span>جاهزية {item.readinessScore}%</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </SurfaceCard>
-
-            <div className="space-y-6">
-              <SurfaceCard title="حالات الـ workflow" subtitle="الفرص لا تتحرك بلا حالة واضحة">
-                <div className="space-y-3">
-                  {workflowStatusSummary.map((item) => (
-                    <div key={item.label} className="flex items-center justify-between rounded-[1.1rem] bg-[#F7F5EF] px-4 py-3">
-                      <p className="text-lg font-black text-navy">{item.value}</p>
-                      <p className="text-sm font-semibold text-slate-600">{item.label}</p>
-                    </div>
-                  ))}
+          <div className="space-y-6">
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+              {workflowStatusSummary.map((item) => (
+                <div key={item.label} className="panel-hover rounded-[1.2rem] border border-[rgba(11,31,51,0.08)] bg-[#FFFEFC] px-4 py-4 text-right">
+                  <p className="text-sm font-semibold text-slate-500">{item.label}</p>
+                  <p className="mt-2 text-3xl font-black text-navy">{item.value}</p>
                 </div>
-              </SurfaceCard>
+              ))}
+            </div>
 
+            <div className={`grid gap-6 ${workspaceMode === "internal" ? "xl:grid-cols-[0.95fr_1.05fr]" : "xl:grid-cols-1"}`}>
               {workspaceMode === "internal" ? (
-                <SurfaceCard title="إضافة فرصة جديدة" subtitle="هذا هو مركز الإدخال، وليس قسماً مستقلاً" action={<Plus className="text-[#B6913E]" size={18} />}>
+                <SurfaceCard title="إضافة فرصة جديدة" subtitle="الإدخال جزء من الصفحة نفسها" action={<Plus className="text-[#B6913E]" size={18} />}>
                   <div className="grid gap-3">
                     <input value={newOpportunity.title} onChange={(event) => setNewOpportunity((current) => ({ ...current, title: event.target.value }))} placeholder="اسم الفرصة" className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
                     <div className="grid gap-3 md:grid-cols-2">
@@ -720,7 +678,64 @@ export default function InvestmentIntelligenceClient({
                   </div>
                 </SurfaceCard>
               ) : null}
+
+              <SurfaceCard title="ملخص القرار الجاري" subtitle="الفرصة الأبرز وما يلزمها قبل الإحالة">
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="rounded-[1.3rem] bg-[#F7F5EF] p-4 text-right">
+                    <div className="flex items-center justify-between gap-3">
+                      <WorkflowBadge status={topAssessment?.readinessScore && topAssessment.readinessScore >= 82 ? "approved" : "review"} />
+                      <h4 className="text-lg font-black text-navy">{topAssessment?.title}</h4>
+                    </div>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">{topAssessment?.recommendation}</p>
+                  </div>
+                  <div className="rounded-[1.3rem] bg-[#F7F5EF] p-4 text-right">
+                    <p className="text-sm font-black text-navy">لماذا هذا المسار واضح؟</p>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">كل فرصة هنا مرتبطة بحالة workflow واضحة، وإجراء مباشر، ومؤشر جاهزية مفهوم دون ترك فراغات أو مسارات مبهمة.</p>
+                  </div>
+                </div>
+              </SurfaceCard>
             </div>
+
+            <SurfaceCard title="سجل الفرص الاستثمارية" subtitle="بطاقات متوازنة تستغل العرض بالكامل">
+              <div className="grid gap-4 xl:grid-cols-2">
+                {opportunityItems.map((item) => (
+                  <div key={item.id} className="rounded-[1.35rem] border border-[rgba(11,31,51,0.08)] bg-[#FFFEFC] p-4">
+                    <div className="text-right">
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        <div className="flex flex-wrap gap-2">
+                          {workspaceMode === "internal" ? (
+                            <>
+                              <ActionButton variant="ghost" onClick={() => selectOpportunityStatus(item.id, "analysis")}>
+                                <RefreshCw size={15} />
+                                تحليل
+                              </ActionButton>
+                              <ActionButton variant="ghost" onClick={() => selectOpportunityStatus(item.id, "review")}>
+                                <FileSpreadsheet size={15} />
+                                مراجعة
+                              </ActionButton>
+                              <ActionButton variant="secondary" onClick={() => selectOpportunityStatus(item.id, "approved")}>
+                                <CheckCircle2 size={15} />
+                                اعتماد
+                              </ActionButton>
+                            </>
+                          ) : null}
+                        </div>
+                        <div className="flex items-center justify-end gap-3">
+                          <WorkflowBadge status={item.status} />
+                          <h3 className="text-lg font-black text-navy">{item.title}</h3>
+                        </div>
+                      </div>
+                      <p className="mt-2 text-sm text-slate-500">{item.neighborhood} • {item.sector} • ROI {item.roi}</p>
+                      <p className="mt-3 text-sm leading-7 text-slate-600">{item.recommendation}</p>
+                      <div className="mt-4 flex justify-between rounded-[1rem] bg-[#F7F5EF] px-4 py-3 text-sm font-semibold text-slate-600">
+                        <span>{item.neighborhood}</span>
+                        <span>جاهزية {item.readinessScore}%</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </SurfaceCard>
           </div>
         )}
 

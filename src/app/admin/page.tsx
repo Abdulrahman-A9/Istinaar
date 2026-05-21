@@ -875,7 +875,7 @@ export default function AdminPage() {
           </ShellCard>
         )}
 
-        {activeTab === "relations" && (
+        {false && activeTab === "relations" && (
           <div className="space-y-6">
             <div className="space-y-6">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -964,7 +964,7 @@ export default function AdminPage() {
         )}
 
         {activeTab === "relations" && (
-          <div className="grid grid-cols-1 xl:grid-cols-[1.05fr_0.95fr] gap-6">
+          <div className="space-y-6">
             <div className="space-y-6">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {Object.entries(advisoryWorkflowMeta).map(([key, meta]) => (
@@ -1013,7 +1013,7 @@ export default function AdminPage() {
               </ShellCard>
             </div>
 
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 items-start">
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 items-start">
               {selectedRequest ? (
                 <>
                   <ShellCard title={selectedRequest.projectName} subtitle="Consulting Detail" icon={<ShieldCheck size={20} />}>
@@ -1105,7 +1105,7 @@ export default function AdminPage() {
                     </div>
                   </ShellCard>
 
-                  <div className="xl:col-span-2">
+                  <div className="xl:col-span-3">
                     <ShellCard title="إضافة ملاحظة جديدة" subtitle="Workflow Notes" icon={<MessageSquarePlus size={20} />}>
                       <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-3 mb-3">
                         <textarea value={noteContent} onChange={(event) => setNoteContent(event.target.value)} rows={3} className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none resize-none" placeholder="أضف ملاحظة تشغيلية أو ميدانية أو موجهة للعميل..." />
@@ -1137,7 +1137,7 @@ export default function AdminPage() {
                   </div>
                 </>
               ) : (
-                <div className="xl:col-span-2 card p-8 text-center text-gray-500">لا توجد طلبات استشارية حالياً.</div>
+                <div className="xl:col-span-3 card p-8 text-center text-gray-500">لا توجد طلبات استشارية حالياً.</div>
               )}
             </div>
           </div>
