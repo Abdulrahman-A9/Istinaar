@@ -159,11 +159,11 @@ function KpiCard({
   tone: string;
 }) {
   return (
-    <div className="panel-hover rise-in rounded-[1.5rem] border border-[rgba(11,31,51,0.08)] bg-[linear-gradient(180deg,#FFFFFF_0%,#FAF8F3_100%)] p-4 shadow-[0_14px_30px_rgba(11,31,51,0.05)]">
+    <div className="official-navy-surface panel-hover rise-in rounded-[1.5rem] p-4">
       <div className="mb-3 h-1.5 w-16 rounded-full" style={{ backgroundColor: tone }} />
-      <p className="text-sm font-semibold text-slate-500">{label}</p>
-      <p className="mt-2 text-3xl font-black text-navy">{value}</p>
-      <p className="mt-2 text-xs leading-6 text-slate-500">{note}</p>
+      <p className="text-sm font-semibold text-[#E9DFC8]/88">{label}</p>
+      <p className="mt-2 text-3xl font-black text-white">{value}</p>
+      <p className="mt-2 text-xs leading-6 text-white/72">{note}</p>
     </div>
   );
 }

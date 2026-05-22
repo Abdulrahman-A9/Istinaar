@@ -461,15 +461,15 @@ export default function AdminPage() {
       statusTitle="متابعة تنفيذية يومية"
       statusDescription="الأولوية الحالية موجهة لرفع جودة العرض، تصفية الطلبات، واعتماد ملفات الشراكة."
     >
-        <section className="rounded-[2rem] p-6 md:p-8 mb-6 border border-slate-200/80 bg-white shadow-[0_22px_60px_rgba(10,35,66,0.08)] overflow-hidden relative">
-          <div className="absolute inset-0 opacity-40" style={{ background: "radial-gradient(circle at top left, rgba(201,168,76,0.14), transparent 28%), radial-gradient(circle at bottom right, rgba(10,35,66,0.06), transparent 34%)" }} />
+        <section className="admin-hero-surface official-navy-surface rounded-[2rem] p-6 md:p-8 mb-6 overflow-hidden relative">
+          <div className="absolute inset-0 opacity-70" style={{ background: "radial-gradient(circle at top left, rgba(182,145,62,0.18), transparent 28%), radial-gradient(circle at bottom right, rgba(11,31,51,0.08), transparent 34%)" }} />
           <div className="relative flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
             <div className="text-right max-w-3xl">
-              <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold mb-4" style={{ backgroundColor: "rgba(10,35,66,0.05)", color: "#0A2342" }}>
-                <Sparkles size={14} color="#C9A84C" />
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/6 px-4 py-2 text-xs font-bold text-[#E9DFC8]">
+                <Sparkles size={14} color="#E9DFC8" />
                 لوحة تنفيذية محدثة
               </div>
-              <h1 className="text-3xl md:text-4xl font-black" style={{ color: "#0A2342" }}>{currentTitle}</h1>
+              <h1 className="text-3xl md:text-4xl font-black text-white">{currentTitle}</h1>
               <p className="text-slate-500 text-sm md:text-base text-right mt-3 leading-8">واجهة تشغيل احترافية تجمع المؤشرات والسجلات والتقارير والموافقات في مستوى عرض واحد واضح ورسمي.</p>
             </div>
             <div className="flex flex-wrap items-center gap-3 self-stretch lg:self-auto">
@@ -517,7 +517,7 @@ export default function AdminPage() {
               ].map((stat) => {
                 const Icon = stat.icon;
                 return (
-                  <div key={stat.label} className="rounded-[1.75rem] border border-slate-200 bg-white p-5 shadow-[0_18px_50px_rgba(10,35,66,0.06)]">
+                  <div key={stat.label} className="admin-kpi-surface official-navy-surface rounded-[1.75rem] p-5">
                     <div className="flex items-start justify-between mb-6">
                       <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ backgroundColor: stat.surface, color: stat.color }}>
                         <Icon size={22} />

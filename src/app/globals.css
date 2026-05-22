@@ -188,6 +188,51 @@ h1, h2, h3, h4, .display-title {
   box-shadow: 0 16px 42px rgba(11, 31, 51, 0.06);
 }
 
+.official-navy-surface {
+  background:
+    radial-gradient(circle at top right, rgba(182, 145, 62, 0.18), transparent 24%),
+    linear-gradient(145deg, var(--navy-dark) 0%, var(--navy) 56%, var(--navy-deep) 100%);
+  border: 1px solid rgba(233, 223, 200, 0.12);
+  box-shadow: 0 20px 54px rgba(11, 31, 51, 0.18);
+}
+
+.admin-hero-surface h1 {
+  color: #fff;
+}
+
+.admin-hero-surface p {
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.admin-hero-surface a {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(10px);
+}
+
+.admin-hero-surface a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.admin-kpi-surface > div > div {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: var(--sand) !important;
+}
+
+.admin-kpi-surface > div > p {
+  color: var(--sand) !important;
+}
+
+.admin-kpi-surface > p:first-of-type {
+  color: rgba(255, 255, 255, 0.54) !important;
+}
+
+.admin-kpi-surface > p:last-of-type {
+  color: #fff !important;
+}
+
 .dashboard-shell {
   position: relative;
   overflow: hidden;
