@@ -27,11 +27,22 @@ export default function Navbar() {
   const accountLabel = isAuthority ? "الحساب" : currentUser ? currentUser.fullName.split(" ")[0] : "الحساب";
 
   return (
-    <nav style={{ backgroundColor: "rgba(11,31,51,0.82)" }} className="sticky top-0 z-50 border-b border-white/10 shadow-[0_12px_40px_rgba(11,31,51,0.18)] backdrop-blur-xl">
+    <nav
+      style={{ backgroundColor: "rgba(6,18,31,0.82)" }}
+      className="sticky top-0 z-50 border-b border-white/10 shadow-[0_12px_40px_rgba(2,10,22,0.32)] backdrop-blur-xl"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Link href={currentUser ? "/dashboard" : "/account"} className="relative p-2 text-white transition-colors hover:text-[#D4B469]">
+        <div className="flex min-h-16 items-center justify-between gap-3 py-3 lg:gap-6">
+          <div className="flex min-w-0 flex-1 items-center justify-start gap-2 sm:gap-3">
+            <button
+              className="rounded-xl p-2 text-white transition-colors hover:bg-white/10 lg:hidden"
+              onClick={() => setMobileOpen((value) => !value)}
+              aria-label={mobileOpen ? "إغلاق القائمة" : "فتح القائمة"}
+            >
+              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+
+            <Link href={currentUser ? "/dashboard" : "/account"} className="relative rounded-xl p-2 text-white transition-colors hover:bg-white/10 hover:text-[#D4B469]">
               <Bell size={20} />
               {currentUser && unread > 0 ? (
                 <span className="absolute -left-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
@@ -39,19 +50,27 @@ export default function Navbar() {
                 </span>
               ) : null}
             </Link>
+
             <Link
               href={primaryHref}
-              className="hidden rounded-lg px-4 py-2 text-sm font-semibold transition-colors sm:block"
+              className="hidden rounded-xl px-4 py-2 text-sm font-semibold transition-colors md:block"
               style={{ backgroundColor: "#B6913E", color: "#0B1F33" }}
             >
               {primaryLabel}
             </Link>
-            <Link href="/account" className="hidden rounded-lg border border-white/30 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-white/10 sm:block">
+
+            <Link
+              href="/account"
+              className="hidden rounded-xl border border-white/25 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-white/10 xl:block"
+            >
               {accountLabel}
             </Link>
           </div>
 
-          <div className="hidden items-center gap-1 rounded-2xl border border-white/10 px-2 py-1 md:flex" style={{ backgroundColor: "rgba(255,255,255,0.05)" }}>
+          <div
+            className="hidden shrink-0 items-center gap-1 rounded-2xl border border-white/10 px-2 py-1 lg:flex"
+            style={{ backgroundColor: "rgba(255,255,255,0.05)" }}
+          >
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -65,24 +84,20 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ backgroundColor: "#B6913E" }}>
+          <div className="flex min-w-0 flex-1 items-center justify-end gap-2">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg" style={{ backgroundColor: "#B6913E" }}>
               <MapPin size={16} color="#0B1F33" />
             </div>
-            <div>
-              <p className="text-sm font-bold leading-tight text-white">استنار | Istinaar</p>
-              <p className="text-xs leading-tight text-white/60">منصة الذكاء الاستثماري ودعم القرار</p>
+            <div className="min-w-0">
+              <p className="truncate text-sm font-bold leading-tight text-white">استنار | Istinaar</p>
+              <p className="truncate text-xs leading-tight text-white/60">منصة الذكاء الاستثماري ودعم القرار</p>
             </div>
           </div>
-
-          <button className="p-2 text-white md:hidden" onClick={() => setMobileOpen((value) => !value)}>
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </div>
       </div>
 
       {mobileOpen ? (
-        <div className="border-t border-white/10 md:hidden" style={{ backgroundColor: "rgba(11,31,51,0.94)" }}>
+        <div className="border-t border-white/10 lg:hidden" style={{ backgroundColor: "rgba(6,18,31,0.94)" }}>
           <div className="space-y-1 px-4 py-3">
             {navLinks.map((link) => (
               <Link

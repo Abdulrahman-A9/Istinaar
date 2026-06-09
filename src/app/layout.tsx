@@ -21,7 +21,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
-      <body className="antialiased" style={{ background: "#F8F9FB" }}>
+      <body className="antialiased">
         <Navbar />
         <main>{children}</main>
         <Footer />
