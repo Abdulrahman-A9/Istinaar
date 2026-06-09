@@ -125,9 +125,16 @@ export default function HomePage() {
         initial="hidden"
         animate="visible"
         variants={stagger}
-        style={{ background: "linear-gradient(135deg, #0A2342 0%, #0d2d56 60%, #1a3a6b 100%)" }}
+        style={{ background: "linear-gradient(135deg, #020814 0%, #04101f 52%, #08182d 100%)" }}
         className="relative overflow-hidden py-16 md:py-24 px-4">
-        <div className="absolute inset-0 pointer-events-none overflow-hidden grid-glow opacity-50" />
+        <div className="absolute inset-0 pointer-events-none overflow-hidden grid-glow opacity-30" />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(circle at 18% 22%, rgba(22, 48, 84, 0.28), transparent 0 24%), linear-gradient(180deg, rgba(1, 6, 14, 0.18) 0%, rgba(1, 6, 14, 0.42) 100%)",
+          }}
+        />
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <motion.div className="absolute top-10 left-10 hidden md:block w-96 h-96 rounded-full border border-white/5"
             animate={{ y: [0, -12, 0], x: [0, 8, 0] }} transition={{ duration: 10, repeat: Infinity }} />
@@ -187,7 +194,7 @@ export default function HomePage() {
             </motion.div>
 
             <motion.div variants={heroSlideLeft} transition={{ duration: 0.8, delay: 0.08, ease: "easeOut" }} className="order-2 lg:order-2 lg:justify-self-start">
-              <div className="glass-panel rounded-[1.75rem] p-4 md:p-6 text-white max-w-xl">
+              <div className="glass-panel rounded-[1.75rem] p-4 md:p-6 text-white max-w-xl" style={{ background: "linear-gradient(180deg, rgba(2,8,20,0.96) 0%, rgba(5,16,31,0.94) 100%)", border: "1px solid rgba(255,255,255,0.06)" }}>
                 <div className="flex items-center justify-between mb-5">
                   <span className="text-sm text-white/60">مركز القرار الاستثماري</span>
                   <span className="inline-flex items-center gap-2 text-sm font-semibold" style={{ color: "#F5D88E" }}>
@@ -202,13 +209,13 @@ export default function HomePage() {
                     { title: "المخاطر القابلة للإدارة", value: "7 فرص", tone: "#7AE2B8" },
                     { title: "التحويل إلى فرص", value: "جاهز", tone: "#F5D88E" },
                   ].map((item) => (
-                    <motion.div key={item.title} whileHover={{ y: -4, scale: 1.01 }} className="rounded-2xl p-4" style={{ backgroundColor: "rgba(255,255,255,0.08)" }}>
+                    <motion.div key={item.title} whileHover={{ y: -4, scale: 1.01 }} className="rounded-2xl p-4" style={{ backgroundColor: "rgba(255,255,255,0.05)" }}>
                       <p className="text-xs text-white/55 mb-2">{item.title}</p>
                       <p className="text-sm font-black" style={{ color: item.tone }}>{item.value}</p>
                     </motion.div>
                   ))}
                 </div>
-                <div className="rounded-2xl p-4" style={{ backgroundColor: "rgba(201,168,76,0.12)" }}>
+                <div className="rounded-2xl p-4" style={{ backgroundColor: "rgba(201,168,76,0.08)" }}>
                   <p className="text-sm font-bold mb-2" style={{ color: "#F5D88E" }}>لماذا هذا مهم؟</p>
                   <p className="text-sm text-white/75 leading-7">
                     لأن الجهة المنظمة لا تحتاج منصة تنفيذ بديلة، بل تحتاج واجهة تساعد على عرض الجاهزية والطلب وقابلية الاستثمار قبل الإحالة إلى فرص.
