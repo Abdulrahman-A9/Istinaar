@@ -125,14 +125,14 @@ export default function HomePage() {
         initial="hidden"
         animate="visible"
         variants={stagger}
-        style={{ background: "linear-gradient(135deg, #020814 0%, #04101f 52%, #08182d 100%)" }}
+        style={{ background: "linear-gradient(135deg, #061629 0%, #0A2342 60%, #163A68 100%)" }}
         className="relative overflow-hidden py-16 md:py-24 px-4">
         <div className="absolute inset-0 pointer-events-none overflow-hidden grid-glow opacity-30" />
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(circle at 18% 22%, rgba(22, 48, 84, 0.28), transparent 0 24%), linear-gradient(180deg, rgba(1, 6, 14, 0.18) 0%, rgba(1, 6, 14, 0.42) 100%)",
+              "radial-gradient(circle at 18% 22%, rgba(39, 78, 132, 0.24), transparent 0 24%), linear-gradient(180deg, rgba(6, 22, 41, 0.08) 0%, rgba(6, 22, 41, 0.22) 100%)",
           }}
         />
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -194,7 +194,7 @@ export default function HomePage() {
             </motion.div>
 
             <motion.div variants={heroSlideLeft} transition={{ duration: 0.8, delay: 0.08, ease: "easeOut" }} className="order-2 lg:order-2 lg:justify-self-start">
-              <div className="glass-panel rounded-[1.75rem] p-4 md:p-6 text-white max-w-xl" style={{ background: "linear-gradient(180deg, rgba(2,8,20,0.96) 0%, rgba(5,16,31,0.94) 100%)", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <div className="glass-panel rounded-[1.75rem] p-4 md:p-6 text-white max-w-xl" style={{ background: "linear-gradient(180deg, rgba(6,22,41,0.92) 0%, rgba(10,35,66,0.88) 100%)", border: "1px solid rgba(255,255,255,0.08)" }}>
                 <div className="flex items-center justify-between mb-5">
                   <span className="text-sm text-white/60">مركز القرار الاستثماري</span>
                   <span className="inline-flex items-center gap-2 text-sm font-semibold" style={{ color: "#F5D88E" }}>
