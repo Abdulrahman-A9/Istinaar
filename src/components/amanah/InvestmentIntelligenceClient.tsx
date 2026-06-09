@@ -333,6 +333,68 @@ export default function InvestmentIntelligenceClient({
     value: getOpportunityRisk(item).score,
   }));
 
+  const regulatorySummary = useMemo(() => {
+    const ready = blueprints.filter((item) => item.readinessScore >= 82);
+    const medium = blueprints.filter((item) => item.readinessScore >= 68 && item.readinessScore < 82);
+    const blocked = blueprints.filter((item) => item.readinessScore < 68);
+    const averageReadiness = blueprints.length
+      ? Math.round(blueprints.reduce((sum, item) => sum + item.readinessScore, 0) / blueprints.length)
+      : 0;
+
+    const blockerCounts = blueprints
+      .flatMap((item) =>
+        item.checklist
+          .filter((check) => !check.complete)
+          .map((check) => check.label)
+      )
+      .reduce<Record<string, number>>((accumulator, blocker) => {
+        accumulator[blocker] = (accumulator[blocker] ?? 0) + 1;
+        return accumulator;
+      }, {});
+
+    const recurringBlockers = Object.entries(blockerCounts)
+      .sort((left, right) => right[1] - left[1])
+      .slice(0, 3)
+      .map(([label, count]) => ({ label, count }));
+
+    const fastest = [...blueprints].sort((left, right) => left.estimatedDurationDays - right.estimatedDurationDays)[0];
+    const highestValue = [...blueprints].sort((left, right) => right.strategicValueScore - left.strategicValueScore)[0];
+    const mostBlocked = [...blueprints].sort((left, right) => left.readinessScore - right.readinessScore)[0];
+    const immediate = [...blueprints]
+      .filter((item) => item.decisionAction === "ارفع الآن")
+      .sort((left, right) => right.readinessScore - left.readinessScore)[0] ?? fastest;
+
+    return {
+      ready,
+      medium,
+      blocked,
+      averageReadiness,
+      recurringBlockers,
+      priorityCards: [
+        {
+          title: "أسرع فرصة يمكن تجهيزها",
+          item: fastest,
+          note: fastest ? `تصل للجاهزية الكاملة خلال ${fastest.estimatedDurationLabel}.` : "",
+        },
+        {
+          title: "أعلى فرصة قيمة",
+          item: highestValue,
+          note: highestValue ? `قيمة استراتيجية ${highestValue.strategicValueScore}% مع توصية ${highestValue.decisionAction}.` : "",
+        },
+        {
+          title: "أكثر فرصة تعثراً",
+          item: mostBlocked,
+          note: mostBlocked ? `أهم سبب تعثر: ${mostBlocked.mainDelayReason}` : "",
+        },
+        {
+          title: "أفضل فرصة للاستثمار الفوري",
+          item: immediate,
+          note: immediate ? `القرار الحالي: ${immediate.decisionAction}.` : "",
+        },
+      ],
+    };
+  }, [blueprints]);
+
   const spatialComparison = priorities.slice(0, 5).map((item) => ({
     name: item.neighborhood,
     demand: item.demandLevel,
@@ -985,31 +1047,165 @@ export default function InvestmentIntelligenceClient({
 
         {activeTab === "regulatory" && (
           <div className="grid gap-6">
-            <SurfaceCard title="الجاهزية التنظيمية" subtitle="معوقات، اشتراطات، ومسار التمرير الرسمي">
-              <div className="grid gap-4 xl:grid-cols-2">
-                {blueprints.slice(0, 4).map((item) => (
-                  <div key={item.opportunityId} className="rounded-[1.35rem] border border-[rgba(11,31,51,0.08)] bg-[#FFFEFC] p-4 text-right">
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="rounded-full px-3 py-1 text-xs font-bold" style={{ backgroundColor: `${item.complexityTone}18`, color: item.complexityTone }}>
-                        {item.complexityLabel}
+            <SurfaceCard title="مركز جاهزية القرار التنظيمي" subtitle="Decision Readiness Center">
+              <div className="grid gap-4 xl:grid-cols-5">
+                {[
+                  { label: "جاهزة للرفع", value: regulatorySummary.ready.length, tone: "#166534", surface: "#ECFDF3", icon: CheckCircle2 },
+                  { label: "جاهزية متوسطة", value: regulatorySummary.medium.length, tone: "#A16207", surface: "#FFF7E8", icon: Clock3 },
+                  { label: "متعثرة", value: regulatorySummary.blocked.length, tone: "#B91C1C", surface: "#FEF2F2", icon: AlertTriangle },
+                  { label: "متوسط الجاهزية", value: `${regulatorySummary.averageReadiness}%`, tone: "#0B1F33", surface: "#EEF4FF", icon: SlidersHorizontal },
+                ].map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <div key={item.label} className="rounded-[1.35rem] border border-[rgba(11,31,51,0.08)] bg-[#FFFEFC] p-4 text-right">
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="rounded-2xl p-2.5" style={{ backgroundColor: item.surface, color: item.tone }}>
+                          <Icon size={18} />
+                        </span>
+                        <p className="text-2xl font-black" style={{ color: item.tone }}>{item.value}</p>
+                      </div>
+                      <p className="mt-4 text-sm font-bold text-navy">{item.label}</p>
+                    </div>
+                  );
+                })}
+
+                <div className="rounded-[1.35rem] border border-[rgba(11,31,51,0.08)] bg-[#FFFEFC] p-4 text-right xl:col-span-1">
+                  <p className="text-sm font-black text-navy">أهم المعوقات المتكررة</p>
+                  <div className="mt-4 space-y-2">
+                    {regulatorySummary.recurringBlockers.map((blocker) => (
+                      <div key={blocker.label} className="flex items-center justify-between rounded-xl bg-[#F7F5EF] px-3 py-2">
+                        <span className="rounded-full bg-white px-2.5 py-1 text-xs font-bold text-[#B45309]">{blocker.count}</span>
+                        <p className="text-xs font-semibold text-slate-600">{blocker.label}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </SurfaceCard>
+
+            <SurfaceCard title="أولوية المعالجة" subtitle="من أين تبدأ الأمانة؟">
+              <div className="grid gap-4 xl:grid-cols-4">
+                {regulatorySummary.priorityCards.map((card) => (
+                  <div key={card.title} className="rounded-[1.35rem] border border-[rgba(11,31,51,0.08)] bg-[#FFFEFC] p-4 text-right">
+                    <p className="text-xs font-bold text-[#B6913E]">{card.title}</p>
+                    <h3 className="mt-2 text-base font-black text-navy">{card.item?.opportunityTitle ?? "لا توجد بيانات"}</h3>
+                    <p className="mt-2 text-sm text-slate-500">{card.item?.neighborhood}</p>
+                    <div className="mt-3 flex items-center justify-between gap-3">
+                      <span className="rounded-full px-3 py-1 text-xs font-bold" style={{ backgroundColor: `${card.item?.readinessTone ?? "#0B1F33"}16`, color: card.item?.readinessTone ?? "#0B1F33" }}>
+                        {card.item?.readinessScore ?? 0}%
                       </span>
-                      <h3 className="text-base font-black text-navy">{item.opportunityTitle}</h3>
+                      <span className="text-xs font-semibold text-slate-500">{card.item?.decisionAction}</span>
                     </div>
-                    <div className="mt-4 space-y-3">
-                      {item.steps.map((step) => (
-                        <div key={step.title} className="rounded-[1.1rem] bg-[#F7F5EF] p-3">
-                          <div className="flex items-center justify-between gap-3">
-                            <p className="text-xs font-bold text-[#B6913E]">{step.source}</p>
-                            <p className="text-sm font-black text-navy">{step.title}</p>
-                          </div>
-                          <p className="mt-2 text-sm leading-7 text-slate-600">{step.detail}</p>
-                        </div>
-                      ))}
-                    </div>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">{card.note}</p>
                   </div>
                 ))}
               </div>
             </SurfaceCard>
+
+            <div className="grid gap-5 xl:grid-cols-2">
+              {blueprints.map((item) => (
+                <div key={item.opportunityId} className="rounded-[1.6rem] border border-[rgba(11,31,51,0.08)] bg-[#FFFEFC] p-5 text-right shadow-[0_16px_42px_rgba(11,31,51,0.05)]">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="text-left">
+                      <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold" style={{ backgroundColor: `${item.readinessTone}16`, color: item.readinessTone }}>
+                        {item.readinessLabel}
+                        <span>{item.readinessScore}%</span>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-xs font-bold text-[#B6913E]">{item.neighborhood}</p>
+                      <h3 className="mt-1 text-lg font-black text-navy">{item.opportunityTitle}</h3>
+                      <p className="mt-2 text-sm text-slate-500">استنار يقيّم الجاهزية ويقترح الإجراء، ولا ينفذ الموافقات الرسمية.</p>
+                    </div>
+                  </div>
+
+                  <div className="mt-5 grid gap-4 md:grid-cols-3">
+                    <div className="rounded-[1.25rem] bg-[#F7F5EF] p-4">
+                      <p className="text-xs text-slate-500">قرار الجاهزية</p>
+                      <p className="mt-2 text-sm font-black" style={{ color: item.readinessTone }}>{item.decisionAction}</p>
+                    </div>
+                    <div className="rounded-[1.25rem] bg-[#F7F5EF] p-4">
+                      <p className="text-xs text-slate-500">مستوى المخاطر</p>
+                      <p className="mt-2 text-sm font-black" style={{ color: item.riskTone }}>{item.riskLabel}</p>
+                    </div>
+                    <div className="rounded-[1.25rem] bg-[#F7F5EF] p-4">
+                      <p className="text-xs text-slate-500">المدة المتوقعة للجاهزية الكاملة</p>
+                      <p className="mt-2 text-sm font-black text-navy">{item.estimatedDurationLabel}</p>
+                    </div>
+                  </div>
+
+                  <div className="mt-5 grid gap-4 lg:grid-cols-2">
+                    <div className="rounded-[1.25rem] border border-[rgba(22,101,52,0.14)] bg-[#F6FCF8] p-4">
+                      <p className="text-sm font-black text-[#166534]">العوامل الإيجابية</p>
+                      <div className="mt-3 space-y-2">
+                        {item.positiveFactors.map((factor) => (
+                          <div key={factor} className="flex items-start justify-between gap-3 rounded-xl bg-white px-3 py-2">
+                            <CheckCircle2 size={15} className="mt-0.5 shrink-0 text-[#166534]" />
+                            <p className="text-sm leading-7 text-slate-600">{factor}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="rounded-[1.25rem] border border-[rgba(185,28,28,0.14)] bg-[#FFF7F7] p-4">
+                      <p className="text-sm font-black text-[#B91C1C]">العوامل المعيقة</p>
+                      <div className="mt-3 space-y-2">
+                        {item.blockingFactors.map((factor) => (
+                          <div key={factor} className="flex items-start justify-between gap-3 rounded-xl bg-white px-3 py-2">
+                            <AlertTriangle size={15} className="mt-0.5 shrink-0 text-[#B91C1C]" />
+                            <p className="text-sm leading-7 text-slate-600">{factor}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-5 grid gap-4 lg:grid-cols-[0.92fr_1.08fr]">
+                    <div className="rounded-[1.25rem] border border-[rgba(11,31,51,0.08)] bg-[#F9FBFD] p-4">
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="rounded-full px-3 py-1 text-xs font-bold" style={{ backgroundColor: `${item.riskTone}16`, color: item.riskTone }}>
+                          {item.riskLabel}
+                        </span>
+                        <p className="text-sm font-black text-navy">تقييم المخاطر</p>
+                      </div>
+                      <p className="mt-3 text-sm leading-7 text-slate-600">{item.riskReason}</p>
+
+                      <div className="mt-4 rounded-xl bg-white p-3">
+                        <p className="text-xs text-slate-500">سبب التأخير الرئيسي</p>
+                        <p className="mt-2 text-sm font-bold text-navy">{item.mainDelayReason}</p>
+                      </div>
+
+                      <div className="mt-4 rounded-xl bg-white p-3">
+                        <p className="text-xs text-slate-500">التوصية التنفيذية</p>
+                        <p className="mt-2 text-sm font-bold text-navy">{item.recommendation}</p>
+                      </div>
+                    </div>
+
+                    <div className="rounded-[1.25rem] border border-[rgba(11,31,51,0.08)] bg-[#F9FBFD] p-4">
+                      <p className="text-sm font-black text-navy">قائمة متطلبات الاستكمال</p>
+                      <div className="mt-3 space-y-2">
+                        {item.checklist.map((check) => (
+                          <div key={check.label} className="rounded-xl bg-white px-3 py-3">
+                            <div className="flex items-center justify-between gap-3">
+                              <span className="text-xs font-bold" style={{ color: check.complete ? "#166534" : "#B91C1C" }}>
+                                {check.complete ? "مكتمل" : "غير مكتمل"}
+                              </span>
+                              <div className="flex items-center gap-2">
+                                <p className="text-sm font-bold text-navy">{check.label}</p>
+                                <span className="text-base" style={{ color: check.complete ? "#166534" : "#B91C1C" }}>
+                                  {check.complete ? "☑" : "☐"}
+                                </span>
+                              </div>
+                            </div>
+                            <p className="mt-2 text-sm leading-7 text-slate-600">{check.note}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 

@@ -42,14 +42,26 @@ export interface AmanahPriorityArea {
 export interface AmanahRequirementBlueprint {
   opportunityId: string;
   opportunityTitle: string;
-  complexityLabel: string;
-  complexityTone: string;
-  steps: Array<{
-    title: string;
-    detail: string;
-    source: string;
-    status: "واضح" | "يحتاج توضيح" | "يتطلب تنسيقاً";
+  neighborhood: string;
+  readinessScore: number;
+  readinessLabel: string;
+  readinessTone: string;
+  riskLabel: string;
+  riskTone: string;
+  riskReason: string;
+  recommendation: string;
+  decisionAction: "ارفع الآن" | "استكمل ثم ارفع" | "أجّل المعالجة";
+  estimatedDurationLabel: string;
+  estimatedDurationDays: number;
+  mainDelayReason: string;
+  positiveFactors: string[];
+  blockingFactors: string[];
+  checklist: Array<{
+    label: string;
+    complete: boolean;
+    note: string;
   }>;
+  strategicValueScore: number;
 }
 
 export interface AmanahLeadershipBrief {
@@ -141,17 +153,81 @@ function getReadinessMeta(score: number) {
 }
 
 function mapRequirementStatus(opportunity: Opportunity) {
-  const risk = getOpportunityRisk(opportunity);
-  const complexity = opportunity.businessModel.includes("Destination") || opportunity.businessModel.includes("Venue")
-    ? 3
-    : opportunity.marketDemand > 85 || risk.score > 50
-      ? 2
-      : 1;
+  const readinessScore = scoreOpportunityReadiness(opportunity);
+
+  if (readinessScore >= 82) {
+    return {
+      readinessLabel: "جاهزية مرتفعة",
+      readinessTone: "#166534",
+      decisionAction: "ارفع الآن" as const,
+      estimatedDurationLabel: "7 - 14 يوم",
+      estimatedDurationDays: 12,
+    };
+  }
+
+  if (readinessScore >= 68) {
+    return {
+      readinessLabel: "جاهزية متوسطة",
+      readinessTone: "#A16207",
+      decisionAction: "استكمل ثم ارفع" as const,
+      estimatedDurationLabel: "2 - 4 أسابيع",
+      estimatedDurationDays: 21,
+    };
+  }
 
   return {
-    complexityLabel: complexity === 3 ? "جاهزية مركبة" : complexity === 2 ? "جاهزية متوسطة" : "جاهزية مباشرة",
-    complexityTone: complexity === 3 ? "#B45309" : complexity === 2 ? "#1D4ED8" : "#166534",
+    readinessLabel: "جاهزية منخفضة",
+    readinessTone: "#B91C1C",
+    decisionAction: "أجّل المعالجة" as const,
+    estimatedDurationLabel: "شهر إلى شهرين",
+    estimatedDurationDays: 45,
   };
+}
+
+function getRegulatoryChecklist(opportunity: Opportunity) {
+  const risk = getOpportunityRisk(opportunity);
+  const insight = getNeighborhoodInsight(opportunity.neighborhood);
+  const activityFit = insight
+    ? Object.entries(insight.activityFit).find(([activity]) =>
+        opportunity.title.includes(activity) ||
+        opportunity.category.includes(activity) ||
+        opportunity.businessModel.includes(activity)
+      )?.[1]
+    : undefined;
+
+  const trafficStudyComplete =
+    opportunity.businessModel.includes("Drive-Thru")
+      ? opportunity.feasibilityScore >= 84
+      : opportunity.businessModel.includes("Destination") || opportunity.businessModel.includes("Venue")
+        ? (insight?.seasonalStrength ?? 0) >= 80 || opportunity.competitionDensity < 30
+        : opportunity.competitionDensity < 55;
+
+  const externalApprovalClear = risk.score < 56 && !opportunity.businessModel.includes("Destination");
+  const activityClassificationClear = opportunity.summary.length > 55 && opportunity.officialSummary.length > 70;
+  const siteSuitabilityClear = opportunity.feasibilityScore >= 78 && (activityFit?.demand ?? opportunity.marketDemand) >= 72;
+
+  return [
+    {
+      label: "توصيف النشاط",
+      complete: activityClassificationClear,
+      note: activityClassificationClear ? "التوصيف الحالي واضح وقابل للعرض الداخلي." : "الصياغة الحالية تحتاج تحديداً أدق لنطاق النشاط.",
+    },
+    {
+      label: "ملاءمة الموقع",
+      complete: siteSuitabilityClear,
+      note: siteSuitabilityClear ? "الموقع متوافق مع الطلب وطبيعة الاستخدام." : "الملاءمة المكانية ما زالت تحتاج دعماً أو مقارنة بديل.",
+    },
+    {
+      label: "دراسة مرورية / تشغيلية",
+      complete: trafficStudyComplete,
+      note: trafficStudyComplete ? "العناصر التشغيلية الأساسية مقبولة مبدئياً." : "ما زال الملف يحتاج قراءة مرورية أو تشغيلية قبل التوصية بالرفع.",
+    },
+    {
+      label: "موافقة مبدئية للجهات ذات العلاقة",
+      complete: externalApprovalClear,
+      note: externalApprovalClear ? "المسار المتوقع للجهات لا يظهر تعقيداً مرتفعاً." : "الجهات المرجحة أو نقاط التنسيق ما زالت غير محسومة بما يكفي.",
+    },
+  ];
 }
 
 export function getAmanahOpportunityAssessments(): AmanahOpportunityAssessment[] {
@@ -249,41 +325,62 @@ export function getAmanahPriorityAreas(): AmanahPriorityArea[] {
 
 export function getAmanahRequirementBlueprints(): AmanahRequirementBlueprint[] {
   return opportunities.slice(0, 5).map((opportunity) => {
-    const meta = mapRequirementStatus(opportunity);
+    const readinessScore = scoreOpportunityReadiness(opportunity);
+    const readinessMeta = mapRequirementStatus(opportunity);
+    const risk = getOpportunityRisk(opportunity);
+    const checklist = getRegulatoryChecklist(opportunity);
+    const incompleteChecklist = checklist.filter((item) => !item.complete);
+    const insight = getNeighborhoodInsight(opportunity.neighborhood);
+    const positiveFactors = [
+      opportunity.strengths[0],
+      opportunity.marketSignals[0],
+      insight ? `الحي يسجل طلباً ${insight.footfall}% وملاءمة مناسبة للنشاط.` : `الطلب الحالي على الفرصة ${opportunity.marketDemand}%.`,
+    ].filter(Boolean) as string[];
+    const blockingFactors = [
+      ...opportunity.riskFactors.slice(0, 2),
+      ...incompleteChecklist.slice(0, 2).map((item) => item.note),
+    ].filter(Boolean);
+    const mainDelayReason = incompleteChecklist[0]?.note ?? opportunity.riskFactors[0] ?? "لا توجد عوائق رئيسية مؤثرة حالياً.";
+    const recommendation =
+      readinessMeta.decisionAction === "ارفع الآن"
+        ? "الفرصة مناسبة للرفع الداخلي الآن مع استكمال الصياغة النهائية فقط قبل الإحالة للمسار الرسمي."
+        : readinessMeta.decisionAction === "استكمل ثم ارفع"
+          ? `الفرصة مناسبة للتحرك خلال ${readinessMeta.estimatedDurationLabel} بعد استكمال ${incompleteChecklist.length} متطلبات رئيسية.`
+          : "لا يوصى برفع الفرصة حالياً لأن المعوقات التنظيمية أو التشغيلية ما زالت مؤثرة على جودة القرار.";
+    const riskReason =
+      risk.level === "low"
+        ? "المتطلبات التنظيمية المتوقعة محدودة، والتعقيد العام لا يظهر ما يمنع التحرك الداخلي."
+        : risk.level === "medium"
+          ? "هناك نقاط تنسيق أو وضوح ناقصة، لكنها قابلة للمعالجة دون إعادة بناء الفرصة بالكامل."
+          : "المعوقات الحالية قد تنتج ملفاً ضعيفاً إذا تم التعجل في الرفع قبل استكمال المتطلبات الحرجة.";
+    const strategicValueScore = Math.round(
+      opportunity.marketDemand * 0.34 +
+      opportunity.profitabilityScore * 0.26 +
+      readinessScore * 0.24 +
+      (100 - risk.score) * 0.16
+    );
 
     return {
       opportunityId: opportunity.id,
       opportunityTitle: opportunity.title,
-      complexityLabel: meta.complexityLabel,
-      complexityTone: meta.complexityTone,
-      steps: [
-        {
-          title: "وضوح توصيف النشاط",
-          detail: `يتطلب تثبيت الصياغة الاستثمارية للنشاط ضمن فئة ${opportunity.category} وربطها بملاءمة الحي والموقع.`,
-          source: "استنار + فرص",
-          status: opportunity.summary.length > 40 ? "واضح" : "يحتاج توضيح",
-        },
-        {
-          title: "قراءة الاشتراطات المتوقعة",
-          detail: "إظهار الاشتراطات البلدية والتنظيمية المتوقعة قبل أي إحالة رسمية، دون تنفيذها داخل المنصة.",
-          source: "بلدي",
-          status: opportunity.businessModel.includes("Destination") ? "يتطلب تنسيقاً" : "يحتاج توضيح",
-        },
-        {
-          title: "مسار الموافقات المرتبطة",
-          detail: "توضيح الجهات المرجحة للدخول في المسار ونقاط التعقيد المتوقعة قبل الرفع النظامي.",
-          source: "بوابة موافقة الجهات الحكومية",
-          status: opportunity.marketDemand > 88 ? "يتطلب تنسيقاً" : "يحتاج توضيح",
-        },
-        {
-          title: "قرار الجاهزية للرفع",
-          detail: "إصدار توصية داخلية: هل تستحق الفرصة الانتقال للمسار الرسمي الآن أم بعد استكمال محدود؟",
-          source: "استنار",
-          status: scoreOpportunityReadiness(opportunity) >= 82 ? "واضح" : "يحتاج توضيح",
-        },
-      ],
+      neighborhood: opportunity.neighborhood,
+      readinessScore,
+      readinessLabel: readinessMeta.readinessLabel,
+      readinessTone: readinessMeta.readinessTone,
+      riskLabel: risk.label,
+      riskTone: risk.color,
+      riskReason,
+      recommendation,
+      decisionAction: readinessMeta.decisionAction,
+      estimatedDurationLabel: readinessMeta.estimatedDurationLabel,
+      estimatedDurationDays: readinessMeta.estimatedDurationDays,
+      mainDelayReason,
+      positiveFactors,
+      blockingFactors,
+      checklist,
+      strategicValueScore,
     };
-  });
+  }).sort((left, right) => right.readinessScore - left.readinessScore);
 }
 
 export function getAmanahLeadershipBriefs(): AmanahLeadershipBrief[] {
