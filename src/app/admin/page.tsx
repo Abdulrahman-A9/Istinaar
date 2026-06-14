@@ -147,37 +147,37 @@ function ExecutiveMetricCard({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="flex h-[148px] flex-col justify-between rounded-[1.55rem] border border-white/8 bg-[linear-gradient(180deg,rgba(13,28,48,0.96)_0%,rgba(10,24,41,0.94)_100%)] p-4 shadow-[0_18px_50px_rgba(2,10,20,0.34)]">
+    <div className="flex h-[132px] flex-col justify-between rounded-[1.45rem] border border-white/8 bg-[linear-gradient(180deg,rgba(13,28,48,0.96)_0%,rgba(10,24,41,0.94)_100%)] p-3.5 shadow-[0_16px_42px_rgba(2,10,20,0.34)]">
       <div className="flex items-start justify-between gap-4">
-        <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-[#B6913E]/20 bg-[#B6913E]/8 text-[#D9BA72]">
+        <div className="flex h-10 w-10 items-center justify-center rounded-[1.15rem] border border-[#B6913E]/20 bg-[#B6913E]/8 text-[#D9BA72]">
           {icon}
         </div>
         <div className="text-right">
           <p className="text-xs text-white/50">{label}</p>
-          <p className="mt-2 text-[2rem] font-black leading-none text-white">{value}</p>
-          {unit ? <p className="mt-1 text-sm text-white/42">{unit}</p> : null}
+          <p className="mt-1.5 text-[1.8rem] font-black leading-none text-white">{value}</p>
+          {unit ? <p className="mt-1 text-[13px] text-white/42">{unit}</p> : null}
         </div>
       </div>
-      <p className="text-sm font-semibold text-emerald-400">{delta}</p>
+      <p className="text-[13px] font-semibold text-emerald-400">{delta}</p>
     </div>
   );
 }
 
-function ReadinessRing({ value, label, tone }: { value: number; label: string; tone: string }) {
+function ReadinessRing({ value, label, tone, compact = false }: { value: number; label: string; tone: string; compact?: boolean }) {
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3">
+    <div className={compact ? "flex flex-col items-center gap-2 text-center" : "flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3"}>
       <div
-        className="relative h-16 w-16 rounded-full"
+        className={compact ? "relative h-[58px] w-[58px] rounded-full" : "relative h-16 w-16 rounded-full"}
         style={{
           background: `conic-gradient(${tone} ${value * 3.6}deg, rgba(255,255,255,0.08) 0deg)`,
         }}
       >
-        <div className="absolute inset-[7px] flex items-center justify-center rounded-full bg-[#08172A] text-sm font-black text-white">
+        <div className={`${compact ? "absolute inset-[6px] text-[13px]" : "absolute inset-[7px] text-sm"} flex items-center justify-center rounded-full bg-[#08172A] font-black text-white`}>
           {value}%
         </div>
       </div>
-      <div className="text-right">
-        <p className="text-sm font-bold text-white">{label}</p>
+      <div className={compact ? "text-center [&>p:last-child]:hidden" : "text-right"}>
+        <p className={compact ? "text-[12px] font-bold leading-5 text-white/80" : "text-sm font-bold text-white"}>{label}</p>
         <p className="text-xs text-white/45">مؤشر تنفيذي سريع</p>
       </div>
     </div>
@@ -420,7 +420,7 @@ export default function AdminPage() {
     { key: "settings", label: "الإعدادات", icon: Settings, href: "#" },
   ];
 
-  const utilityIcons = [MapPin, ShieldCheck, Layers3, FileCheck2, BriefcaseBusiness, Users, Bot, Settings];
+  const utilityIcons = [ShieldCheck, Layers3, FileCheck2, BriefcaseBusiness, Users, Bot];
 
   const executiveRailItems = [
     { key: "overview", label: "الرئيسية", icon: LayoutDashboard, onSelect: () => setActiveTab("overview") },
@@ -527,23 +527,23 @@ export default function AdminPage() {
 
   return (
     <div className={isExecutiveOverview ? "h-[100dvh] overflow-hidden bg-[linear-gradient(180deg,#07111D_0%,#081523_100%)] text-white" : "min-h-screen bg-[linear-gradient(180deg,#07111D_0%,#081523_100%)] text-white"}>
-      <div className={isExecutiveOverview ? "mx-auto grid h-full max-w-[1700px] grid-cols-1 gap-2 p-2 xl:grid-cols-[minmax(0,1fr)_64px_294px]" : "mx-auto grid min-h-screen max-w-[1700px] grid-cols-1 gap-3 p-3 xl:grid-cols-[minmax(0,1fr)_66px_300px]"}>
-        <main className={isExecutiveOverview ? "grid min-w-0 grid-rows-[110px_1fr] gap-2 overflow-hidden" : "min-w-0 space-y-3"}>
-        <section className={isExecutiveOverview ? "h-[110px] rounded-[1.8rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-5 py-4 shadow-[0_24px_70px_rgba(2,10,20,0.32)]" : "rounded-[1.8rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-5 py-4 shadow-[0_24px_70px_rgba(2,10,20,0.32)]"}>
-          <div className="flex flex-col gap-5 2xl:flex-row 2xl:items-center 2xl:justify-between">
+      <div dir="ltr" className={isExecutiveOverview ? "mx-auto grid h-full max-w-[1600px] grid-cols-1 gap-2 p-2 xl:grid-cols-[56px_minmax(0,1fr)_246px]" : "mx-auto grid min-h-screen max-w-[1600px] grid-cols-1 gap-3 p-3 xl:grid-cols-[56px_minmax(0,1fr)_246px]"}>
+        <main dir="rtl" className={isExecutiveOverview ? "order-2 grid min-w-0 grid-rows-[94px_1fr] gap-2 overflow-hidden" : "order-2 min-w-0 space-y-3"}>
+        <section className={isExecutiveOverview ? "h-[94px] rounded-[1.7rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-5 py-3.5 shadow-[0_24px_70px_rgba(2,10,20,0.32)]" : "rounded-[1.8rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-5 py-4 shadow-[0_24px_70px_rgba(2,10,20,0.32)]"}>
+          <div dir="ltr" className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
             <div className="flex flex-wrap items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-[#D1AF68]/55 bg-[radial-gradient(circle_at_30%_30%,#f4e1b0_0%,#8d6b2f_100%)] text-[#0A1524] shadow-[0_8px_20px_rgba(0,0,0,0.25)]">
+              <div className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-[#D1AF68]/55 bg-[radial-gradient(circle_at_30%_30%,#f4e1b0_0%,#8d6b2f_100%)] text-[#0A1524] shadow-[0_8px_20px_rgba(0,0,0,0.25)]">
                 <span className="text-sm font-black">أ</span>
               </div>
-              <button className="relative flex h-10 w-10 items-center justify-center rounded-2xl border border-white/8 bg-white/[0.03] text-white/70">
-                <Bell size={16} />
+              <button className="relative flex h-9 w-9 items-center justify-center rounded-[1rem] border border-white/8 bg-white/[0.03] text-white/70">
+                <Bell size={15} />
                 <span className="absolute -right-1 -top-1 rounded-full bg-red-500 px-1.5 py-0.5 text-[10px] font-black text-white">3</span>
               </button>
-              <button className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/8 bg-white/[0.03] text-white/70">
-                <Mail size={16} />
+              <button className="flex h-9 w-9 items-center justify-center rounded-[1rem] border border-white/8 bg-white/[0.03] text-white/70">
+                <Mail size={15} />
               </button>
               <div className="border-r border-white/8 pr-4 text-right">
-                <p className="text-sm font-black text-[#E8D6A5]">{currentUser.fullName}</p>
+                <p className="text-[15px] font-black text-[#E8D6A5]">{currentUser.fullName}</p>
                 <p className="text-xs text-white/45">مدير إدارة الاستثمار</p>
               </div>
               <div className="border-r border-white/8 pr-4 text-right text-white/60">
@@ -553,8 +553,8 @@ export default function AdminPage() {
             </div>
 
             <div className="text-right">
-              <h1 className="text-3xl font-black text-white">غرفة قيادة الاستثمار الحضري</h1>
-              <p className="mt-1 text-sm text-white/55">مركز القرار التنفيذي - أمانة منطقة حائل</p>
+              <h1 className="text-[2.25rem] font-black leading-none text-white">غرفة قيادة الاستثمار الحضري</h1>
+              <p className="mt-1 text-[13px] text-white/55">مركز القرار التنفيذي - أمانة منطقة حائل</p>
             </div>
           </div>
         </section>
@@ -580,8 +580,8 @@ export default function AdminPage() {
         </section>
 
         {activeTab === "overview" && (
-          <div className="grid h-full grid-cols-1 gap-2 overflow-hidden 2xl:grid-cols-[repeat(6,minmax(0,1fr))_1.18fr]">
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 2xl:col-span-6 2xl:grid-cols-6">
+          <div className="grid h-full grid-cols-1 gap-2 overflow-hidden xl:grid-cols-[repeat(6,minmax(0,1fr))_1.18fr]">
+            <div className="grid grid-cols-1 gap-2 md:grid-cols-2 xl:col-span-6 xl:grid-cols-6">
               {executiveOverviewMetrics.map((metric) => (
                 <ExecutiveMetricCard
                   key={metric.label}
@@ -594,8 +594,8 @@ export default function AdminPage() {
               ))}
             </div>
 
-            <div className="grid grid-cols-1 gap-2 2xl:col-span-6 2xl:grid-cols-[1.3fr_0.94fr]">
-              <section className="h-[372px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+            <div className="grid grid-cols-1 gap-2 xl:col-span-6 xl:grid-cols-[1.28fr_0.96fr]">
+              <section className="h-[340px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-start justify-between gap-4">
                   <button className="rounded-2xl border border-[#B6913E]/20 bg-[#B6913E]/10 px-4 py-2 text-sm font-bold text-[#E9DFC8]">
                     عرض طبقات الخريطة
@@ -639,7 +639,7 @@ export default function AdminPage() {
                     </div>
                   </div>
 
-                  <div className="relative h-[286px] overflow-hidden rounded-[1.7rem] border border-white/8 bg-[radial-gradient(circle_at_center,rgba(182,145,62,0.08),transparent_38%),linear-gradient(180deg,#0C1B2D_0%,#091520_100%)]">
+                  <div className="relative h-[242px] overflow-hidden rounded-[1.7rem] border border-white/8 bg-[radial-gradient(circle_at_center,rgba(182,145,62,0.08),transparent_38%),linear-gradient(180deg,#0C1B2D_0%,#091520_100%)]">
                     <div className="absolute inset-0 opacity-25" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)", backgroundSize: "34px 34px" }} />
                     <div className="absolute inset-[8%] rounded-[50%] border border-[#D7B76F]/10" />
                     <div className="absolute inset-[17%] rounded-[42%] border border-[#D7B76F]/12" />
@@ -667,7 +667,7 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="h-[372px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+              <section className="h-[340px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between gap-4">
                   <button onClick={() => setActiveTab("requests")} className="text-sm font-bold text-[#DAB971]">
                     عرض الكل
@@ -720,7 +720,7 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="h-[372px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)] 2xl:col-start-7 2xl:row-start-1 2xl:row-span-2">
+              <section className="h-[340px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)] xl:col-start-7 xl:row-start-1 xl:row-span-2">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <span className="rounded-xl bg-[#DAB971]/12 px-3 py-1 text-xs font-black text-[#DAB971]">AI</span>
                   <div className="text-right">
@@ -754,21 +754,21 @@ export default function AdminPage() {
               </section>
             </div>
 
-            <div className="grid grid-cols-1 gap-2 2xl:col-span-7 2xl:grid-cols-[0.98fr_0.9fr_0.98fr_1.08fr]">
-              <section className="h-[232px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+            <div className="grid grid-cols-1 gap-2 xl:col-span-7 xl:grid-cols-[0.94fr_0.92fr_1fr_1.08fr]">
+              <section className="h-[202px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض الكل</button>
                   <h2 className="text-xl font-black text-white">مؤشرات الأداء الرئيسية</h2>
                 </div>
-                <div className="grid gap-4">
-                  <ReadinessRing value={83} label="جاهزية الأحياء" tone="#DAB971" />
-                  <ReadinessRing value={76} label="سرعة الاعتماد" tone="#7DDA7E" />
-                  <ReadinessRing value={91} label="رضا المستثمرين" tone="#7DDA7E" />
-                  <ReadinessRing value={68} label="استغلال الأراضي" tone="#DAB971" />
+                <div className="grid grid-cols-4 gap-3">
+                  <ReadinessRing value={83} label="جاهزية الأحياء" tone="#DAB971" compact />
+                  <ReadinessRing value={76} label="سرعة الاعتماد" tone="#7DDA7E" compact />
+                  <ReadinessRing value={91} label="رضا المستثمرين" tone="#7DDA7E" compact />
+                  <ReadinessRing value={68} label="استغلال الأراضي" tone="#DAB971" compact />
                 </div>
               </section>
 
-              <section className="h-[232px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+              <section className="h-[202px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض الكل</button>
                   <h2 className="text-xl font-black text-white">تنبيهات ذكية</h2>
@@ -785,7 +785,7 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="h-[232px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+              <section className="h-[202px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض الكل</button>
                   <h2 className="text-xl font-black text-white">رحلة الفرصة الاستثمارية</h2>
@@ -822,12 +822,12 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="h-[232px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+              <section className="h-[202px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض التقرير</button>
                   <h2 className="text-xl font-black text-white">الأثر الاقتصادي المتوقع</h2>
                 </div>
-                <div className="h-[162px]">
+                <div className="h-[134px]">
                   {chartsReady ? (
                     <ResponsiveContainer width="100%" height="100%">
                       <AreaChart data={monthlyApplications} margin={{ top: 10, right: 6, left: 0, bottom: 0 }}>
@@ -854,7 +854,7 @@ export default function AdminPage() {
               </section>
             </div>
 
-            <div className="grid grid-cols-1 gap-2 md:grid-cols-2 2xl:col-span-7 2xl:grid-cols-5">
+            <div className="grid grid-cols-1 gap-2 md:grid-cols-2 xl:col-span-7 xl:grid-cols-5">
               {[
                 { title: "تصدير تقرير", note: "تقرير الأداء الشهري", icon: <FileText size={18} /> },
                 { title: "اجتماع لجنة الاستثمار", note: "غداً - 10:00 ص", icon: <CalendarDays size={18} /> },
@@ -862,13 +862,13 @@ export default function AdminPage() {
                 { title: "مركز المساعدة", note: "الدعم والمساندة", icon: <MessageSquarePlus size={18} /> },
                 { title: "اسأل مساعد استنار الذكي", note: "اكتب استفسارك هنا...", icon: <Sparkles size={18} /> },
               ].map((item) => (
-                <div key={item.title} className="h-[82px] overflow-hidden rounded-[1.45rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] px-5 py-4 shadow-[0_16px_42px_rgba(2,10,20,0.28)]">
+                <div key={item.title} className="h-[76px] overflow-hidden rounded-[1.45rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] px-4 py-3 shadow-[0_16px_42px_rgba(2,10,20,0.28)]">
                   <div className="flex items-center justify-between gap-4">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-[#DAB971]/20 bg-[#DAB971]/8 text-[#DAB971]">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-[1rem] border border-[#DAB971]/20 bg-[#DAB971]/8 text-[#DAB971]">
                       {item.icon}
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-black text-white">{item.title}</p>
+                      <p className="text-[13px] font-black text-white">{item.title}</p>
                       <p className="mt-1 text-xs text-white/45">{item.note}</p>
                     </div>
                   </div>
@@ -1426,62 +1426,58 @@ export default function AdminPage() {
         )}
         </main>
 
-        <aside className="hidden xl:flex flex-col items-center rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(12,24,38,0.98)_0%,rgba(8,18,30,0.98)_100%)] py-5 shadow-[0_18px_50px_rgba(0,0,0,0.25)]">
-          <div className="mb-6 flex h-11 w-11 items-center justify-center rounded-2xl border border-[#D3B06B]/25 bg-[#D3B06B]/10 text-[#DDBD79]">
-            <MapPin size={18} />
+        <aside dir="rtl" className="order-1 hidden xl:flex flex-col items-center rounded-[1.8rem] border border-white/8 bg-[linear-gradient(180deg,rgba(12,24,38,0.98)_0%,rgba(8,18,30,0.98)_100%)] py-4 shadow-[0_18px_50px_rgba(0,0,0,0.25)]">
+          <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-[1.15rem] border border-[#D3B06B]/25 bg-[#D3B06B]/10 text-[#DDBD79]">
+            <MapPin size={17} />
           </div>
-          <div className="flex flex-1 flex-col items-center gap-3">
+          <div className="flex flex-1 flex-col items-center gap-2.5">
             {utilityIcons.map((Icon, index) => (
               <button
                 key={index}
-                className={`flex h-11 w-11 items-center justify-center rounded-2xl border transition ${
+                className={`flex h-10 w-10 items-center justify-center rounded-[1.15rem] border transition ${
                   index === 0
                     ? "border-[#D3B06B]/25 bg-[#D3B06B]/10 text-[#E7CB8E]"
                     : "border-white/8 bg-white/[0.02] text-white/55 hover:bg-white/[0.05] hover:text-white"
                 }`}
               >
-                <Icon size={18} />
+                <Icon size={17} />
               </button>
             ))}
           </div>
-          <button className="mt-6 flex h-11 w-11 items-center justify-center rounded-2xl border border-white/8 bg-white/[0.02] text-white/55 hover:bg-white/[0.05] hover:text-white">
-            <Settings size={18} />
+          <button className="mt-5 flex h-10 w-10 items-center justify-center rounded-[1.15rem] border border-white/8 bg-white/[0.02] text-white/55 hover:bg-white/[0.05] hover:text-white">
+            <Settings size={17} />
           </button>
         </aside>
 
-        <aside className="hidden xl:flex flex-col rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(9,20,34,0.98)_0%,rgba(7,16,28,0.98)_100%)] px-6 py-7 shadow-[0_18px_50px_rgba(0,0,0,0.28)]">
-          <div className="border-b border-white/8 pb-6 text-right">
+        <aside dir="rtl" className="order-3 hidden xl:flex flex-col rounded-[1.8rem] border border-white/8 bg-[linear-gradient(180deg,rgba(9,20,34,0.98)_0%,rgba(7,16,28,0.98)_100%)] px-5 py-5 shadow-[0_18px_50px_rgba(0,0,0,0.28)]">
+          <div className="border-b border-white/8 pb-5 text-right">
             <div className="flex items-start justify-between gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#D3B06B]/25 bg-[#D3B06B]/10 text-[#DDBD79]">
-                <Sparkles size={22} />
+              <div className="flex h-11 w-11 items-center justify-center rounded-[1.15rem] border border-[#D3B06B]/25 bg-[#D3B06B]/10 text-[#DDBD79]">
+                <Sparkles size={20} />
               </div>
               <div className="text-right">
-                <h2 className="text-3xl font-black text-white">استنار</h2>
-                <p className="mt-2 text-xs leading-6 text-white/50">منصة الذكاء الاستثماري ودعم القرار</p>
-              </div>
-              <div className="hidden">
-                <h2 className="text-3xl font-black text-white">استنار</h2>
-                <p className="mt-2 text-xs leading-6 text-white/50">منصة الذكاء الاستثماري ودعم القرار</p>
+                <h2 className="text-[2rem] font-black leading-none text-white">استنار</h2>
+                <p className="mt-2 text-[11px] leading-5 text-white/50">منصة الذكاء الاستثماري ودعم القرار</p>
               </div>
             </div>
-            <div className="mt-8 rounded-2xl border border-white/8 bg-white/[0.02] px-4 py-3">
-              <p className="text-sm text-white/70">المركز التنفيذي</p>
-              <p className="text-sm text-white/45">المركز التنفيذي</p>
+            <div className="mt-6 rounded-[1.15rem] border border-white/8 bg-white/[0.02] px-4 py-2.5">
+              <p className="text-[13px] text-white/70">المركز التنفيذي</p>
+              <p className="text-[13px] text-white/45">المركز التنفيذي</p>
             </div>
           </div>
 
-          <nav className="mt-6 flex-1 space-y-1.5">
+          <nav className="mt-5 flex-1 space-y-1">
             {executiveRailItems.map((item) => {
               const Icon = item.icon;
               const isActive = item.key === "overview" ? activeTab === "overview" : item.key === activeTab;
-              const classes = `flex w-full items-center justify-between rounded-[1.15rem] px-4 py-3.5 text-[15px] font-semibold transition ${
+              const classes = `flex w-full items-center justify-between rounded-[1.05rem] px-3.5 py-2.5 text-[13px] font-semibold transition ${
                 isActive ? "bg-[#C79A48] text-[#07111D] shadow-[0_12px_28px_rgba(199,154,72,0.22)]" : "text-white/72 hover:bg-white/[0.04] hover:text-white"
               }`;
 
               if (item.href) {
                 return (
                   <Link key={item.key} href={item.href} className={classes}>
-                    <Icon size={18} />
+                    <Icon size={16} />
                     <span>{item.label}</span>
                   </Link>
                 );
@@ -1489,25 +1485,23 @@ export default function AdminPage() {
 
               return (
                 <button key={item.key} onClick={item.onSelect} className={classes}>
-                  <Icon size={18} />
+                  <Icon size={16} />
                   <span>{item.label}</span>
                 </button>
               );
             })}
           </nav>
 
-          <div className="space-y-4 border-t border-white/8 pt-6">
-            <button className="flex w-full items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-4 text-[0px] font-semibold text-white/75 hover:bg-white/[0.04]">
-              <MessageSquarePlus size={16} />
-              <span className="text-sm">دليل المستخدم</span>
-              دليل المستخدم
+          <div className="space-y-3 border-t border-white/8 pt-5">
+            <button className="flex w-full items-center justify-center gap-2 rounded-[1.05rem] border border-white/10 bg-white/[0.02] px-4 py-3 text-[13px] font-semibold text-white/75 hover:bg-white/[0.04]">
+              <MessageSquarePlus size={15} />
+              <span>دليل المستخدم</span>
             </button>
-            <button className="flex w-full items-center justify-center gap-2 rounded-2xl border border-white/10 bg-transparent px-4 py-4 text-[0px] font-semibold text-white/55 hover:bg-white/[0.04] hover:text-white">
-              <LogOut size={16} />
-              <span className="text-sm">تسجيل خروج</span>
-              تسجيل خروج
+            <button className="flex w-full items-center justify-center gap-2 rounded-[1.05rem] border border-white/10 bg-transparent px-4 py-3 text-[13px] font-semibold text-white/55 hover:bg-white/[0.04] hover:text-white">
+              <LogOut size={15} />
+              <span>تسجيل خروج</span>
             </button>
-            <p className="text-center text-xs leading-6 text-white/35">2024 استنار<br />جميع الحقوق محفوظة</p>
+            <p className="text-center text-[11px] leading-5 text-white/35">2024 استنار<br />جميع الحقوق محفوظة</p>
           </div>
         </aside>
       </div>
