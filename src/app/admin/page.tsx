@@ -445,12 +445,12 @@ export default function AdminPage() {
   ];
 
   const executiveMapNodes = [
-    { name: "حي النقرة", top: "18%", right: "46%", status: "جاهزة", tone: "#2DD36F" },
-    { name: "حي الجامعة", top: "57%", right: "32%", status: "متعثرة", tone: "#FF5A5F" },
-    { name: "حي المصيف", top: "30%", right: "24%", status: "قيد المراجعة", tone: "#F4B844" },
-    { name: "حي مشار", top: "70%", right: "52%", status: "جاهزة", tone: "#2DD36F" },
-    { name: "الوسيطاء", top: "58%", right: "61%", status: "جاهزة", tone: "#2DD36F" },
-    { name: "أجا", top: "42%", right: "72%", status: "قيد المراجعة", tone: "#F4B844" },
+    { slug: "al-naqrah", name: "حي النقرة", status: "جاهزة", tone: "#2DD36F", path: "M324 82 L400 64 L480 106 L448 178 L360 192 L304 146 Z", labelX: 394, labelY: 128 },
+    { slug: "al-jamieen", name: "حي الجامعيين", status: "متعثرة", tone: "#FF5A5F", path: "M198 188 L292 148 L350 196 L304 276 L206 264 L162 214 Z", labelX: 254, labelY: 214 },
+    { slug: "mashar", name: "حي مشار", status: "جاهزة", tone: "#2DD36F", path: "M314 278 L404 238 L470 286 L446 364 L348 378 L286 324 Z", labelX: 374, labelY: 316 },
+    { slug: "al-musayf", name: "حي المصيف", status: "قيد المراجعة", tone: "#F4B844", path: "M120 96 L220 82 L276 138 L224 196 L126 184 L86 132 Z", labelX: 178, labelY: 136 },
+    { slug: "downtown", name: "وسط المدينة", status: "قيد المراجعة", tone: "#F4B844", path: "M438 180 L534 154 L588 216 L538 290 L446 268 L408 220 Z", labelX: 500, labelY: 222 },
+    { slug: "al-maghwah", name: "المغواة", status: "جاهزة", tone: "#2DD36F", path: "M540 78 L622 112 L650 196 L590 236 L514 194 L494 118 Z", labelX: 578, labelY: 150 },
   ];
 
   const executiveQuickAlerts = [
@@ -594,8 +594,8 @@ export default function AdminPage() {
               ))}
             </div>
 
-            <div className="grid grid-cols-1 gap-2 xl:col-span-6 xl:grid-cols-[1.28fr_0.96fr]">
-              <section className="h-[340px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+            <div className="grid grid-cols-1 gap-2 xl:col-span-7 xl:grid-cols-[1.36fr_1fr_0.56fr]">
+              <section className="h-[372px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-start justify-between gap-4">
                   <button className="rounded-2xl border border-[#B6913E]/20 bg-[#B6913E]/10 px-4 py-2 text-sm font-bold text-[#E9DFC8]">
                     عرض طبقات الخريطة
@@ -606,7 +606,7 @@ export default function AdminPage() {
                   </div>
                 </div>
 
-                <div className="grid gap-3 xl:grid-cols-[0.22fr_0.78fr]">
+                <div className="grid h-[300px] gap-3 xl:grid-cols-[0.25fr_0.75fr]">
                   <div className="space-y-3">
                     <select
                       value={selectedNeighborhoodSlug}
@@ -639,24 +639,32 @@ export default function AdminPage() {
                     </div>
                   </div>
 
-                  <div className="relative h-[242px] overflow-hidden rounded-[1.7rem] border border-white/8 bg-[radial-gradient(circle_at_center,rgba(182,145,62,0.08),transparent_38%),linear-gradient(180deg,#0C1B2D_0%,#091520_100%)]">
-                    <div className="absolute inset-0 opacity-25" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)", backgroundSize: "34px 34px" }} />
-                    <div className="absolute inset-[8%] rounded-[50%] border border-[#D7B76F]/10" />
-                    <div className="absolute inset-[17%] rounded-[42%] border border-[#D7B76F]/12" />
-                    <div className="absolute inset-[28%] rounded-[35%] border border-[#D7B76F]/14" />
-                    <div className="absolute left-[11%] top-[50%] h-px w-[72%] bg-[#D7B76F]/16" />
-                    <div className="absolute left-[18%] top-[22%] h-[58%] w-px bg-[#D7B76F]/16" />
-                    <div className="absolute left-[34%] top-[18%] h-[64%] w-px bg-[#D7B76F]/16" />
-                    <div className="absolute left-[56%] top-[15%] h-[68%] w-px bg-[#D7B76F]/16" />
-                    <div className="absolute left-[24%] top-[32%] h-px w-[42%] bg-[#D7B76F]/16" />
-                    <div className="absolute left-[28%] top-[64%] h-px w-[34%] bg-[#D7B76F]/16" />
-
-                    {executiveMapNodes.map((node) => (
-                      <div key={node.name} className="absolute flex flex-col items-center gap-2" style={{ top: node.top, right: node.right }}>
-                        <div className="h-5 w-5 rounded-full border-4 border-[#0C1B2D] shadow-[0_0_0_8px_rgba(255,255,255,0.03)]" style={{ backgroundColor: node.tone }} />
-                        <span className="rounded-full bg-[#081624]/90 px-3 py-1 text-[11px] font-bold text-white/80">{node.name}</span>
-                      </div>
-                    ))}
+                  <div className="relative h-[258px] overflow-hidden rounded-[1.7rem] border border-white/8 bg-[radial-gradient(circle_at_center,rgba(182,145,62,0.09),transparent_40%),linear-gradient(180deg,#0C1B2D_0%,#091520_100%)]">
+                    <div className="absolute inset-0 opacity-25" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)", backgroundSize: "34px 34px" }} />
+                    <svg viewBox="0 0 700 430" className="absolute inset-0 h-full w-full">
+                      <path d="M88 146 C154 86, 270 58, 382 64 C510 70, 610 116, 656 194 C676 228, 662 298, 614 346 C562 396, 454 420, 322 404 C206 390, 124 342, 92 286 C66 242, 56 184, 88 146 Z" fill="none" stroke="rgba(215,183,111,0.18)" strokeWidth="2" />
+                      <path d="M144 208 L542 168" stroke="rgba(215,183,111,0.12)" strokeWidth="2" />
+                      <path d="M238 88 L260 354" stroke="rgba(215,183,111,0.12)" strokeWidth="2" />
+                      <path d="M412 76 L396 382" stroke="rgba(215,183,111,0.12)" strokeWidth="2" />
+                      <path d="M166 294 L552 232" stroke="rgba(215,183,111,0.12)" strokeWidth="2" />
+                      {executiveMapNodes.map((node) => {
+                        const selected = selectedNeighborhoodSlug === node.slug;
+                        return (
+                          <g key={node.slug}>
+                            <path
+                              d={node.path}
+                              fill={selected ? "rgba(215,183,111,0.28)" : "rgba(255,255,255,0.05)"}
+                              stroke={selected ? "#D7B76F" : "rgba(255,255,255,0.13)"}
+                              strokeWidth={selected ? 2.3 : 1.2}
+                            />
+                            <circle cx={node.labelX} cy={node.labelY - 18} r={7} fill={node.tone} stroke="#0C1B2D" strokeWidth="4" />
+                            <text x={node.labelX} y={node.labelY + 8} textAnchor="middle" fill="rgba(255,255,255,0.84)" style={{ fontSize: 14, fontWeight: 700 }}>
+                              {node.name}
+                            </text>
+                          </g>
+                        );
+                      })}
+                    </svg>
 
                     <div className="absolute bottom-5 left-5 rounded-2xl border border-white/8 bg-[#0A1726]/88 px-4 py-3 text-right">
                       <p className="text-xs text-white/40">الحي المحدد</p>
@@ -667,7 +675,7 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="h-[340px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+              <section className="h-[372px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between gap-4">
                   <button onClick={() => setActiveTab("requests")} className="text-sm font-bold text-[#DAB971]">
                     عرض الكل
@@ -720,7 +728,7 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="h-[340px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)] xl:col-start-7 xl:row-start-1 xl:row-span-2">
+              <section className="h-[372px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <span className="rounded-xl bg-[#DAB971]/12 px-3 py-1 text-xs font-black text-[#DAB971]">AI</span>
                   <div className="text-right">
