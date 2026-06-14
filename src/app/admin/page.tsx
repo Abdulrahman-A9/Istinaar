@@ -16,7 +16,9 @@ import {
 import {
   ArrowUpLeft,
   BadgeDollarSign,
+  BarChart3,
   Bell,
+  Bot,
   BriefcaseBusiness,
   Building2,
   CalendarDays,
@@ -25,22 +27,27 @@ import {
   Database,
   Eye,
   FileBadge2,
+  FileCheck2,
   FileText,
+  FolderKanban,
   Handshake,
   Landmark,
+  Layers3,
   LayoutDashboard,
+  LogOut,
   Mail,
   Map,
+  MapPin,
   MessageSquarePlus,
   Plus,
   RefreshCw,
   ShieldCheck,
   Sparkles,
+  Settings,
   TrendingUp,
   UserCheck,
   Users,
 } from "lucide-react";
-import AmanahWorkspaceShell from "@/components/amanah/AmanahWorkspaceShell";
 import lands from "@/data/lands";
 import { opportunities } from "@/data/opportunities";
 import { useAppStore } from "@/store/appStore";
@@ -140,18 +147,18 @@ function ExecutiveMetricCard({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="rounded-[1.7rem] border border-white/8 bg-[linear-gradient(180deg,rgba(13,28,48,0.96)_0%,rgba(10,24,41,0.94)_100%)] p-5 shadow-[0_18px_50px_rgba(2,10,20,0.34)]">
+    <div className="rounded-[1.55rem] border border-white/8 bg-[linear-gradient(180deg,rgba(13,28,48,0.96)_0%,rgba(10,24,41,0.94)_100%)] p-4 shadow-[0_18px_50px_rgba(2,10,20,0.34)]">
       <div className="flex items-start justify-between gap-4">
-        <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#B6913E]/20 bg-[#B6913E]/8 text-[#D9BA72]">
+        <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-[#B6913E]/20 bg-[#B6913E]/8 text-[#D9BA72]">
           {icon}
         </div>
         <div className="text-right">
           <p className="text-xs text-white/50">{label}</p>
-          <p className="mt-3 text-3xl font-black text-white">{value}</p>
+          <p className="mt-2 text-[2rem] font-black leading-none text-white">{value}</p>
           {unit ? <p className="mt-1 text-sm text-white/42">{unit}</p> : null}
         </div>
       </div>
-      <p className="mt-5 text-sm font-semibold text-emerald-400">{delta}</p>
+      <p className="mt-4 text-sm font-semibold text-emerald-400">{delta}</p>
     </div>
   );
 }
@@ -400,46 +407,20 @@ export default function AdminPage() {
     [neighborhoodOptions, selectedNeighborhoodSlug]
   );
 
-  const primaryNavItem = navItems[0];
-  const secondaryNavItems = navItems.slice(1);
-  const workspaceItems = [
-    {
-      key: "admin-home",
-      label: "إدارة الأمانة",
-      icon: LayoutDashboard,
-      href: "/admin",
-      isActive: true,
-    },
-    {
-      key: "portal",
-      label: "لوحة الذكاء الاستثماري",
-      icon: Landmark,
-      href: "/investment-intelligence",
-    },
-    {
-      key: "executive",
-      label: "التقارير التنفيذية",
-      icon: FileText,
-      href: "/investment-intelligence?tab=executive",
-    },
+  const rightRailItems = [
+    { key: "overview", label: "الرئيسية", icon: LayoutDashboard, onSelect: () => setActiveTab("overview") },
+    { key: "intelligence", label: "الذكاء الاستثماري", icon: Bot, href: "/investment-intelligence" },
+    { key: "spatial", label: "التحليل المكاني", icon: MapPin, href: "/investment-intelligence?tab=spatial" },
+    { key: "assets", label: "الفرص الاستثمارية", icon: BriefcaseBusiness, onSelect: () => setActiveTab("assets") },
+    { key: "requests", label: "الاعتمادات والموافقات", icon: FileCheck2, onSelect: () => setActiveTab("requests") },
+    { key: "relations", label: "الشركاء والمستثمرون", icon: Users, onSelect: () => setActiveTab("relations") },
+    { key: "cases", label: "الطلبات والاعتراضات", icon: FolderKanban, onSelect: () => setActiveTab("requests") },
+    { key: "reports", label: "التقارير واللوحات", icon: FileText, onSelect: () => setActiveTab("governance") },
+    { key: "governance", label: "الأداء والمؤشرات", icon: BarChart3, onSelect: () => setActiveTab("governance") },
+    { key: "settings", label: "الإعدادات", icon: Settings, href: "#" },
   ];
 
-  const sectionItems = [
-    {
-      key: primaryNavItem.key,
-      label: primaryNavItem.label,
-      icon: primaryNavItem.icon,
-      isActive: activeTab === primaryNavItem.key,
-      onSelect: () => setActiveTab(primaryNavItem.key),
-    },
-    ...secondaryNavItems.map((item) => ({
-      key: item.key,
-      label: item.label,
-      icon: item.icon,
-      isActive: activeTab === item.key,
-      onSelect: () => setActiveTab(item.key),
-    })),
-  ];
+  const utilityIcons = [MapPin, ShieldCheck, Layers3, FileCheck2, BriefcaseBusiness, Users, Bot, Settings];
 
   const overviewMetrics = [
     { label: "قيمة الاستثمار المتوقعة", value: "211.7", unit: "مليون ريال", delta: "+18% عن الشهر الماضي", icon: <BadgeDollarSign size={22} /> },
@@ -501,53 +482,58 @@ export default function AdminPage() {
   }
 
   return (
-    <AmanahWorkspaceShell
-      identityIcon={<Building2 size={22} color="#07192E" />}
-      identityTitle="إدارة الأمانة التشغيلية"
-      identitySubtitle="أمانة منطقة حائل"
-      identityDescription="لوحة تنفيذية موحدة لإدارة الأراضي والطلبات والشراكات والمراجعة الاستشارية."
-      workspaceItems={workspaceItems}
-      sectionItems={sectionItems}
-      statusEyebrow="وضع التشغيل"
-      statusTitle="متابعة تنفيذية يومية"
-      statusDescription="الأولوية الحالية موجهة لرفع جودة العرض، تصفية الطلبات، واعتماد ملفات الشراكة."
-    >
-        <section className="mb-6 overflow-hidden rounded-[2.2rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091A2A_100%)] p-5 shadow-[0_24px_70px_rgba(2,10,20,0.32)]">
-          <div className="flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
-            <div className="flex flex-col gap-4 xl:flex-row xl:items-center">
-              <div className="flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-[#B6913E]/70 bg-[#D6BA78]/15 text-[#E9DFC8]">
-                  <Building2 size={20} />
-                </div>
-                <div className="text-right">
-                  <p className="text-sm font-black text-[#E9DFC8]">{currentUser.fullName}</p>
-                  <p className="text-xs text-white/45">مدير إدارة الاستثمار</p>
-                </div>
-                <span className="rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-black text-white">3</span>
-                <Bell size={16} className="text-[#E9DFC8]" />
-              </div>
+    <div className="min-h-screen bg-[linear-gradient(180deg,#07111D_0%,#081523_100%)] text-white">
+      <div className="mx-auto grid min-h-screen max-w-[1680px] grid-cols-1 gap-4 p-3 xl:grid-cols-[72px_minmax(0,1fr)_290px]">
+        <aside className="hidden xl:flex flex-col items-center rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(12,24,38,0.98)_0%,rgba(8,18,30,0.98)_100%)] py-5 shadow-[0_18px_50px_rgba(0,0,0,0.25)]">
+          <div className="mb-6 flex h-11 w-11 items-center justify-center rounded-2xl border border-[#D3B06B]/25 bg-[#D3B06B]/10 text-[#DDBD79]">
+            <MapPin size={18} />
+          </div>
+          <div className="flex flex-1 flex-col items-center gap-3">
+            {utilityIcons.map((Icon, index) => (
+              <button
+                key={index}
+                className={`flex h-11 w-11 items-center justify-center rounded-2xl border transition ${
+                  index === 0
+                    ? "border-[#D3B06B]/25 bg-[#D3B06B]/10 text-[#E7CB8E]"
+                    : "border-white/8 bg-white/[0.02] text-white/55 hover:bg-white/[0.05] hover:text-white"
+                }`}
+              >
+                <Icon size={18} />
+              </button>
+            ))}
+          </div>
+          <button className="mt-6 flex h-11 w-11 items-center justify-center rounded-2xl border border-white/8 bg-white/[0.02] text-white/55 hover:bg-white/[0.05] hover:text-white">
+            <Settings size={18} />
+          </button>
+        </aside>
 
-              <div className="flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3 text-white/65">
+        <main className="min-w-0 space-y-4">
+        <section className="rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-5 py-4 shadow-[0_24px_70px_rgba(2,10,20,0.32)]">
+          <div className="flex flex-col gap-5 2xl:flex-row 2xl:items-center 2xl:justify-between">
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-[#D1AF68]/55 bg-[radial-gradient(circle_at_30%_30%,#f4e1b0_0%,#8d6b2f_100%)] text-[#0A1524] shadow-[0_8px_20px_rgba(0,0,0,0.25)]">
+                <span className="text-sm font-black">أ</span>
+              </div>
+              <button className="relative flex h-10 w-10 items-center justify-center rounded-2xl border border-white/8 bg-white/[0.03] text-white/70">
+                <Bell size={16} />
+                <span className="absolute -right-1 -top-1 rounded-full bg-red-500 px-1.5 py-0.5 text-[10px] font-black text-white">3</span>
+              </button>
+              <button className="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/8 bg-white/[0.03] text-white/70">
                 <Mail size={16} />
-                <span className="text-sm">المركز التنفيذي للأمانة</span>
+              </button>
+              <div className="border-r border-white/8 pr-4 text-right">
+                <p className="text-sm font-black text-[#E8D6A5]">{currentUser.fullName}</p>
+                <p className="text-xs text-white/45">مدير إدارة الاستثمار</p>
               </div>
-
-              <div className="flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3 text-white/65">
-                <CalendarDays size={16} />
-                <div className="text-right">
-                  <p className="text-xs">الأربعاء 05/01/1448 هـ</p>
-                  <p className="text-sm font-semibold text-white/85">10:30 AM</p>
-                </div>
+              <div className="border-r border-white/8 pr-4 text-right text-white/60">
+                <p className="text-xs">الأربعاء 05/01/1448 هـ</p>
+                <p className="text-sm font-semibold text-white/85">10:30 AM</p>
               </div>
             </div>
 
             <div className="text-right">
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#B6913E]/25 bg-[#B6913E]/10 px-4 py-2 text-xs font-bold text-[#E9DFC8]">
-                <Sparkles size={14} />
-                غرفة قيادة الاستثمار الحضري
-              </div>
-              <h1 className="display-title text-3xl font-black text-white md:text-4xl">غرفة قيادة الاستثمار الحضري</h1>
-              <p className="mt-2 text-sm leading-8 text-white/60 md:text-base">مركز القرار التنفيذي لأمانة منطقة حائل. صفحة مصممة لتُعرض أمام الأمين والمسؤولين بوصفها نواة نظام تشغيلي مستقبلي، لا مجرد لوحة عرض.</p>
+              <h1 className="text-3xl font-black text-white">غرفة قيادة الاستثمار الحضري</h1>
+              <p className="mt-1 text-sm text-white/55">مركز القرار التنفيذي - أمانة منطقة حائل</p>
             </div>
           </div>
         </section>
@@ -573,8 +559,8 @@ export default function AdminPage() {
         </section>
 
         {activeTab === "overview" && (
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-6">
+          <div className="grid grid-cols-1 gap-4 2xl:grid-cols-[repeat(6,minmax(0,1fr))_1.16fr]">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:col-span-6 2xl:grid-cols-6">
               {overviewMetrics.map((metric) => (
                 <ExecutiveMetricCard
                   key={metric.label}
@@ -587,7 +573,7 @@ export default function AdminPage() {
               ))}
             </div>
 
-            <div className="grid grid-cols-1 gap-6 2xl:grid-cols-[1.28fr_0.92fr_0.58fr]">
+            <div className="grid grid-cols-1 gap-6 2xl:col-span-6 2xl:grid-cols-[1.28fr_0.92fr]">
               <section className="rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-5 flex items-start justify-between gap-4">
                   <button className="rounded-2xl border border-[#B6913E]/20 bg-[#B6913E]/10 px-4 py-2 text-sm font-bold text-[#E9DFC8]">
@@ -713,7 +699,7 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+              <section className="rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)] 2xl:col-start-7 2xl:row-start-1 2xl:row-span-2">
                 <div className="mb-5 flex items-center justify-between gap-3">
                   <span className="rounded-xl bg-[#DAB971]/12 px-3 py-1 text-xs font-black text-[#DAB971]">AI</span>
                   <div className="text-right">
@@ -747,7 +733,7 @@ export default function AdminPage() {
               </section>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 2xl:grid-cols-[0.92fr_0.84fr_0.9fr_1.04fr]">
+            <div className="grid grid-cols-1 gap-6 2xl:col-span-7 2xl:grid-cols-[0.92fr_0.84fr_0.9fr_1.04fr]">
               <section className="rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-5 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض الكل</button>
@@ -847,7 +833,7 @@ export default function AdminPage() {
               </section>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-5">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:col-span-7 2xl:grid-cols-5">
               {[
                 { title: "تصدير تقرير", note: "تقرير الأداء الشهري", icon: <FileText size={18} /> },
                 { title: "اجتماع لجنة الاستثمار", note: "غداً - 10:00 ص", icon: <CalendarDays size={18} /> },
@@ -1417,6 +1403,63 @@ export default function AdminPage() {
             </ShellCard>
           </div>
         )}
-    </AmanahWorkspaceShell>
+        </main>
+
+        <aside className="hidden xl:flex flex-col rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(9,20,34,0.98)_0%,rgba(7,16,28,0.98)_100%)] px-6 py-7 shadow-[0_18px_50px_rgba(0,0,0,0.28)]">
+          <div className="border-b border-white/8 pb-6 text-right">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#D3B06B]/25 bg-[#D3B06B]/10 text-[#DDBD79]">
+                <Sparkles size={22} />
+              </div>
+              <div>
+                <h2 className="text-3xl font-black text-white">استنار</h2>
+                <p className="mt-2 text-xs leading-6 text-white/50">منصة الذكاء الاستثماري ودعم القرار</p>
+              </div>
+            </div>
+            <div className="mt-8 rounded-2xl border border-white/8 bg-white/[0.02] px-4 py-3">
+              <p className="text-sm text-white/45">المركز التنفيذي</p>
+            </div>
+          </div>
+
+          <nav className="mt-6 flex-1 space-y-2">
+            {rightRailItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = item.key === "overview" ? activeTab === "overview" : item.key === activeTab;
+              const classes = `flex w-full items-center justify-between rounded-2xl px-4 py-3 text-sm font-semibold transition ${
+                isActive ? "bg-[#C79A48] text-[#07111D]" : "text-white/72 hover:bg-white/[0.04] hover:text-white"
+              }`;
+
+              if (item.href) {
+                return (
+                  <Link key={item.key} href={item.href} className={classes}>
+                    <Icon size={18} />
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              }
+
+              return (
+                <button key={item.key} onClick={item.onSelect} className={classes}>
+                  <Icon size={18} />
+                  <span>{item.label}</span>
+                </button>
+              );
+            })}
+          </nav>
+
+          <div className="space-y-4 border-t border-white/8 pt-6">
+            <button className="flex w-full items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-4 text-sm font-semibold text-white/75 hover:bg-white/[0.04]">
+              <MessageSquarePlus size={16} />
+              دليل المستخدم
+            </button>
+            <button className="flex w-full items-center justify-center gap-2 rounded-2xl border border-white/10 bg-transparent px-4 py-4 text-sm font-semibold text-white/55 hover:bg-white/[0.04] hover:text-white">
+              <LogOut size={16} />
+              تسجيل خروج
+            </button>
+            <p className="text-center text-xs leading-6 text-white/35">2024 استنار<br />جميع الحقوق محفوظة</p>
+          </div>
+        </aside>
+      </div>
+    </div>
   );
 }
