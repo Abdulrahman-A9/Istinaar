@@ -422,6 +422,43 @@ export default function AdminPage() {
 
   const utilityIcons = [MapPin, ShieldCheck, Layers3, FileCheck2, BriefcaseBusiness, Users, Bot, Settings];
 
+  const executiveRailItems = [
+    { key: "overview", label: "الرئيسية", icon: LayoutDashboard, onSelect: () => setActiveTab("overview") },
+    { key: "intelligence", label: "الذكاء الاستثماري", icon: Bot, href: "/investment-intelligence" },
+    { key: "spatial", label: "التحليل المكاني", icon: MapPin, href: "/investment-intelligence?tab=spatial" },
+    { key: "assets", label: "الفرص الاستثمارية", icon: BriefcaseBusiness, onSelect: () => setActiveTab("assets") },
+    { key: "requests", label: "الاعتمادات والموافقات", icon: FileCheck2, onSelect: () => setActiveTab("requests") },
+    { key: "relations", label: "الشركاء والمستثمرون", icon: Users, onSelect: () => setActiveTab("relations") },
+    { key: "cases", label: "الطلبات والاعتراضات", icon: FolderKanban, onSelect: () => setActiveTab("requests") },
+    { key: "reports", label: "التقارير واللوحات", icon: FileText, onSelect: () => setActiveTab("governance") },
+    { key: "governance", label: "الأداء والمؤشرات", icon: BarChart3, onSelect: () => setActiveTab("governance") },
+    { key: "settings", label: "الإعدادات", icon: Settings, href: "#" },
+  ];
+
+  const executiveOverviewMetrics = [
+    { label: "قيمة الاستثمار المتوقعة", value: "211.7", unit: "مليون ريال", delta: "+18% عن الشهر الماضي", icon: <BadgeDollarSign size={22} /> },
+    { label: "مؤشر جاهزية الاستثمار", value: "83%", delta: "+7% عن الشهر الماضي", icon: <TrendingUp size={22} /> },
+    { label: "الوظائف المتوقعة", value: "1,248", unit: "وظيفة", delta: "+26% عن الشهر الماضي", icon: <Users size={22} /> },
+    { label: "العوائد السنوية المتوقعة", value: "28.4", unit: "مليون ريال", delta: "+15% عن الشهر الماضي", icon: <ChartColumn size={22} /> },
+    { label: "عدد الفرص الاستثمارية", value: `${opportunities.length}`, unit: "فرصة", delta: `${opportunities.filter((item) => item.featured).length} جاهزة للطرح`, icon: <BriefcaseBusiness size={22} /> },
+    { label: "القرارات المطلوبة", value: `${amanahDecisionWorkflow.cases.length + 2}`, unit: "قرارات", delta: "تحتاج إجراء هذا الأسبوع", icon: <ClipboardList size={22} /> },
+  ];
+
+  const executiveMapNodes = [
+    { name: "حي النقرة", top: "18%", right: "46%", status: "جاهزة", tone: "#2DD36F" },
+    { name: "حي الجامعة", top: "57%", right: "32%", status: "متعثرة", tone: "#FF5A5F" },
+    { name: "حي المصيف", top: "30%", right: "24%", status: "قيد المراجعة", tone: "#F4B844" },
+    { name: "حي مشار", top: "70%", right: "52%", status: "جاهزة", tone: "#2DD36F" },
+    { name: "الوسيطاء", top: "58%", right: "61%", status: "جاهزة", tone: "#2DD36F" },
+    { name: "أجا", top: "42%", right: "72%", status: "قيد المراجعة", tone: "#F4B844" },
+  ];
+
+  const executiveQuickAlerts = [
+    "فرصة تجاوزت مدة الاعتماد المستهدفة في حي النقرة.",
+    "دراسة ميدانية لمشروع حي الوسيطاء تحتاج تحديثاً عاجلاً.",
+    "ملف شراكة جديد جاهز للطرح بعد استكمال التوقيع.",
+  ];
+
   const overviewMetrics = [
     { label: "قيمة الاستثمار المتوقعة", value: "211.7", unit: "مليون ريال", delta: "+18% عن الشهر الماضي", icon: <BadgeDollarSign size={22} /> },
     { label: "مؤشر جاهزية الاستثمار", value: "83%", delta: "+7% عن الشهر الماضي", icon: <TrendingUp size={22} /> },
@@ -446,6 +483,11 @@ export default function AdminPage() {
     "دراسة ميدانية لمشروع حي الوسيطاء تحتاج تحديثاً.",
     "ملف شراكة جديد جاهز للطرح بعد استكمال التوقيع.",
   ];
+
+  void rightRailItems;
+  void overviewMetrics;
+  void mapNodes;
+  void quickAlerts;
 
   if (!currentUser || currentUser.role !== "authority") {
     return (
@@ -483,32 +525,9 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-[linear-gradient(180deg,#07111D_0%,#081523_100%)] text-white">
-      <div className="mx-auto grid min-h-screen max-w-[1680px] grid-cols-1 gap-4 p-3 xl:grid-cols-[72px_minmax(0,1fr)_290px]">
-        <aside className="hidden xl:flex flex-col items-center rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(12,24,38,0.98)_0%,rgba(8,18,30,0.98)_100%)] py-5 shadow-[0_18px_50px_rgba(0,0,0,0.25)]">
-          <div className="mb-6 flex h-11 w-11 items-center justify-center rounded-2xl border border-[#D3B06B]/25 bg-[#D3B06B]/10 text-[#DDBD79]">
-            <MapPin size={18} />
-          </div>
-          <div className="flex flex-1 flex-col items-center gap-3">
-            {utilityIcons.map((Icon, index) => (
-              <button
-                key={index}
-                className={`flex h-11 w-11 items-center justify-center rounded-2xl border transition ${
-                  index === 0
-                    ? "border-[#D3B06B]/25 bg-[#D3B06B]/10 text-[#E7CB8E]"
-                    : "border-white/8 bg-white/[0.02] text-white/55 hover:bg-white/[0.05] hover:text-white"
-                }`}
-              >
-                <Icon size={18} />
-              </button>
-            ))}
-          </div>
-          <button className="mt-6 flex h-11 w-11 items-center justify-center rounded-2xl border border-white/8 bg-white/[0.02] text-white/55 hover:bg-white/[0.05] hover:text-white">
-            <Settings size={18} />
-          </button>
-        </aside>
-
-        <main className="min-w-0 space-y-4">
-        <section className="rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-5 py-4 shadow-[0_24px_70px_rgba(2,10,20,0.32)]">
+      <div className="mx-auto grid min-h-screen max-w-[1700px] grid-cols-1 gap-3 p-3 xl:grid-cols-[minmax(0,1fr)_66px_300px]">
+        <main className="min-w-0 space-y-3">
+        <section className="rounded-[1.8rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-5 py-4 shadow-[0_24px_70px_rgba(2,10,20,0.32)]">
           <div className="flex flex-col gap-5 2xl:flex-row 2xl:items-center 2xl:justify-between">
             <div className="flex flex-wrap items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-[#D1AF68]/55 bg-[radial-gradient(circle_at_30%_30%,#f4e1b0_0%,#8d6b2f_100%)] text-[#0A1524] shadow-[0_8px_20px_rgba(0,0,0,0.25)]">
@@ -559,9 +578,9 @@ export default function AdminPage() {
         </section>
 
         {activeTab === "overview" && (
-          <div className="grid grid-cols-1 gap-4 2xl:grid-cols-[repeat(6,minmax(0,1fr))_1.16fr]">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:col-span-6 2xl:grid-cols-6">
-              {overviewMetrics.map((metric) => (
+          <div className="grid grid-cols-1 gap-3 2xl:grid-cols-[repeat(6,minmax(0,1fr))_1.22fr]">
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 2xl:col-span-6 2xl:grid-cols-6">
+              {executiveOverviewMetrics.map((metric) => (
                 <ExecutiveMetricCard
                   key={metric.label}
                   label={metric.label}
@@ -573,7 +592,7 @@ export default function AdminPage() {
               ))}
             </div>
 
-            <div className="grid grid-cols-1 gap-6 2xl:col-span-6 2xl:grid-cols-[1.28fr_0.92fr]">
+            <div className="grid grid-cols-1 gap-3 2xl:col-span-6 2xl:grid-cols-[1.34fr_0.9fr]">
               <section className="rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-5 flex items-start justify-between gap-4">
                   <button className="rounded-2xl border border-[#B6913E]/20 bg-[#B6913E]/10 px-4 py-2 text-sm font-bold text-[#E9DFC8]">
@@ -618,7 +637,7 @@ export default function AdminPage() {
                     </div>
                   </div>
 
-                  <div className="relative min-h-[430px] overflow-hidden rounded-[1.7rem] border border-white/8 bg-[radial-gradient(circle_at_center,rgba(182,145,62,0.08),transparent_38%),linear-gradient(180deg,#0C1B2D_0%,#091520_100%)]">
+                  <div className="relative min-h-[458px] overflow-hidden rounded-[1.7rem] border border-white/8 bg-[radial-gradient(circle_at_center,rgba(182,145,62,0.08),transparent_38%),linear-gradient(180deg,#0C1B2D_0%,#091520_100%)]">
                     <div className="absolute inset-0 opacity-25" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)", backgroundSize: "34px 34px" }} />
                     <div className="absolute inset-[8%] rounded-[50%] border border-[#D7B76F]/10" />
                     <div className="absolute inset-[17%] rounded-[42%] border border-[#D7B76F]/12" />
@@ -630,7 +649,7 @@ export default function AdminPage() {
                     <div className="absolute left-[24%] top-[32%] h-px w-[42%] bg-[#D7B76F]/16" />
                     <div className="absolute left-[28%] top-[64%] h-px w-[34%] bg-[#D7B76F]/16" />
 
-                    {mapNodes.map((node) => (
+                    {executiveMapNodes.map((node) => (
                       <div key={node.name} className="absolute flex flex-col items-center gap-2" style={{ top: node.top, right: node.right }}>
                         <div className="h-5 w-5 rounded-full border-4 border-[#0C1B2D] shadow-[0_0_0_8px_rgba(255,255,255,0.03)]" style={{ backgroundColor: node.tone }} />
                         <span className="rounded-full bg-[#081624]/90 px-3 py-1 text-[11px] font-bold text-white/80">{node.name}</span>
@@ -699,7 +718,7 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)] 2xl:col-start-7 2xl:row-start-1 2xl:row-span-2">
+              <section className="rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)] 2xl:col-start-7 2xl:row-start-1 2xl:row-span-2 2xl:min-h-[625px]">
                 <div className="mb-5 flex items-center justify-between gap-3">
                   <span className="rounded-xl bg-[#DAB971]/12 px-3 py-1 text-xs font-black text-[#DAB971]">AI</span>
                   <div className="text-right">
@@ -733,7 +752,7 @@ export default function AdminPage() {
               </section>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 2xl:col-span-7 2xl:grid-cols-[0.92fr_0.84fr_0.9fr_1.04fr]">
+            <div className="grid grid-cols-1 gap-3 2xl:col-span-7 2xl:grid-cols-[1fr_0.94fr_1fr_1.08fr]">
               <section className="rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-5 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض الكل</button>
@@ -753,7 +772,7 @@ export default function AdminPage() {
                   <h2 className="text-xl font-black text-white">تنبيهات ذكية</h2>
                 </div>
                 <div className="space-y-3">
-                  {quickAlerts.map((alert, index) => (
+                  {executiveQuickAlerts.map((alert, index) => (
                     <div key={alert} className="rounded-[1.25rem] border border-white/8 bg-white/[0.03] px-4 py-3">
                       <div className="flex items-start justify-between gap-3">
                         <span className={`mt-1 h-3 w-3 rounded-full ${index === 0 ? "bg-red-500" : index === 1 ? "bg-[#F4B844]" : "bg-emerald-400"}`} />
@@ -833,7 +852,7 @@ export default function AdminPage() {
               </section>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:col-span-7 2xl:grid-cols-5">
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 2xl:col-span-7 2xl:grid-cols-5">
               {[
                 { title: "تصدير تقرير", note: "تقرير الأداء الشهري", icon: <FileText size={18} /> },
                 { title: "اجتماع لجنة الاستثمار", note: "غداً - 10:00 ص", icon: <CalendarDays size={18} /> },
@@ -1405,28 +1424,56 @@ export default function AdminPage() {
         )}
         </main>
 
+        <aside className="hidden xl:flex flex-col items-center rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(12,24,38,0.98)_0%,rgba(8,18,30,0.98)_100%)] py-5 shadow-[0_18px_50px_rgba(0,0,0,0.25)]">
+          <div className="mb-6 flex h-11 w-11 items-center justify-center rounded-2xl border border-[#D3B06B]/25 bg-[#D3B06B]/10 text-[#DDBD79]">
+            <MapPin size={18} />
+          </div>
+          <div className="flex flex-1 flex-col items-center gap-3">
+            {utilityIcons.map((Icon, index) => (
+              <button
+                key={index}
+                className={`flex h-11 w-11 items-center justify-center rounded-2xl border transition ${
+                  index === 0
+                    ? "border-[#D3B06B]/25 bg-[#D3B06B]/10 text-[#E7CB8E]"
+                    : "border-white/8 bg-white/[0.02] text-white/55 hover:bg-white/[0.05] hover:text-white"
+                }`}
+              >
+                <Icon size={18} />
+              </button>
+            ))}
+          </div>
+          <button className="mt-6 flex h-11 w-11 items-center justify-center rounded-2xl border border-white/8 bg-white/[0.02] text-white/55 hover:bg-white/[0.05] hover:text-white">
+            <Settings size={18} />
+          </button>
+        </aside>
+
         <aside className="hidden xl:flex flex-col rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(9,20,34,0.98)_0%,rgba(7,16,28,0.98)_100%)] px-6 py-7 shadow-[0_18px_50px_rgba(0,0,0,0.28)]">
           <div className="border-b border-white/8 pb-6 text-right">
             <div className="flex items-start justify-between gap-4">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#D3B06B]/25 bg-[#D3B06B]/10 text-[#DDBD79]">
                 <Sparkles size={22} />
               </div>
-              <div>
+              <div className="text-right">
+                <h2 className="text-3xl font-black text-white">استنار</h2>
+                <p className="mt-2 text-xs leading-6 text-white/50">منصة الذكاء الاستثماري ودعم القرار</p>
+              </div>
+              <div className="hidden">
                 <h2 className="text-3xl font-black text-white">استنار</h2>
                 <p className="mt-2 text-xs leading-6 text-white/50">منصة الذكاء الاستثماري ودعم القرار</p>
               </div>
             </div>
             <div className="mt-8 rounded-2xl border border-white/8 bg-white/[0.02] px-4 py-3">
+              <p className="text-sm text-white/70">المركز التنفيذي</p>
               <p className="text-sm text-white/45">المركز التنفيذي</p>
             </div>
           </div>
 
-          <nav className="mt-6 flex-1 space-y-2">
-            {rightRailItems.map((item) => {
+          <nav className="mt-6 flex-1 space-y-1.5">
+            {executiveRailItems.map((item) => {
               const Icon = item.icon;
               const isActive = item.key === "overview" ? activeTab === "overview" : item.key === activeTab;
-              const classes = `flex w-full items-center justify-between rounded-2xl px-4 py-3 text-sm font-semibold transition ${
-                isActive ? "bg-[#C79A48] text-[#07111D]" : "text-white/72 hover:bg-white/[0.04] hover:text-white"
+              const classes = `flex w-full items-center justify-between rounded-[1.15rem] px-4 py-3.5 text-[15px] font-semibold transition ${
+                isActive ? "bg-[#C79A48] text-[#07111D] shadow-[0_12px_28px_rgba(199,154,72,0.22)]" : "text-white/72 hover:bg-white/[0.04] hover:text-white"
               }`;
 
               if (item.href) {
@@ -1448,12 +1495,14 @@ export default function AdminPage() {
           </nav>
 
           <div className="space-y-4 border-t border-white/8 pt-6">
-            <button className="flex w-full items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-4 text-sm font-semibold text-white/75 hover:bg-white/[0.04]">
+            <button className="flex w-full items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/[0.02] px-4 py-4 text-[0px] font-semibold text-white/75 hover:bg-white/[0.04]">
               <MessageSquarePlus size={16} />
+              <span className="text-sm">دليل المستخدم</span>
               دليل المستخدم
             </button>
-            <button className="flex w-full items-center justify-center gap-2 rounded-2xl border border-white/10 bg-transparent px-4 py-4 text-sm font-semibold text-white/55 hover:bg-white/[0.04] hover:text-white">
+            <button className="flex w-full items-center justify-center gap-2 rounded-2xl border border-white/10 bg-transparent px-4 py-4 text-[0px] font-semibold text-white/55 hover:bg-white/[0.04] hover:text-white">
               <LogOut size={16} />
+              <span className="text-sm">تسجيل خروج</span>
               تسجيل خروج
             </button>
             <p className="text-center text-xs leading-6 text-white/35">2024 استنار<br />جميع الحقوق محفوظة</p>
