@@ -8,8 +8,6 @@ import {
   BarChart,
   CartesianGrid,
   Cell,
-  Pie,
-  PieChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -18,10 +16,11 @@ import {
 import {
   ArrowUpLeft,
   BadgeDollarSign,
+  Bell,
   BriefcaseBusiness,
   Building2,
+  CalendarDays,
   ChartColumn,
-  CircleDollarSign,
   ClipboardList,
   Database,
   Eye,
@@ -30,7 +29,7 @@ import {
   Handshake,
   Landmark,
   LayoutDashboard,
-  LineChart,
+  Mail,
   Map,
   MessageSquarePlus,
   Plus,
@@ -71,13 +70,6 @@ const monthlyApplications = [
   { month: "يناير", applications: 31, accepted: 19, revenue: 410 },
   { month: "فبراير", applications: 28, accepted: 18, revenue: 385 },
   { month: "مارس", applications: 35, accepted: 23, revenue: 470 },
-];
-
-const neighborhoodDemand = [
-  { name: "حي النقرة", value: 35, color: "#0A2342" },
-  { name: "الجامعيين", value: 28, color: "#C9A84C" },
-  { name: "مشار", value: 22, color: "#16A34A" },
-  { name: "المصيف", value: 15, color: "#D97706" },
 ];
 
 const landStatusLabels = {
@@ -134,6 +126,57 @@ function ShellCard({ title, subtitle, children, action, icon }: { title: string;
   );
 }
 
+function ExecutiveMetricCard({
+  label,
+  value,
+  unit,
+  delta,
+  icon,
+}: {
+  label: string;
+  value: string;
+  unit?: string;
+  delta: string;
+  icon: React.ReactNode;
+}) {
+  return (
+    <div className="rounded-[1.7rem] border border-white/8 bg-[linear-gradient(180deg,rgba(13,28,48,0.96)_0%,rgba(10,24,41,0.94)_100%)] p-5 shadow-[0_18px_50px_rgba(2,10,20,0.34)]">
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#B6913E]/20 bg-[#B6913E]/8 text-[#D9BA72]">
+          {icon}
+        </div>
+        <div className="text-right">
+          <p className="text-xs text-white/50">{label}</p>
+          <p className="mt-3 text-3xl font-black text-white">{value}</p>
+          {unit ? <p className="mt-1 text-sm text-white/42">{unit}</p> : null}
+        </div>
+      </div>
+      <p className="mt-5 text-sm font-semibold text-emerald-400">{delta}</p>
+    </div>
+  );
+}
+
+function ReadinessRing({ value, label, tone }: { value: number; label: string; tone: string }) {
+  return (
+    <div className="flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3">
+      <div
+        className="relative h-16 w-16 rounded-full"
+        style={{
+          background: `conic-gradient(${tone} ${value * 3.6}deg, rgba(255,255,255,0.08) 0deg)`,
+        }}
+      >
+        <div className="absolute inset-[7px] flex items-center justify-center rounded-full bg-[#08172A] text-sm font-black text-white">
+          {value}%
+        </div>
+      </div>
+      <div className="text-right">
+        <p className="text-sm font-bold text-white">{label}</p>
+        <p className="text-xs text-white/45">مؤشر تنفيذي سريع</p>
+      </div>
+    </div>
+  );
+}
+
 export default function AdminPage() {
   const [chartsReady, setChartsReady] = useState(false);
   const [activeTab, setActiveTab] = useState<ActiveTab>("overview");
@@ -171,15 +214,6 @@ export default function AdminPage() {
     () => advisoryRequests.find((request) => request.id === selectedRequestId) ?? advisoryRequests[0],
     [advisoryRequests, selectedRequestId]
   );
-
-  const stats = {
-    totalLands: lands.length,
-    incoming: mockApplications.length,
-    accepted: mockApplications.filter((application) => application.status === "accepted").length,
-    revenue: lands.reduce((sum, land) => sum + land.price, 0),
-    advisory: advisoryRequests.length,
-    humanReview: advisoryRequests.filter((request) => request.wantsHumanReview).length,
-  };
 
   const workflowCounts = useMemo(
     () => advisoryRequests.reduce<Record<string, number>>((accumulator, request) => {
@@ -366,14 +400,6 @@ export default function AdminPage() {
     [neighborhoodOptions, selectedNeighborhoodSlug]
   );
 
-  const currentTitle = {
-    overview: "مركز التشغيل اليومي",
-    requests: "الطلبات والاعتمادات",
-    assets: "الأصول والفرص",
-    relations: "الشراكات والاستشارات",
-    governance: "الحوكمة والمتابعة",
-  }[activeTab];
-
   const primaryNavItem = navItems[0];
   const secondaryNavItems = navItems.slice(1);
   const workspaceItems = [
@@ -413,6 +439,31 @@ export default function AdminPage() {
       isActive: activeTab === item.key,
       onSelect: () => setActiveTab(item.key),
     })),
+  ];
+
+  const overviewMetrics = [
+    { label: "قيمة الاستثمار المتوقعة", value: "211.7", unit: "مليون ريال", delta: "+18% عن الشهر الماضي", icon: <BadgeDollarSign size={22} /> },
+    { label: "مؤشر جاهزية الاستثمار", value: "83%", delta: "+7% عن الشهر الماضي", icon: <TrendingUp size={22} /> },
+    { label: "الوظائف المتوقعة", value: "1,248", unit: "وظيفة", delta: "+26% عن الشهر الماضي", icon: <Users size={22} /> },
+    { label: "العوائد السنوية المتوقعة", value: "28.4", unit: "مليون ريال", delta: "+15% عن الشهر الماضي", icon: <ChartColumn size={22} /> },
+    { label: "عدد الفرص الاستثمارية", value: `${opportunities.length}`, unit: "فرصة", delta: `${opportunities.filter((item) => item.featured).length} جاهزة للطرح`, icon: <BriefcaseBusiness size={22} /> },
+    { label: "القرارات المطلوبة", value: `${amanahDecisionWorkflow.cases.length + 2}`, unit: "قرارات", delta: "تحتاج إجراء هذا الأسبوع", icon: <ClipboardList size={22} /> },
+  ];
+
+  const mapNodes = [
+    { name: "حي النقرة", top: "18%", right: "46%", status: "جاهزة", tone: "#2DD36F" },
+    { name: "حي الجامعة", top: "57%", right: "32%", status: "متعثرة", tone: "#FF5A5F" },
+    { name: "حي المصيف", top: "30%", right: "24%", status: "قيد المراجعة", tone: "#F4B844" },
+    { name: "حي مشار", top: "70%", right: "52%", status: "جاهزة", tone: "#2DD36F" },
+    { name: "الوسيطاء", top: "58%", right: "61%", status: "جاهزة", tone: "#2DD36F" },
+    { name: "أجا", top: "42%", right: "72%", status: "قيد المراجعة", tone: "#F4B844" },
+  ];
+
+  const topExecutiveBrief = leadershipBriefs[0];
+  const quickAlerts = [
+    "فرصة تجاوزت مدة الاعتماد المستهدفة في حي النقرة.",
+    "دراسة ميدانية لمشروع حي الوسيطاء تحتاج تحديثاً.",
+    "ملف شراكة جديد جاهز للطرح بعد استكمال التوقيع.",
   ];
 
   if (!currentUser || currentUser.role !== "authority") {
@@ -461,23 +512,42 @@ export default function AdminPage() {
       statusTitle="متابعة تنفيذية يومية"
       statusDescription="الأولوية الحالية موجهة لرفع جودة العرض، تصفية الطلبات، واعتماد ملفات الشراكة."
     >
-        <section className="admin-hero-surface official-navy-surface rounded-[2rem] p-6 md:p-8 mb-6 overflow-hidden relative">
-          <div className="absolute inset-0 opacity-70" style={{ background: "radial-gradient(circle at top left, rgba(182,145,62,0.18), transparent 28%), radial-gradient(circle at bottom right, rgba(11,31,51,0.08), transparent 34%)" }} />
-          <div className="relative flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-            <div className="text-right max-w-3xl">
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/6 px-4 py-2 text-xs font-bold text-[#E9DFC8]">
-                <Sparkles size={14} color="#E9DFC8" />
-                لوحة تنفيذية محدثة
+        <section className="mb-6 overflow-hidden rounded-[2.2rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091A2A_100%)] p-5 shadow-[0_24px_70px_rgba(2,10,20,0.32)]">
+          <div className="flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
+            <div className="flex flex-col gap-4 xl:flex-row xl:items-center">
+              <div className="flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-[#B6913E]/70 bg-[#D6BA78]/15 text-[#E9DFC8]">
+                  <Building2 size={20} />
+                </div>
+                <div className="text-right">
+                  <p className="text-sm font-black text-[#E9DFC8]">{currentUser.fullName}</p>
+                  <p className="text-xs text-white/45">مدير إدارة الاستثمار</p>
+                </div>
+                <span className="rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-black text-white">3</span>
+                <Bell size={16} className="text-[#E9DFC8]" />
               </div>
-              <h1 className="text-3xl md:text-4xl font-black text-white">{currentTitle}</h1>
-              <p className="text-slate-500 text-sm md:text-base text-right mt-3 leading-8">واجهة تشغيل احترافية تجمع المؤشرات والسجلات والتقارير والموافقات في مستوى عرض واحد واضح ورسمي.</p>
+
+              <div className="flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3 text-white/65">
+                <Mail size={16} />
+                <span className="text-sm">المركز التنفيذي للأمانة</span>
+              </div>
+
+              <div className="flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3 text-white/65">
+                <CalendarDays size={16} />
+                <div className="text-right">
+                  <p className="text-xs">الأربعاء 05/01/1448 هـ</p>
+                  <p className="text-sm font-semibold text-white/85">10:30 AM</p>
+                </div>
+              </div>
             </div>
-            <div className="flex flex-wrap items-center gap-3 self-stretch lg:self-auto">
-              <Link href="/investment-intelligence?tab=executive" className="px-4 py-3 rounded-2xl text-sm font-semibold border border-slate-200 text-slate-600 hover:bg-slate-50">التقارير التنفيذية</Link>
-              <button className="btn-primary px-5 py-3">
-                <Plus size={16} />
-                إجراء تنفيذي جديد
-              </button>
+
+            <div className="text-right">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#B6913E]/25 bg-[#B6913E]/10 px-4 py-2 text-xs font-bold text-[#E9DFC8]">
+                <Sparkles size={14} />
+                غرفة قيادة الاستثمار الحضري
+              </div>
+              <h1 className="display-title text-3xl font-black text-white md:text-4xl">غرفة قيادة الاستثمار الحضري</h1>
+              <p className="mt-2 text-sm leading-8 text-white/60 md:text-base">مركز القرار التنفيذي لأمانة منطقة حائل. صفحة مصممة لتُعرض أمام الأمين والمسؤولين بوصفها نواة نظام تشغيلي مستقبلي، لا مجرد لوحة عرض.</p>
             </div>
           </div>
         </section>
@@ -503,136 +573,300 @@ export default function AdminPage() {
         </section>
 
         {activeTab === "overview" && (
-          <div>
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mb-8">
-              {[
-                { label: "إجمالي الأراضي", value: stats.totalLands, icon: Map, color: "#0A2342", surface: "#EEF4FF" },
-                { label: "الطلبات الواردة", value: stats.incoming, icon: ClipboardList, color: "#C2891B", surface: "#FFF7E1" },
-                { label: "الطلبات المقبولة", value: stats.accepted, icon: ShieldCheck, color: "#15803D", surface: "#ECFDF3" },
-                { label: "إيرادات الموسم", value: `${stats.revenue.toLocaleString()} ر`, icon: CircleDollarSign, color: "#7C3AED", surface: "#F4F0FF" },
-                { label: "الطلبات الاستشارية", value: stats.advisory, icon: FileBadge2, color: "#2563EB", surface: "#EFF6FF" },
-                { label: "مراجعات بشرية", value: stats.humanReview, icon: Users, color: "#B45309", surface: "#FFF7ED" },
-                { label: "الفرص الاستثمارية", value: opportunities.length, icon: BriefcaseBusiness, color: "#7C3AED", surface: "#F5F3FF" },
-                { label: "طلبات الشراكة", value: partnershipRequests.length, icon: Handshake, color: "#059669", surface: "#ECFDF5" },
-              ].map((stat) => {
-                const Icon = stat.icon;
-                return (
-                  <div key={stat.label} className="admin-kpi-surface official-navy-surface rounded-[1.75rem] p-5">
-                    <div className="flex items-start justify-between mb-6">
-                      <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ backgroundColor: stat.surface, color: stat.color }}>
-                        <Icon size={22} />
-                      </div>
-                      <p className="text-3xl font-black leading-none" style={{ color: stat.color }}>{stat.value}</p>
-                    </div>
-                    <p className="text-sm text-slate-400 text-right mb-2">المؤشر التنفيذي</p>
-                    <p className="text-sm font-bold text-right" style={{ color: "#0A2342" }}>{stat.label}</p>
-                  </div>
-                );
-              })}
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-6">
+              {overviewMetrics.map((metric) => (
+                <ExecutiveMetricCard
+                  key={metric.label}
+                  label={metric.label}
+                  value={metric.value}
+                  unit={metric.unit}
+                  delta={metric.delta}
+                  icon={metric.icon}
+                />
+              ))}
             </div>
 
-            <div className="grid grid-cols-1 xl:grid-cols-[0.95fr_1.05fr] gap-6 mb-6">
-              <ShellCard title="ملخص تنفيذي للعرض أمام الأمانة" subtitle="Executive Summary" icon={<Landmark size={22} />}>
-                <p className="text-sm text-gray-600 leading-8 mb-5 text-right">الجزء الاستشاري أصبح الآن يدار بمسار تشغيلي فعلي: استقبال الطلب، تعيين المراجع، تدوين الملاحظات، ثم إغلاق المراجعة مع بقاء التقرير الآلي كأساس للقرار.</p>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  {Object.entries(advisoryWorkflowMeta).map(([key, meta]) => (
-                    <div key={key} className="rounded-2xl px-4 py-4 text-right border border-white/70" style={{ backgroundColor: meta.surface, color: meta.tone }}>
-                      <p className="font-black text-sm">{meta.label}</p>
-                      <p className="text-xs mt-1">{workflowCounts[key] ?? 0} طلب</p>
+            <div className="grid grid-cols-1 gap-6 2xl:grid-cols-[1.28fr_0.92fr_0.58fr]">
+              <section className="rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+                <div className="mb-5 flex items-start justify-between gap-4">
+                  <button className="rounded-2xl border border-[#B6913E]/20 bg-[#B6913E]/10 px-4 py-2 text-sm font-bold text-[#E9DFC8]">
+                    عرض طبقات الخريطة
+                  </button>
+                  <div className="text-right">
+                    <p className="text-xs text-[#B6913E]">التحليل المكاني المباشر</p>
+                    <h2 className="mt-1 text-2xl font-black text-white">خريطة أولويات الأحياء</h2>
+                  </div>
+                </div>
+
+                <div className="grid gap-4 xl:grid-cols-[0.24fr_0.76fr]">
+                  <div className="space-y-4">
+                    <select
+                      value={selectedNeighborhoodSlug}
+                      onChange={(event) => setSelectedNeighborhoodSlug(event.target.value)}
+                      className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-right text-sm text-white/85 focus:outline-none"
+                    >
+                      {neighborhoodOptions.map((item) => (
+                        <option key={item.slug} value={item.slug} className="text-slate-900">
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
+
+                    <div className="rounded-[1.5rem] border border-white/8 bg-white/[0.03] p-4 text-right">
+                      <p className="text-sm font-bold text-white">حالة الأحياء</p>
+                      <div className="mt-4 space-y-2 text-sm text-white/60">
+                        <div className="flex items-center justify-between">
+                          <span className="h-3 w-3 rounded-full bg-[#2DD36F]" />
+                          <span>جاهزة للطرح</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="h-3 w-3 rounded-full bg-[#F4B844]" />
+                          <span>قيد المراجعة</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="h-3 w-3 rounded-full bg-[#FF5A5F]" />
+                          <span>متعثرة</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="relative min-h-[430px] overflow-hidden rounded-[1.7rem] border border-white/8 bg-[radial-gradient(circle_at_center,rgba(182,145,62,0.08),transparent_38%),linear-gradient(180deg,#0C1B2D_0%,#091520_100%)]">
+                    <div className="absolute inset-0 opacity-25" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)", backgroundSize: "34px 34px" }} />
+                    <div className="absolute inset-[8%] rounded-[50%] border border-[#D7B76F]/10" />
+                    <div className="absolute inset-[17%] rounded-[42%] border border-[#D7B76F]/12" />
+                    <div className="absolute inset-[28%] rounded-[35%] border border-[#D7B76F]/14" />
+                    <div className="absolute left-[11%] top-[50%] h-px w-[72%] bg-[#D7B76F]/16" />
+                    <div className="absolute left-[18%] top-[22%] h-[58%] w-px bg-[#D7B76F]/16" />
+                    <div className="absolute left-[34%] top-[18%] h-[64%] w-px bg-[#D7B76F]/16" />
+                    <div className="absolute left-[56%] top-[15%] h-[68%] w-px bg-[#D7B76F]/16" />
+                    <div className="absolute left-[24%] top-[32%] h-px w-[42%] bg-[#D7B76F]/16" />
+                    <div className="absolute left-[28%] top-[64%] h-px w-[34%] bg-[#D7B76F]/16" />
+
+                    {mapNodes.map((node) => (
+                      <div key={node.name} className="absolute flex flex-col items-center gap-2" style={{ top: node.top, right: node.right }}>
+                        <div className="h-5 w-5 rounded-full border-4 border-[#0C1B2D] shadow-[0_0_0_8px_rgba(255,255,255,0.03)]" style={{ backgroundColor: node.tone }} />
+                        <span className="rounded-full bg-[#081624]/90 px-3 py-1 text-[11px] font-bold text-white/80">{node.name}</span>
+                      </div>
+                    ))}
+
+                    <div className="absolute bottom-5 left-5 rounded-2xl border border-white/8 bg-[#0A1726]/88 px-4 py-3 text-right">
+                      <p className="text-xs text-white/40">الحي المحدد</p>
+                      <p className="mt-1 text-sm font-bold text-white">{selectedNeighborhoodItem?.name ?? "حي النقرة"}</p>
+                      <p className="mt-1 text-xs text-[#E9DFC8]">آخر تحديث: {selectedNeighborhoodItem?.analytics?.updatedAt ?? "—"}</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section className="rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+                <div className="mb-5 flex items-center justify-between gap-4">
+                  <button onClick={() => setActiveTab("requests")} className="text-sm font-bold text-[#DAB971]">
+                    عرض الكل
+                  </button>
+                  <div className="text-right">
+                    <p className="text-xs text-white/45">المطلوب الآن</p>
+                    <h2 className="mt-1 text-2xl font-black text-white">أهم القرارات اليوم</h2>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  {amanahDecisionWorkflow.cases.slice(0, 4).map((caseItem) => (
+                    <div key={caseItem.id} className="rounded-[1.45rem] border border-white/8 bg-white/[0.03] p-4 text-right">
+                      <div className="flex items-start justify-between gap-4">
+                        <button onClick={() => setActiveTab("requests")} className="rounded-xl border border-[#DAB971]/20 bg-[#DAB971]/10 px-4 py-2 text-sm font-bold text-[#E9DFC8]">
+                          اتخاذ إجراء
+                        </button>
+                        <div>
+                          <h3 className="text-base font-black text-white">{caseItem.title}</h3>
+                          <p className="mt-1 text-sm text-white/45">{caseItem.anchorAsset}</p>
+                        </div>
+                      </div>
+
+                      <div className="mt-4 flex items-center justify-between gap-3">
+                        <span className="rounded-full px-3 py-1 text-xs font-bold" style={{ backgroundColor: `${caseItem.stageTone}20`, color: caseItem.stageTone }}>
+                          {caseItem.stageLabel}
+                        </span>
+                        <div className="text-left">
+                          <p className="text-xs text-white/35">الجاهزية</p>
+                          <p className="text-sm font-black text-white">{caseItem.readinessScore}%</p>
+                        </div>
+                      </div>
+
+                      <div className="mt-4 grid gap-2 text-sm text-white/55">
+                        <div className="flex items-center justify-between">
+                          <span className="text-white/35">الإجراء التالي</span>
+                          <span>{caseItem.nextAction}</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-white/35">المالك</span>
+                          <span>{caseItem.owner}</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-white/35">الإطار الزمني</span>
+                          <span>{amanahDecisionWorkflow.steps.find((step) => step.id === caseItem.stageId)?.duration ?? "2 - 5 أيام"}</span>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
-              </ShellCard>
+              </section>
 
-              <ShellCard
-                title="أحدث الطلبات الاستشارية"
-                subtitle="Latest Advisory Queue"
-                icon={<ShieldCheck size={22} />}
-                action={<button onClick={() => setActiveTab("relations")} className="inline-flex items-center gap-2 text-xs font-bold" style={{ color: "#0A2342" }}><ArrowUpLeft size={13} />فتح مركز المراجعة</button>}
-              >
-                <div className="space-y-3">
-                  {advisoryRequests.slice(0, 3).map((request) => {
-                    const workflowMeta = getAdvisoryWorkflowMeta(request.workflowStatus);
-                    return (
-                      <div key={request.id} className="rounded-2xl border border-slate-200 bg-slate-50 p-4 flex items-center justify-between gap-4 hover:bg-white transition-colors">
-                        <span className="rounded-full px-3 py-1 text-xs font-semibold" style={{ backgroundColor: workflowMeta.surface, color: workflowMeta.tone }}>{workflowMeta.label}</span>
-                        <div className="text-right">
-                          <p className="font-bold text-sm" style={{ color: "#0A2342" }}>{request.projectName}</p>
-                          <p className="text-xs text-gray-400">{request.assignedReviewerName ?? "غير معيّن"} • {request.neighborhood}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
+              <section className="rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+                <div className="mb-5 flex items-center justify-between gap-3">
+                  <span className="rounded-xl bg-[#DAB971]/12 px-3 py-1 text-xs font-black text-[#DAB971]">AI</span>
+                  <div className="text-right">
+                    <p className="text-xs text-white/45">الذكاء التنفيذي يقترح</p>
+                    <h2 className="mt-1 text-xl font-black text-white">توصية جاهزة</h2>
+                  </div>
                 </div>
-              </ShellCard>
+
+                <div className="rounded-[1.6rem] border border-white/8 bg-white/[0.03] p-4 text-right">
+                  <p className="text-xs text-[#DAB971]">يوصى بالإسراع في اعتماد فرصة</p>
+                  <h3 className="mt-3 text-2xl font-black text-white">{topExecutiveBrief?.angle ?? "تطوير موقع حي مشار"}</h3>
+                  <p className="mt-3 text-sm leading-8 text-white/55">{topExecutiveBrief?.summary ?? "فرصة ذات جاهزية عالية وعائد استثماري مرتفع مع معوقات محدودة."}</p>
+
+                  <div className="mt-5">
+                    <ReadinessRing value={83} label="نسبة الجاهزية" tone="#2DD36F" />
+                  </div>
+
+                  <div className="mt-5 space-y-3 text-sm">
+                    <div className="rounded-2xl bg-white/[0.03] px-4 py-3 text-white/70">
+                      <span className="text-white/35">عائد استثماري متوقع:</span> مرتفع
+                    </div>
+                    <div className="rounded-2xl bg-white/[0.03] px-4 py-3 text-white/70">
+                      <span className="text-white/35">جاهزية النظام:</span> عالية
+                    </div>
+                  </div>
+
+                  <button onClick={() => setActiveTab("governance")} className="mt-5 w-full rounded-2xl bg-[#C59B49] px-4 py-3 text-sm font-black text-[#07192E] transition hover:bg-[#d2ad63]">
+                    مراجعة الآن
+                  </button>
+                </div>
+              </section>
             </div>
 
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-              <ShellCard title="منحنى الطلب والقبول الشهري" subtitle="Demand Curve" icon={<LineChart size={20} />}>
+            <div className="grid grid-cols-1 gap-6 2xl:grid-cols-[0.92fr_0.84fr_0.9fr_1.04fr]">
+              <section className="rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+                <div className="mb-5 flex items-center justify-between">
+                  <button className="text-sm font-bold text-[#DAB971]">عرض الكل</button>
+                  <h2 className="text-xl font-black text-white">مؤشرات الأداء الرئيسية</h2>
+                </div>
+                <div className="grid gap-4">
+                  <ReadinessRing value={83} label="جاهزية الأحياء" tone="#DAB971" />
+                  <ReadinessRing value={76} label="سرعة الاعتماد" tone="#7DDA7E" />
+                  <ReadinessRing value={91} label="رضا المستثمرين" tone="#7DDA7E" />
+                  <ReadinessRing value={68} label="استغلال الأراضي" tone="#DAB971" />
+                </div>
+              </section>
+
+              <section className="rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+                <div className="mb-5 flex items-center justify-between">
+                  <button className="text-sm font-bold text-[#DAB971]">عرض الكل</button>
+                  <h2 className="text-xl font-black text-white">تنبيهات ذكية</h2>
+                </div>
+                <div className="space-y-3">
+                  {quickAlerts.map((alert, index) => (
+                    <div key={alert} className="rounded-[1.25rem] border border-white/8 bg-white/[0.03] px-4 py-3">
+                      <div className="flex items-start justify-between gap-3">
+                        <span className={`mt-1 h-3 w-3 rounded-full ${index === 0 ? "bg-red-500" : index === 1 ? "bg-[#F4B844]" : "bg-emerald-400"}`} />
+                        <p className="text-sm leading-7 text-white/70">{alert}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section className="rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+                <div className="mb-5 flex items-center justify-between">
+                  <button className="text-sm font-bold text-[#DAB971]">عرض الكل</button>
+                  <h2 className="text-xl font-black text-white">رحلة الفرصة الاستثمارية</h2>
+                </div>
+                <div className="flex items-center justify-between gap-2 overflow-x-auto pb-3">
+                  {[
+                    "فكرة مكتملة",
+                    "تحليل مكتمل",
+                    "دراسة جارية",
+                    "اعتماد قريباً",
+                    "طرح قريباً",
+                    "تشغيل قريباً",
+                  ].map((label, index) => (
+                    <div key={label} className="flex min-w-[88px] flex-col items-center gap-2 text-center">
+                      <div className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-black ${index < 2 ? "bg-emerald-500 text-white" : index === 2 ? "bg-[#C59B49] text-[#07192E]" : "bg-white/10 text-white/45"}`}>
+                        {index < 2 ? "✓" : index + 1}
+                      </div>
+                      <p className="text-xs leading-5 text-white/60">{label}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 grid grid-cols-4 gap-3 text-center">
+                  {[
+                    { label: "قيد التشغيل", value: "1" },
+                    { label: "قيد التحليل", value: "8" },
+                    { label: "قيد الاعتماد", value: "3" },
+                    { label: "كل الإنجازات", value: "2" },
+                  ].map((item) => (
+                    <div key={item.label} className="rounded-2xl bg-white/[0.03] px-3 py-4">
+                      <p className="text-lg font-black text-white">{item.value}</p>
+                      <p className="mt-1 text-xs text-white/45">{item.label}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              <section className="rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+                <div className="mb-5 flex items-center justify-between">
+                  <button className="text-sm font-bold text-[#DAB971]">عرض التقرير</button>
+                  <h2 className="text-xl font-black text-white">الأثر الاقتصادي المتوقع</h2>
+                </div>
                 <div className="h-72">
                   {chartsReady ? (
                     <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart data={monthlyApplications} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
+                      <AreaChart data={monthlyApplications} margin={{ top: 10, right: 6, left: 0, bottom: 0 }}>
                         <defs>
-                          <linearGradient id="applicationsFill" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#0A2342" stopOpacity={0.22} />
-                            <stop offset="100%" stopColor="#0A2342" stopOpacity={0.03} />
+                          <linearGradient id="execRevenuePrimary" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#33D17A" stopOpacity={0.28} />
+                            <stop offset="100%" stopColor="#33D17A" stopOpacity={0.03} />
                           </linearGradient>
-                          <linearGradient id="acceptedFill" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#C9A84C" stopOpacity={0.3} />
-                            <stop offset="100%" stopColor="#C9A84C" stopOpacity={0.04} />
+                          <linearGradient id="execRevenueSecondary" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#DAB971" stopOpacity={0.25} />
+                            <stop offset="100%" stopColor="#DAB971" stopOpacity={0.04} />
                           </linearGradient>
                         </defs>
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
-                        <XAxis dataKey="month" tick={{ fill: "#6B7280", fontSize: 12 }} axisLine={false} tickLine={false} />
-                        <YAxis tick={{ fill: "#6B7280", fontSize: 12 }} axisLine={false} tickLine={false} />
-                        <Tooltip />
-                        <Area type="monotone" dataKey="applications" stroke="#0A2342" fill="url(#applicationsFill)" strokeWidth={3} name="الطلبات" />
-                        <Area type="monotone" dataKey="accepted" stroke="#C9A84C" fill="url(#acceptedFill)" strokeWidth={3} name="المقبول" />
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.08)" />
+                        <XAxis dataKey="month" tick={{ fill: "rgba(255,255,255,0.45)", fontSize: 12 }} axisLine={false} tickLine={false} />
+                        <YAxis tick={{ fill: "rgba(255,255,255,0.45)", fontSize: 12 }} axisLine={false} tickLine={false} />
+                        <Tooltip contentStyle={{ backgroundColor: "#081624", border: "1px solid rgba(255,255,255,0.08)", color: "#fff" }} />
+                        <Area type="monotone" dataKey="revenue" stroke="#33D17A" fill="url(#execRevenuePrimary)" strokeWidth={3} name="الأثر الاقتصادي المتوقع" />
+                        <Area type="monotone" dataKey="accepted" stroke="#DAB971" fill="url(#execRevenueSecondary)" strokeWidth={2.5} name="الفرص المعتمدة" />
                       </AreaChart>
                     </ResponsiveContainer>
                   ) : null}
                 </div>
-              </ShellCard>
+              </section>
+            </div>
 
-              <ShellCard title="توزيع الطلب على الأحياء" subtitle="Neighborhood Mix" icon={<TrendingUp size={20} />}>
-                <div className="h-72">
-                  {chartsReady ? (
-                    <ResponsiveContainer width="100%" height="100%">
-                      <PieChart>
-                        <Pie data={neighborhoodDemand} dataKey="value" nameKey="name" innerRadius={50} outerRadius={86}>
-                          {neighborhoodDemand.map((entry) => (
-                            <Cell key={entry.name} fill={entry.color} />
-                          ))}
-                        </Pie>
-                        <Tooltip />
-                      </PieChart>
-                    </ResponsiveContainer>
-                  ) : null}
-                </div>
-              </ShellCard>
-
-              <ShellCard
-                title="مركز العمليات الموحد"
-                subtitle="Unified Operations"
-                icon={<BadgeDollarSign size={20} />}
-                action={<button onClick={() => setActiveTab("relations")} className="inline-flex items-center gap-2 text-xs font-bold" style={{ color: "#0A2342" }}><ArrowUpLeft size={13} />فتح إدارة الشراكات</button>}
-              >
-                <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-1 gap-4">
-                  <div className="rounded-[1.4rem] border border-slate-200 bg-slate-50 p-5 text-right">
-                    <p className="text-lg font-black text-navy mb-1">{opportunities.filter((item) => item.featured).length} فرص مميزة</p>
-                    <p className="text-sm text-gray-500">قابلة للعرض المباشر أو التحويل إلى دراسة تفصيلية.</p>
-                  </div>
-                  <div className="rounded-[1.4rem] border border-slate-200 bg-slate-50 p-5 text-right">
-                    <p className="text-lg font-black text-navy mb-1">{partnershipCounts.pending ?? 0} شراكات معلقة</p>
-                    <p className="text-sm text-gray-500">تحتاج اعتماداً أو توجيهاً من الإدارة قبل تثبيت الهيكلة.</p>
-                  </div>
-                  <div className="rounded-[1.4rem] border border-slate-200 bg-slate-50 p-5 text-right">
-                    <p className="text-lg font-black text-navy mb-1">{advisoryRequests.filter((request) => request.partnershipWorkflowStatus === "fully_approved").length} ملفات مشتركة مكتملة</p>
-                    <p className="text-sm text-gray-500">جاهزة للتقديم أو للتصدير التنفيذي ومشاركة القرار.</p>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-5">
+              {[
+                { title: "تصدير تقرير", note: "تقرير الأداء الشهري", icon: <FileText size={18} /> },
+                { title: "اجتماع لجنة الاستثمار", note: "غداً - 10:00 ص", icon: <CalendarDays size={18} /> },
+                { title: "توقيع إلكتروني", note: "3 مستندات بانتظار التوقيع", icon: <Mail size={18} /> },
+                { title: "مركز المساعدة", note: "الدعم والمساندة", icon: <MessageSquarePlus size={18} /> },
+                { title: "اسأل مساعد استنار الذكي", note: "اكتب استفسارك هنا...", icon: <Sparkles size={18} /> },
+              ].map((item) => (
+                <div key={item.title} className="rounded-[1.45rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] px-5 py-4 shadow-[0_16px_42px_rgba(2,10,20,0.28)]">
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-[#DAB971]/20 bg-[#DAB971]/8 text-[#DAB971]">
+                      {item.icon}
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-black text-white">{item.title}</p>
+                      <p className="mt-1 text-xs text-white/45">{item.note}</p>
+                    </div>
                   </div>
                 </div>
-              </ShellCard>
+              ))}
             </div>
           </div>
         )}
