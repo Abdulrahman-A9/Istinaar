@@ -147,7 +147,7 @@ function ExecutiveMetricCard({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="rounded-[1.55rem] border border-white/8 bg-[linear-gradient(180deg,rgba(13,28,48,0.96)_0%,rgba(10,24,41,0.94)_100%)] p-4 shadow-[0_18px_50px_rgba(2,10,20,0.34)]">
+    <div className="flex h-[148px] flex-col justify-between rounded-[1.55rem] border border-white/8 bg-[linear-gradient(180deg,rgba(13,28,48,0.96)_0%,rgba(10,24,41,0.94)_100%)] p-4 shadow-[0_18px_50px_rgba(2,10,20,0.34)]">
       <div className="flex items-start justify-between gap-4">
         <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-[#B6913E]/20 bg-[#B6913E]/8 text-[#D9BA72]">
           {icon}
@@ -158,7 +158,7 @@ function ExecutiveMetricCard({
           {unit ? <p className="mt-1 text-sm text-white/42">{unit}</p> : null}
         </div>
       </div>
-      <p className="mt-4 text-sm font-semibold text-emerald-400">{delta}</p>
+      <p className="text-sm font-semibold text-emerald-400">{delta}</p>
     </div>
   );
 }
@@ -489,6 +489,8 @@ export default function AdminPage() {
   void mapNodes;
   void quickAlerts;
 
+  const isExecutiveOverview = activeTab === "overview";
+
   if (!currentUser || currentUser.role !== "authority") {
     return (
       <div className="min-h-screen px-4 py-14" style={{ background: "linear-gradient(180deg, #F5F7FB 0%, #EEF2F7 100%)" }}>
@@ -524,10 +526,10 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#07111D_0%,#081523_100%)] text-white">
-      <div className="mx-auto grid min-h-screen max-w-[1700px] grid-cols-1 gap-3 p-3 xl:grid-cols-[minmax(0,1fr)_66px_300px]">
-        <main className="min-w-0 space-y-3">
-        <section className="rounded-[1.8rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-5 py-4 shadow-[0_24px_70px_rgba(2,10,20,0.32)]">
+    <div className={isExecutiveOverview ? "h-[100dvh] overflow-hidden bg-[linear-gradient(180deg,#07111D_0%,#081523_100%)] text-white" : "min-h-screen bg-[linear-gradient(180deg,#07111D_0%,#081523_100%)] text-white"}>
+      <div className={isExecutiveOverview ? "mx-auto grid h-full max-w-[1700px] grid-cols-1 gap-2 p-2 xl:grid-cols-[minmax(0,1fr)_64px_294px]" : "mx-auto grid min-h-screen max-w-[1700px] grid-cols-1 gap-3 p-3 xl:grid-cols-[minmax(0,1fr)_66px_300px]"}>
+        <main className={isExecutiveOverview ? "grid min-w-0 grid-rows-[110px_1fr] gap-2 overflow-hidden" : "min-w-0 space-y-3"}>
+        <section className={isExecutiveOverview ? "h-[110px] rounded-[1.8rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-5 py-4 shadow-[0_24px_70px_rgba(2,10,20,0.32)]" : "rounded-[1.8rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-5 py-4 shadow-[0_24px_70px_rgba(2,10,20,0.32)]"}>
           <div className="flex flex-col gap-5 2xl:flex-row 2xl:items-center 2xl:justify-between">
             <div className="flex flex-wrap items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-[#D1AF68]/55 bg-[radial-gradient(circle_at_30%_30%,#f4e1b0_0%,#8d6b2f_100%)] text-[#0A1524] shadow-[0_8px_20px_rgba(0,0,0,0.25)]">
@@ -578,7 +580,7 @@ export default function AdminPage() {
         </section>
 
         {activeTab === "overview" && (
-          <div className="grid grid-cols-1 gap-3 2xl:grid-cols-[repeat(6,minmax(0,1fr))_1.22fr]">
+          <div className="grid h-full grid-cols-1 gap-2 overflow-hidden 2xl:grid-cols-[repeat(6,minmax(0,1fr))_1.18fr]">
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2 2xl:col-span-6 2xl:grid-cols-6">
               {executiveOverviewMetrics.map((metric) => (
                 <ExecutiveMetricCard
@@ -592,9 +594,9 @@ export default function AdminPage() {
               ))}
             </div>
 
-            <div className="grid grid-cols-1 gap-3 2xl:col-span-6 2xl:grid-cols-[1.34fr_0.9fr]">
-              <section className="rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
-                <div className="mb-5 flex items-start justify-between gap-4">
+            <div className="grid grid-cols-1 gap-2 2xl:col-span-6 2xl:grid-cols-[1.3fr_0.94fr]">
+              <section className="h-[372px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+                <div className="mb-4 flex items-start justify-between gap-4">
                   <button className="rounded-2xl border border-[#B6913E]/20 bg-[#B6913E]/10 px-4 py-2 text-sm font-bold text-[#E9DFC8]">
                     عرض طبقات الخريطة
                   </button>
@@ -604,8 +606,8 @@ export default function AdminPage() {
                   </div>
                 </div>
 
-                <div className="grid gap-4 xl:grid-cols-[0.24fr_0.76fr]">
-                  <div className="space-y-4">
+                <div className="grid gap-3 xl:grid-cols-[0.22fr_0.78fr]">
+                  <div className="space-y-3">
                     <select
                       value={selectedNeighborhoodSlug}
                       onChange={(event) => setSelectedNeighborhoodSlug(event.target.value)}
@@ -637,7 +639,7 @@ export default function AdminPage() {
                     </div>
                   </div>
 
-                  <div className="relative min-h-[458px] overflow-hidden rounded-[1.7rem] border border-white/8 bg-[radial-gradient(circle_at_center,rgba(182,145,62,0.08),transparent_38%),linear-gradient(180deg,#0C1B2D_0%,#091520_100%)]">
+                  <div className="relative h-[286px] overflow-hidden rounded-[1.7rem] border border-white/8 bg-[radial-gradient(circle_at_center,rgba(182,145,62,0.08),transparent_38%),linear-gradient(180deg,#0C1B2D_0%,#091520_100%)]">
                     <div className="absolute inset-0 opacity-25" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)", backgroundSize: "34px 34px" }} />
                     <div className="absolute inset-[8%] rounded-[50%] border border-[#D7B76F]/10" />
                     <div className="absolute inset-[17%] rounded-[42%] border border-[#D7B76F]/12" />
@@ -665,8 +667,8 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
-                <div className="mb-5 flex items-center justify-between gap-4">
+              <section className="h-[372px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+                <div className="mb-4 flex items-center justify-between gap-4">
                   <button onClick={() => setActiveTab("requests")} className="text-sm font-bold text-[#DAB971]">
                     عرض الكل
                   </button>
@@ -676,9 +678,9 @@ export default function AdminPage() {
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {amanahDecisionWorkflow.cases.slice(0, 4).map((caseItem) => (
-                    <div key={caseItem.id} className="rounded-[1.45rem] border border-white/8 bg-white/[0.03] p-4 text-right">
+                    <div key={caseItem.id} className="rounded-[1.45rem] border border-white/8 bg-white/[0.03] p-3.5 text-right">
                       <div className="flex items-start justify-between gap-4">
                         <button onClick={() => setActiveTab("requests")} className="rounded-xl border border-[#DAB971]/20 bg-[#DAB971]/10 px-4 py-2 text-sm font-bold text-[#E9DFC8]">
                           اتخاذ إجراء
@@ -718,8 +720,8 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)] 2xl:col-start-7 2xl:row-start-1 2xl:row-span-2 2xl:min-h-[625px]">
-                <div className="mb-5 flex items-center justify-between gap-3">
+              <section className="h-[372px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)] 2xl:col-start-7 2xl:row-start-1 2xl:row-span-2">
+                <div className="mb-4 flex items-center justify-between gap-3">
                   <span className="rounded-xl bg-[#DAB971]/12 px-3 py-1 text-xs font-black text-[#DAB971]">AI</span>
                   <div className="text-right">
                     <p className="text-xs text-white/45">الذكاء التنفيذي يقترح</p>
@@ -732,11 +734,11 @@ export default function AdminPage() {
                   <h3 className="mt-3 text-2xl font-black text-white">{topExecutiveBrief?.angle ?? "تطوير موقع حي مشار"}</h3>
                   <p className="mt-3 text-sm leading-8 text-white/55">{topExecutiveBrief?.summary ?? "فرصة ذات جاهزية عالية وعائد استثماري مرتفع مع معوقات محدودة."}</p>
 
-                  <div className="mt-5">
+                  <div className="mt-4">
                     <ReadinessRing value={83} label="نسبة الجاهزية" tone="#2DD36F" />
                   </div>
 
-                  <div className="mt-5 space-y-3 text-sm">
+                  <div className="mt-4 space-y-2 text-sm">
                     <div className="rounded-2xl bg-white/[0.03] px-4 py-3 text-white/70">
                       <span className="text-white/35">عائد استثماري متوقع:</span> مرتفع
                     </div>
@@ -745,16 +747,16 @@ export default function AdminPage() {
                     </div>
                   </div>
 
-                  <button onClick={() => setActiveTab("governance")} className="mt-5 w-full rounded-2xl bg-[#C59B49] px-4 py-3 text-sm font-black text-[#07192E] transition hover:bg-[#d2ad63]">
+                  <button onClick={() => setActiveTab("governance")} className="mt-4 w-full rounded-2xl bg-[#C59B49] px-4 py-3 text-sm font-black text-[#07192E] transition hover:bg-[#d2ad63]">
                     مراجعة الآن
                   </button>
                 </div>
               </section>
             </div>
 
-            <div className="grid grid-cols-1 gap-3 2xl:col-span-7 2xl:grid-cols-[1fr_0.94fr_1fr_1.08fr]">
-              <section className="rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
-                <div className="mb-5 flex items-center justify-between">
+            <div className="grid grid-cols-1 gap-2 2xl:col-span-7 2xl:grid-cols-[0.98fr_0.9fr_0.98fr_1.08fr]">
+              <section className="h-[232px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+                <div className="mb-4 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض الكل</button>
                   <h2 className="text-xl font-black text-white">مؤشرات الأداء الرئيسية</h2>
                 </div>
@@ -766,8 +768,8 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
-                <div className="mb-5 flex items-center justify-between">
+              <section className="h-[232px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+                <div className="mb-4 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض الكل</button>
                   <h2 className="text-xl font-black text-white">تنبيهات ذكية</h2>
                 </div>
@@ -783,8 +785,8 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
-                <div className="mb-5 flex items-center justify-between">
+              <section className="h-[232px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+                <div className="mb-4 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض الكل</button>
                   <h2 className="text-xl font-black text-white">رحلة الفرصة الاستثمارية</h2>
                 </div>
@@ -820,12 +822,12 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
-                <div className="mb-5 flex items-center justify-between">
+              <section className="h-[232px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+                <div className="mb-4 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض التقرير</button>
                   <h2 className="text-xl font-black text-white">الأثر الاقتصادي المتوقع</h2>
                 </div>
-                <div className="h-72">
+                <div className="h-[162px]">
                   {chartsReady ? (
                     <ResponsiveContainer width="100%" height="100%">
                       <AreaChart data={monthlyApplications} margin={{ top: 10, right: 6, left: 0, bottom: 0 }}>
@@ -852,7 +854,7 @@ export default function AdminPage() {
               </section>
             </div>
 
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 2xl:col-span-7 2xl:grid-cols-5">
+            <div className="grid grid-cols-1 gap-2 md:grid-cols-2 2xl:col-span-7 2xl:grid-cols-5">
               {[
                 { title: "تصدير تقرير", note: "تقرير الأداء الشهري", icon: <FileText size={18} /> },
                 { title: "اجتماع لجنة الاستثمار", note: "غداً - 10:00 ص", icon: <CalendarDays size={18} /> },
@@ -860,7 +862,7 @@ export default function AdminPage() {
                 { title: "مركز المساعدة", note: "الدعم والمساندة", icon: <MessageSquarePlus size={18} /> },
                 { title: "اسأل مساعد استنار الذكي", note: "اكتب استفسارك هنا...", icon: <Sparkles size={18} /> },
               ].map((item) => (
-                <div key={item.title} className="rounded-[1.45rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] px-5 py-4 shadow-[0_16px_42px_rgba(2,10,20,0.28)]">
+                <div key={item.title} className="h-[82px] overflow-hidden rounded-[1.45rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] px-5 py-4 shadow-[0_16px_42px_rgba(2,10,20,0.28)]">
                   <div className="flex items-center justify-between gap-4">
                     <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-[#DAB971]/20 bg-[#DAB971]/8 text-[#DAB971]">
                       {item.icon}

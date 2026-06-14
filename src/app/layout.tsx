@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import ConditionalChrome from "@/components/ConditionalChrome";
 
 export const metadata: Metadata = {
   title: "استنار | Istinaar",
@@ -22,9 +21,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className="antialiased" style={{ background: "#F8F9FB" }}>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <ConditionalChrome>{children}</ConditionalChrome>
       </body>
     </html>
   );
