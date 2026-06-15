@@ -528,18 +528,18 @@ export default function AdminPage() {
   return (
     <div className={isExecutiveOverview ? "h-[100dvh] overflow-hidden bg-[linear-gradient(180deg,#07111D_0%,#081523_100%)] text-white" : "min-h-screen bg-[linear-gradient(180deg,#07111D_0%,#081523_100%)] text-white"}>
       <div dir="ltr" className={isExecutiveOverview ? "mx-auto grid h-full max-w-[1600px] grid-cols-1 gap-2 p-2 xl:grid-cols-[56px_minmax(0,1fr)_246px]" : "mx-auto grid min-h-screen max-w-[1600px] grid-cols-1 gap-3 p-3 xl:grid-cols-[56px_minmax(0,1fr)_246px]"}>
-        <main dir="rtl" className={isExecutiveOverview ? "order-2 grid min-w-0 grid-rows-[94px_1fr] gap-2 overflow-hidden" : "order-2 min-w-0 space-y-3"}>
-        <section className={isExecutiveOverview ? "h-[94px] rounded-[1.7rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-5 py-3.5 shadow-[0_24px_70px_rgba(2,10,20,0.32)]" : "rounded-[1.8rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-5 py-4 shadow-[0_24px_70px_rgba(2,10,20,0.32)]"}>
-          <div dir="ltr" className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-[#D1AF68]/55 bg-[radial-gradient(circle_at_30%_30%,#f4e1b0_0%,#8d6b2f_100%)] text-[#0A1524] shadow-[0_8px_20px_rgba(0,0,0,0.25)]">
+        <main dir="rtl" className={isExecutiveOverview ? "order-2 grid min-w-0 grid-rows-[82px_1fr] gap-2 overflow-hidden" : "order-2 min-w-0 space-y-3"}>
+        <section className={isExecutiveOverview ? "h-[82px] rounded-[1.55rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-4 py-2.5 shadow-[0_24px_70px_rgba(2,10,20,0.32)]" : "rounded-[1.8rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-5 py-4 shadow-[0_24px_70px_rgba(2,10,20,0.32)]"}>
+          <div dir="ltr" className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-[#D1AF68]/55 bg-[radial-gradient(circle_at_30%_30%,#f4e1b0_0%,#8d6b2f_100%)] text-[#0A1524] shadow-[0_8px_20px_rgba(0,0,0,0.25)]">
                 <span className="text-sm font-black">أ</span>
               </div>
-              <button className="relative flex h-9 w-9 items-center justify-center rounded-[1rem] border border-white/8 bg-white/[0.03] text-white/70">
+              <button className="relative flex h-8.5 w-8.5 items-center justify-center rounded-[0.95rem] border border-white/8 bg-white/[0.03] text-white/70">
                 <Bell size={15} />
                 <span className="absolute -right-1 -top-1 rounded-full bg-red-500 px-1.5 py-0.5 text-[10px] font-black text-white">3</span>
               </button>
-              <button className="flex h-9 w-9 items-center justify-center rounded-[1rem] border border-white/8 bg-white/[0.03] text-white/70">
+              <button className="flex h-8.5 w-8.5 items-center justify-center rounded-[0.95rem] border border-white/8 bg-white/[0.03] text-white/70">
                 <Mail size={15} />
               </button>
               <div className="border-r border-white/8 pr-4 text-right">
@@ -594,10 +594,10 @@ export default function AdminPage() {
               ))}
             </div>
 
-            <div className="grid grid-cols-1 gap-2 xl:col-span-7 xl:grid-cols-[1.36fr_1fr_0.56fr]">
-              <section className="h-[372px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+            <div className="grid grid-cols-1 gap-2 xl:col-span-7 xl:grid-cols-[1.42fr_1fr_0.54fr]">
+              <section className="h-[384px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-start justify-between gap-4">
-                  <button className="rounded-2xl border border-[#B6913E]/20 bg-[#B6913E]/10 px-4 py-2 text-sm font-bold text-[#E9DFC8]">
+                  <button className="rounded-2xl border border-[#B6913E]/20 bg-[#B6913E]/10 px-4 py-2 text-[13px] font-bold text-[#E9DFC8]">
                     عرض طبقات الخريطة
                   </button>
                   <div className="text-right">
@@ -606,7 +606,7 @@ export default function AdminPage() {
                   </div>
                 </div>
 
-                <div className="grid h-[300px] gap-3 xl:grid-cols-[0.25fr_0.75fr]">
+                <div className="grid h-[314px] gap-3 xl:grid-cols-[0.23fr_0.77fr]">
                   <div className="space-y-3">
                     <select
                       value={selectedNeighborhoodSlug}
@@ -639,8 +639,11 @@ export default function AdminPage() {
                     </div>
                   </div>
 
-                  <div className="relative h-[258px] overflow-hidden rounded-[1.7rem] border border-white/8 bg-[radial-gradient(circle_at_center,rgba(182,145,62,0.09),transparent_40%),linear-gradient(180deg,#0C1B2D_0%,#091520_100%)]">
+                  <div className="relative h-[274px] overflow-hidden rounded-[1.85rem] border border-white/8 bg-[radial-gradient(circle_at_50%_38%,rgba(199,159,73,0.12),transparent_36%),radial-gradient(circle_at_22%_74%,rgba(69,131,205,0.12),transparent_28%),linear-gradient(180deg,#0C1B2D_0%,#091520_100%)]">
+                    <div className="absolute inset-x-[8%] top-10 h-16 rounded-full bg-[#D7B76F]/8 blur-3xl" />
+                    <div className="absolute bottom-8 right-[16%] h-20 w-28 rounded-full bg-[#10253E] blur-3xl" />
                     <div className="absolute inset-0 opacity-25" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)", backgroundSize: "34px 34px" }} />
+                    <div className="absolute inset-[18px] rounded-[1.55rem] border border-white/[0.04]" />
                     <svg viewBox="0 0 700 430" className="absolute inset-0 h-full w-full">
                       <path d="M88 146 C154 86, 270 58, 382 64 C510 70, 610 116, 656 194 C676 228, 662 298, 614 346 C562 396, 454 420, 322 404 C206 390, 124 342, 92 286 C66 242, 56 184, 88 146 Z" fill="none" stroke="rgba(215,183,111,0.18)" strokeWidth="2" />
                       <path d="M144 208 L542 168" stroke="rgba(215,183,111,0.12)" strokeWidth="2" />
@@ -651,6 +654,7 @@ export default function AdminPage() {
                         const selected = selectedNeighborhoodSlug === node.slug;
                         return (
                           <g key={node.slug}>
+                            {selected ? <circle cx={node.labelX} cy={node.labelY - 18} r={22} fill="rgba(215,183,111,0.12)" /> : null}
                             <path
                               d={node.path}
                               fill={selected ? "rgba(215,183,111,0.28)" : "rgba(255,255,255,0.05)"}
@@ -666,7 +670,7 @@ export default function AdminPage() {
                       })}
                     </svg>
 
-                    <div className="absolute bottom-5 left-5 rounded-2xl border border-white/8 bg-[#0A1726]/88 px-4 py-3 text-right">
+                    <div className="absolute bottom-5 left-5 rounded-[1.2rem] border border-white/8 bg-[#0A1726]/90 px-4 py-3 text-right shadow-[0_12px_35px_rgba(0,0,0,0.28)]">
                       <p className="text-xs text-white/40">الحي المحدد</p>
                       <p className="mt-1 text-sm font-bold text-white">{selectedNeighborhoodItem?.name ?? "حي النقرة"}</p>
                       <p className="mt-1 text-xs text-[#E9DFC8]">آخر تحديث: {selectedNeighborhoodItem?.analytics?.updatedAt ?? "—"}</p>
@@ -675,7 +679,7 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="h-[372px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+              <section className="h-[384px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between gap-4">
                   <button onClick={() => setActiveTab("requests")} className="text-sm font-bold text-[#DAB971]">
                     عرض الكل
@@ -694,7 +698,7 @@ export default function AdminPage() {
                         <button onClick={() => setActiveTab("requests")} className="rounded-xl border border-[#DAB971]/20 bg-[#DAB971]/10 px-4 py-2 text-sm font-bold text-[#E9DFC8]">
                           اتخاذ إجراء
                         </button>
-                        <div>
+                        <div className="min-w-0">
                           <h3 className="text-base font-black text-white">{caseItem.title}</h3>
                           <p className="mt-1 text-[13px] text-white/45">{caseItem.anchorAsset}</p>
                         </div>
@@ -710,7 +714,7 @@ export default function AdminPage() {
                         </div>
                       </div>
 
-                      <div className="mt-4 grid gap-2 pl-2 text-[13px] text-white/55">
+                      <div className="mt-4 grid gap-2 pl-2 text-[12.5px] text-white/55">
                         <div className="flex items-center justify-between">
                           <span className="text-white/35">الإجراء التالي</span>
                           <span>{caseItem.nextAction}</span>
@@ -729,7 +733,7 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="h-[372px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+              <section className="h-[384px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <span className="rounded-xl bg-[#DAB971]/12 px-3 py-1 text-xs font-black text-[#DAB971]">AI</span>
                   <div className="text-right">
@@ -775,8 +779,8 @@ export default function AdminPage() {
               </section>
             </div>
 
-            <div className="grid grid-cols-1 gap-2 xl:col-span-7 xl:grid-cols-[1.08fr_0.98fr_1fr_1.08fr]">
-              <section className="h-[214px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+            <div className="grid grid-cols-1 gap-2 xl:col-span-7 xl:grid-cols-[1.12fr_1fr_1.04fr_1.12fr]">
+              <section className="h-[226px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض الكل</button>
                   <h2 className="text-xl font-black text-white">مؤشرات الأداء الرئيسية</h2>
@@ -789,7 +793,7 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="h-[214px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+              <section className="h-[226px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض الكل</button>
                   <h2 className="text-xl font-black text-white">تنبيهات ذكية</h2>
@@ -799,14 +803,14 @@ export default function AdminPage() {
                     <div key={alert} className="rounded-[1.25rem] border border-white/8 bg-white/[0.03] px-4 py-3">
                       <div className="flex items-start justify-between gap-3">
                         <span className={`mt-1 h-3 w-3 rounded-full ${index === 0 ? "bg-red-500" : index === 1 ? "bg-[#F4B844]" : "bg-emerald-400"}`} />
-                        <p className="text-[13px] leading-6 text-white/70">{alert}</p>
+                        <p className="text-[13px] leading-7 text-white/70">{alert}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </section>
 
-              <section className="h-[214px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+              <section className="h-[226px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض الكل</button>
                   <h2 className="text-xl font-black text-white">رحلة الفرصة الاستثمارية</h2>
@@ -835,7 +839,7 @@ export default function AdminPage() {
                     { label: "قيد الاعتماد", value: "3" },
                     { label: "كل الإنجازات", value: "2" },
                   ].map((item) => (
-                    <div key={item.label} className="rounded-2xl bg-white/[0.03] px-3 py-3.5">
+                    <div key={item.label} className="rounded-2xl bg-white/[0.03] px-3 py-4">
                       <p className="text-lg font-black text-white">{item.value}</p>
                       <p className="mt-1 text-xs text-white/45">{item.label}</p>
                     </div>
@@ -843,7 +847,7 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="h-[214px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+              <section className="h-[226px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض التقرير</button>
                   <h2 className="text-xl font-black text-white">الأثر الاقتصادي المتوقع</h2>
@@ -855,7 +859,7 @@ export default function AdminPage() {
                     <span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-[#DAB971]" />الفرص المعتمدة</span>
                   </div>
                 </div>
-                <div className="h-[118px]">
+                <div className="h-[126px]">
                   {chartsReady ? (
                     <ResponsiveContainer width="100%" height="100%">
                       <AreaChart data={monthlyApplications} margin={{ top: 10, right: 6, left: 0, bottom: 0 }}>
