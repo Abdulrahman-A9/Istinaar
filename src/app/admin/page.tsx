@@ -526,9 +526,9 @@ export default function AdminPage() {
   }
 
   return (
-    <div className={isExecutiveOverview ? "h-[100dvh] overflow-hidden bg-[linear-gradient(180deg,#07111D_0%,#081523_100%)] text-white" : "min-h-screen bg-[linear-gradient(180deg,#07111D_0%,#081523_100%)] text-white"}>
-      <div dir="ltr" className={isExecutiveOverview ? "mx-auto grid h-full max-w-[1600px] grid-cols-1 gap-2 p-2 xl:grid-cols-[56px_minmax(0,1fr)_246px]" : "mx-auto grid min-h-screen max-w-[1600px] grid-cols-1 gap-3 p-3 xl:grid-cols-[56px_minmax(0,1fr)_246px]"}>
-        <main dir="rtl" className={isExecutiveOverview ? "order-2 grid min-w-0 grid-rows-[82px_1fr] gap-2 overflow-hidden" : "order-2 min-w-0 space-y-3"}>
+    <div className={isExecutiveOverview ? "min-h-screen overflow-x-hidden bg-[linear-gradient(180deg,#07111D_0%,#081523_100%)] text-white" : "min-h-screen bg-[linear-gradient(180deg,#07111D_0%,#081523_100%)] text-white"}>
+      <div dir="ltr" className={isExecutiveOverview ? "mx-auto grid min-h-screen max-w-[1600px] grid-cols-1 gap-2 p-2 xl:grid-cols-[56px_minmax(0,1fr)_246px]" : "mx-auto grid min-h-screen max-w-[1600px] grid-cols-1 gap-3 p-3 xl:grid-cols-[56px_minmax(0,1fr)_246px]"}>
+        <main dir="rtl" className={isExecutiveOverview ? "order-2 grid min-w-0 grid-rows-[82px_auto] gap-2" : "order-2 min-w-0 space-y-3"}>
         <section className={isExecutiveOverview ? "h-[82px] rounded-[1.55rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-4 py-2.5 shadow-[0_24px_70px_rgba(2,10,20,0.32)]" : "rounded-[1.8rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-5 py-4 shadow-[0_24px_70px_rgba(2,10,20,0.32)]"}>
           <div dir="ltr" className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
             <div className="flex flex-wrap items-center gap-2.5">
