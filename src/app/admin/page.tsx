@@ -138,26 +138,35 @@ function ExecutiveMetricCard({
   unit,
   delta,
   icon,
+  tone,
 }: {
   label: string;
   value: string;
   unit?: string;
   delta: string;
   icon: React.ReactNode;
+  tone: {
+    shell: string;
+    glow: string;
+    icon: string;
+    delta: string;
+  };
 }) {
   return (
-    <div className="flex h-[156px] flex-col justify-between rounded-[1.4rem] border border-white/8 bg-[linear-gradient(180deg,rgba(13,28,48,0.98)_0%,rgba(10,24,41,0.96)_100%)] px-4 py-3.5 shadow-[0_18px_46px_rgba(2,10,20,0.34)]">
+    <div className={`relative flex h-[182px] flex-col justify-between overflow-hidden rounded-[1.6rem] border border-white/8 ${tone.shell} px-5 py-4 shadow-[0_22px_58px_rgba(2,10,20,0.36)]`}>
+      <div className={`pointer-events-none absolute -left-8 top-[-22px] h-28 w-28 rounded-full blur-3xl ${tone.glow}`} />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-l from-transparent via-white/18 to-transparent" />
       <div className="flex items-start justify-between gap-3">
-        <div className="flex h-[54px] w-[54px] items-center justify-center rounded-full border border-[#B6913E]/55 bg-[radial-gradient(circle_at_30%_30%,rgba(214,185,116,0.08)_0%,rgba(182,145,62,0.02)_100%)] text-[#D9BA72] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+        <div className={`flex h-[60px] w-[60px] items-center justify-center rounded-full border border-white/12 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.14)_0%,rgba(255,255,255,0.03)_100%)] ${tone.icon} shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]`}>
           {icon}
         </div>
-        <div className="text-right">
-          <p className="text-[13px] leading-6 text-white/58">{label}</p>
-          <p className="mt-2 text-[2.55rem] font-black leading-none tracking-[-0.03em] text-white">{value}</p>
-          {unit ? <p className="mt-2 text-[13px] text-white/48">{unit}</p> : null}
+        <div className="text-right font-['IBM_Plex_Sans_Arabic']">
+          <p className="text-[14px] leading-7 text-white/64">{label}</p>
+          <p className="mt-3 font-['Tajawal'] text-[3rem] font-black leading-none tracking-[-0.04em] text-white">{value}</p>
+          {unit ? <p className="mt-2 text-[13px] text-white/52">{unit}</p> : null}
         </div>
       </div>
-      <p className="text-right text-[13px] font-semibold text-emerald-400">{delta}</p>
+      <p className={`text-right font-['IBM_Plex_Sans_Arabic'] text-[14px] font-semibold ${tone.delta}`}>{delta}</p>
     </div>
   );
 }
@@ -433,12 +442,53 @@ export default function AdminPage() {
   ];
 
   const executiveOverviewMetrics = [
-    { label: "قيمة الاستثمار المتوقعة", value: "211.7", unit: "مليون ريال", delta: "+18% عن الشهر الماضي", icon: <BadgeDollarSign size={22} /> },
-    { label: "مؤشر جاهزية الاستثمار", value: "83%", delta: "+7% عن الشهر الماضي", icon: <TrendingUp size={22} /> },
-    { label: "الوظائف المتوقعة", value: "1,248", unit: "وظيفة", delta: "+26% عن الشهر الماضي", icon: <Users size={22} /> },
-    { label: "العوائد السنوية المتوقعة", value: "28.4", unit: "مليون ريال", delta: "+15% عن الشهر الماضي", icon: <ChartColumn size={22} /> },
-    { label: "عدد الفرص الاستثمارية", value: `${opportunities.length}`, unit: "فرصة", delta: `${opportunities.filter((item) => item.featured).length} جاهزة للطرح`, icon: <BriefcaseBusiness size={22} /> },
-    { label: "القرارات المطلوبة", value: `${amanahDecisionWorkflow.cases.length + 2}`, unit: "قرارات", delta: "تحتاج إجراء هذا الأسبوع", icon: <ClipboardList size={22} /> },
+    {
+      label: "قيمة الاستثمار المتوقعة",
+      value: "211.7",
+      unit: "مليون ريال",
+      delta: "+18% عن الشهر الماضي",
+      icon: <BadgeDollarSign size={22} />,
+      tone: { shell: "bg-[linear-gradient(145deg,rgba(26,51,82,0.98)_0%,rgba(13,30,49,0.98)_48%,rgba(9,22,38,0.98)_100%)]", glow: "bg-emerald-500/12", icon: "text-[#F2C66A]", delta: "text-emerald-300" },
+    },
+    {
+      label: "مؤشر جاهزية الاستثمار",
+      value: "83%",
+      delta: "+7% عن الشهر الماضي",
+      icon: <TrendingUp size={22} />,
+      tone: { shell: "bg-[linear-gradient(145deg,rgba(17,40,72,0.98)_0%,rgba(11,27,46,0.98)_50%,rgba(7,21,36,0.98)_100%)]", glow: "bg-sky-500/10", icon: "text-[#8ED9FF]", delta: "text-[#66F1C2]" },
+    },
+    {
+      label: "الوظائف المتوقعة",
+      value: "1,248",
+      unit: "وظيفة",
+      delta: "+26% عن الشهر الماضي",
+      icon: <Users size={22} />,
+      tone: { shell: "bg-[linear-gradient(145deg,rgba(18,38,67,0.98)_0%,rgba(10,25,43,0.98)_52%,rgba(8,22,37,0.98)_100%)]", glow: "bg-amber-400/10", icon: "text-[#FFD58A]", delta: "text-[#7CF2A7]" },
+    },
+    {
+      label: "العوائد السنوية المتوقعة",
+      value: "28.4",
+      unit: "مليون ريال",
+      delta: "+15% عن الشهر الماضي",
+      icon: <ChartColumn size={22} />,
+      tone: { shell: "bg-[linear-gradient(145deg,rgba(22,40,67,0.98)_0%,rgba(11,25,43,0.98)_45%,rgba(10,26,39,0.98)_100%)]", glow: "bg-violet-500/10", icon: "text-[#E7C77A]", delta: "text-[#7CF2A7]" },
+    },
+    {
+      label: "عدد الفرص الاستثمارية",
+      value: `${opportunities.length}`,
+      unit: "فرصة",
+      delta: `${opportunities.filter((item) => item.featured).length} جاهزة للطرح`,
+      icon: <BriefcaseBusiness size={22} />,
+      tone: { shell: "bg-[linear-gradient(145deg,rgba(19,42,66,0.98)_0%,rgba(12,27,44,0.98)_50%,rgba(8,21,36,0.98)_100%)]", glow: "bg-cyan-400/10", icon: "text-[#F0C86E]", delta: "text-[#9AF277]" },
+    },
+    {
+      label: "القرارات المطلوبة",
+      value: `${amanahDecisionWorkflow.cases.length + 2}`,
+      unit: "قرارات",
+      delta: "تحتاج إجراء هذا الأسبوع",
+      icon: <ClipboardList size={22} />,
+      tone: { shell: "bg-[linear-gradient(145deg,rgba(23,43,71,0.98)_0%,rgba(12,28,46,0.98)_50%,rgba(9,22,38,0.98)_100%)]", glow: "bg-rose-500/10", icon: "text-[#F4C974]", delta: "text-[#52F1B3]" },
+    },
   ];
 
   const executiveMapNodes = [
@@ -532,9 +582,9 @@ export default function AdminPage() {
 
   return (
     <div className={isExecutiveOverview ? "min-h-screen overflow-x-hidden bg-[linear-gradient(180deg,#07111D_0%,#081523_100%)] text-white" : "min-h-screen bg-[linear-gradient(180deg,#07111D_0%,#081523_100%)] text-white"}>
-      <div dir="ltr" className={isExecutiveOverview ? "mx-auto grid min-h-screen max-w-[1600px] grid-cols-1 gap-2 p-2 xl:grid-cols-[minmax(0,1fr)_218px]" : "mx-auto grid min-h-screen max-w-[1600px] grid-cols-1 gap-3 p-3 xl:grid-cols-[minmax(0,1fr)_218px]"}>
-        <main dir="rtl" className={isExecutiveOverview ? "order-2 grid min-w-0 grid-rows-[82px_auto] gap-2" : "order-2 min-w-0 space-y-3"}>
-        <section className={isExecutiveOverview ? "h-[82px] rounded-[1.55rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-4 py-2.5 shadow-[0_24px_70px_rgba(2,10,20,0.32)]" : "rounded-[1.8rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-5 py-4 shadow-[0_24px_70px_rgba(2,10,20,0.32)]"}>
+      <div dir="ltr" className={isExecutiveOverview ? "mx-auto grid min-h-screen max-w-[1720px] grid-cols-1 gap-3 p-3 xl:grid-cols-[minmax(0,1fr)_202px]" : "mx-auto grid min-h-screen max-w-[1600px] grid-cols-1 gap-3 p-3 xl:grid-cols-[minmax(0,1fr)_218px]"}>
+        <main dir="rtl" className={isExecutiveOverview ? "order-2 grid min-w-0 grid-rows-[108px_auto] gap-3" : "order-2 min-w-0 space-y-3"}>
+        <section className={isExecutiveOverview ? "h-[108px] rounded-[1.8rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-6 py-3 shadow-[0_24px_70px_rgba(2,10,20,0.32)]" : "rounded-[1.8rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-5 py-4 shadow-[0_24px_70px_rgba(2,10,20,0.32)]"}>
           <div dir="ltr" className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
             <div className="flex flex-wrap items-center gap-2.5">
               <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-[#D1AF68]/55 bg-[radial-gradient(circle_at_30%_30%,#f4e1b0_0%,#8d6b2f_100%)] text-[#0A1524] shadow-[0_8px_20px_rgba(0,0,0,0.25)]">
@@ -548,18 +598,18 @@ export default function AdminPage() {
                 <Mail size={15} />
               </button>
               <div className="border-r border-white/8 pr-4 text-right">
-                <p className="text-[15px] font-black text-[#E8D6A5]">{currentUser.fullName}</p>
-                <p className="text-xs text-white/45">مدير إدارة الاستثمار</p>
+                <p className="font-['Tajawal'] text-[18px] font-black text-[#E8D6A5]">{currentUser.fullName}</p>
+                <p className="font-['IBM_Plex_Sans_Arabic'] text-[12px] text-white/45">مدير إدارة الاستثمار</p>
               </div>
               <div className="border-r border-white/8 pr-4 text-right text-white/60">
-                <p className="text-xs">الأربعاء 05/01/1448 هـ</p>
-                <p className="text-sm font-semibold text-white/85">10:30 AM</p>
+                <p className="font-['IBM_Plex_Sans_Arabic'] text-[12px]">الأربعاء 05/01/1448 هـ</p>
+                <p className="font-['Tajawal'] text-[16px] font-bold text-white/85">10:30 AM</p>
               </div>
             </div>
 
             <div className="text-right">
-              <h1 className="text-[2.25rem] font-black leading-none text-white">غرفة قيادة الاستثمار الحضري</h1>
-              <p className="mt-1 text-[13px] text-white/55">مركز القرار التنفيذي - أمانة منطقة حائل</p>
+              <h1 className="font-['Tajawal'] text-[2.7rem] font-black leading-none text-white">غرفة قيادة الاستثمار الحضري</h1>
+              <p className="mt-2 font-['IBM_Plex_Sans_Arabic'] text-[14px] text-white/55">مركز القرار التنفيذي - أمانة منطقة حائل</p>
             </div>
           </div>
         </section>
@@ -585,8 +635,8 @@ export default function AdminPage() {
         </section>
 
         {activeTab === "overview" && (
-          <div className="grid h-full grid-cols-1 gap-2 overflow-hidden xl:grid-cols-[repeat(6,minmax(0,1fr))_1.18fr]">
-            <div className="grid grid-cols-1 gap-2 md:grid-cols-2 xl:col-span-6 xl:grid-cols-6">
+          <div className="grid h-full grid-cols-1 gap-3 overflow-hidden xl:grid-cols-[repeat(6,minmax(0,1fr))_1.05fr]">
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:col-span-6 xl:grid-cols-6">
               {executiveOverviewMetrics.map((metric) => (
                 <ExecutiveMetricCard
                   key={metric.label}
@@ -595,23 +645,24 @@ export default function AdminPage() {
                   unit={metric.unit}
                   delta={metric.delta}
                   icon={metric.icon}
+                  tone={metric.tone}
                 />
               ))}
             </div>
 
-            <div className="grid grid-cols-1 gap-2 xl:col-span-7 xl:grid-cols-[1.42fr_1fr_0.54fr]">
-              <section className="h-[384px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+            <div className="grid grid-cols-1 gap-3 xl:col-span-7 xl:grid-cols-[1.48fr_1.08fr_0.62fr]">
+              <section className="h-[432px] overflow-hidden rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-start justify-between gap-4">
                   <button className="rounded-2xl border border-[#B6913E]/20 bg-[#B6913E]/10 px-4 py-2 text-[13px] font-bold text-[#E9DFC8]">
                     عرض طبقات الخريطة
                   </button>
                   <div className="text-right">
                     <p className="text-xs text-[#B6913E]">التحليل المكاني المباشر</p>
-                    <h2 className="mt-1 text-2xl font-black text-white">خريطة أولويات الأحياء</h2>
+                    <h2 className="mt-1 font-['Tajawal'] text-[2rem] font-black text-white">خريطة أولويات الأحياء</h2>
                   </div>
                 </div>
 
-                <div className="grid h-[314px] gap-3 xl:grid-cols-[0.23fr_0.77fr]">
+                <div className="grid h-[354px] gap-3 xl:grid-cols-[0.24fr_0.76fr]">
                   <div className="space-y-3">
                     <select
                       value={selectedNeighborhoodSlug}
@@ -644,7 +695,7 @@ export default function AdminPage() {
                     </div>
                   </div>
 
-                  <div className="relative h-[274px] overflow-hidden rounded-[1.85rem] border border-white/8 bg-[radial-gradient(circle_at_50%_38%,rgba(199,159,73,0.1),transparent_36%),radial-gradient(circle_at_22%_74%,rgba(69,131,205,0.08),transparent_28%),linear-gradient(180deg,#0C1B2D_0%,#091520_100%)]">
+                  <div className="relative h-[316px] overflow-hidden rounded-[1.95rem] border border-white/8 bg-[radial-gradient(circle_at_50%_38%,rgba(199,159,73,0.12),transparent_36%),radial-gradient(circle_at_22%_74%,rgba(69,131,205,0.14),transparent_28%),radial-gradient(circle_at_80%_20%,rgba(35,208,121,0.08),transparent_24%),linear-gradient(180deg,#0C1B2D_0%,#091520_100%)]">
                     <div className="absolute inset-x-[8%] top-10 h-16 rounded-full bg-[#D7B76F]/8 blur-3xl" />
                     <div className="absolute bottom-8 right-[16%] h-20 w-28 rounded-full bg-[#10253E] blur-3xl" />
                     <div className="absolute inset-0 opacity-25" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)", backgroundSize: "34px 34px" }} />
@@ -696,20 +747,20 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="h-[384px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+              <section className="h-[432px] overflow-hidden rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between gap-4">
                   <button onClick={() => setActiveTab("requests")} className="text-sm font-bold text-[#DAB971]">
                     عرض الكل
                   </button>
                   <div className="text-right">
                     <p className="text-xs text-white/45">المطلوب الآن</p>
-                    <h2 className="mt-1 text-2xl font-black text-white">أهم القرارات اليوم</h2>
+                    <h2 className="mt-1 font-['Tajawal'] text-[2rem] font-black text-white">أهم القرارات اليوم</h2>
                   </div>
                 </div>
 
                 <div className="space-y-3">
                   {amanahDecisionWorkflow.cases.slice(0, 4).map((caseItem) => (
-                    <div key={caseItem.id} className="relative overflow-hidden rounded-[1.45rem] border border-white/8 bg-white/[0.03] p-3.5 text-right">
+                    <div key={caseItem.id} className="relative overflow-hidden rounded-[1.55rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.04)_0%,rgba(255,255,255,0.03)_100%)] p-4 text-right">
                       <span className="absolute inset-y-3 right-0 w-[3px] rounded-full" style={{ backgroundColor: caseItem.stageTone }} />
                       <div className="flex items-start justify-between gap-4 pl-2">
                         <button onClick={() => setActiveTab("requests")} className="rounded-xl border border-[#DAB971]/20 bg-[#DAB971]/10 px-4 py-2 text-sm font-bold text-[#E9DFC8]">
@@ -750,21 +801,21 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="h-[384px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+              <section className="h-[432px] overflow-hidden rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(17,32,56,0.98)_0%,rgba(10,24,40,0.97)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <span className="rounded-xl bg-[#DAB971]/12 px-3 py-1 text-xs font-black text-[#DAB971]">AI</span>
                   <div className="text-right">
                     <p className="text-xs text-white/45">الذكاء التنفيذي يقترح</p>
-                    <h2 className="mt-1 text-xl font-black text-white">توصية جاهزة</h2>
+                    <h2 className="mt-1 font-['Tajawal'] text-[1.8rem] font-black text-white">توصية جاهزة</h2>
                   </div>
                 </div>
 
-                <div className="h-[308px] rounded-[1.6rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.03)_0%,rgba(255,255,255,0.02)_100%)] p-4 text-right">
+                <div className="h-[350px] rounded-[1.75rem] border border-[#DAB971]/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.04)_0%,rgba(255,255,255,0.025)_100%)] p-4 text-right">
                   <div className="flex items-center justify-between gap-2">
                     <p className="text-[11px] text-white/38">يوصي بالإسراع في اعتماد فرصة</p>
                     <span className="rounded-full bg-[#DAB971]/12 px-2.5 py-1 text-[10px] font-bold text-[#E9DFC8]">أولوية مرتفعة</span>
                   </div>
-                  <h3 className="mt-3 text-[1.7rem] font-black leading-[1.45] text-white">{topExecutiveBrief?.angle ?? "تطوير موقع حي مشار"}</h3>
+                  <h3 className="mt-4 font-['Tajawal'] text-[2rem] font-black leading-[1.45] text-white">{topExecutiveBrief?.angle ?? "تطوير موقع حي مشار"}</h3>
                   <div className="mt-3 rounded-[1.25rem] border border-white/8 bg-white/[0.025] px-3 py-2.5">
                     <div className="mb-2 flex items-center justify-between text-[11px]">
                       <span className="text-white/42">نسبة الجاهزية</span>
@@ -791,11 +842,11 @@ export default function AdminPage() {
               </section>
             </div>
 
-            <div className="grid grid-cols-1 gap-2 xl:col-span-7 xl:grid-cols-[1.12fr_1fr_1.04fr_1.12fr]">
-              <section className="h-[226px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+            <div className="grid grid-cols-1 gap-3 xl:col-span-7 xl:grid-cols-[1.14fr_1.02fr_1.06fr_1.14fr]">
+              <section className="h-[258px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(14,32,54,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض الكل</button>
-                  <h2 className="text-xl font-black text-white">مؤشرات الأداء الرئيسية</h2>
+                  <h2 className="font-['Tajawal'] text-[1.75rem] font-black text-white">مؤشرات الأداء الرئيسية</h2>
                 </div>
                 <div className="grid grid-cols-4 gap-2.5">
                   <ReadinessRing value={83} label="جاهزية الأحياء" tone="#DAB971" compact />
@@ -805,10 +856,10 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="h-[226px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+              <section className="h-[258px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(17,33,56,0.98)_0%,rgba(10,24,41,0.97)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض الكل</button>
-                  <h2 className="text-xl font-black text-white">تنبيهات ذكية</h2>
+                  <h2 className="font-['Tajawal'] text-[1.75rem] font-black text-white">تنبيهات ذكية</h2>
                 </div>
                 <div className="space-y-3">
                   {executiveQuickAlerts.map((alert, index) => (
@@ -822,10 +873,10 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="h-[226px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+              <section className="h-[258px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(13,31,54,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض الكل</button>
-                  <h2 className="text-xl font-black text-white">رحلة الفرصة الاستثمارية</h2>
+                  <h2 className="font-['Tajawal'] text-[1.75rem] font-black text-white">رحلة الفرصة الاستثمارية</h2>
                 </div>
                 <div className="flex items-center justify-between gap-2 overflow-x-auto pb-3">
                   {[
@@ -859,10 +910,10 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="h-[226px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+              <section className="h-[258px] overflow-hidden rounded-[1.9rem] border border-white/8 bg-[linear-gradient(180deg,rgba(16,34,56,0.98)_0%,rgba(10,24,40,0.97)_100%)] p-5 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض التقرير</button>
-                  <h2 className="text-xl font-black text-white">الأثر الاقتصادي المتوقع</h2>
+                  <h2 className="font-['Tajawal'] text-[1.75rem] font-black text-white">الأثر الاقتصادي المتوقع</h2>
                 </div>
                 <div className="mb-3 flex items-center justify-between text-[12px] text-white/45">
                   <span>المؤشر</span>

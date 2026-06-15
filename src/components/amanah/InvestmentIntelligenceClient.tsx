@@ -134,12 +134,12 @@ function SurfaceCard({
   action?: React.ReactNode;
 }) {
   return (
-    <section className="panel-hover rise-in rounded-[1.6rem] border border-[rgba(11,31,51,0.08)] bg-[linear-gradient(180deg,#FFFFFF_0%,#FCFBF8_100%)] p-5 shadow-[0_16px_42px_rgba(11,31,51,0.05)]">
+    <section className="panel-hover rise-in rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(10,24,40,0.94)_0%,rgba(9,22,37,0.98)_100%)] p-5 text-white shadow-[0_16px_42px_rgba(11,31,51,0.14)]">
       <div className="mb-4 flex items-start justify-between gap-4">
         <div>{action}</div>
         <div className="text-right">
-          {subtitle ? <p className="mb-1 text-xs text-slate-400">{subtitle}</p> : null}
-          <h3 className="text-lg font-black text-navy">{title}</h3>
+          {subtitle ? <p className="mb-1 font-['IBM_Plex_Sans_Arabic'] text-xs text-white/45">{subtitle}</p> : null}
+          <h3 className="font-['Tajawal'] text-[1.45rem] font-black text-white">{title}</h3>
         </div>
       </div>
       {children}
@@ -159,11 +159,11 @@ function KpiCard({
   tone: string;
 }) {
   return (
-    <div className="official-navy-surface panel-hover rise-in rounded-[1.5rem] p-4">
+    <div className="official-navy-surface panel-hover rise-in rounded-[1.65rem] border border-white/8 p-5 shadow-[0_18px_38px_rgba(2,10,20,0.16)]">
       <div className="mb-3 h-1.5 w-16 rounded-full" style={{ backgroundColor: tone }} />
-      <p className="text-sm font-semibold text-[#E9DFC8]/88">{label}</p>
-      <p className="mt-2 text-3xl font-black text-white">{value}</p>
-      <p className="mt-2 text-xs leading-6 text-white/72">{note}</p>
+      <p className="font-['IBM_Plex_Sans_Arabic'] text-sm font-semibold text-[#E9DFC8]/88">{label}</p>
+      <p className="mt-2 font-['Tajawal'] text-[2.2rem] font-black text-white">{value}</p>
+      <p className="mt-3 font-['IBM_Plex_Sans_Arabic'] text-xs leading-7 text-white/72">{note}</p>
     </div>
   );
 }
