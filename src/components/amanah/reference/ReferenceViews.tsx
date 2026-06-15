@@ -7,8 +7,11 @@ import {
   ChevronDown,
   ClipboardList,
   Coins,
+  Eye,
   FileSpreadsheet,
   Minus,
+  MoreVertical,
+  Pencil,
   Plus,
   ShieldAlert,
   TrendingUp,
@@ -446,7 +449,7 @@ export function IntelligenceSpatialReference() {
   return (
     <div className="space-y-5">
       <div className="grid gap-4 xl:grid-cols-[0.32fr_1fr_0.28fr]">
-        <DarkCard title="فلترة التحليل" className="min-h-[515px]">
+        <DarkCard title="فلترة التحليل" className="order-3 min-h-[515px] xl:order-1">
           <div className="space-y-4">
             {["اختيار الحي", "أمر التشغيل", "نوع الاستخدام", "أمر القرار"].map((item) => (
               <button key={item} className="flex w-full items-center justify-between rounded-[1rem] border border-white/10 bg-white/[0.03] px-4 py-4 text-sm font-semibold text-white/76">
@@ -491,7 +494,7 @@ export function IntelligenceSpatialReference() {
           </div>
         </DarkCard>
 
-        <DarkCard title="طبقات الخريطة" className="min-h-[515px]">
+        <DarkCard title="طبقات الخريطة" className="order-1 min-h-[515px] xl:order-3">
           <div className="space-y-3 text-right">
             {[
               ["مؤشر الجاذبية المكانية", "#39D56E"],
@@ -592,9 +595,15 @@ export function IntelligenceOpportunitiesReference() {
                     <td className="px-4 py-5 text-white/52">{row.updated}</td>
                     <td className="px-4 py-5">
                       <div className="flex justify-end gap-2">
-                        <button className="rounded-[0.85rem] border border-white/10 bg-white/[0.03] px-3 py-2 text-xs font-bold">⋮</button>
-                        <button className="rounded-[0.85rem] border border-white/10 bg-white/[0.03] px-3 py-2 text-xs font-bold">👁</button>
-                        <button className="rounded-[0.85rem] border border-white/10 bg-white/[0.03] px-3 py-2 text-xs font-bold">✎</button>
+                        <button className="flex h-9 w-9 items-center justify-center rounded-[0.85rem] border border-white/10 bg-white/[0.03] text-white/72">
+                          <Pencil size={15} />
+                        </button>
+                        <button className="flex h-9 w-9 items-center justify-center rounded-[0.85rem] border border-white/10 bg-white/[0.03] text-white/72">
+                          <Eye size={15} />
+                        </button>
+                        <button className="flex h-9 w-9 items-center justify-center rounded-[0.85rem] border border-white/10 bg-white/[0.03] text-white/72">
+                          <MoreVertical size={15} />
+                        </button>
                       </div>
                     </td>
                   </tr>

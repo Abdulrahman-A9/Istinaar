@@ -5,7 +5,12 @@ import { usePathname } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const chromeLessPrefixes = ["/admin"];
+const chromeLessPrefixes = [
+  "/admin",
+  "/investment-intelligence",
+  "/amanah-portal",
+  "/amanah-executive",
+];
 
 export default function ConditionalChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
