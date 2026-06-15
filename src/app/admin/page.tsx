@@ -32,7 +32,6 @@ import {
   FolderKanban,
   Handshake,
   Landmark,
-  Layers3,
   LayoutDashboard,
   LogOut,
   Mail,
@@ -420,8 +419,6 @@ export default function AdminPage() {
     { key: "settings", label: "الإعدادات", icon: Settings, href: "#" },
   ];
 
-  const utilityIcons = [ShieldCheck, Layers3, FileCheck2, BriefcaseBusiness, Users, Bot];
-
   const executiveRailItems = [
     { key: "overview", label: "الرئيسية", icon: LayoutDashboard, onSelect: () => setActiveTab("overview") },
     { key: "intelligence", label: "الذكاء الاستثماري", icon: Bot, href: "/investment-intelligence" },
@@ -457,6 +454,14 @@ export default function AdminPage() {
     "فرصة تجاوزت مدة الاعتماد المستهدفة في حي النقرة.",
     "دراسة ميدانية لمشروع حي الوسيطاء تحتاج تحديثاً عاجلاً.",
     "ملف شراكة جديد جاهز للطرح بعد استكمال التوقيع.",
+  ];
+
+  const executiveSupportCards = [
+    { title: "تصدير تقرير", note: "تقرير الأداء الشهري", icon: <FileText size={16} /> },
+    { title: "اجتماع لجنة الاستثمار", note: "غداً - 10:00 ص", icon: <CalendarDays size={16} /> },
+    { title: "توقيع إلكتروني", note: "3 مستندات بانتظار التوقيع", icon: <Mail size={16} /> },
+    { title: "مركز المساعدة", note: "الدعم والمساندة", icon: <MessageSquarePlus size={16} /> },
+    { title: "اسأل مساعد استنار الذكي", note: "اكتب استفسارك هنا...", icon: <Sparkles size={16} /> },
   ];
 
   const overviewMetrics = [
@@ -527,7 +532,7 @@ export default function AdminPage() {
 
   return (
     <div className={isExecutiveOverview ? "min-h-screen overflow-x-hidden bg-[linear-gradient(180deg,#07111D_0%,#081523_100%)] text-white" : "min-h-screen bg-[linear-gradient(180deg,#07111D_0%,#081523_100%)] text-white"}>
-      <div dir="ltr" className={isExecutiveOverview ? "mx-auto grid min-h-screen max-w-[1600px] grid-cols-1 gap-2 p-2 xl:grid-cols-[56px_minmax(0,1fr)_246px]" : "mx-auto grid min-h-screen max-w-[1600px] grid-cols-1 gap-3 p-3 xl:grid-cols-[56px_minmax(0,1fr)_246px]"}>
+      <div dir="ltr" className={isExecutiveOverview ? "mx-auto grid min-h-screen max-w-[1600px] grid-cols-1 gap-2 p-2 xl:grid-cols-[minmax(0,1fr)_218px]" : "mx-auto grid min-h-screen max-w-[1600px] grid-cols-1 gap-3 p-3 xl:grid-cols-[minmax(0,1fr)_218px]"}>
         <main dir="rtl" className={isExecutiveOverview ? "order-2 grid min-w-0 grid-rows-[82px_auto] gap-2" : "order-2 min-w-0 space-y-3"}>
         <section className={isExecutiveOverview ? "h-[82px] rounded-[1.55rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-4 py-2.5 shadow-[0_24px_70px_rgba(2,10,20,0.32)]" : "rounded-[1.8rem] border border-white/8 bg-[linear-gradient(180deg,#081624_0%,#091726_100%)] px-5 py-4 shadow-[0_24px_70px_rgba(2,10,20,0.32)]"}>
           <div dir="ltr" className="flex flex-col gap-3 xl:flex-row xl:items-center xl:justify-between">
@@ -893,27 +898,6 @@ export default function AdminPage() {
               </section>
             </div>
 
-            <div className="grid grid-cols-1 gap-2 md:grid-cols-2 xl:col-span-7 xl:grid-cols-5">
-              {[
-                { title: "تصدير تقرير", note: "تقرير الأداء الشهري", icon: <FileText size={18} /> },
-                { title: "اجتماع لجنة الاستثمار", note: "غداً - 10:00 ص", icon: <CalendarDays size={18} /> },
-                { title: "توقيع إلكتروني", note: "3 مستندات بانتظار التوقيع", icon: <Mail size={18} /> },
-                { title: "مركز المساعدة", note: "الدعم والمساندة", icon: <MessageSquarePlus size={18} /> },
-                { title: "اسأل مساعد استنار الذكي", note: "اكتب استفسارك هنا...", icon: <Sparkles size={18} /> },
-              ].map((item) => (
-                <div key={item.title} className="h-[76px] overflow-hidden rounded-[1.45rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] px-4 py-3 shadow-[0_16px_42px_rgba(2,10,20,0.28)]">
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-[1rem] border border-[#DAB971]/20 bg-[#DAB971]/8 text-[#DAB971]">
-                      {item.icon}
-                    </div>
-                    <div className="text-right">
-                      <p className="text-[13px] font-black text-white">{item.title}</p>
-                      <p className="mt-1 text-xs text-white/45">{item.note}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         )}
 
@@ -1465,58 +1449,35 @@ export default function AdminPage() {
         )}
         </main>
 
-        <aside dir="rtl" className="order-1 hidden xl:flex flex-col items-center rounded-[1.8rem] border border-white/8 bg-[linear-gradient(180deg,rgba(12,24,38,0.98)_0%,rgba(8,18,30,0.98)_100%)] py-4 shadow-[0_18px_50px_rgba(0,0,0,0.25)]">
-          <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-[1.15rem] border border-[#D3B06B]/25 bg-[#D3B06B]/10 text-[#DDBD79]">
-            <MapPin size={17} />
-          </div>
-          <div className="flex flex-1 flex-col items-center gap-2.5">
-            {utilityIcons.map((Icon, index) => (
-              <button
-                key={index}
-                className={`flex h-10 w-10 items-center justify-center rounded-[1.15rem] border transition ${
-                  index === 0
-                    ? "border-[#D3B06B]/25 bg-[#D3B06B]/10 text-[#E7CB8E]"
-                    : "border-white/8 bg-white/[0.02] text-white/55 hover:bg-white/[0.05] hover:text-white"
-                }`}
-              >
-                <Icon size={17} />
-              </button>
-            ))}
-          </div>
-          <button className="mt-5 flex h-10 w-10 items-center justify-center rounded-[1.15rem] border border-white/8 bg-white/[0.02] text-white/55 hover:bg-white/[0.05] hover:text-white">
-            <Settings size={17} />
-          </button>
-        </aside>
-
-        <aside dir="rtl" className="order-3 hidden xl:flex flex-col rounded-[1.8rem] border border-white/8 bg-[linear-gradient(180deg,rgba(9,20,34,0.98)_0%,rgba(7,16,28,0.98)_100%)] px-5 py-5 shadow-[0_18px_50px_rgba(0,0,0,0.28)]">
-          <div className="border-b border-white/8 pb-5 text-right">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex h-11 w-11 items-center justify-center rounded-[1.15rem] border border-[#D3B06B]/25 bg-[#D3B06B]/10 text-[#DDBD79]">
-                <Sparkles size={20} />
+        <aside dir="rtl" className="order-3 hidden xl:flex flex-col rounded-[1.7rem] border border-white/8 bg-[linear-gradient(180deg,rgba(9,20,34,0.98)_0%,rgba(7,16,28,0.98)_100%)] px-4 py-4 shadow-[0_18px_50px_rgba(0,0,0,0.28)]">
+          <div className="border-b border-white/8 pb-4 text-right">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-[1rem] border border-[#D3B06B]/25 bg-[#D3B06B]/10 text-[#DDBD79]">
+                <Sparkles size={18} />
               </div>
               <div className="text-right">
                 <h2 className="text-[2rem] font-black leading-none text-white">استنار</h2>
                 <p className="mt-2 text-[11px] leading-5 text-white/50">منصة الذكاء الاستثماري ودعم القرار</p>
               </div>
             </div>
-            <div className="mt-6 rounded-[1.15rem] border border-white/8 bg-white/[0.02] px-4 py-2.5">
+            <div className="mt-5 rounded-[1.05rem] border border-white/8 bg-white/[0.02] px-3.5 py-2.5">
               <p className="text-[13px] text-white/70">المركز التنفيذي</p>
               <p className="text-[13px] text-white/45">المركز التنفيذي</p>
             </div>
           </div>
 
-          <nav className="mt-5 flex-1 space-y-1">
+          <nav className="mt-4 flex-1 space-y-1">
             {executiveRailItems.map((item) => {
               const Icon = item.icon;
               const isActive = item.key === "overview" ? activeTab === "overview" : item.key === activeTab;
-              const classes = `flex w-full items-center justify-between rounded-[1.05rem] px-3.5 py-2.5 text-[13px] font-semibold transition ${
+              const classes = `flex w-full items-center justify-between rounded-[1rem] px-3 py-2.5 text-[12.5px] font-semibold transition ${
                 isActive ? "bg-[#C79A48] text-[#07111D] shadow-[0_12px_28px_rgba(199,154,72,0.22)]" : "text-white/72 hover:bg-white/[0.04] hover:text-white"
               }`;
 
               if (item.href) {
                 return (
                   <Link key={item.key} href={item.href} className={classes}>
-                    <Icon size={16} />
+                    <Icon size={15} />
                     <span>{item.label}</span>
                   </Link>
                 );
@@ -1524,19 +1485,34 @@ export default function AdminPage() {
 
               return (
                 <button key={item.key} onClick={item.onSelect} className={classes}>
-                  <Icon size={16} />
+                  <Icon size={15} />
                   <span>{item.label}</span>
                 </button>
               );
             })}
           </nav>
 
-          <div className="space-y-3 border-t border-white/8 pt-5">
-            <button className="flex w-full items-center justify-center gap-2 rounded-[1.05rem] border border-white/10 bg-white/[0.02] px-4 py-3 text-[13px] font-semibold text-white/75 hover:bg-white/[0.04]">
+          <div className="space-y-2.5 border-t border-white/8 pt-4">
+            <div className="space-y-2">
+              {executiveSupportCards.map((item) => (
+                <div key={item.title} className="rounded-[1rem] border border-white/8 bg-white/[0.02] px-3 py-2.5">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-[0.9rem] border border-[#DAB971]/18 bg-[#DAB971]/8 text-[#DAB971]">
+                      {item.icon}
+                    </div>
+                    <div className="text-right">
+                      <p className="text-[12px] font-black leading-5 text-white">{item.title}</p>
+                      <p className="mt-1 text-[11px] leading-5 text-white/45">{item.note}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button className="flex w-full items-center justify-center gap-2 rounded-[1rem] border border-white/10 bg-white/[0.02] px-4 py-3 text-[12.5px] font-semibold text-white/75 hover:bg-white/[0.04]">
               <MessageSquarePlus size={15} />
               <span>دليل المستخدم</span>
             </button>
-            <button className="flex w-full items-center justify-center gap-2 rounded-[1.05rem] border border-white/10 bg-transparent px-4 py-3 text-[13px] font-semibold text-white/55 hover:bg-white/[0.04] hover:text-white">
+            <button className="flex w-full items-center justify-center gap-2 rounded-[1rem] border border-white/10 bg-transparent px-4 py-3 text-[12.5px] font-semibold text-white/55 hover:bg-white/[0.04] hover:text-white">
               <LogOut size={15} />
               <span>تسجيل خروج</span>
             </button>
