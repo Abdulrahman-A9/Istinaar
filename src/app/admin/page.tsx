@@ -147,18 +147,18 @@ function ExecutiveMetricCard({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="flex h-[132px] flex-col justify-between rounded-[1.45rem] border border-white/8 bg-[linear-gradient(180deg,rgba(13,28,48,0.96)_0%,rgba(10,24,41,0.94)_100%)] p-3.5 shadow-[0_16px_42px_rgba(2,10,20,0.34)]">
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex h-10 w-10 items-center justify-center rounded-[1.15rem] border border-[#B6913E]/20 bg-[#B6913E]/8 text-[#D9BA72]">
+    <div className="flex h-[156px] flex-col justify-between rounded-[1.4rem] border border-white/8 bg-[linear-gradient(180deg,rgba(13,28,48,0.98)_0%,rgba(10,24,41,0.96)_100%)] px-4 py-3.5 shadow-[0_18px_46px_rgba(2,10,20,0.34)]">
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex h-[54px] w-[54px] items-center justify-center rounded-full border border-[#B6913E]/55 bg-[radial-gradient(circle_at_30%_30%,rgba(214,185,116,0.08)_0%,rgba(182,145,62,0.02)_100%)] text-[#D9BA72] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
           {icon}
         </div>
         <div className="text-right">
-          <p className="text-xs text-white/50">{label}</p>
-          <p className="mt-1.5 text-[1.8rem] font-black leading-none text-white">{value}</p>
-          {unit ? <p className="mt-1 text-[13px] text-white/42">{unit}</p> : null}
+          <p className="text-[13px] leading-6 text-white/58">{label}</p>
+          <p className="mt-2 text-[2.55rem] font-black leading-none tracking-[-0.03em] text-white">{value}</p>
+          {unit ? <p className="mt-2 text-[13px] text-white/48">{unit}</p> : null}
         </div>
       </div>
-      <p className="text-[13px] font-semibold text-emerald-400">{delta}</p>
+      <p className="text-right text-[13px] font-semibold text-emerald-400">{delta}</p>
     </div>
   );
 }
@@ -639,17 +639,21 @@ export default function AdminPage() {
                     </div>
                   </div>
 
-                  <div className="relative h-[274px] overflow-hidden rounded-[1.85rem] border border-white/8 bg-[radial-gradient(circle_at_50%_38%,rgba(199,159,73,0.12),transparent_36%),radial-gradient(circle_at_22%_74%,rgba(69,131,205,0.12),transparent_28%),linear-gradient(180deg,#0C1B2D_0%,#091520_100%)]">
+                  <div className="relative h-[274px] overflow-hidden rounded-[1.85rem] border border-white/8 bg-[radial-gradient(circle_at_50%_38%,rgba(199,159,73,0.1),transparent_36%),radial-gradient(circle_at_22%_74%,rgba(69,131,205,0.08),transparent_28%),linear-gradient(180deg,#0C1B2D_0%,#091520_100%)]">
                     <div className="absolute inset-x-[8%] top-10 h-16 rounded-full bg-[#D7B76F]/8 blur-3xl" />
                     <div className="absolute bottom-8 right-[16%] h-20 w-28 rounded-full bg-[#10253E] blur-3xl" />
                     <div className="absolute inset-0 opacity-25" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)", backgroundSize: "34px 34px" }} />
                     <div className="absolute inset-[18px] rounded-[1.55rem] border border-white/[0.04]" />
                     <svg viewBox="0 0 700 430" className="absolute inset-0 h-full w-full">
-                      <path d="M88 146 C154 86, 270 58, 382 64 C510 70, 610 116, 656 194 C676 228, 662 298, 614 346 C562 396, 454 420, 322 404 C206 390, 124 342, 92 286 C66 242, 56 184, 88 146 Z" fill="none" stroke="rgba(215,183,111,0.18)" strokeWidth="2" />
-                      <path d="M144 208 L542 168" stroke="rgba(215,183,111,0.12)" strokeWidth="2" />
-                      <path d="M238 88 L260 354" stroke="rgba(215,183,111,0.12)" strokeWidth="2" />
-                      <path d="M412 76 L396 382" stroke="rgba(215,183,111,0.12)" strokeWidth="2" />
-                      <path d="M166 294 L552 232" stroke="rgba(215,183,111,0.12)" strokeWidth="2" />
+                      <path d="M88 146 C154 86, 270 58, 382 64 C510 70, 610 116, 656 194 C676 228, 662 298, 614 346 C562 396, 454 420, 322 404 C206 390, 124 342, 92 286 C66 242, 56 184, 88 146 Z" fill="none" stroke="rgba(215,183,111,0.16)" strokeWidth="2" />
+                      <path d="M126 174 C212 130, 286 122, 360 132 C444 144, 514 170, 592 224" fill="none" stroke="rgba(215,183,111,0.18)" strokeWidth="3" strokeLinecap="round" />
+                      <path d="M136 304 C212 248, 320 214, 444 220 C516 224, 568 238, 616 266" fill="none" stroke="rgba(215,183,111,0.14)" strokeWidth="2.6" strokeLinecap="round" />
+                      <path d="M232 96 C254 156, 258 210, 246 334" fill="none" stroke="rgba(215,183,111,0.14)" strokeWidth="2" strokeLinecap="round" />
+                      <path d="M416 88 C410 152, 402 232, 396 382" fill="none" stroke="rgba(215,183,111,0.14)" strokeWidth="2" strokeLinecap="round" />
+                      <path d="M180 226 L562 176" stroke="rgba(255,255,255,0.06)" strokeWidth="1.5" strokeDasharray="6 10" />
+                      <path d="M184 266 L544 314" stroke="rgba(255,255,255,0.05)" strokeWidth="1.2" strokeDasharray="5 9" />
+                      <path d="M312 110 L514 286" stroke="rgba(255,255,255,0.05)" strokeWidth="1.2" strokeDasharray="5 9" />
+                      <path d="M354 142 L228 278" stroke="rgba(255,255,255,0.05)" strokeWidth="1.2" strokeDasharray="5 9" />
                       {executiveMapNodes.map((node) => {
                         const selected = selectedNeighborhoodSlug === node.slug;
                         return (
@@ -669,6 +673,14 @@ export default function AdminPage() {
                         );
                       })}
                     </svg>
+
+                    <div className="absolute bottom-[72px] left-4 flex flex-col gap-2">
+                      <button className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-[#122235]/88 text-lg text-white/78">+</button>
+                      <button className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-[#122235]/88 text-lg text-white/78">−</button>
+                      <button className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-[#122235]/88 text-white/78">
+                        <Eye size={15} />
+                      </button>
+                    </div>
 
                     <div className="absolute bottom-5 left-5 rounded-[1.2rem] border border-white/8 bg-[#0A1726]/90 px-4 py-3 text-right shadow-[0_12px_35px_rgba(0,0,0,0.28)]">
                       <p className="text-xs text-white/40">الحي المحدد</p>
@@ -742,38 +754,33 @@ export default function AdminPage() {
                   </div>
                 </div>
 
-                <div className="rounded-[1.6rem] border border-white/8 bg-white/[0.03] p-4 text-right">
-                  <div className="flex items-center justify-between gap-3">
-                    <p className="text-xs text-[#DAB971]">يوصى بالإسراع في اعتماد فرصة</p>
-                    <span className="rounded-full bg-[#DAB971]/12 px-3 py-1 text-[11px] font-bold text-[#E9DFC8]">أولوية مرتفعة</span>
+                <div className="h-[308px] rounded-[1.6rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.03)_0%,rgba(255,255,255,0.02)_100%)] p-4 text-right">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="text-[11px] text-white/38">يوصي بالإسراع في اعتماد فرصة</p>
+                    <span className="rounded-full bg-[#DAB971]/12 px-2.5 py-1 text-[10px] font-bold text-[#E9DFC8]">أولوية مرتفعة</span>
                   </div>
-                  <h3 className="mt-3 text-[2rem] font-black leading-tight text-white">{topExecutiveBrief?.angle ?? "تطوير موقع حي مشار"}</h3>
-                  <p className="mt-3 text-[13px] leading-7 text-white/55">{topExecutiveBrief?.summary ?? "فرصة ذات جاهزية عالية وعائد استثماري مرتفع مع معوقات محدودة."}</p>
-
-                  <div className="mt-4 rounded-[1.35rem] border border-white/8 bg-white/[0.025] p-3">
-                    <div className="mb-3 flex items-center justify-between text-[12px]">
-                      <span className="text-white/35">نسبة الجاهزية</span>
+                  <h3 className="mt-3 text-[1.7rem] font-black leading-[1.45] text-white">{topExecutiveBrief?.angle ?? "تطوير موقع حي مشار"}</h3>
+                  <div className="mt-3 rounded-[1.25rem] border border-white/8 bg-white/[0.025] px-3 py-2.5">
+                    <div className="mb-2 flex items-center justify-between text-[11px]">
+                      <span className="text-white/42">نسبة الجاهزية</span>
                       <span className="font-black text-emerald-300">83%</span>
                     </div>
                     <div className="h-2 rounded-full bg-white/10">
                       <div className="h-2 rounded-full bg-gradient-to-l from-[#2DD36F] to-[#79F2A2]" style={{ width: "83%" }} />
                     </div>
-                    <div className="mt-3">
-                      <ReadinessRing value={83} label="مؤشر تنفيذي سريع" tone="#2DD36F" />
-                    </div>
                   </div>
 
-                  <div className="mt-4 space-y-2 text-[13px]">
-                    <div className="rounded-2xl bg-white/[0.03] px-4 py-3 text-white/70">
-                      <span className="text-white/35">عائد استثماري متوقع:</span> مرتفع
-                    </div>
-                    <div className="rounded-2xl bg-white/[0.03] px-4 py-3 text-white/70">
-                      <span className="text-white/35">جاهزية النظام:</span> عالية
-                    </div>
+                  <div className="mt-4 space-y-3 text-[12px] leading-6 text-white/62">
+                    <p>عائد استثماري متوقع مرتفع</p>
+                    <p>جاهزية النظام: عالية</p>
+                    <p>{topExecutiveBrief?.summary ?? "تظهر القراءة الحالية أن الفرصة قابلة للرفع الفوري بعد استكمال الصياغة النهائية."}</p>
                   </div>
 
-                  <button onClick={() => setActiveTab("governance")} className="mt-4 w-full rounded-2xl bg-[#C59B49] px-4 py-3 text-sm font-black text-[#07192E] transition hover:bg-[#d2ad63]">
+                  <button onClick={() => setActiveTab("governance")} className="mt-5 w-full rounded-2xl bg-[#C59B49] px-4 py-3 text-sm font-black text-[#07192E] transition hover:bg-[#d2ad63]">
                     مراجعة الآن
+                  </button>
+                  <button onClick={() => setActiveTab("governance")} className="mt-3 flex w-full items-center justify-center gap-2 text-[12px] text-white/55">
+                    <span>عرض جميع التوصيات</span>
                   </button>
                 </div>
               </section>
