@@ -688,28 +688,29 @@ export default function AdminPage() {
 
                 <div className="space-y-3">
                   {amanahDecisionWorkflow.cases.slice(0, 4).map((caseItem) => (
-                    <div key={caseItem.id} className="rounded-[1.45rem] border border-white/8 bg-white/[0.03] p-3.5 text-right">
-                      <div className="flex items-start justify-between gap-4">
+                    <div key={caseItem.id} className="relative overflow-hidden rounded-[1.45rem] border border-white/8 bg-white/[0.03] p-3.5 text-right">
+                      <span className="absolute inset-y-3 right-0 w-[3px] rounded-full" style={{ backgroundColor: caseItem.stageTone }} />
+                      <div className="flex items-start justify-between gap-4 pl-2">
                         <button onClick={() => setActiveTab("requests")} className="rounded-xl border border-[#DAB971]/20 bg-[#DAB971]/10 px-4 py-2 text-sm font-bold text-[#E9DFC8]">
                           اتخاذ إجراء
                         </button>
                         <div>
                           <h3 className="text-base font-black text-white">{caseItem.title}</h3>
-                          <p className="mt-1 text-sm text-white/45">{caseItem.anchorAsset}</p>
+                          <p className="mt-1 text-[13px] text-white/45">{caseItem.anchorAsset}</p>
                         </div>
                       </div>
 
-                      <div className="mt-4 flex items-center justify-between gap-3">
+                      <div className="mt-4 flex items-center justify-between gap-3 pl-2">
                         <span className="rounded-full px-3 py-1 text-xs font-bold" style={{ backgroundColor: `${caseItem.stageTone}20`, color: caseItem.stageTone }}>
                           {caseItem.stageLabel}
                         </span>
-                        <div className="text-left">
+                        <div className="flex items-center gap-2 text-left">
                           <p className="text-xs text-white/35">الجاهزية</p>
-                          <p className="text-sm font-black text-white">{caseItem.readinessScore}%</p>
+                          <p className="rounded-full bg-emerald-500/12 px-2.5 py-1 text-xs font-black text-emerald-300">{caseItem.readinessScore}%</p>
                         </div>
                       </div>
 
-                      <div className="mt-4 grid gap-2 text-sm text-white/55">
+                      <div className="mt-4 grid gap-2 pl-2 text-[13px] text-white/55">
                         <div className="flex items-center justify-between">
                           <span className="text-white/35">الإجراء التالي</span>
                           <span>{caseItem.nextAction}</span>
@@ -738,15 +739,27 @@ export default function AdminPage() {
                 </div>
 
                 <div className="rounded-[1.6rem] border border-white/8 bg-white/[0.03] p-4 text-right">
-                  <p className="text-xs text-[#DAB971]">يوصى بالإسراع في اعتماد فرصة</p>
-                  <h3 className="mt-3 text-2xl font-black text-white">{topExecutiveBrief?.angle ?? "تطوير موقع حي مشار"}</h3>
-                  <p className="mt-3 text-sm leading-8 text-white/55">{topExecutiveBrief?.summary ?? "فرصة ذات جاهزية عالية وعائد استثماري مرتفع مع معوقات محدودة."}</p>
+                  <div className="flex items-center justify-between gap-3">
+                    <p className="text-xs text-[#DAB971]">يوصى بالإسراع في اعتماد فرصة</p>
+                    <span className="rounded-full bg-[#DAB971]/12 px-3 py-1 text-[11px] font-bold text-[#E9DFC8]">أولوية مرتفعة</span>
+                  </div>
+                  <h3 className="mt-3 text-[2rem] font-black leading-tight text-white">{topExecutiveBrief?.angle ?? "تطوير موقع حي مشار"}</h3>
+                  <p className="mt-3 text-[13px] leading-7 text-white/55">{topExecutiveBrief?.summary ?? "فرصة ذات جاهزية عالية وعائد استثماري مرتفع مع معوقات محدودة."}</p>
 
-                  <div className="mt-4">
-                    <ReadinessRing value={83} label="نسبة الجاهزية" tone="#2DD36F" />
+                  <div className="mt-4 rounded-[1.35rem] border border-white/8 bg-white/[0.025] p-3">
+                    <div className="mb-3 flex items-center justify-between text-[12px]">
+                      <span className="text-white/35">نسبة الجاهزية</span>
+                      <span className="font-black text-emerald-300">83%</span>
+                    </div>
+                    <div className="h-2 rounded-full bg-white/10">
+                      <div className="h-2 rounded-full bg-gradient-to-l from-[#2DD36F] to-[#79F2A2]" style={{ width: "83%" }} />
+                    </div>
+                    <div className="mt-3">
+                      <ReadinessRing value={83} label="مؤشر تنفيذي سريع" tone="#2DD36F" />
+                    </div>
                   </div>
 
-                  <div className="mt-4 space-y-2 text-sm">
+                  <div className="mt-4 space-y-2 text-[13px]">
                     <div className="rounded-2xl bg-white/[0.03] px-4 py-3 text-white/70">
                       <span className="text-white/35">عائد استثماري متوقع:</span> مرتفع
                     </div>
@@ -762,13 +775,13 @@ export default function AdminPage() {
               </section>
             </div>
 
-            <div className="grid grid-cols-1 gap-2 xl:col-span-7 xl:grid-cols-[0.94fr_0.92fr_1fr_1.08fr]">
-              <section className="h-[202px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+            <div className="grid grid-cols-1 gap-2 xl:col-span-7 xl:grid-cols-[1.08fr_0.98fr_1fr_1.08fr]">
+              <section className="h-[214px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض الكل</button>
                   <h2 className="text-xl font-black text-white">مؤشرات الأداء الرئيسية</h2>
                 </div>
-                <div className="grid grid-cols-4 gap-3">
+                <div className="grid grid-cols-4 gap-2.5">
                   <ReadinessRing value={83} label="جاهزية الأحياء" tone="#DAB971" compact />
                   <ReadinessRing value={76} label="سرعة الاعتماد" tone="#7DDA7E" compact />
                   <ReadinessRing value={91} label="رضا المستثمرين" tone="#7DDA7E" compact />
@@ -776,7 +789,7 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="h-[202px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+              <section className="h-[214px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض الكل</button>
                   <h2 className="text-xl font-black text-white">تنبيهات ذكية</h2>
@@ -786,14 +799,14 @@ export default function AdminPage() {
                     <div key={alert} className="rounded-[1.25rem] border border-white/8 bg-white/[0.03] px-4 py-3">
                       <div className="flex items-start justify-between gap-3">
                         <span className={`mt-1 h-3 w-3 rounded-full ${index === 0 ? "bg-red-500" : index === 1 ? "bg-[#F4B844]" : "bg-emerald-400"}`} />
-                        <p className="text-sm leading-7 text-white/70">{alert}</p>
+                        <p className="text-[13px] leading-6 text-white/70">{alert}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </section>
 
-              <section className="h-[202px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+              <section className="h-[214px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض الكل</button>
                   <h2 className="text-xl font-black text-white">رحلة الفرصة الاستثمارية</h2>
@@ -808,10 +821,10 @@ export default function AdminPage() {
                     "تشغيل قريباً",
                   ].map((label, index) => (
                     <div key={label} className="flex min-w-[88px] flex-col items-center gap-2 text-center">
-                      <div className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-black ${index < 2 ? "bg-emerald-500 text-white" : index === 2 ? "bg-[#C59B49] text-[#07192E]" : "bg-white/10 text-white/45"}`}>
+                      <div className={`flex h-11 w-11 items-center justify-center rounded-full text-sm font-black ${index < 2 ? "bg-emerald-500 text-white" : index === 2 ? "bg-[#C59B49] text-[#07192E]" : "bg-white/10 text-white/45"}`}>
                         {index < 2 ? "✓" : index + 1}
                       </div>
-                      <p className="text-xs leading-5 text-white/60">{label}</p>
+                      <p className="text-[11px] leading-5 text-white/60">{label}</p>
                     </div>
                   ))}
                 </div>
@@ -822,7 +835,7 @@ export default function AdminPage() {
                     { label: "قيد الاعتماد", value: "3" },
                     { label: "كل الإنجازات", value: "2" },
                   ].map((item) => (
-                    <div key={item.label} className="rounded-2xl bg-white/[0.03] px-3 py-4">
+                    <div key={item.label} className="rounded-2xl bg-white/[0.03] px-3 py-3.5">
                       <p className="text-lg font-black text-white">{item.value}</p>
                       <p className="mt-1 text-xs text-white/45">{item.label}</p>
                     </div>
@@ -830,12 +843,19 @@ export default function AdminPage() {
                 </div>
               </section>
 
-              <section className="h-[202px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
+              <section className="h-[214px] overflow-hidden rounded-[1.75rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,46,0.98)_0%,rgba(9,23,39,0.96)_100%)] p-4 shadow-[0_20px_60px_rgba(2,10,20,0.35)]">
                 <div className="mb-4 flex items-center justify-between">
                   <button className="text-sm font-bold text-[#DAB971]">عرض التقرير</button>
                   <h2 className="text-xl font-black text-white">الأثر الاقتصادي المتوقع</h2>
                 </div>
-                <div className="h-[134px]">
+                <div className="mb-3 flex items-center justify-between text-[12px] text-white/45">
+                  <span>المؤشر</span>
+                  <div className="flex items-center gap-4">
+                    <span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-[#33D17A]" />الأثر المتوقع</span>
+                    <span className="inline-flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-[#DAB971]" />الفرص المعتمدة</span>
+                  </div>
+                </div>
+                <div className="h-[118px]">
                   {chartsReady ? (
                     <ResponsiveContainer width="100%" height="100%">
                       <AreaChart data={monthlyApplications} margin={{ top: 10, right: 6, left: 0, bottom: 0 }}>
