@@ -191,7 +191,7 @@ function ActionButton({
   const className = {
     primary: "bg-[#0B1F33] text-white hover:bg-[#102A43]",
     secondary: "bg-[#B6913E] text-[#0B1F33] hover:bg-[#c7a85a]",
-    ghost: "border border-[rgba(11,31,51,0.1)] bg-white text-navy hover:bg-[#F7F5EF]",
+    ghost: "border border-white/10 bg-white/[0.04] text-white hover:bg-white/[0.08]",
   }[variant];
 
   return (
@@ -561,10 +561,10 @@ export default function InvestmentIntelligenceClient({
             </p>
           </section>
 
-          <section className="rounded-[2rem] border border-[rgba(11,31,51,0.08)] bg-white p-8 text-right shadow-[0_20px_60px_rgba(11,31,51,0.08)]">
+          <section className="rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,#071726_0%,#0B1F33_100%)] p-8 text-right text-white shadow-[0_20px_60px_rgba(11,31,51,0.16)]">
             <p className="text-xs text-slate-400">Investment Intelligence Access</p>
-            <h2 className="mt-2 text-2xl font-black text-navy">الوصول يتطلب حساب أمانة مخول</h2>
-            <p className="mt-4 text-sm leading-8 text-slate-600">
+            <h2 className="mt-2 font-['Tajawal'] text-2xl font-black text-white">الوصول يتطلب حساب أمانة مخول</h2>
+            <p className="mt-4 text-sm leading-8 text-white/68">
               ادخل أولاً من الحساب الموحد أو انتقل مباشرة إلى إدارة الأمانة، ثم افتح لوحة الذكاء الاستثماري من المسار الداخلي المعتمد.
             </p>
             <div className="mt-6 flex flex-wrap justify-end gap-3">
@@ -634,18 +634,18 @@ export default function InvestmentIntelligenceClient({
             <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
               <SurfaceCard title="ملخص القرار الحالي" subtitle="ما الذي تغير فعلاً؟">
                 <div className="grid gap-4 md:grid-cols-2">
-                  <div className="rounded-[1.4rem] bg-[#F7F5EF] p-4 text-right">
-                    <p className="text-xs text-slate-500">أقوى فرصة حالياً</p>
-                    <h4 className="mt-2 text-xl font-black text-navy">{topAssessment?.title}</h4>
-                    <p className="mt-3 text-sm leading-7 text-slate-600">{topAssessment?.recommendation}</p>
+                  <div className="rounded-[1.4rem] border border-white/8 bg-white/[0.04] p-4 text-right">
+                    <p className="text-xs text-white/45">أقوى فرصة حالياً</p>
+                    <h4 className="mt-2 font-['Tajawal'] text-xl font-black text-white">{topAssessment?.title}</h4>
+                    <p className="mt-3 text-sm leading-7 text-white/68">{topAssessment?.recommendation}</p>
                     <div className="mt-4 flex justify-end">
                       <WorkflowBadge status={topAssessment?.readinessScore && topAssessment.readinessScore >= 82 ? "approved" : "review"} />
                     </div>
                   </div>
-                  <div className="rounded-[1.4rem] bg-[#F7F5EF] p-4 text-right">
-                    <p className="text-xs text-slate-500">أولوية الحي</p>
-                    <h4 className="mt-2 text-xl font-black text-navy">{topPriority?.neighborhood}</h4>
-                    <p className="mt-3 text-sm leading-7 text-slate-600">{topPriority?.note}</p>
+                  <div className="rounded-[1.4rem] border border-white/8 bg-white/[0.04] p-4 text-right">
+                    <p className="text-xs text-white/45">أولوية الحي</p>
+                    <h4 className="mt-2 font-['Tajawal'] text-xl font-black text-white">{topPriority?.neighborhood}</h4>
+                    <p className="mt-3 text-sm leading-7 text-white/68">{topPriority?.note}</p>
                     <p className="mt-4 text-sm font-black text-[#B6913E]">مؤشر الأولوية {topPriority?.priorityScore}%</p>
                   </div>
                 </div>
@@ -681,9 +681,9 @@ export default function InvestmentIntelligenceClient({
                 </div>
                 <div className="grid gap-3 md:grid-cols-3">
                   {readinessDistribution.map((entry) => (
-                    <div key={entry.name} className="rounded-[1.2rem] bg-[#F7F5EF] p-3 text-right">
-                      <p className="text-xs text-slate-500">{entry.name}</p>
-                      <p className="mt-1 text-xl font-black text-navy">{entry.value}</p>
+                    <div key={entry.name} className="rounded-[1.2rem] border border-white/8 bg-white/[0.04] p-3 text-right">
+                      <p className="text-xs text-white/45">{entry.name}</p>
+                      <p className="mt-1 font-['Tajawal'] text-xl font-black text-white">{entry.value}</p>
                     </div>
                   ))}
                 </div>
@@ -710,9 +710,9 @@ export default function InvestmentIntelligenceClient({
           <div className="space-y-6">
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
               {workflowStatusSummary.map((item) => (
-                <div key={item.label} className="panel-hover rounded-[1.2rem] border border-[rgba(11,31,51,0.08)] bg-[#FFFEFC] px-4 py-4 text-right">
-                  <p className="text-sm font-semibold text-slate-500">{item.label}</p>
-                  <p className="mt-2 text-3xl font-black text-navy">{item.value}</p>
+                <div key={item.label} className="panel-hover rounded-[1.2rem] border border-white/8 bg-white/[0.03] px-4 py-4 text-right">
+                  <p className="text-sm font-semibold text-white/50">{item.label}</p>
+                  <p className="mt-2 font-['Tajawal'] text-3xl font-black text-white">{item.value}</p>
                 </div>
               ))}
             </div>
@@ -721,16 +721,16 @@ export default function InvestmentIntelligenceClient({
               {workspaceMode === "internal" ? (
                 <SurfaceCard title="إضافة فرصة جديدة" subtitle="الإدخال جزء من الصفحة نفسها" action={<Plus className="text-[#B6913E]" size={18} />}>
                   <div className="grid gap-3">
-                    <input value={newOpportunity.title} onChange={(event) => setNewOpportunity((current) => ({ ...current, title: event.target.value }))} placeholder="اسم الفرصة" className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
+                    <input value={newOpportunity.title} onChange={(event) => setNewOpportunity((current) => ({ ...current, title: event.target.value }))} placeholder="اسم الفرصة" className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-right text-white placeholder:text-white/30" />
                     <div className="grid gap-3 md:grid-cols-2">
-                      <select value={newOpportunity.neighborhood} onChange={(event) => setNewOpportunity((current) => ({ ...current, neighborhood: event.target.value }))} className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right">
+                      <select value={newOpportunity.neighborhood} onChange={(event) => setNewOpportunity((current) => ({ ...current, neighborhood: event.target.value }))} className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-right text-white">
                         {priorities.slice(0, 6).map((item) => (
                           <option key={item.neighborhood} value={item.neighborhood}>{item.neighborhood}</option>
                         ))}
                       </select>
-                      <input value={newOpportunity.roi} onChange={(event) => setNewOpportunity((current) => ({ ...current, roi: event.target.value }))} placeholder="ROI المتوقع" className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
+                      <input value={newOpportunity.roi} onChange={(event) => setNewOpportunity((current) => ({ ...current, roi: event.target.value }))} placeholder="ROI المتوقع" className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-right text-white placeholder:text-white/30" />
                     </div>
-                    <input value={newOpportunity.sector} onChange={(event) => setNewOpportunity((current) => ({ ...current, sector: event.target.value }))} placeholder="القطاع" className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
+                    <input value={newOpportunity.sector} onChange={(event) => setNewOpportunity((current) => ({ ...current, sector: event.target.value }))} placeholder="القطاع" className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-right text-white placeholder:text-white/30" />
                     <div className="flex justify-end">
                       <ActionButton variant="primary" onClick={addOpportunity}>
                         <Plus size={15} />
@@ -743,16 +743,16 @@ export default function InvestmentIntelligenceClient({
 
               <SurfaceCard title="ملخص القرار الجاري" subtitle="الفرصة الأبرز وما يلزمها قبل الإحالة">
                 <div className="grid gap-4 md:grid-cols-2">
-                  <div className="rounded-[1.3rem] bg-[#F7F5EF] p-4 text-right">
+                  <div className="rounded-[1.3rem] border border-white/8 bg-white/[0.04] p-4 text-right">
                     <div className="flex items-center justify-between gap-3">
                       <WorkflowBadge status={topAssessment?.readinessScore && topAssessment.readinessScore >= 82 ? "approved" : "review"} />
-                      <h4 className="text-lg font-black text-navy">{topAssessment?.title}</h4>
+                      <h4 className="text-lg font-black text-white">{topAssessment?.title}</h4>
                     </div>
-                    <p className="mt-3 text-sm leading-7 text-slate-600">{topAssessment?.recommendation}</p>
+                    <p className="mt-3 text-sm leading-7 text-white/68">{topAssessment?.recommendation}</p>
                   </div>
-                  <div className="rounded-[1.3rem] bg-[#F7F5EF] p-4 text-right">
-                    <p className="text-sm font-black text-navy">لماذا هذا المسار واضح؟</p>
-                    <p className="mt-3 text-sm leading-7 text-slate-600">كل فرصة هنا مرتبطة بحالة workflow واضحة، وإجراء مباشر، ومؤشر جاهزية مفهوم دون ترك فراغات أو مسارات مبهمة.</p>
+                  <div className="rounded-[1.3rem] border border-white/8 bg-white/[0.04] p-4 text-right">
+                    <p className="text-sm font-black text-white">لماذا هذا المسار واضح؟</p>
+                    <p className="mt-3 text-sm leading-7 text-white/68">كل فرصة هنا مرتبطة بحالة workflow واضحة، وإجراء مباشر، ومؤشر جاهزية مفهوم دون ترك فراغات أو مسارات مبهمة.</p>
                   </div>
                 </div>
               </SurfaceCard>
@@ -761,7 +761,7 @@ export default function InvestmentIntelligenceClient({
             <SurfaceCard title="سجل الفرص الاستثمارية" subtitle="بطاقات متوازنة تستغل العرض بالكامل">
               <div className="grid gap-4 xl:grid-cols-2">
                 {opportunityItems.map((item) => (
-                  <div key={item.id} className="rounded-[1.35rem] border border-[rgba(11,31,51,0.08)] bg-[#FFFEFC] p-4">
+                  <div key={item.id} className="rounded-[1.35rem] border border-white/8 bg-white/[0.03] p-4">
                     <div className="text-right">
                       <div className="flex flex-wrap items-center justify-between gap-3">
                         <div className="flex flex-wrap gap-2">
@@ -784,12 +784,12 @@ export default function InvestmentIntelligenceClient({
                         </div>
                         <div className="flex items-center justify-end gap-3">
                           <WorkflowBadge status={item.status} />
-                          <h3 className="text-lg font-black text-navy">{item.title}</h3>
+                          <h3 className="text-lg font-black text-white">{item.title}</h3>
                         </div>
                       </div>
-                      <p className="mt-2 text-sm text-slate-500">{item.neighborhood} • {item.sector} • ROI {item.roi}</p>
-                      <p className="mt-3 text-sm leading-7 text-slate-600">{item.recommendation}</p>
-                      <div className="mt-4 flex justify-between rounded-[1rem] bg-[#F7F5EF] px-4 py-3 text-sm font-semibold text-slate-600">
+                      <p className="mt-2 text-sm text-white/45">{item.neighborhood} • {item.sector} • ROI {item.roi}</p>
+                      <p className="mt-3 text-sm leading-7 text-white/68">{item.recommendation}</p>
+                      <div className="mt-4 flex justify-between rounded-[1rem] border border-white/8 bg-white/[0.04] px-4 py-3 text-sm font-semibold text-white/68">
                         <span>{item.neighborhood}</span>
                         <span>جاهزية {item.readinessScore}%</span>
                       </div>
@@ -818,12 +818,12 @@ export default function InvestmentIntelligenceClient({
               </div>
               <div className="mt-4 grid gap-3">
                 {priorities.slice(0, 4).map((item) => (
-                  <div key={item.neighborhood} className="rounded-[1.2rem] bg-[#F7F5EF] p-4 text-right">
+                  <div key={item.neighborhood} className="rounded-[1.2rem] border border-white/8 bg-white/[0.04] p-4 text-right">
                     <div className="flex items-center justify-between gap-3">
                       <p className="text-sm font-black text-[#B6913E]">{item.priorityScore}%</p>
-                      <h4 className="text-base font-black text-navy">{item.neighborhood}</h4>
+                      <h4 className="text-base font-black text-white">{item.neighborhood}</h4>
                     </div>
-                    <p className="mt-2 text-sm leading-7 text-slate-600">{item.note}</p>
+                    <p className="mt-2 text-sm leading-7 text-white/68">{item.note}</p>
                   </div>
                 ))}
               </div>
@@ -832,10 +832,10 @@ export default function InvestmentIntelligenceClient({
             <div className="space-y-6">
               <SurfaceCard title="طبقات التحليل المكاني" subtitle="تحديث الطبقة يظل فعلاً داخل الصفحة" action={<Layers3 className="text-[#B6913E]" size={18} />}>
                 <div className="space-y-3 text-right">
-                  <div className="rounded-[1.2rem] bg-[#F7F5EF] p-4">
-                    <p className="text-xs text-slate-500">نسخة الطبقة الحالية</p>
-                    <p className="mt-1 text-2xl font-black text-navy">V{spatialLayerVersion}</p>
-                    <p className="mt-2 text-sm leading-7 text-slate-600">تتضمن الطلب، المنافسة، الموسمية، وربط الأصول البلدية القريبة.</p>
+                  <div className="rounded-[1.2rem] border border-white/8 bg-white/[0.04] p-4">
+                    <p className="text-xs text-white/45">نسخة الطبقة الحالية</p>
+                    <p className="mt-1 text-2xl font-black text-white">V{spatialLayerVersion}</p>
+                    <p className="mt-2 text-sm leading-7 text-white/68">تتضمن الطلب، المنافسة، الموسمية، وربط الأصول البلدية القريبة.</p>
                   </div>
                   {workspaceMode === "internal" ? (
                     <div className="flex justify-end">
@@ -850,13 +850,13 @@ export default function InvestmentIntelligenceClient({
 
               <SurfaceCard title="حلول مباشرة للمسؤول" subtitle="لا نعرض خريطة استعراضية بلا قرار">
                 <div className="space-y-3">
-                  <div className="rounded-[1.2rem] border border-[rgba(11,31,51,0.08)] p-4 text-right">
-                    <p className="text-sm font-black text-navy">أين نبدأ؟</p>
-                    <p className="mt-2 text-sm leading-7 text-slate-600">البدء من {topPriority?.neighborhood} لأن الطلب مرتفع والمنافسة قابلة للإدارة.</p>
+                  <div className="rounded-[1.2rem] border border-white/8 bg-white/[0.03] p-4 text-right">
+                    <p className="text-sm font-black text-white">أين نبدأ؟</p>
+                    <p className="mt-2 text-sm leading-7 text-white/68">البدء من {topPriority?.neighborhood} لأن الطلب مرتفع والمنافسة قابلة للإدارة.</p>
                   </div>
-                  <div className="rounded-[1.2rem] border border-[rgba(11,31,51,0.08)] p-4 text-right">
-                    <p className="text-sm font-black text-navy">ما الذي نؤجله؟</p>
-                    <p className="mt-2 text-sm leading-7 text-slate-600">تأجيل الأحياء ذات التشبع المرتفع حتى يكتمل تحديث القراءة التنظيمية والبدائل القطاعية.</p>
+                  <div className="rounded-[1.2rem] border border-white/8 bg-white/[0.03] p-4 text-right">
+                    <p className="text-sm font-black text-white">ما الذي نؤجله؟</p>
+                    <p className="mt-2 text-sm leading-7 text-white/68">تأجيل الأحياء ذات التشبع المرتفع حتى يكتمل تحديث القراءة التنظيمية والبدائل القطاعية.</p>
                   </div>
                 </div>
               </SurfaceCard>
@@ -869,14 +869,14 @@ export default function InvestmentIntelligenceClient({
             <SurfaceCard title="مخرجات محرك الاستدلال" subtitle="توصيات مفهومة مع سبب واضح">
               <div className="space-y-4">
                 {proposals.slice(0, 4).map((item) => (
-                  <div key={item.id} className="rounded-[1.35rem] border border-[rgba(11,31,51,0.08)] bg-[#FFFEFC] p-4 text-right">
+                  <div key={item.id} className="rounded-[1.35rem] border border-white/8 bg-white/[0.03] p-4 text-right">
                     <div className="flex items-center justify-between gap-3">
                       <p className="text-sm font-black text-[#B6913E]">{item.demandScore}% طلب</p>
-                      <h3 className="text-lg font-black text-navy">{item.title}</h3>
+                      <h3 className="text-lg font-black text-white">{item.title}</h3>
                     </div>
-                    <p className="mt-2 text-sm text-slate-500">{item.neighborhood} • أصل مرجعي: {item.anchorAsset}</p>
-                    <p className="mt-3 text-sm leading-7 text-slate-600">{item.rationale}</p>
-                    <p className="mt-3 text-sm font-semibold text-slate-600">{item.expectedImpact}</p>
+                    <p className="mt-2 text-sm text-white/45">{item.neighborhood} • أصل مرجعي: {item.anchorAsset}</p>
+                    <p className="mt-3 text-sm leading-7 text-white/68">{item.rationale}</p>
+                    <p className="mt-3 text-sm font-semibold text-white/68">{item.expectedImpact}</p>
                   </div>
                 ))}
               </div>
@@ -885,28 +885,28 @@ export default function InvestmentIntelligenceClient({
             <div className="space-y-6">
               <SurfaceCard title="إدارة التحليلات" subtitle="القدرة الثانية مدمجة هنا، لا كقسم مستقل" action={<SlidersHorizontal className="text-[#B6913E]" size={18} />}>
                 <div className="space-y-4 text-right">
-                  <div className="rounded-[1.2rem] bg-[#F7F5EF] p-4">
-                    <p className="text-xs text-slate-500">مصدر التقييم</p>
-                    <p className="mt-1 text-base font-black text-navy">{analysisConfig.source}</p>
-                    <p className="mt-2 text-sm text-slate-600">آخر إعادة توليد: {analysisConfig.lastGenerated}</p>
+                  <div className="rounded-[1.2rem] border border-white/8 bg-white/[0.04] p-4">
+                    <p className="text-xs text-white/45">مصدر التقييم</p>
+                    <p className="mt-1 text-base font-black text-white">{analysisConfig.source}</p>
+                    <p className="mt-2 text-sm text-white/68">آخر إعادة توليد: {analysisConfig.lastGenerated}</p>
                   </div>
 
                   {workspaceMode === "internal" ? (
                     <>
-                      <select value={analysisConfig.source} onChange={(event) => setAnalysisConfig((current) => ({ ...current, source: event.target.value }))} className="w-full rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right">
+                      <select value={analysisConfig.source} onChange={(event) => setAnalysisConfig((current) => ({ ...current, source: event.target.value }))} className="w-full rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-right text-white">
                         <option>بيانات السوق التاريخية</option>
                         <option>البيانات المكانية</option>
                         <option>قراءة الأصول البلدية</option>
                       </select>
 
                       <div className="grid gap-3 md:grid-cols-2">
-                        <label className="rounded-[1.2rem] bg-[#F7F5EF] p-3 text-right text-sm">
-                          <span className="mb-2 block font-bold text-navy">وزن الجاهزية</span>
-                          <input type="number" value={analysisConfig.weights.readiness} onChange={(event) => setAnalysisConfig((current) => ({ ...current, weights: { ...current.weights, readiness: Number(event.target.value) || 0 } }))} className="w-full rounded-xl border border-[rgba(11,31,51,0.1)] bg-white px-3 py-2 text-right" />
+                        <label className="rounded-[1.2rem] border border-white/8 bg-white/[0.04] p-3 text-right text-sm">
+                          <span className="mb-2 block font-bold text-white">وزن الجاهزية</span>
+                          <input type="number" value={analysisConfig.weights.readiness} onChange={(event) => setAnalysisConfig((current) => ({ ...current, weights: { ...current.weights, readiness: Number(event.target.value) || 0 } }))} className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-right text-white" />
                         </label>
-                        <label className="rounded-[1.2rem] bg-[#F7F5EF] p-3 text-right text-sm">
-                          <span className="mb-2 block font-bold text-navy">وزن الطلب</span>
-                          <input type="number" value={analysisConfig.weights.demand} onChange={(event) => setAnalysisConfig((current) => ({ ...current, weights: { ...current.weights, demand: Number(event.target.value) || 0 } }))} className="w-full rounded-xl border border-[rgba(11,31,51,0.1)] bg-white px-3 py-2 text-right" />
+                        <label className="rounded-[1.2rem] border border-white/8 bg-white/[0.04] p-3 text-right text-sm">
+                          <span className="mb-2 block font-bold text-white">وزن الطلب</span>
+                          <input type="number" value={analysisConfig.weights.demand} onChange={(event) => setAnalysisConfig((current) => ({ ...current, weights: { ...current.weights, demand: Number(event.target.value) || 0 } }))} className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-right text-white" />
                         </label>
                       </div>
 
@@ -923,9 +923,9 @@ export default function InvestmentIntelligenceClient({
                     </>
                   ) : null}
 
-                  <div className="rounded-[1.2rem] border border-[rgba(11,31,51,0.08)] p-4">
-                    <p className="text-sm font-black text-navy">الحالة الحالية</p>
-                    <p className="mt-2 text-sm leading-7 text-slate-600">
+                  <div className="rounded-[1.2rem] border border-white/8 bg-white/[0.03] p-4">
+                    <p className="text-sm font-black text-white">الحالة الحالية</p>
+                    <p className="mt-2 text-sm leading-7 text-white/68">
                       {analysisConfig.approved
                         ? "تم اعتماد التوصية الحالية داخلياً ويمكن حفظها داخل الـ briefing التنفيذي."
                         : "التوصية الحالية ما زالت بحاجة اعتماد داخلي قبل تصعيدها إلى العرض التنفيذي."}
@@ -957,7 +957,7 @@ export default function InvestmentIntelligenceClient({
               <SurfaceCard title="الكراسات والملفات" subtitle="رفع ملف وتحويله إلى مسار قرار" action={<Upload className="text-[#B6913E]" size={18} />}>
                 {workspaceMode === "internal" ? (
                   <div className="mb-4 grid gap-3">
-                    <input value={newDossierTitle} onChange={(event) => setNewDossierTitle(event.target.value)} placeholder="اسم الكراسة أو الملف" className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
+                    <input value={newDossierTitle} onChange={(event) => setNewDossierTitle(event.target.value)} placeholder="اسم الكراسة أو الملف" className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-right text-white placeholder:text-white/30" />
                     <div className="flex justify-end">
                       <ActionButton variant="primary" onClick={uploadDossier}>
                         <Upload size={15} />
@@ -968,13 +968,13 @@ export default function InvestmentIntelligenceClient({
                 ) : null}
                 <div className="space-y-3">
                   {dossiers.map((item) => (
-                    <div key={item.id} className="rounded-[1.2rem] bg-[#F7F5EF] p-4 text-right">
+                    <div key={item.id} className="rounded-[1.2rem] border border-white/8 bg-white/[0.04] p-4 text-right">
                       <div className="flex items-center justify-between gap-3">
                         <WorkflowBadge status={item.status} />
-                        <h4 className="text-base font-black text-navy">{item.title}</h4>
+                        <h4 className="text-base font-black text-white">{item.title}</h4>
                       </div>
-                      <p className="mt-2 text-sm text-slate-500">{item.source}</p>
-                      <p className="mt-3 text-sm leading-7 text-slate-600">{item.summary}</p>
+                      <p className="mt-2 text-sm text-white/45">{item.source}</p>
+                      <p className="mt-3 text-sm leading-7 text-white/68">{item.summary}</p>
                     </div>
                   ))}
                 </div>
@@ -983,8 +983,8 @@ export default function InvestmentIntelligenceClient({
               <SurfaceCard title="ملاحظات تنفيذية" subtitle="مدخلة داخل اللوحة لا في قسم زائد">
                 {workspaceMode === "internal" ? (
                   <div className="mb-4 grid gap-3">
-                    <input value={newNoteTitle} onChange={(event) => setNewNoteTitle(event.target.value)} placeholder="عنوان الملاحظة" className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
-                    <textarea value={newNoteContent} onChange={(event) => setNewNoteContent(event.target.value)} placeholder="الملاحظة التنفيذية" rows={4} className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
+                    <input value={newNoteTitle} onChange={(event) => setNewNoteTitle(event.target.value)} placeholder="عنوان الملاحظة" className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-right text-white placeholder:text-white/30" />
+                    <textarea value={newNoteContent} onChange={(event) => setNewNoteContent(event.target.value)} placeholder="الملاحظة التنفيذية" rows={4} className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-right text-white placeholder:text-white/30" />
                     <div className="flex justify-end">
                       <ActionButton variant="secondary" onClick={addExecutiveNote}>
                         <Save size={15} />
@@ -995,10 +995,10 @@ export default function InvestmentIntelligenceClient({
                 ) : null}
                 <div className="space-y-3">
                   {executiveNotes.map((item) => (
-                    <div key={item.id} className="rounded-[1.2rem] border border-[rgba(11,31,51,0.08)] p-4 text-right">
-                      <p className="text-xs text-slate-500">{item.createdAt}</p>
-                      <h4 className="mt-1 text-base font-black text-navy">{item.title}</h4>
-                      <p className="mt-2 text-sm leading-7 text-slate-600">{item.content}</p>
+                    <div key={item.id} className="rounded-[1.2rem] border border-white/8 bg-white/[0.03] p-4 text-right">
+                      <p className="text-xs text-white/45">{item.createdAt}</p>
+                      <h4 className="mt-1 text-base font-black text-white">{item.title}</h4>
+                      <p className="mt-2 text-sm leading-7 text-white/68">{item.content}</p>
                     </div>
                   ))}
                 </div>
@@ -1009,8 +1009,8 @@ export default function InvestmentIntelligenceClient({
               <SurfaceCard title="المؤشرات الاقتصادية المستخدمة" subtitle="إضافة مؤشر واحد مفيد خير من عشرة بلا أثر">
                 {workspaceMode === "internal" ? (
                   <div className="mb-4 grid gap-3 md:grid-cols-2">
-                    <input value={newIndicator.label} onChange={(event) => setNewIndicator((current) => ({ ...current, label: event.target.value }))} placeholder="اسم المؤشر" className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
-                    <input value={newIndicator.value} onChange={(event) => setNewIndicator((current) => ({ ...current, value: event.target.value }))} placeholder="القيمة" className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
+                    <input value={newIndicator.label} onChange={(event) => setNewIndicator((current) => ({ ...current, label: event.target.value }))} placeholder="اسم المؤشر" className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-right text-white placeholder:text-white/30" />
+                    <input value={newIndicator.value} onChange={(event) => setNewIndicator((current) => ({ ...current, value: event.target.value }))} placeholder="القيمة" className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-right text-white placeholder:text-white/30" />
                     <div className="md:col-span-2 flex justify-end">
                       <ActionButton variant="primary" onClick={addIndicator}>
                         <Plus size={15} />
@@ -1021,9 +1021,9 @@ export default function InvestmentIntelligenceClient({
                 ) : null}
                 <div className="grid gap-3 md:grid-cols-2">
                   {economicIndicators.map((item) => (
-                    <div key={item.id} className="rounded-[1.2rem] bg-[#F7F5EF] p-4 text-right">
-                      <p className="text-xs text-slate-500">{item.label}</p>
-                      <p className="mt-2 text-2xl font-black text-navy">{item.value}</p>
+                    <div key={item.id} className="rounded-[1.2rem] border border-white/8 bg-white/[0.04] p-4 text-right">
+                      <p className="text-xs text-white/45">{item.label}</p>
+                      <p className="mt-2 text-2xl font-black text-white">{item.value}</p>
                     </div>
                   ))}
                 </div>
@@ -1031,13 +1031,13 @@ export default function InvestmentIntelligenceClient({
 
               <SurfaceCard title="ما الذي يقدمه استوديو القرار؟" subtitle="وظيفة مباشرة وليست استعراضاً">
                 <div className="grid gap-3">
-                  <div className="rounded-[1.2rem] bg-[#F7F5EF] p-4 text-right">
-                    <p className="text-sm font-black text-navy">يوحد الإدخال</p>
-                    <p className="mt-2 text-sm leading-7 text-slate-600">رفع الملفات، إضافة المؤشرات، وتسجيل الملاحظات التنفيذية في صفحة واحدة فقط.</p>
+                  <div className="rounded-[1.2rem] border border-white/8 bg-white/[0.04] p-4 text-right">
+                    <p className="text-sm font-black text-white">يوحد الإدخال</p>
+                    <p className="mt-2 text-sm leading-7 text-white/68">رفع الملفات، إضافة المؤشرات، وتسجيل الملاحظات التنفيذية في صفحة واحدة فقط.</p>
                   </div>
-                  <div className="rounded-[1.2rem] bg-[#F7F5EF] p-4 text-right">
-                    <p className="text-sm font-black text-navy">يحفظ النظام نظيفاً</p>
-                    <p className="mt-2 text-sm leading-7 text-slate-600">بدلاً من ثلاث أو أربع أقسام فرعية، صارت كل أدوات الإدخال في مكان واحد مرتب.</p>
+                  <div className="rounded-[1.2rem] border border-white/8 bg-white/[0.04] p-4 text-right">
+                    <p className="text-sm font-black text-white">يحفظ النظام نظيفاً</p>
+                    <p className="mt-2 text-sm leading-7 text-white/68">بدلاً من ثلاث أو أربع أقسام فرعية، صارت كل أدوات الإدخال في مكان واحد مرتب.</p>
                   </div>
                 </div>
               </SurfaceCard>
@@ -1057,25 +1057,25 @@ export default function InvestmentIntelligenceClient({
                 ].map((item) => {
                   const Icon = item.icon;
                   return (
-                    <div key={item.label} className="rounded-[1.35rem] border border-[rgba(11,31,51,0.08)] bg-[#FFFEFC] p-4 text-right">
+                    <div key={item.label} className="rounded-[1.35rem] border border-white/8 bg-white/[0.03] p-4 text-right">
                       <div className="flex items-center justify-between gap-3">
                         <span className="rounded-2xl p-2.5" style={{ backgroundColor: item.surface, color: item.tone }}>
                           <Icon size={18} />
                         </span>
                         <p className="text-2xl font-black" style={{ color: item.tone }}>{item.value}</p>
                       </div>
-                      <p className="mt-4 text-sm font-bold text-navy">{item.label}</p>
+                      <p className="mt-4 text-sm font-bold text-white">{item.label}</p>
                     </div>
                   );
                 })}
 
-                <div className="rounded-[1.35rem] border border-[rgba(11,31,51,0.08)] bg-[#FFFEFC] p-4 text-right xl:col-span-1">
-                  <p className="text-sm font-black text-navy">أهم المعوقات المتكررة</p>
+                <div className="rounded-[1.35rem] border border-white/8 bg-white/[0.03] p-4 text-right xl:col-span-1">
+                  <p className="text-sm font-black text-white">أهم المعوقات المتكررة</p>
                   <div className="mt-4 space-y-2">
                     {regulatorySummary.recurringBlockers.map((blocker) => (
-                      <div key={blocker.label} className="flex items-center justify-between rounded-xl bg-[#F7F5EF] px-3 py-2">
-                        <span className="rounded-full bg-white px-2.5 py-1 text-xs font-bold text-[#B45309]">{blocker.count}</span>
-                        <p className="text-xs font-semibold text-slate-600">{blocker.label}</p>
+                      <div key={blocker.label} className="flex items-center justify-between rounded-xl border border-white/8 bg-white/[0.04] px-3 py-2">
+                        <span className="rounded-full border border-white/8 bg-[#071726]/80 px-2.5 py-1 text-xs font-bold text-[#F3C971]">{blocker.count}</span>
+                        <p className="text-xs font-semibold text-white/68">{blocker.label}</p>
                       </div>
                     ))}
                   </div>
@@ -1086,17 +1086,17 @@ export default function InvestmentIntelligenceClient({
             <SurfaceCard title="أولوية المعالجة" subtitle="من أين تبدأ الأمانة؟">
               <div className="grid gap-4 xl:grid-cols-4">
                 {regulatorySummary.priorityCards.map((card) => (
-                  <div key={card.title} className="rounded-[1.35rem] border border-[rgba(11,31,51,0.08)] bg-[#FFFEFC] p-4 text-right">
+                  <div key={card.title} className="rounded-[1.35rem] border border-white/8 bg-white/[0.03] p-4 text-right">
                     <p className="text-xs font-bold text-[#B6913E]">{card.title}</p>
-                    <h3 className="mt-2 text-base font-black text-navy">{card.item?.opportunityTitle ?? "لا توجد بيانات"}</h3>
-                    <p className="mt-2 text-sm text-slate-500">{card.item?.neighborhood}</p>
+                    <h3 className="mt-2 text-base font-black text-white">{card.item?.opportunityTitle ?? "لا توجد بيانات"}</h3>
+                    <p className="mt-2 text-sm text-white/45">{card.item?.neighborhood}</p>
                     <div className="mt-3 flex items-center justify-between gap-3">
                       <span className="rounded-full px-3 py-1 text-xs font-bold" style={{ backgroundColor: `${card.item?.readinessTone ?? "#0B1F33"}16`, color: card.item?.readinessTone ?? "#0B1F33" }}>
                         {card.item?.readinessScore ?? 0}%
                       </span>
-                      <span className="text-xs font-semibold text-slate-500">{card.item?.decisionAction}</span>
+                      <span className="text-xs font-semibold text-white/45">{card.item?.decisionAction}</span>
                     </div>
-                    <p className="mt-3 text-sm leading-7 text-slate-600">{card.note}</p>
+                    <p className="mt-3 text-sm leading-7 text-white/68">{card.note}</p>
                   </div>
                 ))}
               </div>
@@ -1104,7 +1104,7 @@ export default function InvestmentIntelligenceClient({
 
             <div className="grid gap-5 xl:grid-cols-2">
               {blueprints.map((item) => (
-                <div key={item.opportunityId} className="rounded-[1.6rem] border border-[rgba(11,31,51,0.08)] bg-[#FFFEFC] p-5 text-right shadow-[0_16px_42px_rgba(11,31,51,0.05)]">
+                <div key={item.opportunityId} className="rounded-[1.6rem] border border-white/8 bg-white/[0.03] p-5 text-right shadow-[0_16px_42px_rgba(11,31,51,0.14)]">
                   <div className="flex items-start justify-between gap-4">
                     <div className="text-left">
                       <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold" style={{ backgroundColor: `${item.readinessTone}16`, color: item.readinessTone }}>
@@ -1114,46 +1114,46 @@ export default function InvestmentIntelligenceClient({
                     </div>
                     <div className="text-right">
                       <p className="text-xs font-bold text-[#B6913E]">{item.neighborhood}</p>
-                      <h3 className="mt-1 text-lg font-black text-navy">{item.opportunityTitle}</h3>
-                      <p className="mt-2 text-sm text-slate-500">استنار يقيّم الجاهزية ويقترح الإجراء، ولا ينفذ الموافقات الرسمية.</p>
+                      <h3 className="mt-1 text-lg font-black text-white">{item.opportunityTitle}</h3>
+                      <p className="mt-2 text-sm text-white/45">استنار يقيّم الجاهزية ويقترح الإجراء، ولا ينفذ الموافقات الرسمية.</p>
                     </div>
                   </div>
 
                   <div className="mt-5 grid gap-4 md:grid-cols-3">
-                    <div className="rounded-[1.25rem] bg-[#F7F5EF] p-4">
-                      <p className="text-xs text-slate-500">قرار الجاهزية</p>
+                    <div className="rounded-[1.25rem] border border-white/8 bg-white/[0.04] p-4">
+                      <p className="text-xs text-white/45">قرار الجاهزية</p>
                       <p className="mt-2 text-sm font-black" style={{ color: item.readinessTone }}>{item.decisionAction}</p>
                     </div>
-                    <div className="rounded-[1.25rem] bg-[#F7F5EF] p-4">
-                      <p className="text-xs text-slate-500">مستوى المخاطر</p>
+                    <div className="rounded-[1.25rem] border border-white/8 bg-white/[0.04] p-4">
+                      <p className="text-xs text-white/45">مستوى المخاطر</p>
                       <p className="mt-2 text-sm font-black" style={{ color: item.riskTone }}>{item.riskLabel}</p>
                     </div>
-                    <div className="rounded-[1.25rem] bg-[#F7F5EF] p-4">
-                      <p className="text-xs text-slate-500">المدة المتوقعة للجاهزية الكاملة</p>
-                      <p className="mt-2 text-sm font-black text-navy">{item.estimatedDurationLabel}</p>
+                    <div className="rounded-[1.25rem] border border-white/8 bg-white/[0.04] p-4">
+                      <p className="text-xs text-white/45">المدة المتوقعة للجاهزية الكاملة</p>
+                      <p className="mt-2 text-sm font-black text-white">{item.estimatedDurationLabel}</p>
                     </div>
                   </div>
 
                   <div className="mt-5 grid gap-4 lg:grid-cols-2">
-                    <div className="rounded-[1.25rem] border border-[rgba(22,101,52,0.14)] bg-[#F6FCF8] p-4">
+                    <div className="rounded-[1.25rem] border border-emerald-500/25 bg-emerald-500/[0.08] p-4">
                       <p className="text-sm font-black text-[#166534]">العوامل الإيجابية</p>
                       <div className="mt-3 space-y-2">
                         {item.positiveFactors.map((factor) => (
-                          <div key={factor} className="flex items-start justify-between gap-3 rounded-xl bg-white px-3 py-2">
+                          <div key={factor} className="flex items-start justify-between gap-3 rounded-xl border border-white/8 bg-[#071726]/80 px-3 py-2">
                             <CheckCircle2 size={15} className="mt-0.5 shrink-0 text-[#166534]" />
-                            <p className="text-sm leading-7 text-slate-600">{factor}</p>
+                            <p className="text-sm leading-7 text-white/68">{factor}</p>
                           </div>
                         ))}
                       </div>
                     </div>
 
-                    <div className="rounded-[1.25rem] border border-[rgba(185,28,28,0.14)] bg-[#FFF7F7] p-4">
+                    <div className="rounded-[1.25rem] border border-red-500/25 bg-red-500/[0.08] p-4">
                       <p className="text-sm font-black text-[#B91C1C]">العوامل المعيقة</p>
                       <div className="mt-3 space-y-2">
                         {item.blockingFactors.map((factor) => (
-                          <div key={factor} className="flex items-start justify-between gap-3 rounded-xl bg-white px-3 py-2">
+                          <div key={factor} className="flex items-start justify-between gap-3 rounded-xl border border-white/8 bg-[#071726]/80 px-3 py-2">
                             <AlertTriangle size={15} className="mt-0.5 shrink-0 text-[#B91C1C]" />
-                            <p className="text-sm leading-7 text-slate-600">{factor}</p>
+                            <p className="text-sm leading-7 text-white/68">{factor}</p>
                           </div>
                         ))}
                       </div>
@@ -1161,43 +1161,43 @@ export default function InvestmentIntelligenceClient({
                   </div>
 
                   <div className="mt-5 grid gap-4 lg:grid-cols-[0.92fr_1.08fr]">
-                    <div className="rounded-[1.25rem] border border-[rgba(11,31,51,0.08)] bg-[#F9FBFD] p-4">
+                    <div className="rounded-[1.25rem] border border-white/8 bg-white/[0.03] p-4">
                       <div className="flex items-center justify-between gap-3">
                         <span className="rounded-full px-3 py-1 text-xs font-bold" style={{ backgroundColor: `${item.riskTone}16`, color: item.riskTone }}>
                           {item.riskLabel}
                         </span>
-                        <p className="text-sm font-black text-navy">تقييم المخاطر</p>
+                        <p className="text-sm font-black text-white">تقييم المخاطر</p>
                       </div>
-                      <p className="mt-3 text-sm leading-7 text-slate-600">{item.riskReason}</p>
+                      <p className="mt-3 text-sm leading-7 text-white/68">{item.riskReason}</p>
 
-                      <div className="mt-4 rounded-xl bg-white p-3">
-                        <p className="text-xs text-slate-500">سبب التأخير الرئيسي</p>
-                        <p className="mt-2 text-sm font-bold text-navy">{item.mainDelayReason}</p>
+                      <div className="mt-4 rounded-xl border border-white/8 bg-[#071726]/80 p-3">
+                        <p className="text-xs text-white/45">سبب التأخير الرئيسي</p>
+                        <p className="mt-2 text-sm font-bold text-white">{item.mainDelayReason}</p>
                       </div>
 
-                      <div className="mt-4 rounded-xl bg-white p-3">
-                        <p className="text-xs text-slate-500">التوصية التنفيذية</p>
-                        <p className="mt-2 text-sm font-bold text-navy">{item.recommendation}</p>
+                      <div className="mt-4 rounded-xl border border-white/8 bg-[#071726]/80 p-3">
+                        <p className="text-xs text-white/45">التوصية التنفيذية</p>
+                        <p className="mt-2 text-sm font-bold text-white">{item.recommendation}</p>
                       </div>
                     </div>
 
-                    <div className="rounded-[1.25rem] border border-[rgba(11,31,51,0.08)] bg-[#F9FBFD] p-4">
-                      <p className="text-sm font-black text-navy">قائمة متطلبات الاستكمال</p>
+                    <div className="rounded-[1.25rem] border border-white/8 bg-white/[0.03] p-4">
+                      <p className="text-sm font-black text-white">قائمة متطلبات الاستكمال</p>
                       <div className="mt-3 space-y-2">
                         {item.checklist.map((check) => (
-                          <div key={check.label} className="rounded-xl bg-white px-3 py-3">
+                          <div key={check.label} className="rounded-xl border border-white/8 bg-[#071726]/80 px-3 py-3">
                             <div className="flex items-center justify-between gap-3">
                               <span className="text-xs font-bold" style={{ color: check.complete ? "#166534" : "#B91C1C" }}>
                                 {check.complete ? "مكتمل" : "غير مكتمل"}
                               </span>
                               <div className="flex items-center gap-2">
-                                <p className="text-sm font-bold text-navy">{check.label}</p>
+                                <p className="text-sm font-bold text-white">{check.label}</p>
                                 <span className="text-base" style={{ color: check.complete ? "#166534" : "#B91C1C" }}>
                                   {check.complete ? "☑" : "☐"}
                                 </span>
                               </div>
                             </div>
-                            <p className="mt-2 text-sm leading-7 text-slate-600">{check.note}</p>
+                            <p className="mt-2 text-sm leading-7 text-white/68">{check.note}</p>
                           </div>
                         ))}
                       </div>
@@ -1215,7 +1215,7 @@ export default function InvestmentIntelligenceClient({
               <SurfaceCard title="ملخصات القيادة" subtitle="هنا تم دمج العرض التنفيذي داخل اللوحة">
                 <div className="space-y-4">
                   {briefings.map((item) => (
-                    <div key={item.id} className="rounded-[1.35rem] border border-[rgba(11,31,51,0.08)] bg-[#FFFEFC] p-4 text-right">
+                    <div key={item.id} className="rounded-[1.35rem] border border-white/8 bg-white/[0.03] p-4 text-right">
                       <div className="flex items-center justify-between gap-3">
                         {workspaceMode === "internal" ? (
                           <div className="flex gap-2">
@@ -1232,15 +1232,15 @@ export default function InvestmentIntelligenceClient({
                         <div className="text-right">
                           <div className="flex items-center justify-end gap-3">
                             <WorkflowBadge status={item.status} />
-                            <h3 className="text-lg font-black text-navy">{item.title}</h3>
+                            <h3 className="text-lg font-black text-white">{item.title}</h3>
                           </div>
-                          <p className="mt-3 text-sm leading-7 text-slate-600">{item.summary}</p>
+                          <p className="mt-3 text-sm leading-7 text-white/68">{item.summary}</p>
                           <p className="mt-3 text-sm font-semibold text-[#0B1F33]">{item.recommendation}</p>
                         </div>
                       </div>
                       <div className="mt-4 flex flex-wrap justify-end gap-2">
                         {item.indicators.map((indicator) => (
-                          <span key={indicator} className="rounded-full bg-[#F7F5EF] px-3 py-1 text-xs font-semibold text-slate-600">
+                          <span key={indicator} className="rounded-full border border-white/8 bg-white/[0.04] px-3 py-1 text-xs font-semibold text-white/68">
                             {indicator}
                           </span>
                         ))}
@@ -1253,17 +1253,17 @@ export default function InvestmentIntelligenceClient({
               {presentationMode ? (
                 <SurfaceCard title="وضع الاجتماعات" subtitle="سردية قرار مختصرة للمسؤولين">
                   <div className="space-y-4 text-right">
-                    <div className="rounded-[1.3rem] bg-[#F7F5EF] p-5">
-                      <p className="text-sm font-black text-navy">لماذا المنصة مهمة الآن؟</p>
-                      <p className="mt-3 text-sm leading-8 text-slate-600">لأنها تختصر الانتقال من البيانات المتفرقة إلى قرار استثماري واحد: فرصة، حي، جاهزية، توصية، ثم brief جاهز للعرض.</p>
+                    <div className="rounded-[1.3rem] border border-white/8 bg-white/[0.04] p-5">
+                      <p className="text-sm font-black text-white">لماذا المنصة مهمة الآن؟</p>
+                      <p className="mt-3 text-sm leading-8 text-white/68">لأنها تختصر الانتقال من البيانات المتفرقة إلى قرار استثماري واحد: فرصة، حي، جاهزية، توصية، ثم brief جاهز للعرض.</p>
                     </div>
-                    <div className="rounded-[1.3rem] bg-[#F7F5EF] p-5">
-                      <p className="text-sm font-black text-navy">ما القيمة المباشرة للأمانة؟</p>
-                      <p className="mt-3 text-sm leading-8 text-slate-600">تقليل التشتت بين التشغيل والتحليل والقيادة، وتوحيد رحلة اعتماد الفرص في مسار مفهوم للمسؤول.</p>
+                    <div className="rounded-[1.3rem] border border-white/8 bg-white/[0.04] p-5">
+                      <p className="text-sm font-black text-white">ما القيمة المباشرة للأمانة؟</p>
+                      <p className="mt-3 text-sm leading-8 text-white/68">تقليل التشتت بين التشغيل والتحليل والقيادة، وتوحيد رحلة اعتماد الفرص في مسار مفهوم للمسؤول.</p>
                     </div>
-                    <div className="rounded-[1.3rem] bg-[#F7F5EF] p-5">
-                      <p className="text-sm font-black text-navy">ما التوصية الحالية؟</p>
-                      <p className="mt-3 text-sm leading-8 text-slate-600">{topBrief?.recommendation ?? "اعتماد أولويتين فقط في هذا الربع مع إبقاء بقية الفرص تحت التحليل المرحلي."}</p>
+                    <div className="rounded-[1.3rem] border border-white/8 bg-white/[0.04] p-5">
+                      <p className="text-sm font-black text-white">ما التوصية الحالية؟</p>
+                      <p className="mt-3 text-sm leading-8 text-white/68">{topBrief?.recommendation ?? "اعتماد أولويتين فقط في هذا الربع مع إبقاء بقية الفرص تحت التحليل المرحلي."}</p>
                     </div>
                   </div>
                 </SurfaceCard>
@@ -1275,8 +1275,8 @@ export default function InvestmentIntelligenceClient({
                 {workspaceMode === "internal" ? (
                   <SurfaceCard title="إنشاء briefing جديد" subtitle="الإجراء واضح وفي مكانه الصحيح">
                     <div className="grid gap-3">
-                      <input value={newBriefTitle} onChange={(event) => setNewBriefTitle(event.target.value)} placeholder="عنوان التقرير" className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
-                      <textarea value={newBriefSummary} onChange={(event) => setNewBriefSummary(event.target.value)} placeholder="الملخص التنفيذي" rows={4} className="rounded-2xl border border-[rgba(11,31,51,0.1)] bg-white px-4 py-3 text-right" />
+                      <input value={newBriefTitle} onChange={(event) => setNewBriefTitle(event.target.value)} placeholder="عنوان التقرير" className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-right text-white placeholder:text-white/30" />
+                      <textarea value={newBriefSummary} onChange={(event) => setNewBriefSummary(event.target.value)} placeholder="الملخص التنفيذي" rows={4} className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-right text-white placeholder:text-white/30" />
                       <div className="flex justify-end">
                         <ActionButton variant="primary" onClick={createBrief}>
                           <Plus size={15} />
@@ -1290,13 +1290,13 @@ export default function InvestmentIntelligenceClient({
                 <SurfaceCard title="سير القرار المتصل" subtitle="من الفرصة إلى العرض القيادي">
                   <div className="space-y-3">
                     {workflow.steps.map((step) => (
-                      <div key={step.id} className="rounded-[1.2rem] bg-[#F7F5EF] p-4 text-right">
+                      <div key={step.id} className="rounded-[1.2rem] border border-white/8 bg-white/[0.04] p-4 text-right">
                         <div className="flex items-center justify-between gap-3">
                           <p className="text-xs font-bold text-[#B6913E]">{step.duration}</p>
-                          <h4 className="text-base font-black text-navy">{step.title}</h4>
+                          <h4 className="text-base font-black text-white">{step.title}</h4>
                         </div>
-                        <p className="mt-2 text-sm leading-7 text-slate-600">{step.description}</p>
-                        <p className="mt-2 text-xs text-slate-500">المالك: {step.owner}</p>
+                        <p className="mt-2 text-sm leading-7 text-white/68">{step.description}</p>
+                        <p className="mt-2 text-xs text-white/45">المالك: {step.owner}</p>
                       </div>
                     ))}
                   </div>
