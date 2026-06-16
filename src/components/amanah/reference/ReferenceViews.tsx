@@ -370,14 +370,36 @@ export function AdminReferenceDashboard() {
         </DarkCard>
       </div>
 
-      <div className="grid items-start gap-3 xl:grid-cols-[1.15fr_0.82fr]">
+      <div className="grid items-start gap-3 xl:grid-cols-[0.9fr_1.1fr]">
+        <DarkCard title="أهم القرارات اليوم" action={<button className="text-sm font-black text-[#D0A243]">عرض الكل</button>} className="h-full">
+          <div className="space-y-3">
+            {executiveDecisions.map((decision) => (
+              <div key={decision.id} className="rounded-[1.1rem] border border-white/8 bg-white/[0.03] p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <button className="rounded-[0.95rem] border border-[#D0A243]/28 bg-white/[0.03] px-4 py-3 text-sm font-bold text-white/84">
+                    {decision.action}
+                  </button>
+                  <div className="min-w-0 flex-1 text-right">
+                    <h3 className="font-['Tajawal'] text-[1.08rem] font-black leading-8 text-white">{decision.title}</h3>
+                    <p className="mt-1 text-sm text-white/48">{decision.subtitle}</p>
+                    <div className="mt-3 flex items-center justify-end gap-3">
+                      <span className={`rounded-full px-3 py-1 text-xs font-black ${decisionTone(decision.statusTone)}`}>{decision.status}</span>
+                      <span className="text-xs text-white/36">{decision.age}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </DarkCard>
+
         <DarkCard
           title="خريطة أولويات الأحياء"
           subtitle="التحليل المكاني المباشر"
           action={<button className="rounded-[1rem] border border-[#D0A243]/30 bg-white/[0.03] px-5 py-3 text-sm font-bold text-[#E4C982]">عرض طبقات الخريطة</button>}
+          className="h-full"
         >
-          <div className="grid items-start gap-3 lg:grid-cols-[minmax(0,1fr)_260px]">
-            <ExecutiveMap compact />
+          <div className="grid items-start gap-3 lg:grid-cols-[250px_minmax(0,1fr)]">
             <div className="space-y-3">
               <button className="flex w-full items-center justify-between rounded-[1rem] border border-white/10 bg-white/[0.03] px-4 py-4 text-sm font-bold">
                 <ChevronDown size={18} />
@@ -406,34 +428,80 @@ export function AdminReferenceDashboard() {
                 <p className="mt-2 text-sm text-white/56">آخر تحديث: 28-03-2026</p>
               </div>
             </div>
+            <ExecutiveMap compact />
           </div>
-        </DarkCard>
 
-        <DarkCard title="أهم القرارات اليوم" action={<button className="text-sm font-black text-[#D0A243]">عرض الكل</button>}>
-          <div className="space-y-3">
-            {executiveDecisions.map((decision) => (
-              <div key={decision.id} className="rounded-[1.1rem] border border-white/8 bg-white/[0.03] p-4">
-                <div className="flex items-start justify-between gap-3">
-                  <button className="rounded-[0.95rem] border border-[#D0A243]/28 bg-white/[0.03] px-4 py-3 text-sm font-bold text-white/84">
-                    {decision.action}
-                  </button>
-                  <div className="min-w-0 flex-1 text-right">
-                    <h3 className="font-['Tajawal'] text-[1.08rem] font-black leading-8 text-white">{decision.title}</h3>
-                    <p className="mt-1 text-sm text-white/48">{decision.subtitle}</p>
-                    <div className="mt-3 flex items-center justify-end gap-3">
-                      <span className={`rounded-full px-3 py-1 text-xs font-black ${decisionTone(decision.statusTone)}`}>{decision.status}</span>
-                      <span className="text-xs text-white/36">{decision.age}</span>
-                    </div>
-                  </div>
-                </div>
+          <div className="mt-3 grid gap-3 md:grid-cols-3">
+            {[
+              ["الأحياء الجاهزة", "6 أحياء", "أولوية رفع مباشر", "#42DD71"],
+              ["المعوقات المتكررة", "3 عناصر", "تحتاج متابعة تنظيمية", "#F0B846"],
+              ["قيمة الفرص المكانية", "67.9", "مليون ريال متوقع", "#D0A243"],
+            ].map(([label, value, note, color]) => (
+              <div key={String(label)} className="rounded-[1rem] border border-white/8 bg-white/[0.03] px-4 py-4 text-right">
+                <p className="text-[12px] text-white/42">{label}</p>
+                <p className="mt-2 font-['Tajawal'] text-[1.5rem] font-black text-white">{value}</p>
+                <p className="mt-2 text-[12px]" style={{ color: String(color) }}>
+                  {note}
+                </p>
               </div>
             ))}
           </div>
         </DarkCard>
       </div>
 
-      <div className="grid items-start gap-3 xl:grid-cols-[0.82fr_0.72fr_0.9fr_0.9fr]">
-        <DarkCard title="مؤشرات الأداء الرئيسية" action={<button className="text-sm font-black text-[#D0A243]">عرض الكل</button>}>
+      <div className="grid items-start gap-3 xl:grid-cols-[0.92fr_0.84fr_0.84fr]">
+        <DarkCard title="الأثر الاقتصادي المتوقع" action={<button className="text-sm font-black text-[#D0A243]">عرض التقرير</button>} className="h-full">
+          <div className="mb-4 flex justify-start">
+            <button className="rounded-[0.8rem] border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-semibold text-white/74">سنوي</button>
+          </div>
+          <div className="h-[250px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={chartData}>
+                <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
+                <XAxis dataKey="month" tickLine={false} axisLine={false} stroke="rgba(255,255,255,0.4)" />
+                <YAxis tickLine={false} axisLine={false} stroke="rgba(255,255,255,0.35)" />
+                <Tooltip />
+                <Line type="monotone" dataKey="projected" stroke="#54E070" strokeWidth={3} dot={false} />
+                <Line type="monotone" dataKey="approved" stroke="#D7A84F" strokeWidth={3} dot={false} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </DarkCard>
+
+        <div className="grid items-start gap-3">
+          <DarkCard title="رحلة الفرصة الاستثمارية" action={<button className="text-sm font-black text-[#D0A243]">عرض الكل</button>} className="h-full">
+            <div className="flex items-start justify-between gap-2">
+              {stages.map((stage) => (
+                <div key={stage.label} className="flex-1 text-center">
+                  <div className={`mx-auto flex h-11 w-11 items-center justify-center rounded-full border ${stageTone(stage.active, stage.gold)}`}>
+                    {stage.active ? <Check size={18} className={stage.gold ? "text-white" : "text-[#39D56E]"} /> : <span className="h-2.5 w-2.5 rounded-full bg-white/28" />}
+                  </div>
+                  <p className={`mt-2 text-[12px] font-bold ${stage.active ? (stage.gold ? "text-[#E6C16A]" : "text-[#56DD77]") : "text-white/54"}`}>{stage.label}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-5 grid grid-cols-3 gap-2 xl:grid-cols-6">
+              {["1 تشغيل", "8 تحليل", "3 اعتماد", "كل الإنجاز", "2 طرح", "1 تشغيل"].map((item) => (
+                <div key={item} className="rounded-[1rem] border border-white/8 bg-white/[0.03] px-3 py-3 text-center text-sm font-bold text-white/78">
+                  {item}
+                </div>
+              ))}
+            </div>
+          </DarkCard>
+
+          <DarkCard title="تنبيهات ذكية" action={<button className="text-sm font-black text-[#D0A243]">عرض الكل</button>} className="h-full">
+            <div className="space-y-3">
+              {alertItems.map(([text, color]) => (
+                <div key={text} className="flex items-center justify-between rounded-[1rem] border border-white/8 bg-white/[0.03] px-4 py-4 text-right">
+                  <span className="h-3.5 w-3.5 rounded-full" style={{ background: color }} />
+                  <p className="text-sm leading-8 text-white/78">{text}</p>
+                </div>
+              ))}
+            </div>
+          </DarkCard>
+        </div>
+
+        <DarkCard title="مؤشرات الأداء الرئيسية" action={<button className="text-sm font-black text-[#D0A243]">عرض الكل</button>} className="h-full">
           <div className="grid grid-cols-2 gap-3">
             {kpis.map(([value, label], index) => (
               <div key={label} className="text-center">
@@ -454,55 +522,6 @@ export function AdminReferenceDashboard() {
                 <p className="mt-1 text-[12px] leading-6 text-white/58">{label}</p>
               </div>
             ))}
-          </div>
-        </DarkCard>
-
-        <DarkCard title="تنبيهات ذكية" action={<button className="text-sm font-black text-[#D0A243]">عرض الكل</button>}>
-          <div className="space-y-3">
-            {alertItems.map(([text, color]) => (
-              <div key={text} className="flex items-center justify-between rounded-[1rem] border border-white/8 bg-white/[0.03] px-4 py-4 text-right">
-                <span className="h-3.5 w-3.5 rounded-full" style={{ background: color }} />
-                <p className="text-sm leading-8 text-white/78">{text}</p>
-              </div>
-            ))}
-          </div>
-        </DarkCard>
-
-        <DarkCard title="رحلة الفرصة الاستثمارية" action={<button className="text-sm font-black text-[#D0A243]">عرض الكل</button>}>
-          <div className="flex items-start justify-between gap-2">
-            {stages.map((stage) => (
-              <div key={stage.label} className="flex-1 text-center">
-                <div className={`mx-auto flex h-11 w-11 items-center justify-center rounded-full border ${stageTone(stage.active, stage.gold)}`}>
-                  {stage.active ? <Check size={18} className={stage.gold ? "text-white" : "text-[#39D56E]"} /> : <span className="h-2.5 w-2.5 rounded-full bg-white/28" />}
-                </div>
-                <p className={`mt-2 text-[12px] font-bold ${stage.active ? (stage.gold ? "text-[#E6C16A]" : "text-[#56DD77]") : "text-white/54"}`}>{stage.label}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-5 grid grid-cols-3 gap-2 xl:grid-cols-6">
-            {["1 تشغيل", "8 تحليل", "3 اعتماد", "كل الإنجاز", "2 طرح", "1 تشغيل"].map((item) => (
-              <div key={item} className="rounded-[1rem] border border-white/8 bg-white/[0.03] px-3 py-3 text-center text-sm font-bold text-white/78">
-                {item}
-              </div>
-            ))}
-          </div>
-        </DarkCard>
-
-        <DarkCard title="الأثر الاقتصادي المتوقع" action={<button className="text-sm font-black text-[#D0A243]">عرض التقرير</button>}>
-          <div className="mb-4 flex justify-start">
-            <button className="rounded-[0.8rem] border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-semibold text-white/74">سنوي</button>
-          </div>
-          <div className="h-[250px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={chartData}>
-                <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
-                <XAxis dataKey="month" tickLine={false} axisLine={false} stroke="rgba(255,255,255,0.4)" />
-                <YAxis tickLine={false} axisLine={false} stroke="rgba(255,255,255,0.35)" />
-                <Tooltip />
-                <Line type="monotone" dataKey="projected" stroke="#54E070" strokeWidth={3} dot={false} />
-                <Line type="monotone" dataKey="approved" stroke="#D7A84F" strokeWidth={3} dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
           </div>
         </DarkCard>
       </div>
