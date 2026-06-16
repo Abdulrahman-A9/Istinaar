@@ -129,7 +129,7 @@ export const executiveMapPoints: ReferenceMapPoint[] = [
   { id: "jamieen", label: "حي الجامعيين", state: "review", top: "46%", right: "34%" },
   { id: "zubarah", label: "حي الزبارة", state: "ready", top: "24%", right: "24%" },
   { id: "sifain", label: "حي الشفاء", state: "ready", top: "21%", right: "74%" },
-  { id: "muntazah", label: "حي المنتزه", state: "ready", top: "69%", right: "55%" },
+  { id: "muntazah", label: "حي منتزه", state: "ready", top: "69%", right: "55%" },
   { id: "salam", label: "حي السلام", state: "blocked", top: "74%", right: "19%" },
 ];
 
@@ -155,7 +155,7 @@ export const recommendationFeed = [
 ];
 
 export const spatialNeighborhoodCards = [
-  { name: "حي الجامعة", score: "42%", opportunities: "1", value: "1.6", state: "منخفضة الجاهزية", tone: "red" },
+  { name: "حي الجامعة", score: "42%", opportunities: "1", value: "1.6", state: "جاهزية منخفضة", tone: "red" },
   { name: "حي الوسيطاء", score: "65%", opportunities: "2", value: "8.7", state: "جاهزية متوسطة", tone: "amber" },
   { name: "حي النقرة", score: "71%", opportunities: "3", value: "15.2", state: "جاهزية جيدة", tone: "green" },
   { name: "حي الجامعيين", score: "83%", opportunities: "6", value: "32.5", state: "جاهزة للطرح", tone: "green" },
