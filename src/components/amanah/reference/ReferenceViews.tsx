@@ -88,6 +88,8 @@ const neighborhoodCards = [
   { name: "حي الوسيطاء", score: "65%", opportunities: "2", value: "8.7", state: "جاهزية متوسطة", tone: "amber" },
   { name: "حي النقرة", score: "71%", opportunities: "3", value: "15.2", state: "جاهزية جيدة", tone: "green" },
   { name: "حي الجامعيين", score: "83%", opportunities: "6", value: "32.5", state: "جاهزة للطرح", tone: "green" },
+  { name: "حي الزبارة", score: "74%", opportunities: "2", value: "11.1", state: "جاهزية جيدة", tone: "green" },
+  { name: "حي الشفاء", score: "58%", opportunities: "2", value: "6.9", state: "جاهزية متوسطة", tone: "amber" },
 ];
 
 const opportunityRows: OpportunityRow[] = [
@@ -583,12 +585,14 @@ export function IntelligenceSpatialReference() {
           </div>
         </DarkCard>
 
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {[
             ["الأحياء الجاهزة", "6 أحياء", "أولوية رفع مباشرة", "#42DD71"],
             ["المعوقات المتكررة", "3 عناصر", "تحتاج متابعة تنظيمية", "#F0B846"],
             ["قيمة الفرص المكانية", "67.9", "مليون ريال متوقع", "#D0A243"],
             ["المناطق ذات النمو", "4 نطاقات", "جاهزية أعلى من المتوسط", "#57A0FF"],
+            ["الواجهات الواعدة", "3 مواقع", "أثر موسمي أعلى هذا الشهر", "#A78BFA"],
+            ["الفرص سريعة الرفع", "5 فرص", "قابلة للتنفيذ بعد مراجعة خفيفة", "#FF8A5B"],
           ].map(([label, value, note, color]) => (
             <div key={String(label)} className="rounded-[1.2rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(78,163,255,0.12),transparent_36%),linear-gradient(180deg,rgba(11,27,45,0.98)_0%,rgba(10,23,38,0.98)_100%)] px-5 py-5 text-right shadow-[0_16px_36px_rgba(0,0,0,0.16)]">
               <p className="text-[12px] text-white/42">{label}</p>

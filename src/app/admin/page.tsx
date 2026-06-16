@@ -70,7 +70,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(46,93,138,0.24),transparent_24%),radial-gradient(circle_at_top_right,rgba(16,65,104,0.22),transparent_28%),radial-gradient(circle_at_50%_100%,rgba(21,84,118,0.18),transparent_34%),linear-gradient(180deg,#0B1B2B_0%,#102338_48%,#0D2235_100%)] text-[#0B1726]">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(94,145,194,0.26),transparent_24%),radial-gradient(circle_at_top_right,rgba(61,122,176,0.24),transparent_28%),radial-gradient(circle_at_50%_100%,rgba(42,96,144,0.18),transparent_34%),linear-gradient(180deg,#16324A_0%,#122B42_32%,#10263C_68%,#0D2235_100%)] text-[#0B1726]">
       <div
         className="mx-auto grid max-w-[1880px] grid-cols-1 gap-3 px-3 py-3 xl:grid-cols-[minmax(0,1fr)_332px]"
         style={{ direction: "ltr" }}
