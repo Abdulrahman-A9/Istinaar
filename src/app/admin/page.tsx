@@ -3,61 +3,17 @@
 import Link from "next/link";
 import {
   Bell,
-  BriefcaseBusiness,
   Building2,
   FileCheck2,
   FileText,
-  HelpCircle,
-  LayoutDashboard,
-  LineChart,
-  LogOut,
   Mail,
-  MapPin,
-  Settings,
   ShieldCheck,
   Sparkles,
   UserCircle2,
-  Users,
 } from "lucide-react";
+import ExecutiveSidebar from "@/components/amanah/ExecutiveSidebar";
 import { AdminReferenceDashboard } from "@/components/amanah/reference/ReferenceViews";
 import { useAppStore } from "@/store/appStore";
-
-function SidebarLink({
-  href,
-  label,
-  hint,
-  icon,
-  active,
-}: {
-  href: string;
-  label: string;
-  hint: string;
-  icon: React.ReactNode;
-  active?: boolean;
-}) {
-  return (
-    <Link
-      href={href}
-      className={`flex items-center justify-between rounded-[1rem] px-4 py-3 transition ${
-        active
-          ? "bg-[#D0A243] text-[#09121D] shadow-[0_18px_38px_rgba(208,162,67,0.22)]"
-          : "border border-white/8 bg-white/[0.02] text-white/82 hover:bg-white/[0.04]"
-      }`}
-    >
-      <div className="text-right">
-        <p className={`text-[14px] font-bold ${active ? "text-[#09121D]" : "text-white"}`}>{label}</p>
-        <p className={`mt-1 text-[11px] ${active ? "text-[#09121D]/70" : "text-white/40"}`}>{hint}</p>
-      </div>
-      <span
-        className={`flex h-10 w-10 items-center justify-center rounded-[0.95rem] border ${
-          active ? "border-[#0B1726]/10 bg-[#0B1726]/6" : "border-white/10 bg-white/[0.03]"
-        }`}
-      >
-        {icon}
-      </span>
-    </Link>
-  );
-}
 
 function SupportShortcut({
   title,
@@ -71,7 +27,9 @@ function SupportShortcut({
   toneClass: string;
 }) {
   return (
-    <div className={`rounded-[1.05rem] border border-white/8 px-4 py-4 text-right shadow-[0_14px_32px_rgba(15,23,42,0.14)] ${toneClass}`}>
+    <div
+      className={`rounded-[1.05rem] border border-white/8 px-4 py-4 text-right shadow-[0_14px_32px_rgba(15,23,42,0.14)] ${toneClass}`}
+    >
       <div className="flex items-center justify-between gap-3">
         <span className="flex h-10 w-10 items-center justify-center rounded-[0.95rem] border border-[#D0A243]/28 bg-white/[0.03] text-[#D7B45E]">
           {icon}
@@ -112,7 +70,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F1E8] text-[#0B1726]">
+    <div className="min-h-screen bg-[linear-gradient(180deg,#071625_0%,#0A1C2E_58%,#17314B_70%,#F5F1E8_70%,#F5F1E8_100%)] text-[#0B1726]">
       <div
         className="mx-auto grid max-w-[1880px] grid-cols-1 gap-3 px-3 py-3 xl:grid-cols-[minmax(0,1fr)_352px]"
         style={{ direction: "ltr" }}
@@ -153,69 +111,40 @@ export default function AdminPage() {
           <AdminReferenceDashboard />
 
           <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-5">
-            <SupportShortcut title="تصدير تقرير" description="تقرير الأداء الشهري" icon={<FileCheck2 size={18} />} toneClass="bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.18),transparent_38%),linear-gradient(180deg,rgba(13,31,51,0.98)_0%,rgba(9,22,37,0.98)_100%)]" />
-            <SupportShortcut title="اجتماع لجنة الاستثمار" description="غداً - 10:00 ص" icon={<Building2 size={18} />} toneClass="bg-[radial-gradient(circle_at_top_right,rgba(61,211,128,0.16),transparent_38%),linear-gradient(180deg,rgba(13,31,51,0.98)_0%,rgba(9,22,37,0.98)_100%)]" />
-            <SupportShortcut title="توقيع إلكتروني" description="3 مستندات بانتظار التوقيع" icon={<FileText size={18} />} toneClass="bg-[radial-gradient(circle_at_top_right,rgba(78,163,255,0.18),transparent_38%),linear-gradient(180deg,rgba(13,31,51,0.98)_0%,rgba(9,22,37,0.98)_100%)]" />
-            <SupportShortcut title="مركز المساعدة" description="الدعم والمساندة" icon={<ShieldCheck size={18} />} toneClass="bg-[radial-gradient(circle_at_top_right,rgba(188,125,255,0.14),transparent_38%),linear-gradient(180deg,rgba(13,31,51,0.98)_0%,rgba(9,22,37,0.98)_100%)]" />
-            <SupportShortcut title="اسأل مساعد استنار الذكي" description="اكتب استفسارك هنا..." icon={<Sparkles size={18} />} toneClass="bg-[radial-gradient(circle_at_top_right,rgba(255,124,124,0.14),transparent_38%),linear-gradient(180deg,rgba(13,31,51,0.98)_0%,rgba(9,22,37,0.98)_100%)]" />
+            <SupportShortcut
+              title="تصدير تقرير"
+              description="تقرير الأداء الشهري"
+              icon={<FileCheck2 size={18} />}
+              toneClass="bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.18),transparent_38%),linear-gradient(180deg,rgba(13,31,51,0.98)_0%,rgba(9,22,37,0.98)_100%)]"
+            />
+            <SupportShortcut
+              title="اجتماع لجنة الاستثمار"
+              description="غداً - 10:00 ص"
+              icon={<Building2 size={18} />}
+              toneClass="bg-[radial-gradient(circle_at_top_right,rgba(61,211,128,0.16),transparent_38%),linear-gradient(180deg,rgba(13,31,51,0.98)_0%,rgba(9,22,37,0.98)_100%)]"
+            />
+            <SupportShortcut
+              title="توقيع إلكتروني"
+              description="3 مستندات بانتظار التوقيع"
+              icon={<FileText size={18} />}
+              toneClass="bg-[radial-gradient(circle_at_top_right,rgba(78,163,255,0.18),transparent_38%),linear-gradient(180deg,rgba(13,31,51,0.98)_0%,rgba(9,22,37,0.98)_100%)]"
+            />
+            <SupportShortcut
+              title="مركز المساعدة"
+              description="الدعم والمساندة"
+              icon={<ShieldCheck size={18} />}
+              toneClass="bg-[radial-gradient(circle_at_top_right,rgba(188,125,255,0.14),transparent_38%),linear-gradient(180deg,rgba(13,31,51,0.98)_0%,rgba(9,22,37,0.98)_100%)]"
+            />
+            <SupportShortcut
+              title="اسأل مساعد استنار الذكي"
+              description="اكتب استفسارك هنا..."
+              icon={<Sparkles size={18} />}
+              toneClass="bg-[radial-gradient(circle_at_top_right,rgba(255,124,124,0.14),transparent_38%),linear-gradient(180deg,rgba(13,31,51,0.98)_0%,rgba(9,22,37,0.98)_100%)]"
+            />
           </div>
         </main>
 
-        <aside
-          className="sticky top-3 hidden h-[calc(100vh-1.5rem)] overflow-y-auto rounded-[1.65rem] border border-white/8 bg-[linear-gradient(180deg,#091624_0%,#0B1C2F_100%)] px-5 py-5 shadow-[0_24px_60px_rgba(0,0,0,0.22)] xl:block"
-          dir="rtl"
-        >
-          <div className="space-y-5">
-            <div className="flex items-start justify-between">
-              <div className="flex h-16 w-16 items-center justify-center rounded-[1.2rem] bg-[radial-gradient(circle_at_top,#F0E3BA_0%,#D0A243_100%)] text-[#0B1726] shadow-[0_16px_30px_rgba(208,162,67,0.2)]">
-                <Sparkles size={26} />
-              </div>
-              <div className="text-right">
-                <h2 className="font-['Tajawal'] text-[2rem] font-black text-white">استنار</h2>
-                <p className="mt-1.5 text-[11px] leading-6 text-white/44">منصة الذكاء الاستثماري ودعم القرار</p>
-              </div>
-            </div>
-
-            <div className="rounded-[1.2rem] border border-white/8 bg-white/[0.03] px-4 py-4 text-right">
-              <p className="font-['Tajawal'] text-[1.35rem] font-black text-white">المركز التنفيذي</p>
-              <p className="mt-2 text-[12px] leading-7 text-white/44">لوحة تشغيل مختصرة للقيادة والمتابعة الداخلية</p>
-            </div>
-
-            <div className="border-t border-white/8 pt-4">
-              <p className="mb-3 text-right text-[11px] font-bold text-white/38">المسارات الرئيسية</p>
-              <div className="space-y-2">
-                <SidebarLink href="/admin" label="الرئيسية" hint="ملخص التشغيل اليومي" icon={<LayoutDashboard size={18} />} active />
-                <SidebarLink href="/investment-intelligence" label="الذكاء الاستثماري" hint="القراءة التنفيذية" icon={<Sparkles size={18} />} />
-                <SidebarLink href="/investment-intelligence?tab=spatial" label="التحليل المكاني" hint="الأحياء والأولويات" icon={<MapPin size={18} />} />
-                <SidebarLink href="/investment-intelligence?tab=opportunities" label="الفرص الاستثمارية" hint="السجل والجاهزية" icon={<BriefcaseBusiness size={18} />} />
-              </div>
-            </div>
-
-            <div className="border-t border-white/8 pt-4">
-              <p className="mb-3 text-right text-[11px] font-bold text-white/38">الإدارة والمتابعة</p>
-              <div className="space-y-2">
-                <SidebarLink href="#" label="الاعتمادات والموافقات" hint="الرفع والاعتماد" icon={<FileCheck2 size={18} />} />
-                <SidebarLink href="#" label="الشركاء والمستثمرون" hint="الأطراف ذات العلاقة" icon={<Users size={18} />} />
-                <SidebarLink href="#" label="التقارير واللوحات" hint="العروض التنفيذية" icon={<LineChart size={18} />} />
-                <SidebarLink href="#" label="الإعدادات" hint="التفضيلات والصلاحيات" icon={<Settings size={18} />} />
-              </div>
-            </div>
-
-            <div className="border-t border-white/8 pt-4">
-              <p className="mb-3 text-right text-[11px] font-bold text-white/38">الخدمات السريعة</p>
-              <div className="space-y-2">
-                <SidebarLink href="#" label="مركز المساعدة" hint="الدعم والمساندة" icon={<HelpCircle size={18} />} />
-                <SidebarLink href="#" label="تسجيل الخروج" hint="العودة للبوابة" icon={<LogOut size={18} />} />
-              </div>
-            </div>
-
-            <p className="pt-1 text-center text-[11px] leading-6 text-white/30">
-              © 2024 استنار
-              <br />
-              جميع الحقوق محفوظة
-            </p>
-          </div>
-        </aside>
+        <ExecutiveSidebar page="admin" />
       </div>
     </div>
   );
