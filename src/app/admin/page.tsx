@@ -111,8 +111,11 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,#13263B_0%,#09131E_42%,#06101A_100%)] text-white">
-      <div className="mx-auto grid max-w-[1880px] grid-cols-1 gap-3 px-3 py-3 xl:grid-cols-[minmax(0,1fr)_352px]">
-        <main className="min-w-0 space-y-3">
+      <div
+        className="mx-auto grid max-w-[1880px] grid-cols-1 gap-3 px-3 py-3 xl:grid-cols-[minmax(0,1fr)_352px]"
+        style={{ direction: "ltr" }}
+      >
+        <main className="min-w-0 space-y-3" dir="rtl">
           <header className="rounded-[1.45rem] border border-white/8 bg-[linear-gradient(180deg,rgba(8,19,31,0.94)_0%,rgba(9,23,38,0.98)_100%)] px-5 py-4 shadow-[0_18px_44px_rgba(0,0,0,0.2)]">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="text-right">
@@ -156,7 +159,10 @@ export default function AdminPage() {
           </div>
         </main>
 
-        <aside className="sticky top-3 hidden h-[calc(100vh-1.5rem)] overflow-y-auto rounded-[1.65rem] border border-white/8 bg-[linear-gradient(180deg,#091624_0%,#0B1C2F_100%)] px-5 py-5 shadow-[0_24px_60px_rgba(0,0,0,0.22)] xl:block">
+        <aside
+          className="sticky top-3 hidden h-[calc(100vh-1.5rem)] overflow-y-auto rounded-[1.65rem] border border-white/8 bg-[linear-gradient(180deg,#091624_0%,#0B1C2F_100%)] px-5 py-5 shadow-[0_24px_60px_rgba(0,0,0,0.22)] xl:block"
+          dir="rtl"
+        >
           <div className="space-y-5">
             <div className="flex items-start justify-between">
               <div className="flex h-16 w-16 items-center justify-center rounded-[1.2rem] bg-[radial-gradient(circle_at_top,#F0E3BA_0%,#D0A243_100%)] text-[#0B1726] shadow-[0_16px_30px_rgba(208,162,67,0.2)]">
