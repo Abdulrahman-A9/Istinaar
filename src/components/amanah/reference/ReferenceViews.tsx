@@ -90,6 +90,8 @@ const neighborhoodCards = [
   { name: "حي الجامعيين", score: "83%", opportunities: "6", value: "32.5", state: "جاهزة للطرح", tone: "green" },
   { name: "حي الزبارة", score: "74%", opportunities: "2", value: "11.1", state: "جاهزية جيدة", tone: "green" },
   { name: "حي الشفاء", score: "58%", opportunities: "2", value: "6.9", state: "جاهزية متوسطة", tone: "amber" },
+  { name: "حي المصيف", score: "69%", opportunities: "2", value: "9.8", state: "جاهزية جيدة", tone: "green" },
+  { name: "حي السلام", score: "54%", opportunities: "1", value: "4.4", state: "قابلة للمعالجة", tone: "amber" },
 ];
 
 const opportunityRows: OpportunityRow[] = [
@@ -235,7 +237,7 @@ export function AdminReferenceDashboard() {
 
   return (
     <div className="space-y-3">
-      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-7">
         {executiveMetrics.map((metric, index) => (
           <article
             key={metric.label}
@@ -508,99 +510,84 @@ export function IntelligenceOverviewReference() {
 export function IntelligenceSpatialReference() {
   return (
     <div className="space-y-4">
-      <div className="grid items-start gap-4 xl:grid-cols-[1.1fr_0.42fr]">
-        <DarkCard title="خريطة الأولويات المكانية" subtitle="تحليل الأحياء">
+      <DarkCard title="خريطة الأولويات المكانية" subtitle="تحليل الأحياء">
+        <div className="grid items-start gap-4 xl:grid-cols-[minmax(0,1.24fr)_340px]">
           <ExecutiveMap />
-          <div className="mt-4 grid gap-3 md:grid-cols-4">
-            {neighborhoodCards.map((card) => (
-              <div key={card.name} className="rounded-[1rem] border border-white/8 bg-white/[0.03] px-4 py-4 text-right">
-                <div className="flex items-center justify-between">
-                  <span className={`rounded-full px-3 py-1 text-xs font-black ${cardTone(card.tone as "green" | "amber" | "red")}`}>{card.state}</span>
-                  <h3 className="font-['Tajawal'] text-[1rem] font-black text-white">{card.name}</h3>
+          <div className="space-y-4">
+            <div className="rounded-[1.1rem] border border-white/8 bg-white/[0.03] p-4">
+              <p className="mb-3 text-right text-sm font-bold text-white">فلترة التحليل</p>
+              <div className="space-y-3">
+                {["اختيار الحي", "أمر التنفيذ", "نوع الاستخدام", "أمر القرار"].map((item) => (
+                  <button key={item} className="flex w-full items-center justify-between rounded-[1rem] border border-white/10 bg-white/[0.03] px-4 py-4 text-sm font-semibold text-white/76">
+                    <ChevronDown size={18} />
+                    {item}
+                  </button>
+                ))}
+                <div className="rounded-[1rem] border border-white/10 bg-white/[0.03] p-4">
+                  <p className="mb-3 text-sm font-bold text-white">نسبة الجاهزية</p>
+                  <input type="range" min="0" max="100" defaultValue="64" className="w-full accent-[#D0A243]" />
                 </div>
-                <div className="mt-3 grid grid-cols-2 gap-3 text-sm text-white/66">
-                  <div><p>الجاهزية</p><p className="mt-1 text-lg font-black text-white">{card.score}</p></div>
-                  <div><p>الفرص</p><p className="mt-1 text-lg font-black text-white">{card.opportunities}</p></div>
-                </div>
-                <p className="mt-3 text-[12px] text-[#D8A84F]">قيمة تقديرية {card.value} مليون ر.س</p>
+                <button className="w-full rounded-[1rem] bg-[#C79C45] px-4 py-4 text-base font-black text-[#0B1726]">تطبيق التحليل</button>
+                <button className="w-full rounded-[1rem] border border-white/10 px-4 py-3 text-sm font-semibold text-white/74">إلغاء التحديد</button>
               </div>
-            ))}
+            </div>
+
+            <div className="rounded-[1.1rem] border border-white/8 bg-white/[0.03] p-4">
+              <p className="mb-3 text-right text-sm font-bold text-white">طبقات الخريطة</p>
+              <div className="space-y-3 text-right">
+                {[
+                  ["مؤشر الجاذبية المكانية", "#39D56E"],
+                  ["جاهزية الفرصة", "#F3B942"],
+                  ["الكثافة الاستثمارية", "#FF5A5F"],
+                  ["الفرص الاستثمارية", "#D1A243"],
+                  ["الكثافة السكانية", "#57A0FF"],
+                  ["المشاريع القائمة", "#B6BCC6"],
+                ].map(([label, color]) => (
+                  <div key={String(label)} className="flex items-center justify-between rounded-[1rem] border border-white/8 bg-white/[0.03] px-4 py-3">
+                    <span className="h-3.5 w-3.5 rounded-full" style={{ background: String(color) }} />
+                    <span className="text-sm text-white/74">{label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-        </DarkCard>
-
-        <div className="grid gap-4">
-          <DarkCard title="فلترة التحليل">
-            <div className="space-y-4">
-              {["اختيار الحي", "أمر التنفيذ", "نوع الاستخدام", "أمر القرار"].map((item) => (
-                <button key={item} className="flex w-full items-center justify-between rounded-[1rem] border border-white/10 bg-white/[0.03] px-4 py-4 text-sm font-semibold text-white/76">
-                  <ChevronDown size={18} />
-                  {item}
-                </button>
-              ))}
-              <div className="rounded-[1rem] border border-white/10 bg-white/[0.03] p-4">
-                <p className="mb-3 text-sm font-bold text-white">نسبة الجاهزية</p>
-                <input type="range" min="0" max="100" defaultValue="64" className="w-full accent-[#D0A243]" />
-              </div>
-              <button className="w-full rounded-[1rem] bg-[#C79C45] px-4 py-4 text-base font-black text-[#0B1726]">تطبيق التحليل</button>
-              <button className="w-full rounded-[1rem] border border-white/10 px-4 py-3 text-sm font-semibold text-white/74">إلغاء التحديد</button>
-            </div>
-          </DarkCard>
-
-          <DarkCard title="طبقات الخريطة">
-            <div className="space-y-3 text-right">
-              {[
-                ["مؤشر الجاذبية المكانية", "#39D56E"],
-                ["جاهزية الفرصة", "#F3B942"],
-                ["الكثافة الاستثمارية", "#FF5A5F"],
-                ["الفرص الاستثمارية", "#D1A243"],
-                ["الكثافة السكانية", "#57A0FF"],
-                ["المشاريع القائمة", "#B6BCC6"],
-              ].map(([label, color]) => (
-                <div key={String(label)} className="flex items-center justify-between rounded-[1rem] border border-white/8 bg-white/[0.03] px-4 py-3">
-                  <span className="h-3.5 w-3.5 rounded-full" style={{ background: String(color) }} />
-                  <span className="text-sm text-white/74">{label}</span>
-                </div>
-              ))}
-            </div>
-          </DarkCard>
         </div>
+      </DarkCard>
+
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {neighborhoodCards.map((card) => (
+          <div key={card.name} className="rounded-[1rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(78,163,255,0.12),transparent_36%),linear-gradient(180deg,rgba(11,27,45,0.98)_0%,rgba(10,23,38,0.98)_100%)] px-4 py-4 text-right shadow-[0_16px_36px_rgba(0,0,0,0.16)]">
+            <div className="flex items-center justify-between">
+              <span className={`rounded-full px-3 py-1 text-xs font-black ${cardTone(card.tone as "green" | "amber" | "red")}`}>{card.state}</span>
+              <h3 className="font-['Tajawal'] text-[1rem] font-black text-white">{card.name}</h3>
+            </div>
+            <div className="mt-3 grid grid-cols-2 gap-3 text-sm text-white/66">
+              <div><p>الجاهزية</p><p className="mt-1 text-lg font-black text-white">{card.score}</p></div>
+              <div><p>الفرص</p><p className="mt-1 text-lg font-black text-white">{card.opportunities}</p></div>
+            </div>
+            <p className="mt-3 text-[12px] text-[#D8A84F]">قيمة تقديرية {card.value} مليون ر.س</p>
+          </div>
+        ))}
       </div>
 
-      <div className="grid items-start gap-4 xl:grid-cols-[0.88fr_1.12fr]">
-        <DarkCard title="خلاصة القرار المكاني" subtitle="ما الذي يحتاج تحركاً أولاً؟">
-          <div className="grid gap-3">
-            {[
-              ["حي الجامعة", "فجوة جاهزية تحتاج معالجة تنظيمية قبل الرفع", "#FF5A5F"],
-              ["حي النقرة", "جاهزية جيدة مع فرصتين قابلتين للتطوير السريع", "#F0B846"],
-              ["حي الجامعيين", "الأعلى قيمةً والأقرب لقرار الرفع التنفيذي", "#42DD71"],
-            ].map(([name, note, color]) => (
-              <div key={String(name)} className="rounded-[1rem] border border-white/8 bg-white/[0.03] px-4 py-4 text-right">
-                <div className="flex items-center justify-between">
-                  <span className="h-3.5 w-3.5 rounded-full" style={{ background: String(color) }} />
-                  <p className="font-['Tajawal'] text-[1.05rem] font-black text-white">{name}</p>
-                </div>
-                <p className="mt-3 text-sm leading-8 text-white/66">{note}</p>
-              </div>
-            ))}
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {[
+          ["خلاصة القرار المكاني", "حي الجامعة", "فجوة جاهزية تحتاج معالجة تنظيمية قبل الرفع", "#FF5A5F"],
+          ["خلاصة القرار المكاني", "حي النقرة", "جاهزية جيدة مع فرصتين قابلتين للتطوير السريع", "#F0B846"],
+          ["خلاصة القرار المكاني", "حي الجامعيين", "الأعلى قيمةً والأقرب لقرار الرفع التنفيذي", "#42DD71"],
+          ["الأحياء الجاهزة", "6 أحياء", "أولوية رفع مباشرة", "#42DD71"],
+          ["المعوقات المتكررة", "3 عناصر", "تحتاج متابعة تنظيمية", "#F0B846"],
+          ["قيمة الفرص المكانية", "67.9", "مليون ريال متوقع", "#D0A243"],
+          ["المناطق ذات النمو", "4 نطاقات", "جاهزية أعلى من المتوسط", "#57A0FF"],
+          ["الواجهات الواعدة", "3 مواقع", "أثر موسمي أعلى هذا الشهر", "#A78BFA"],
+          ["الفرص سريعة الرفع", "5 فرص", "قابلة للتنفيذ بعد مراجعة خفيفة", "#FF8A5B"],
+        ].map(([label, value, note, color]) => (
+          <div key={`${label}-${value}`} className="rounded-[1.2rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(78,163,255,0.12),transparent_36%),linear-gradient(180deg,rgba(11,27,45,0.98)_0%,rgba(10,23,38,0.98)_100%)] px-5 py-5 text-right shadow-[0_16px_36px_rgba(0,0,0,0.16)]">
+            <p className="text-[12px] text-white/42">{label}</p>
+            <p className="mt-2 font-['Tajawal'] text-[1.55rem] font-black text-white">{value}</p>
+            <p className="mt-2 text-[12px]" style={{ color: String(color) }}>{note}</p>
           </div>
-        </DarkCard>
-
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {[
-            ["الأحياء الجاهزة", "6 أحياء", "أولوية رفع مباشرة", "#42DD71"],
-            ["المعوقات المتكررة", "3 عناصر", "تحتاج متابعة تنظيمية", "#F0B846"],
-            ["قيمة الفرص المكانية", "67.9", "مليون ريال متوقع", "#D0A243"],
-            ["المناطق ذات النمو", "4 نطاقات", "جاهزية أعلى من المتوسط", "#57A0FF"],
-            ["الواجهات الواعدة", "3 مواقع", "أثر موسمي أعلى هذا الشهر", "#A78BFA"],
-            ["الفرص سريعة الرفع", "5 فرص", "قابلة للتنفيذ بعد مراجعة خفيفة", "#FF8A5B"],
-          ].map(([label, value, note, color]) => (
-            <div key={String(label)} className="rounded-[1.2rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(78,163,255,0.12),transparent_36%),linear-gradient(180deg,rgba(11,27,45,0.98)_0%,rgba(10,23,38,0.98)_100%)] px-5 py-5 text-right shadow-[0_16px_36px_rgba(0,0,0,0.16)]">
-              <p className="text-[12px] text-white/42">{label}</p>
-              <p className="mt-2 font-['Tajawal'] text-[1.55rem] font-black text-white">{value}</p>
-              <p className="mt-2 text-[12px]" style={{ color: String(color) }}>{note}</p>
-            </div>
-          ))}
-        </div>
+        ))}
       </div>
     </div>
   );
