@@ -38,9 +38,9 @@ export default function ReferenceShell({
   const displayName = currentUser?.fullName || "أ. محمد الشمري";
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#071625_0%,#0A1C2E_58%,#17314B_70%,#F5F1E8_70%,#F5F1E8_100%)] text-[#0B1726]">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(46,93,138,0.24),transparent_24%),radial-gradient(circle_at_top_right,rgba(16,65,104,0.22),transparent_28%),radial-gradient(circle_at_50%_100%,rgba(21,84,118,0.18),transparent_34%),linear-gradient(180deg,#0B1B2B_0%,#102338_48%,#0D2235_100%)] text-[#0B1726]">
       <div
-        className="mx-auto grid max-w-[1880px] grid-cols-1 gap-3 px-3 py-3 xl:grid-cols-[minmax(0,1fr)_352px]"
+        className="mx-auto grid max-w-[1880px] grid-cols-1 gap-3 px-3 py-3 xl:grid-cols-[minmax(0,1fr)_332px]"
         style={{ direction: "ltr" }}
       >
         <main className="min-w-0 space-y-3" dir="rtl">

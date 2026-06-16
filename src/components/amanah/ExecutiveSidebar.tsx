@@ -40,8 +40,8 @@ function SidebarLink({
       }`}
     >
       <div className="text-right">
-        <p className={`text-[14px] font-bold ${active ? "text-[#09121D]" : "text-white"}`}>{label}</p>
-        <p className={`mt-1 text-[11px] ${active ? "text-[#09121D]/70" : "text-white/40"}`}>{hint}</p>
+        <p className={`text-[13px] font-bold ${active ? "text-[#09121D]" : "text-white"}`}>{label}</p>
+        <p className={`mt-1 text-[10px] ${active ? "text-[#09121D]/70" : "text-white/40"}`}>{hint}</p>
       </div>
       <span
         className={`flex h-10 w-10 items-center justify-center rounded-[0.95rem] border ${
@@ -57,7 +57,7 @@ function SidebarLink({
 export default function ExecutiveSidebar({ page }: { page: ExecutiveSidebarPage }) {
   return (
     <aside
-      className="sticky top-3 hidden h-[calc(100vh-1.5rem)] overflow-y-auto rounded-[1.65rem] border border-white/8 bg-[linear-gradient(180deg,#091624_0%,#0B1C2F_100%)] px-5 py-5 shadow-[0_24px_60px_rgba(0,0,0,0.22)] xl:block"
+      className="sticky top-3 hidden h-[calc(100vh-1.5rem)] overflow-y-auto rounded-[1.55rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.08),transparent_22%),radial-gradient(circle_at_bottom_left,rgba(58,111,160,0.12),transparent_24%),linear-gradient(180deg,#0C1C2D_0%,#10253A_100%)] px-4 py-5 shadow-[0_24px_60px_rgba(0,0,0,0.22)] xl:block"
       dir="rtl"
     >
       <div className="space-y-5">
@@ -66,14 +66,14 @@ export default function ExecutiveSidebar({ page }: { page: ExecutiveSidebarPage 
             <Sparkles size={26} />
           </div>
           <div className="text-right">
-            <h2 className="font-['Tajawal'] text-[2rem] font-black text-white">استنار</h2>
-            <p className="mt-1.5 text-[11px] leading-6 text-white/44">منصة الذكاء الاستثماري ودعم القرار</p>
+            <h2 className="font-['Tajawal'] text-[1.9rem] font-black text-white">استنار</h2>
+            <p className="mt-1 text-[10px] leading-6 text-white/44">منصة الذكاء الاستثماري ودعم القرار</p>
           </div>
         </div>
 
-        <div className="rounded-[1.2rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.12),transparent_42%),linear-gradient(180deg,rgba(255,255,255,0.04)_0%,rgba(255,255,255,0.02)_100%)] px-4 py-4 text-right">
-          <p className="font-['Tajawal'] text-[1.35rem] font-black text-white">المركز التنفيذي</p>
-          <p className="mt-2 text-[12px] leading-7 text-white/44">لوحة تشغيل مختصرة للقيادة والمتابعة الداخلية</p>
+        <div className="rounded-[1.15rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.12),transparent_42%),linear-gradient(180deg,rgba(255,255,255,0.04)_0%,rgba(255,255,255,0.02)_100%)] px-4 py-4 text-right">
+          <p className="font-['Tajawal'] text-[1.25rem] font-black text-white">المركز التنفيذي</p>
+          <p className="mt-2 text-[11px] leading-7 text-white/44">لوحة تشغيل مختصرة للقيادة والمتابعة الداخلية</p>
         </div>
 
         <div className="border-t border-white/8 pt-4">

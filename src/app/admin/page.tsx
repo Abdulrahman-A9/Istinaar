@@ -28,15 +28,15 @@ function SupportShortcut({
 }) {
   return (
     <div
-      className={`rounded-[1.05rem] border border-white/8 px-4 py-4 text-right shadow-[0_14px_32px_rgba(15,23,42,0.14)] ${toneClass}`}
+      className={`rounded-[1rem] border border-white/8 px-3.5 py-3 text-right shadow-[0_12px_28px_rgba(15,23,42,0.14)] ${toneClass}`}
     >
       <div className="flex items-center justify-between gap-3">
-        <span className="flex h-10 w-10 items-center justify-center rounded-[0.95rem] border border-[#D0A243]/28 bg-white/[0.03] text-[#D7B45E]">
+        <span className="flex h-9 w-9 items-center justify-center rounded-[0.9rem] border border-[#D0A243]/28 bg-white/[0.03] text-[#D7B45E]">
           {icon}
         </span>
         <div>
-          <p className="font-['Tajawal'] text-[0.98rem] font-black text-white">{title}</p>
-          <p className="mt-1.5 text-[12px] text-white/46">{description}</p>
+          <p className="font-['Tajawal'] text-[0.9rem] font-black text-white">{title}</p>
+          <p className="mt-1 text-[11px] text-white/46">{description}</p>
         </div>
       </div>
     </div>
@@ -70,9 +70,9 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#071625_0%,#0A1C2E_58%,#17314B_70%,#F5F1E8_70%,#F5F1E8_100%)] text-[#0B1726]">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(46,93,138,0.24),transparent_24%),radial-gradient(circle_at_top_right,rgba(16,65,104,0.22),transparent_28%),radial-gradient(circle_at_50%_100%,rgba(21,84,118,0.18),transparent_34%),linear-gradient(180deg,#0B1B2B_0%,#102338_48%,#0D2235_100%)] text-[#0B1726]">
       <div
-        className="mx-auto grid max-w-[1880px] grid-cols-1 gap-3 px-3 py-3 xl:grid-cols-[minmax(0,1fr)_352px]"
+        className="mx-auto grid max-w-[1880px] grid-cols-1 gap-3 px-3 py-3 xl:grid-cols-[minmax(0,1fr)_332px]"
         style={{ direction: "ltr" }}
       >
         <main className="min-w-0 space-y-3" dir="rtl">
@@ -110,7 +110,7 @@ export default function AdminPage() {
 
           <AdminReferenceDashboard />
 
-          <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-5">
+          <div className="grid gap-2.5 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
             <SupportShortcut
               title="تصدير تقرير"
               description="تقرير الأداء الشهري"
