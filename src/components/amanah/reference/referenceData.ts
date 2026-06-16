@@ -1,3 +1,5 @@
+"use client";
+
 export type ReferenceMetric = {
   label: string;
   value: string;
@@ -27,12 +29,54 @@ export type ReferenceMapPoint = {
 };
 
 export const executiveMetrics: ReferenceMetric[] = [
-  { label: "قيمة الاستثمار المتوقعة", value: "211.7", unit: "مليون ريال", delta: "+18% عن الشهر الماضي", icon: "coins", accent: "#d8a84f" },
-  { label: "مؤشر جاهزية الاستثمار", value: "83%", unit: "", delta: "+7% عن الشهر الماضي", icon: "trend", accent: "#d7a14a" },
-  { label: "الوظائف المتوقعة", value: "1,248", unit: "وظيفة", delta: "+26% عن الشهر الماضي", icon: "users", accent: "#d3a04a" },
-  { label: "العوائد السنوية المتوقعة", value: "28.4", unit: "مليون ريال", delta: "+15% عن الشهر الماضي", icon: "bars", accent: "#d3a04a" },
-  { label: "عدد الفرص الاستثمارية", value: "24", unit: "فرصة", delta: "جاهزة للطرح", icon: "briefcase", accent: "#d4a04b" },
-  { label: "القرارات المطلوبة", value: "6", unit: "قرارات", delta: "تحتاج إجراء", icon: "clipboard", accent: "#d3a24e" },
+  {
+    label: "قيمة الاستثمار المتوقعة",
+    value: "211.7",
+    unit: "مليون ريال",
+    delta: "+18% عن الشهر الماضي",
+    icon: "coins",
+    accent: "#d8a84f",
+  },
+  {
+    label: "مؤشر جاهزية الاستثمار",
+    value: "83%",
+    unit: "",
+    delta: "+7% عن الشهر الماضي",
+    icon: "trend",
+    accent: "#d7a14a",
+  },
+  {
+    label: "الوظائف المتوقعة",
+    value: "1,248",
+    unit: "وظيفة",
+    delta: "+26% عن الشهر الماضي",
+    icon: "users",
+    accent: "#d3a04a",
+  },
+  {
+    label: "العوائد السنوية المتوقعة",
+    value: "28.4",
+    unit: "مليون ريال",
+    delta: "+15% عن الشهر الماضي",
+    icon: "bars",
+    accent: "#d3a04a",
+  },
+  {
+    label: "عدد الفرص الاستثمارية",
+    value: "24",
+    unit: "فرصة",
+    delta: "جاهزة للطرح",
+    icon: "briefcase",
+    accent: "#d4a04b",
+  },
+  {
+    label: "القرارات المطلوبة",
+    value: "6",
+    unit: "قرارات",
+    delta: "تحتاج إجراء",
+    icon: "clipboard",
+    accent: "#d3a24e",
+  },
 ];
 
 export const executiveDecisions: ReferenceDecision[] = [
@@ -118,11 +162,56 @@ export const spatialNeighborhoodCards = [
 ];
 
 export const opportunityRows = [
-  { title: "تطوير موقع حي مشار", category: "تجاري", location: "حي مشار - شمال حائل", readiness: "83%", value: "28.5 مليون ر.س", roi: "27%", stage: "جاهزة للطرح", updated: "منذ 2 يوم" },
-  { title: "تطوير حي النقرة", category: "سكني", location: "حي النقرة - غرب حائل", readiness: "71%", value: "15.2 مليون ر.س", roi: "23%", stage: "قيد الدراسة", updated: "منذ 5 يوم" },
-  { title: "مشروع الوسيطاء التجاري", category: "تجاري", location: "حي الوسيطاء - جنوب حائل", readiness: "65%", value: "8.7 مليون ر.س", roi: "19%", stage: "قيد المراجعة", updated: "منذ 1 أسبوع" },
-  { title: "مركز تجاري حي الجامعة", category: "تجاري", location: "حي الجامعة - شرق حائل", readiness: "42%", value: "3.1 مليون ر.س", roi: "14%", stage: "قيد الدراسة", updated: "منذ 2 أسبوع" },
-  { title: "تطوير الواجهة الشمالية", category: "ترفيهي", location: "الواجهة الشمالية", readiness: "38%", value: "12.4 مليون ر.س", roi: "18%", stage: "معتمدة", updated: "منذ 3 أسبوع" },
+  {
+    title: "تطوير موقع حي مشار",
+    category: "تجاري",
+    location: "حي مشار - شمال حائل",
+    readiness: "83%",
+    value: "28.5 مليون ر.س",
+    roi: "27%",
+    stage: "جاهزة للطرح",
+    updated: "منذ 2 يوم",
+  },
+  {
+    title: "تطوير حي النقرة",
+    category: "سكني",
+    location: "حي النقرة - غرب حائل",
+    readiness: "71%",
+    value: "15.2 مليون ر.س",
+    roi: "23%",
+    stage: "قيد الدراسة",
+    updated: "منذ 5 يوم",
+  },
+  {
+    title: "مشروع الوسيطاء التجاري",
+    category: "تجاري",
+    location: "حي الوسيطاء - جنوب حائل",
+    readiness: "65%",
+    value: "8.7 مليون ر.س",
+    roi: "19%",
+    stage: "قيد المراجعة",
+    updated: "منذ 1 أسبوع",
+  },
+  {
+    title: "مركز تجاري حي الجامعة",
+    category: "تجاري",
+    location: "حي الجامعة - شرق حائل",
+    readiness: "42%",
+    value: "3.1 مليون ر.س",
+    roi: "14%",
+    stage: "قيد الدراسة",
+    updated: "منذ 2 أسبوع",
+  },
+  {
+    title: "تطوير الواجهة الشمالية",
+    category: "ترفيهي",
+    location: "الواجهة الشمالية",
+    readiness: "38%",
+    value: "12.4 مليون ر.س",
+    roi: "18%",
+    stage: "معتمدة",
+    updated: "منذ 3 أسبوع",
+  },
 ];
 
 export const intelligenceSidebarItems = [

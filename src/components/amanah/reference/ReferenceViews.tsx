@@ -54,11 +54,11 @@ function DarkCard({
   className?: string;
 }) {
   return (
-    <section className={`rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,45,0.98)_0%,rgba(10,23,38,0.98)_100%)] p-5 shadow-[0_22px_60px_rgba(0,0,0,0.18)] ${className}`}>
-      <div className="mb-4 flex items-start justify-between gap-4">
+    <section className={`rounded-[1.6rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,45,0.98)_0%,rgba(10,23,38,0.98)_100%)] p-4 shadow-[0_18px_42px_rgba(0,0,0,0.18)] ${className}`}>
+      <div className="mb-3 flex items-start justify-between gap-3">
         <div className="text-right">
           {subtitle ? <p className="font-['IBM_Plex_Sans_Arabic'] text-[12px] text-[#CDA24A]">{subtitle}</p> : null}
-          <h2 className="mt-1 font-['Tajawal'] text-[2rem] font-black text-white">{title}</h2>
+          <h2 className="mt-1 font-['Tajawal'] text-[1.65rem] font-black text-white">{title}</h2>
         </div>
         {action}
       </div>
@@ -120,35 +120,35 @@ export function AdminReferenceDashboard() {
   ];
 
   return (
-    <div className="space-y-5">
-      <div className="grid gap-4 xl:grid-cols-[1.08fr_1fr_0.42fr]">
+    <div className="space-y-4">
+      <div className="grid gap-3 xl:grid-cols-[1.08fr_1fr_0.42fr]">
         <div className="grid gap-4 md:grid-cols-3 xl:col-span-2 xl:grid-cols-6">
           {executiveMetrics.map((metric) => (
             <article
               key={metric.label}
-              className="rounded-[1.85rem] border border-white/8 bg-[linear-gradient(180deg,rgba(22,39,64,0.96)_0%,rgba(12,29,48,0.98)_100%)] px-5 py-5 shadow-[0_22px_44px_rgba(0,0,0,0.18)]"
+              className="rounded-[1.4rem] border border-white/8 bg-[linear-gradient(180deg,rgba(22,39,64,0.96)_0%,rgba(12,29,48,0.98)_100%)] px-4 py-4 shadow-[0_18px_36px_rgba(0,0,0,0.18)]"
             >
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex h-16 w-16 items-center justify-center rounded-[1.45rem] border border-[#D0A243]/45 bg-[linear-gradient(180deg,rgba(255,255,255,0.02)_0%,rgba(255,255,255,0.05)_100%)]">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-[1rem] border border-[#D0A243]/45 bg-[linear-gradient(180deg,rgba(255,255,255,0.02)_0%,rgba(255,255,255,0.05)_100%)]">
                   <MetricIcon type={metric.icon} />
                 </div>
                 <div className="text-right">
-                  <p className="font-['IBM_Plex_Sans_Arabic'] text-[13px] leading-7 text-white/72">{metric.label}</p>
-                  <p className="mt-4 font-['Tajawal'] text-[3.1rem] font-black leading-none tracking-[-0.04em] text-white">{metric.value}</p>
-                  {metric.unit ? <p className="mt-3 font-['IBM_Plex_Sans_Arabic'] text-[14px] text-white/46">{metric.unit}</p> : <div className="mt-3 h-[22px]" />}
+                  <p className="font-['IBM_Plex_Sans_Arabic'] text-[12px] leading-6 text-white/72">{metric.label}</p>
+                  <p className="mt-3 font-['Tajawal'] text-[2.35rem] font-black leading-none tracking-[-0.04em] text-white">{metric.value}</p>
+                  {metric.unit ? <p className="mt-2 font-['IBM_Plex_Sans_Arabic'] text-[13px] text-white/46">{metric.unit}</p> : <div className="mt-2 h-[18px]" />}
                 </div>
               </div>
-              <p className="mt-4 text-right font-['IBM_Plex_Sans_Arabic'] text-[14px] font-bold text-[#18F5B0]">{metric.delta}</p>
+              <p className="mt-3 text-right font-['IBM_Plex_Sans_Arabic'] text-[13px] font-bold text-[#18F5B0]">{metric.delta}</p>
             </article>
           ))}
         </div>
 
-        <div className="rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(13,29,47,0.98)_0%,rgba(10,24,39,0.98)_100%)] p-5 shadow-[0_22px_60px_rgba(0,0,0,0.2)]">
+        <div className="rounded-[1.6rem] border border-white/8 bg-[linear-gradient(180deg,rgba(13,29,47,0.98)_0%,rgba(10,24,39,0.98)_100%)] p-4 shadow-[0_20px_42px_rgba(0,0,0,0.2)]">
           <div className="flex items-start justify-between gap-4">
             <div className="rounded-[0.9rem] bg-[#D0A243]/20 px-3 py-1 text-sm font-black text-[#DAB257]">AI</div>
             <div className="text-right">
               <p className="font-['IBM_Plex_Sans_Arabic'] text-[12px] text-white/52">الذكاء التنفيذي يقترح</p>
-              <h2 className="mt-2 font-['Tajawal'] text-[1.7rem] font-black text-white">تطوير موقع حي مشار</h2>
+              <h2 className="mt-2 font-['Tajawal'] text-[1.45rem] font-black text-white">تطوير موقع حي مشار</h2>
             </div>
           </div>
           <div className="mt-4 border-t border-white/8 pt-4 text-right">
@@ -163,25 +163,25 @@ export function AdminReferenceDashboard() {
               <p>عائد استثماري متوقع مرتفع</p>
               <p>جاهزية النظام: عالية</p>
             </div>
-            <button className="mt-6 w-full rounded-[1rem] bg-[#C79C45] px-4 py-4 text-base font-black text-[#0B1726]">مراجعة الآن</button>
+            <button className="mt-5 w-full rounded-[0.95rem] bg-[#C79C45] px-4 py-3 text-sm font-black text-[#0B1726]">مراجعة الآن</button>
             <button className="mt-3 w-full rounded-[1rem] border border-white/8 px-4 py-3 text-sm font-semibold text-white/72">عرض جميع التوصيات</button>
           </div>
         </div>
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[1.12fr_0.82fr_0.38fr]">
+      <div className="grid gap-3 xl:grid-cols-[1.12fr_0.82fr_0.38fr]">
         <DarkCard
           title="خريطة أولويات الأحياء"
           subtitle="التحليل المكاني المباشر"
           action={<button className="rounded-[1rem] border border-[#D0A243]/30 bg-white/[0.03] px-5 py-3 text-sm font-bold text-[#E4C982]">عرض طبقات الخريطة</button>}
         >
-          <div className="grid gap-4 lg:grid-cols-[1fr_170px]">
-            <div className="relative overflow-hidden rounded-[1.7rem] border border-white/8 bg-[radial-gradient(circle_at_top,#18283d_0%,#0e1f30_58%,#0a1826_100%)] p-4">
+          <div className="grid gap-3 lg:grid-cols-[1fr_156px]">
+            <div className="relative overflow-hidden rounded-[1.45rem] border border-white/8 bg-[radial-gradient(circle_at_top,#18283d_0%,#0e1f30_58%,#0a1826_100%)] p-3.5">
               <div className="absolute inset-0 opacity-50" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
               <div className="absolute inset-[8%] rounded-[50%] border border-[#83622A]/30" />
               <div className="absolute inset-[18%] rounded-[50%] border border-[#83622A]/28" />
               <div className="absolute inset-[28%] rounded-[50%] border border-[#83622A]/24" />
-              <svg className="relative z-10 h-[360px] w-full" viewBox="0 0 780 430" fill="none">
+              <svg className="relative z-10 h-[300px] w-full" viewBox="0 0 780 430" fill="none">
                 <path d="M76 225C156 151 250 98 356 84C493 66 607 103 706 191" stroke="#61513A" strokeOpacity=".48" strokeWidth="4" />
                 <path d="M87 293C181 254 278 220 389 210C515 199 607 218 712 285" stroke="#61513A" strokeOpacity=".42" strokeWidth="3" />
                 <path d="M167 97L628 334" stroke="#564A38" strokeOpacity=".35" strokeWidth="3" />
@@ -196,14 +196,14 @@ export function AdminReferenceDashboard() {
                   <div className="mx-auto mb-2 flex h-7 w-7 items-center justify-center rounded-full bg-[#102438]/90 shadow-[0_0_0_8px_rgba(255,255,255,0.04)]">
                     <MapStateDot state={point.state} />
                   </div>
-                  <span className="rounded-full bg-[#091521]/88 px-3 py-1 text-[12px] font-bold text-white/88">{point.label}</span>
+                  <span className="rounded-full bg-[#091521]/88 px-2.5 py-1 text-[11px] font-bold text-white/88">{point.label}</span>
                 </div>
               ))}
               <div className="absolute bottom-4 right-4 flex flex-col gap-2">
-                <button className="flex h-11 w-11 items-center justify-center rounded-[1rem] border border-white/10 bg-[#132338]/88"><Plus size={18} /></button>
-                <button className="flex h-11 w-11 items-center justify-center rounded-[1rem] border border-white/10 bg-[#132338]/88"><Minus size={18} /></button>
+                <button className="flex h-9 w-9 items-center justify-center rounded-[0.85rem] border border-white/10 bg-[#132338]/88"><Plus size={16} /></button>
+                <button className="flex h-9 w-9 items-center justify-center rounded-[0.85rem] border border-white/10 bg-[#132338]/88"><Minus size={16} /></button>
               </div>
-              <button className="absolute bottom-5 left-5 rounded-[1rem] border border-white/10 bg-[#15263a]/92 px-5 py-3 text-sm font-bold text-[#E8D6A5]">عرض طبقات الخريطة</button>
+              <button className="absolute bottom-4 left-4 rounded-[0.9rem] border border-white/10 bg-[#15263a]/92 px-4 py-2.5 text-xs font-bold text-[#E8D6A5]">عرض طبقات الخريطة</button>
             </div>
 
             <div className="space-y-4">
@@ -211,8 +211,8 @@ export function AdminReferenceDashboard() {
                 <ChevronDown size={18} />
                 حي الجامعيين
               </button>
-              <div className="rounded-[1.4rem] border border-white/10 bg-white/[0.03] p-4 text-right">
-                <p className="mb-4 font-['Tajawal'] text-[1.35rem] font-black text-white">حالة الأحياء</p>
+              <div className="rounded-[1.2rem] border border-white/10 bg-white/[0.03] p-3.5 text-right">
+                <p className="mb-3 font-['Tajawal'] text-[1.15rem] font-black text-white">حالة الأحياء</p>
                 <div className="space-y-3 text-base">
                   <div className="flex items-center justify-between"><MapStateDot state="ready" /><span>جاهزة للطرح</span></div>
                   <div className="flex items-center justify-between"><MapStateDot state="review" /><span>قيد المراجعة</span></div>
@@ -230,7 +230,7 @@ export function AdminReferenceDashboard() {
                 <div className="flex items-start justify-between gap-3">
                   <button className="rounded-[1rem] border border-[#D0A243]/28 bg-white/[0.03] px-4 py-3 text-sm font-bold text-white/84">{decision.action}</button>
                   <div className="min-w-0 flex-1 text-right">
-                    <h3 className="font-['Tajawal'] text-[1.35rem] font-black text-white">{decision.title}</h3>
+                    <h3 className="font-['Tajawal'] text-[1.12rem] font-black text-white">{decision.title}</h3>
                     <p className="mt-1 text-sm text-white/48">{decision.subtitle}</p>
                     <div className="mt-3 flex items-center justify-end gap-3">
                       <span className={`rounded-full px-3 py-1 text-xs font-black ${DecisionTone({ tone: decision.statusTone })}`}>{decision.status}</span>
@@ -249,8 +249,8 @@ export function AdminReferenceDashboard() {
               <span className="rounded-full bg-[#223441] px-4 py-2 text-xs font-black text-[#F2D382]">AI</span>
               <p className="text-sm text-white/48">يوصي بالإسراع في اعتماد فرصة</p>
             </div>
-            <h3 className="mt-5 font-['Tajawal'] text-[2rem] font-black leading-[1.45] text-white">وجهة عائلية موسمية في مشار</h3>
-            <p className="mt-4 text-sm leading-8 text-white/66">
+            <h3 className="mt-4 font-['Tajawal'] text-[1.5rem] font-black leading-[1.5] text-white">وجهة عائلية موسمية في مشار</h3>
+            <p className="mt-3 text-[13px] leading-7 text-white/66">
               تظهر القراءة الحالية أن الفرصة الواقعة في حي مشار وصلت إلى مستوى نضج يسمح بعرضها داخلياً على القيادة بوصفها ملفاً مؤهلاً للانتقال إلى المسار النظامي.
             </p>
             <div className="mt-6 rounded-[1.2rem] border border-white/8 bg-white/[0.04] p-4">
@@ -270,7 +270,7 @@ export function AdminReferenceDashboard() {
         </DarkCard>
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[0.9fr_0.64fr_0.9fr_1.04fr]">
+      <div className="grid gap-3 xl:grid-cols-[0.9fr_0.64fr_0.9fr_1.04fr]">
         <DarkCard title="مؤشرات الأداء الرئيسية" action={<button className="text-sm font-black text-[#D0A243]">عرض الكل</button>}>
           <div className="grid grid-cols-4 gap-3">
             {[
@@ -280,7 +280,7 @@ export function AdminReferenceDashboard() {
               ["68%", "استغلال الأراضي"],
             ].map(([value, label], index) => (
               <div key={label} className="text-center">
-                <div className="mx-auto h-20 w-20">
+                <div className="mx-auto h-16 w-16">
                   <ResponsiveContainer width="100%" height="100%">
                     <RadialBarChart data={[{ value: Number(value.replace("%", "")) }]} innerRadius="72%" outerRadius="100%" startAngle={90} endAngle={-270}>
                       <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
@@ -288,8 +288,8 @@ export function AdminReferenceDashboard() {
                     </RadialBarChart>
                   </ResponsiveContainer>
                 </div>
-                <p className="mt-2 text-xl font-black text-white">{value}</p>
-                <p className="mt-1 text-sm text-white/58">{label}</p>
+                <p className="mt-2 text-[18px] font-black text-white">{value}</p>
+                <p className="mt-1 text-[12px] text-white/58">{label}</p>
               </div>
             ))}
           </div>
@@ -318,7 +318,7 @@ export function AdminReferenceDashboard() {
                 <div className={`mx-auto flex h-11 w-11 items-center justify-center rounded-full border ${stage.active ? (stage.gold ? "border-[#D0A243] bg-[#C79C45]" : "border-[#39D56E] bg-[#173C2A]") : "border-white/12 bg-white/[0.04]"}`}>
                   {stage.active ? <Check size={18} className={stage.gold ? "text-white" : "text-[#39D56E]"} /> : <span className="h-2.5 w-2.5 rounded-full bg-white/28" />}
                 </div>
-                <p className={`mt-3 text-sm font-bold ${stage.active ? (stage.gold ? "text-[#E6C16A]" : "text-[#56DD77]") : "text-white/54"}`}>{stage.label}</p>
+                <p className={`mt-2 text-[12px] font-bold ${stage.active ? (stage.gold ? "text-[#E6C16A]" : "text-[#56DD77]") : "text-white/54"}`}>{stage.label}</p>
               </div>
             ))}
           </div>
@@ -333,7 +333,7 @@ export function AdminReferenceDashboard() {
           <div className="mb-4 flex justify-start">
             <button className="rounded-[0.8rem] border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-semibold text-white/74">سنوي</button>
           </div>
-          <div className="h-[255px]">
+          <div className="h-[220px]">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData}>
                 <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
