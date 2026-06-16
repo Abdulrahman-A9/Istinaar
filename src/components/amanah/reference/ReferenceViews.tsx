@@ -30,14 +30,151 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import {
-  executiveDecisions,
-  executiveMapPoints,
-  executiveMetrics,
-  opportunityRows,
-  recommendationFeed,
-  spatialNeighborhoodCards,
-} from "./referenceData";
+
+type Metric = {
+  label: string;
+  value: string;
+  unit?: string;
+  delta: string;
+  icon: "coins" | "trend" | "users" | "bars" | "briefcase" | "clipboard";
+};
+
+type Decision = {
+  id: string;
+  title: string;
+  subtitle: string;
+  status: string;
+  statusTone: "green" | "amber" | "red";
+  action: string;
+  age: string;
+};
+
+type MapPoint = {
+  id: string;
+  label: string;
+  state: "ready" | "review" | "blocked";
+  top: string;
+  right: string;
+};
+
+const executiveMetrics: Metric[] = [
+  { label: "قيمة الاستثمار المتوقعة", value: "211.7", unit: "مليون ريال", delta: "+18% عن الشهر الماضي", icon: "coins" },
+  { label: "مؤشر جاهزية الاستثمار", value: "83%", delta: "+7% عن الشهر الماضي", icon: "trend" },
+  { label: "الوظائف المتوقعة", value: "1,248", unit: "وظيفة", delta: "+26% عن الشهر الماضي", icon: "users" },
+  { label: "العوائد السنوية المتوقعة", value: "28.4", unit: "مليون ريال", delta: "+15% عن الشهر الماضي", icon: "bars" },
+  { label: "عدد الفرص الاستثمارية", value: "24", unit: "فرصة", delta: "6 جاهزة للطرح", icon: "briefcase" },
+  { label: "القرارات المطلوبة", value: "6", unit: "قرار", delta: "تحتاج إجراء", icon: "clipboard" },
+];
+
+const executiveDecisions: Decision[] = [
+  {
+    id: "1",
+    title: "رفع فرصة تطوير موقع حي مشار",
+    subtitle: "جاهزية عالية - بانتظار الاعتماد",
+    status: "عالية",
+    statusTone: "green",
+    action: "اتخاذ إجراء",
+    age: "منذ 2 يوم",
+  },
+  {
+    id: "2",
+    title: "اعتماد دراسة تطوير حي النقرة",
+    subtitle: "جاهزة للاعتماد",
+    status: "متوسطة",
+    statusTone: "amber",
+    action: "اتخاذ إجراء",
+    age: "منذ 1 يوم",
+  },
+  {
+    id: "3",
+    title: "مراجعة اعتراض على شروط كراسة المنافسة",
+    subtitle: "اعتراض مقدم من شركة نسك",
+    status: "عالية",
+    statusTone: "red",
+    action: "مراجعة الاعتراض",
+    age: "منذ 3 أيام",
+  },
+  {
+    id: "4",
+    title: "اعتماد شراكة استثمارية لمشروع الوسيطاء",
+    subtitle: "شريك استراتيجي - جاهز للتوقيع",
+    status: "منخفضة",
+    statusTone: "green",
+    action: "اتخاذ إجراء",
+    age: "منذ 4 أيام",
+  },
+];
+
+const mapPoints: MapPoint[] = [
+  { id: "naqrah", label: "حي النقرة", state: "blocked", top: "31%", right: "57%" },
+  { id: "mashar", label: "حي مشار", state: "review", top: "57%", right: "42%" },
+  { id: "wasitah", label: "حي الوسيطاء", state: "ready", top: "56%", right: "68%" },
+  { id: "jamieen", label: "حي الجامعيين", state: "review", top: "46%", right: "35%" },
+  { id: "zubarah", label: "حي الزبارة", state: "ready", top: "24%", right: "24%" },
+  { id: "shifa", label: "حي الشفاء", state: "ready", top: "21%", right: "74%" },
+  { id: "muntazah", label: "حي منتزه", state: "ready", top: "69%", right: "55%" },
+  { id: "salam", label: "حي السلام", state: "blocked", top: "74%", right: "19%" },
+];
+
+const spatialNeighborhoodCards = [
+  { name: "حي الجامعة", score: "42%", opportunities: "1", value: "1.6", state: "جاهزية منخفضة", tone: "red" },
+  { name: "حي الوسيطاء", score: "65%", opportunities: "2", value: "8.7", state: "جاهزية متوسطة", tone: "amber" },
+  { name: "حي النقرة", score: "71%", opportunities: "3", value: "15.2", state: "جاهزية جيدة", tone: "green" },
+  { name: "حي الجامعيين", score: "83%", opportunities: "6", value: "32.5", state: "جاهزة للطرح", tone: "green" },
+];
+
+const opportunityRows = [
+  {
+    title: "تطوير موقع حي مشار",
+    category: "تجاري",
+    location: "حي مشار - شمال حائل",
+    readiness: "83%",
+    value: "28.5 مليون ر.س",
+    roi: "27%",
+    stage: "جاهزة للطرح",
+    updated: "منذ 2 يوم",
+  },
+  {
+    title: "تطوير حي النقرة",
+    category: "سكني",
+    location: "حي النقرة - غرب حائل",
+    readiness: "71%",
+    value: "15.2 مليون ر.س",
+    roi: "23%",
+    stage: "قيد الدراسة",
+    updated: "منذ 5 يوم",
+  },
+  {
+    title: "مشروع الوسيطاء التجاري",
+    category: "تجاري",
+    location: "حي الوسيطاء - جنوب حائل",
+    readiness: "65%",
+    value: "8.7 مليون ر.س",
+    roi: "19%",
+    stage: "قيد المراجعة",
+    updated: "منذ 1 أسبوع",
+  },
+  {
+    title: "مركز تجاري حي الجامعة",
+    category: "تجاري",
+    location: "حي الجامعة - شرق حائل",
+    readiness: "42%",
+    value: "3.1 مليون ر.س",
+    roi: "14%",
+    stage: "قيد الدراسة",
+    updated: "منذ 2 أسبوع",
+  },
+  {
+    title: "تطوير الواجهة الشمالية",
+    category: "ترفيهي",
+    location: "الواجهة الشمالية",
+    readiness: "38%",
+    value: "12.4 مليون ر.س",
+    roi: "18%",
+    stage: "معتمدة",
+    updated: "منذ 3 أسبوع",
+  },
+];
 
 function DarkCard({
   title,
@@ -58,9 +195,7 @@ function DarkCard({
     >
       <div className="mb-3 flex items-start justify-between gap-3">
         <div className="text-right">
-          {subtitle ? (
-            <p className="font-['IBM_Plex_Sans_Arabic'] text-[12px] text-[#CDA24A]">{subtitle}</p>
-          ) : null}
+          {subtitle ? <p className="text-[12px] text-[#CDA24A]">{subtitle}</p> : null}
           <h2 className="mt-1 font-['Tajawal'] text-[1.45rem] font-black text-white">{title}</h2>
         </div>
         {action}
@@ -70,7 +205,7 @@ function DarkCard({
   );
 }
 
-function MetricIcon({ type }: { type: string }) {
+function MetricIcon({ type }: { type: Metric["icon"] }) {
   const common = "text-[#D8A84F]";
   switch (type) {
     case "coins":
@@ -89,8 +224,7 @@ function MetricIcon({ type }: { type: string }) {
 }
 
 function MapStateDot({ state }: { state: "ready" | "review" | "blocked" }) {
-  const tone =
-    state === "ready" ? "bg-[#39D56E]" : state === "review" ? "bg-[#F3B942]" : "bg-[#FF5A5F]";
+  const tone = state === "ready" ? "bg-[#39D56E]" : state === "review" ? "bg-[#F3B942]" : "bg-[#FF5A5F]";
   return <span className={`h-3.5 w-3.5 rounded-full ${tone} shadow-[0_0_18px_currentColor]`} />;
 }
 
@@ -98,6 +232,11 @@ function decisionTone(tone: "green" | "amber" | "red") {
   if (tone === "green") return "bg-[#173C2A] text-[#4FE07C]";
   if (tone === "amber") return "bg-[#3B3120] text-[#F3C04F]";
   return "bg-[#3F2226] text-[#FF6B72]";
+}
+
+function stageTone(active: boolean, gold: boolean) {
+  if (!active) return "border-white/12 bg-white/[0.04]";
+  return gold ? "border-[#D0A243] bg-[#C79C45]" : "border-[#39D56E] bg-[#173C2A]";
 }
 
 function ExecutiveMap({ compact = false }: { compact?: boolean }) {
@@ -126,7 +265,8 @@ function ExecutiveMap({ compact = false }: { compact?: boolean }) {
         <path d="M108 158H671" stroke="#63533B" strokeOpacity=".22" />
         <path d="M102 258H682" stroke="#63533B" strokeOpacity=".18" />
       </svg>
-      {executiveMapPoints.map((point) => (
+
+      {mapPoints.map((point) => (
         <div key={point.id} className="absolute z-20 text-center" style={{ top: point.top, right: point.right }}>
           <div className="mx-auto mb-2 flex h-7 w-7 items-center justify-center rounded-full bg-[#102438]/90 shadow-[0_0_0_8px_rgba(255,255,255,0.04)]">
             <MapStateDot state={point.state} />
@@ -134,6 +274,7 @@ function ExecutiveMap({ compact = false }: { compact?: boolean }) {
           <span className="rounded-full bg-[#091521]/88 px-2.5 py-1 text-[11px] font-bold text-white/88">{point.label}</span>
         </div>
       ))}
+
       <div className="absolute bottom-4 right-4 flex flex-col gap-2">
         <button className="flex h-9 w-9 items-center justify-center rounded-[0.85rem] border border-white/10 bg-[#132338]/88">
           <Plus size={16} />
@@ -142,9 +283,6 @@ function ExecutiveMap({ compact = false }: { compact?: boolean }) {
           <Minus size={16} />
         </button>
       </div>
-      <button className="absolute bottom-4 left-4 rounded-[0.9rem] border border-white/10 bg-[#15263a]/92 px-4 py-2.5 text-xs font-bold text-[#E8D6A5]">
-        عرض طبقات الخريطة
-      </button>
     </div>
   );
 }
@@ -166,21 +304,55 @@ export function AdminReferenceDashboard() {
     { label: "طرح قريباً", active: false, gold: false },
     { label: "تشغيل قريباً", active: false, gold: false },
   ];
+  const alertItems = [
+    ["فرصة تجاوزت مدة الاعتماد المستهدفة في حي النقرة", "#FF5A5F"],
+    ["دراسة ميدانية لمشروع حي الوسيطاء تحتاج تحديثاً عاجلاً", "#F0B846"],
+  ];
+  const kpis = [
+    ["83%", "جاهزية الأحياء"],
+    ["76%", "سرعة الاعتماد"],
+    ["91%", "رضا المستثمرين"],
+    ["68%", "استغلال الأراضي"],
+  ];
 
   return (
     <div className="space-y-3">
-      <div className="grid items-start gap-3 xl:grid-cols-[0.54fr_1.46fr]">
-        <DarkCard title="توصية جاهزة" subtitle="الذكاء التنفيذي يقترح" className="self-start">
-          <div className="rounded-[1.25rem] border border-white/8 bg-white/[0.03] p-4 text-right">
-            <div className="flex items-center justify-between">
-              <span className="rounded-full bg-[#223441] px-4 py-2 text-xs font-black text-[#F2D382]">AI</span>
-              <p className="text-sm text-white/48">يوصي بالإسراع في اعتماد فرصة</p>
+      <div className="grid items-start gap-3 2xl:grid-cols-[minmax(0,1fr)_320px]">
+        <div className="grid items-start gap-3 md:grid-cols-3 2xl:grid-cols-6">
+          {executiveMetrics.map((metric) => (
+            <article
+              key={metric.label}
+              className="rounded-[1.2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(20,38,60,0.96)_0%,rgba(12,28,47,0.98)_100%)] px-4 py-4 shadow-[0_16px_32px_rgba(0,0,0,0.16)]"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-[1rem] border border-[#D0A243]/38 bg-white/[0.04]">
+                  <MetricIcon type={metric.icon} />
+                </div>
+                <div className="text-right">
+                  <p className="text-[12px] leading-6 text-white/68">{metric.label}</p>
+                  <p className="mt-2 font-['Tajawal'] text-[2rem] font-black leading-none text-white">{metric.value}</p>
+                  {metric.unit ? <p className="mt-2 text-[12px] text-white/44">{metric.unit}</p> : null}
+                </div>
+              </div>
+              <p className="mt-3 text-right text-[12px] font-bold text-[#28F0AE]">{metric.delta}</p>
+            </article>
+          ))}
+        </div>
+
+        <DarkCard title="توصية جاهزة" subtitle="الذكاء التنفيذي يقترح" className="h-full">
+          <div className="rounded-[1.2rem] border border-white/8 bg-white/[0.03] p-4 text-right">
+            <div className="flex items-center justify-between gap-3">
+              <span className="rounded-full bg-[#263848] px-4 py-2 text-xs font-black text-[#EFCF81]">AI</span>
+              <p className="text-sm text-white/48">يوصى بالإسراع في اعتماد الفرصة</p>
             </div>
-            <h3 className="mt-4 font-['Tajawal'] text-[1.8rem] font-black leading-[1.45] text-white">تطوير موقع حي مشار</h3>
-            <div className="mt-4 border-t border-white/8 pt-4">
+            <h3 className="mt-4 font-['Tajawal'] text-[1.9rem] font-black leading-[1.45] text-white">تطوير موقع حي مشار</h3>
+            <p className="mt-3 text-[13px] leading-8 text-white/66">
+              قراءة الصفحة الحالية تؤكد أن الفرصة مؤهلة للرفع الداخلي مع جدوى استثمارية مرتفعة وجاهزية تنظيمية مستقرة.
+            </p>
+            <div className="mt-5 rounded-[1rem] border border-white/8 bg-white/[0.04] p-4">
               <div className="mb-3 flex items-center justify-between">
                 <span className="text-sm font-black text-[#42DD71]">83%</span>
-                <span className="text-sm text-white/48">نسبة الجاهزية</span>
+                <span className="text-sm text-white/50">نسبة الجاهزية</span>
               </div>
               <div className="h-3 overflow-hidden rounded-full bg-white/10">
                 <div className="h-full w-[83%] rounded-full bg-[#42DD71]" />
@@ -190,72 +362,63 @@ export function AdminReferenceDashboard() {
               <p>عائد استثماري متوقع مرتفع</p>
               <p>جاهزية النظام: عالية</p>
             </div>
-            <button className="mt-5 w-full rounded-[1rem] bg-[#C79C45] px-4 py-3 text-sm font-black text-[#0B1726]">مراجعة الآن</button>
-            <button className="mt-3 w-full rounded-[1rem] border border-white/8 px-4 py-3 text-sm font-semibold text-white/72">عرض جميع التوصيات</button>
+            <div className="mt-5 space-y-3">
+              <button className="w-full rounded-[1rem] bg-[#C79C45] px-4 py-3 text-sm font-black text-[#0B1726]">مراجعة الآن</button>
+              <button className="w-full rounded-[1rem] border border-white/8 px-4 py-3 text-sm font-semibold text-white/74">عرض جميع التوصيات</button>
+            </div>
           </div>
         </DarkCard>
-
-        <div className="grid items-start gap-3">
-          <div className="grid items-start gap-3 md:grid-cols-3 xl:grid-cols-6">
-            {executiveMetrics.map((metric) => (
-              <article
-                key={metric.label}
-                className="self-start rounded-[1.25rem] border border-white/8 bg-[linear-gradient(180deg,rgba(22,39,64,0.96)_0%,rgba(12,29,48,0.98)_100%)] px-4 py-4 shadow-[0_16px_32px_rgba(0,0,0,0.18)]"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-[1rem] border border-[#D0A243]/45 bg-[linear-gradient(180deg,rgba(255,255,255,0.02)_0%,rgba(255,255,255,0.05)_100%)]">
-                    <MetricIcon type={metric.icon} />
-                  </div>
-                  <div className="text-right">
-                    <p className="font-['IBM_Plex_Sans_Arabic'] text-[12px] leading-6 text-white/72">{metric.label}</p>
-                    <p className="mt-2 font-['Tajawal'] text-[2rem] font-black leading-none tracking-[-0.04em] text-white">{metric.value}</p>
-                    {metric.unit ? (
-                      <p className="mt-2 font-['IBM_Plex_Sans_Arabic'] text-[13px] text-white/46">{metric.unit}</p>
-                    ) : null}
-                  </div>
-                </div>
-                <p className="mt-3 text-right font-['IBM_Plex_Sans_Arabic'] text-[13px] font-bold text-[#18F5B0]">{metric.delta}</p>
-              </article>
-            ))}
-          </div>
-        </div>
       </div>
 
-      <div className="grid items-start gap-3 xl:grid-cols-[0.52fr_0.56fr_1.38fr]">
-        <DarkCard title="توصية جاهزة" subtitle="الذكاء التنفيذي يقترح" className="self-start">
-          <div className="rounded-[1.25rem] border border-white/8 bg-white/[0.03] p-4 text-right">
-            <div className="flex items-center justify-between">
-              <span className="rounded-full bg-[#223441] px-4 py-2 text-xs font-black text-[#F2D382]">AI</span>
-              <p className="text-sm text-white/48">يوصي بالإسراع في اعتماد فرصة</p>
-            </div>
-            <h3 className="mt-4 font-['Tajawal'] text-[1.7rem] font-black leading-[1.5] text-white">وجهة عائلية موسمية في مشار</h3>
-            <p className="mt-3 text-[13px] leading-7 text-white/66">
-              تظهر القراءة الحالية أن الفرصة الواقعة في حي مشار وصلت إلى مستوى نضج يسمح بعرضها داخلياً على القيادة بوصفها ملفاً مؤهلاً للانتقال إلى المسار النظامي.
-            </p>
-            <div className="mt-5 rounded-[1.1rem] border border-white/8 bg-white/[0.04] p-4">
-              <div className="mb-3 flex items-center justify-between">
-                <span className="text-sm font-black text-[#42DD71]">83%</span>
-                <span className="text-sm text-white/48">نسبة الجاهزية</span>
+      <div className="grid items-start gap-3 xl:grid-cols-[1.15fr_0.82fr]">
+        <DarkCard
+          title="خريطة أولويات الأحياء"
+          subtitle="التحليل المكاني المباشر"
+          action={<button className="rounded-[1rem] border border-[#D0A243]/30 bg-white/[0.03] px-5 py-3 text-sm font-bold text-[#E4C982]">عرض طبقات الخريطة</button>}
+        >
+          <div className="grid items-start gap-3 lg:grid-cols-[minmax(0,1fr)_260px]">
+            <ExecutiveMap compact />
+            <div className="space-y-3">
+              <button className="flex w-full items-center justify-between rounded-[1rem] border border-white/10 bg-white/[0.03] px-4 py-4 text-sm font-bold">
+                <ChevronDown size={18} />
+                حي الجامعيين
+              </button>
+              <div className="rounded-[1.15rem] border border-white/10 bg-white/[0.03] p-4 text-right">
+                <p className="mb-3 font-['Tajawal'] text-[1.05rem] font-black text-white">حالة الأحياء</p>
+                <div className="space-y-3 text-sm text-white/78">
+                  <div className="flex items-center justify-between">
+                    <MapStateDot state="ready" />
+                    <span>جاهزة للطرح</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <MapStateDot state="review" />
+                    <span>قيد المراجعة</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <MapStateDot state="blocked" />
+                    <span>متعثرة</span>
+                  </div>
+                </div>
               </div>
-              <div className="h-3 overflow-hidden rounded-full bg-white/10">
-                <div className="h-full w-[83%] rounded-full bg-[#42DD71]" />
+              <div className="rounded-[1.15rem] border border-white/10 bg-white/[0.03] p-4 text-right">
+                <p className="text-sm text-white/46">الحي المحدد</p>
+                <p className="mt-2 font-['Tajawal'] text-[1.5rem] font-black text-white">حي الجامعيين</p>
+                <p className="mt-2 text-sm text-white/56">آخر تحديث: 28-03-2026</p>
               </div>
-            </div>
-            <div className="mt-4 space-y-2 text-sm text-white/64">
-              <p>عائد استثماري متوقع مرتفع</p>
-              <p>جاهزية النظام: عالية</p>
             </div>
           </div>
         </DarkCard>
 
-        <DarkCard title="أهم القرارات اليوم" action={<button className="text-sm font-black text-[#D0A243]">عرض الكل</button>} className="self-start">
+        <DarkCard title="أهم القرارات اليوم" action={<button className="text-sm font-black text-[#D0A243]">عرض الكل</button>}>
           <div className="space-y-3">
             {executiveDecisions.map((decision) => (
-              <div key={decision.id} className="rounded-[1.2rem] border border-white/8 bg-white/[0.03] p-4">
+              <div key={decision.id} className="rounded-[1.1rem] border border-white/8 bg-white/[0.03] p-4">
                 <div className="flex items-start justify-between gap-3">
-                  <button className="rounded-[1rem] border border-[#D0A243]/28 bg-white/[0.03] px-4 py-3 text-sm font-bold text-white/84">{decision.action}</button>
+                  <button className="rounded-[0.95rem] border border-[#D0A243]/28 bg-white/[0.03] px-4 py-3 text-sm font-bold text-white/84">
+                    {decision.action}
+                  </button>
                   <div className="min-w-0 flex-1 text-right">
-                    <h3 className="font-['Tajawal'] text-[1.05rem] font-black text-white">{decision.title}</h3>
+                    <h3 className="font-['Tajawal'] text-[1.08rem] font-black leading-8 text-white">{decision.title}</h3>
                     <p className="mt-1 text-sm text-white/48">{decision.subtitle}</p>
                     <div className="mt-3 flex items-center justify-end gap-3">
                       <span className={`rounded-full px-3 py-1 text-xs font-black ${decisionTone(decision.statusTone)}`}>{decision.status}</span>
@@ -267,35 +430,65 @@ export function AdminReferenceDashboard() {
             ))}
           </div>
         </DarkCard>
-
-        <DarkCard
-          title="خريطة أولويات الأحياء"
-          subtitle="التحليل المكاني المباشر"
-          action={<button className="rounded-[1rem] border border-[#D0A243]/30 bg-white/[0.03] px-5 py-3 text-sm font-bold text-[#E4C982]">عرض طبقات الخريطة</button>}
-          className="self-start"
-        >
-          <div className="grid items-start gap-3 lg:grid-cols-[220px_1fr]">
-            <div className="space-y-4">
-              <button className="flex w-full items-center justify-between rounded-[1rem] border border-white/10 bg-white/[0.03] px-4 py-4 text-sm font-bold">
-                <ChevronDown size={18} />
-                حي الجامعيين
-              </button>
-              <div className="rounded-[1.2rem] border border-white/10 bg-white/[0.03] p-3.5 text-right">
-                <p className="mb-3 font-['Tajawal'] text-[1.1rem] font-black text-white">حالة الأحياء</p>
-                <div className="space-y-3 text-sm">
-                  <div className="flex items-center justify-between"><MapStateDot state="ready" /><span>جاهزة للطرح</span></div>
-                  <div className="flex items-center justify-between"><MapStateDot state="review" /><span>قيد المراجعة</span></div>
-                  <div className="flex items-center justify-between"><MapStateDot state="blocked" /><span>متعثرة</span></div>
-                </div>
-              </div>
-            </div>
-            <ExecutiveMap compact />
-          </div>
-        </DarkCard>
       </div>
 
-      <div className="grid items-start gap-3 xl:grid-cols-[0.98fr_1.02fr_0.6fr_0.82fr]">
-        <DarkCard title="الأثر الاقتصادي المتوقع" action={<button className="text-sm font-black text-[#D0A243]">عرض التقرير</button>} className="self-start">
+      <div className="grid items-start gap-3 xl:grid-cols-[0.82fr_0.72fr_0.9fr_0.9fr]">
+        <DarkCard title="مؤشرات الأداء الرئيسية" action={<button className="text-sm font-black text-[#D0A243]">عرض الكل</button>}>
+          <div className="grid grid-cols-2 gap-3">
+            {kpis.map(([value, label], index) => (
+              <div key={label} className="text-center">
+                <div className="mx-auto h-20 w-20">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <RadialBarChart data={[{ value: Number(value.replace("%", "")) }]} innerRadius="72%" outerRadius="100%" startAngle={90} endAngle={-270}>
+                      <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
+                      <RadialBar
+                        dataKey="value"
+                        cornerRadius={12}
+                        fill={index === 0 || index === 3 ? "#D8B25A" : "#85E26E"}
+                        background={{ fill: "rgba(255,255,255,0.1)" }}
+                      />
+                    </RadialBarChart>
+                  </ResponsiveContainer>
+                </div>
+                <p className="mt-2 text-[1.5rem] font-black text-white">{value}</p>
+                <p className="mt-1 text-[12px] leading-6 text-white/58">{label}</p>
+              </div>
+            ))}
+          </div>
+        </DarkCard>
+
+        <DarkCard title="تنبيهات ذكية" action={<button className="text-sm font-black text-[#D0A243]">عرض الكل</button>}>
+          <div className="space-y-3">
+            {alertItems.map(([text, color]) => (
+              <div key={text} className="flex items-center justify-between rounded-[1rem] border border-white/8 bg-white/[0.03] px-4 py-4 text-right">
+                <span className="h-3.5 w-3.5 rounded-full" style={{ background: color }} />
+                <p className="text-sm leading-8 text-white/78">{text}</p>
+              </div>
+            ))}
+          </div>
+        </DarkCard>
+
+        <DarkCard title="رحلة الفرصة الاستثمارية" action={<button className="text-sm font-black text-[#D0A243]">عرض الكل</button>}>
+          <div className="flex items-start justify-between gap-2">
+            {stages.map((stage) => (
+              <div key={stage.label} className="flex-1 text-center">
+                <div className={`mx-auto flex h-11 w-11 items-center justify-center rounded-full border ${stageTone(stage.active, stage.gold)}`}>
+                  {stage.active ? <Check size={18} className={stage.gold ? "text-white" : "text-[#39D56E]"} /> : <span className="h-2.5 w-2.5 rounded-full bg-white/28" />}
+                </div>
+                <p className={`mt-2 text-[12px] font-bold ${stage.active ? (stage.gold ? "text-[#E6C16A]" : "text-[#56DD77]") : "text-white/54"}`}>{stage.label}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 grid grid-cols-3 gap-2 xl:grid-cols-6">
+            {["1 تشغيل", "8 تحليل", "3 اعتماد", "كل الإنجاز", "2 طرح", "1 تشغيل"].map((item) => (
+              <div key={item} className="rounded-[1rem] border border-white/8 bg-white/[0.03] px-3 py-3 text-center text-sm font-bold text-white/78">
+                {item}
+              </div>
+            ))}
+          </div>
+        </DarkCard>
+
+        <DarkCard title="الأثر الاقتصادي المتوقع" action={<button className="text-sm font-black text-[#D0A243]">عرض التقرير</button>}>
           <div className="mb-4 flex justify-start">
             <button className="rounded-[0.8rem] border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-semibold text-white/74">سنوي</button>
           </div>
@@ -312,156 +505,82 @@ export function AdminReferenceDashboard() {
             </ResponsiveContainer>
           </div>
         </DarkCard>
-
-        <DarkCard title="رحلة الفرصة الاستثمارية" action={<button className="text-sm font-black text-[#D0A243]">عرض الكل</button>} className="self-start">
-          <div className="flex items-start justify-between gap-2">
-            {stages.map((stage) => (
-              <div key={stage.label} className="flex-1 text-center">
-                <div className={`mx-auto flex h-11 w-11 items-center justify-center rounded-full border ${stage.active ? (stage.gold ? "border-[#D0A243] bg-[#C79C45]" : "border-[#39D56E] bg-[#173C2A]") : "border-white/12 bg-white/[0.04]"}`}>
-                  {stage.active ? <Check size={18} className={stage.gold ? "text-white" : "text-[#39D56E]"} /> : <span className="h-2.5 w-2.5 rounded-full bg-white/28" />}
-                </div>
-                <p className={`mt-2 text-[12px] font-bold ${stage.active ? (stage.gold ? "text-[#E6C16A]" : "text-[#56DD77]") : "text-white/54"}`}>{stage.label}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-5 grid grid-cols-6 gap-2">
-            {["1 تشغيل", "8 تحليل", "3 اعتماد", "كل الإنجاز", "2 طرح", "1 تشغيل"].map((item) => (
-              <div key={item} className="rounded-[1rem] border border-white/8 bg-white/[0.03] px-3 py-3 text-center text-sm font-bold text-white/78">{item}</div>
-            ))}
-          </div>
-        </DarkCard>
-
-        <DarkCard title="تنبيهات ذكية" action={<button className="text-sm font-black text-[#D0A243]">عرض الكل</button>} className="self-start">
-          <div className="space-y-3">
-            {[
-              ["فرصة تجاوزت مدة الاعتماد المستهدفة في حي النقرة", "#FF5A5F"],
-              ["دراسة ميدانية لمشروع حي الوسيطاء تحتاج تحديثاً عاجلاً", "#F0B846"],
-            ].map(([text, color]) => (
-              <div key={text} className="flex items-center justify-between rounded-[1rem] border border-white/8 bg-white/[0.03] px-4 py-3 text-right">
-                <span className="h-3.5 w-3.5 rounded-full" style={{ background: color }} />
-                <p className="text-sm leading-7 text-white/78">{text}</p>
-              </div>
-            ))}
-          </div>
-        </DarkCard>
-
-        <DarkCard title="مؤشرات الأداء الرئيسية" action={<button className="text-sm font-black text-[#D0A243]">عرض الكل</button>} className="self-start">
-          <div className="grid grid-cols-4 gap-3">
-            {[
-              ["68%", "استغلال الأراضي"],
-              ["91%", "رضا المستثمرين"],
-              ["76%", "سرعة الاعتماد"],
-              ["83%", "جاهزية الأحياء"],
-            ].map(([value, label], index) => (
-              <div key={label} className="text-center">
-                <div className="mx-auto h-16 w-16">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RadialBarChart data={[{ value: Number(value.replace("%", "")) }]} innerRadius="72%" outerRadius="100%" startAngle={90} endAngle={-270}>
-                      <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
-                      <RadialBar dataKey="value" cornerRadius={12} fill={index === 0 || index === 3 ? "#D8B25A" : "#85E26E"} background={{ fill: "rgba(255,255,255,0.1)" }} />
-                    </RadialBarChart>
-                  </ResponsiveContainer>
-                </div>
-                <p className="mt-2 text-[18px] font-black text-white">{value}</p>
-                <p className="mt-1 text-[12px] text-white/58">{label}</p>
-              </div>
-            ))}
-          </div>
-        </DarkCard>
       </div>
     </div>
   );
 }
 
 export function IntelligenceOverviewReference() {
-  const gaugeData = [{ name: "score", value: 78, fill: "#7BD96A" }];
+  const alerts = ["موسمية قوية", "أفضل أحياء للأنشطة الموسمية مرتبطة بالواجهة"];
+  const economyData = [
+    { name: "حي النقرة", value: 14 },
+    { name: "حي الجامعيين", value: 11 },
+    { name: "حي مشار", value: 18 },
+    { name: "حي المصيف", value: 9 },
+  ];
+  const readinessData = [
+    { name: "جاهزة", value: 35, fill: "#1E7E49" },
+    { name: "متوسطة", value: 33, fill: "#C98A1E" },
+    { name: "متعثرة", value: 32, fill: "#2B56D9" },
+  ];
 
   return (
     <div className="space-y-4">
-      <div className="grid items-start gap-4 xl:grid-cols-[0.34fr_1.15fr_0.42fr]">
-        <DarkCard title="التوصية الأهم" className="self-start">
-          <div className="rounded-[1.35rem] border border-white/8 bg-white/[0.03] p-5 text-right">
-            <span className="rounded-full bg-[#3A362E] px-3 py-1 text-xs font-black text-[#F0CB71]">أولوية مرتفعة</span>
-            <p className="mt-3 text-sm leading-7 text-white/54">يوصى بالإسراع في اعتماد فرصة</p>
-            <h3 className="mt-5 font-['Tajawal'] text-[1.8rem] font-black leading-[1.55] text-white">تطوير موقع حي مشار</h3>
-            <div className="mt-6 flex items-center justify-between">
-              <div className="h-24 w-24">
-                <ResponsiveContainer width="100%" height="100%">
-                  <RadialBarChart data={[{ value: 83 }]} innerRadius="78%" outerRadius="100%" startAngle={90} endAngle={-270}>
-                    <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
-                    <RadialBar dataKey="value" fill="#D5B159" cornerRadius={10} background={{ fill: "rgba(255,255,255,0.1)" }} />
-                  </RadialBarChart>
-                </ResponsiveContainer>
+      <div className="grid items-start gap-4 xl:grid-cols-[0.92fr_1.18fr]">
+        <DarkCard title="تنبيهات تستحق العرض" subtitle="مختصرة وواضحة">
+          <div className="space-y-4">
+            {alerts.map((alert) => (
+              <div key={alert} className="flex items-center justify-between rounded-[1.2rem] bg-[#F8EEEB] px-5 py-5 text-right text-[#09121D]">
+                <ShieldAlert size={20} className="text-[#DD4A32]" />
+                <p className="text-base font-semibold">{alert}</p>
               </div>
-              <div className="text-right">
-                <p className="text-sm text-white/46">العائد المتوقع</p>
-                <p className="mt-2 text-[1.9rem] font-black text-white">28.5</p>
-                <p className="text-sm text-white/42">مليون ر.س</p>
-              </div>
-            </div>
-            <button className="mt-5 w-full rounded-[1rem] bg-[#C79C45] px-4 py-3.5 text-base font-black text-[#0B1726]">مراجعة الفرصة</button>
+            ))}
           </div>
         </DarkCard>
 
-        <DarkCard title="التوصيات الذكية" className="self-start">
-          <div className="grid items-start gap-4 xl:grid-cols-[1fr_0.42fr]">
-            <div className="space-y-3">
-              {recommendationFeed.map((item) => (
-                <div key={item.title} className="rounded-[1.15rem] border border-white/8 bg-white/[0.03] p-4 text-right">
-                  <div className="flex items-center justify-between gap-3">
-                    <button className="rounded-[0.9rem] border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-bold text-white/80">عرض التفاصيل</button>
-                    <div>
-                      <span className="rounded-full bg-[#362C1B] px-3 py-1 text-xs font-black text-[#E2B95D]">{item.badge}</span>
-                      <h3 className="mt-3 font-['Tajawal'] text-[1.2rem] font-black text-white">{item.title}</h3>
-                    </div>
-                  </div>
-                  <div className="mt-4 grid grid-cols-2 gap-3 text-sm text-white/62">
-                    <p>نسبة الجاهزية: <span className="font-black text-[#57DD77]">{item.readiness}%</span></p>
-                    <p>متوقع {item.roi} مليون ر.س</p>
-                  </div>
-                </div>
-              ))}
+        <DarkCard title="ملخص القرار الحالي" subtitle="ما الذي تغير فعلاً">
+          <div className="grid items-start gap-4 lg:grid-cols-2">
+            <div className="rounded-[1.25rem] border border-white/8 bg-white/[0.03] p-5 text-right">
+              <p className="text-sm text-white/48">أولوية الحي</p>
+              <h3 className="mt-3 font-['Tajawal'] text-[2rem] font-black text-white">حي مشار</h3>
+              <p className="mt-3 text-base leading-9 text-white/66">الواجهة السياحية الأسرع نمواً للمشاريع الموسمية وتجارب الواجهة.</p>
+              <p className="mt-6 text-sm font-black text-[#D3A248]">مؤشر الأولوية 82%</p>
             </div>
-            <div className="rounded-[1.25rem] border border-white/8 bg-white/[0.03] p-4 text-right">
-              <p className="text-sm text-white/48">مؤشر الذكاء الاستثماري</p>
-              <div className="mt-4 h-[170px]">
-                <ResponsiveContainer width="100%" height="100%">
-                  <RadialBarChart data={gaugeData} innerRadius="70%" outerRadius="100%" startAngle={180} endAngle={0}>
-                    <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
-                    <RadialBar dataKey="value" background={{ fill: "rgba(255,255,255,0.08)" }} cornerRadius={10} />
-                  </RadialBarChart>
-                </ResponsiveContainer>
-              </div>
-              <div className="-mt-8 text-center">
-                <p className="text-[2.1rem] font-black text-white">78%</p>
-                <p className="text-sm font-black text-[#7BD96A]">مرتفع</p>
-              </div>
-              <div className="mt-4 space-y-2 text-sm text-white/66">
-                <p>تحسن عن الشهر الماضي</p>
-                <p>فرص جاهزة للطرح</p>
-                <p>الجاهزية أعلى في الأصول</p>
-              </div>
+            <div className="rounded-[1.25rem] border border-white/8 bg-white/[0.03] p-5 text-right">
+              <p className="text-sm text-white/48">أقوى فرصة حالياً</p>
+              <h3 className="mt-3 font-['Tajawal'] text-[1.8rem] font-black leading-[1.55] text-white">وجهة عائلية موسمية في مشار</h3>
+              <p className="mt-3 text-base leading-9 text-white/66">يوصى بالإعداد للرفع الرسمي بعد مراجعة الصياغة النهائية للطرح.</p>
+              <span className="mt-5 inline-flex rounded-full bg-[#DDF8E7] px-4 py-2 text-sm font-black text-[#1E8148]">معتمد داخلياً</span>
             </div>
           </div>
         </DarkCard>
       </div>
 
-      <div className="grid items-start gap-4 md:grid-cols-4">
-        {[
-          ["فرص جاهزة للطرح", "24", "+8% عن الشهر", <BriefcaseBusiness key="a" size={18} />],
-          ["متوسط زمن الاعتماد", "14", "يوم", <ShieldAlert key="b" size={18} />],
-          ["العائد على الاستثمار المتوقع", "27%", "+3% عن الشهر", <Coins key="c" size={18} />],
-          ["مستوى الجاهزية الاستثمارية", "84%", "+7% عن الشهر", <TrendingUp key="d" size={18} />],
-        ].map(([label, value, note, icon]) => (
-          <div key={String(label)} className="rounded-[1.3rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,45,0.98)_0%,rgba(10,23,38,0.98)_100%)] px-5 py-5 text-right">
-            <div className="flex items-center justify-between">
-              <div className="flex h-11 w-11 items-center justify-center rounded-[1rem] border border-[#D0A243]/35 bg-white/[0.03] text-[#D5B159]">{icon}</div>
-              <p className="text-sm text-white/52">{label}</p>
-            </div>
-            <p className="mt-5 font-['Tajawal'] text-[2.3rem] font-black text-white">{value}</p>
-            <p className="mt-2 text-sm text-[#57DD77]">{note}</p>
+      <div className="grid items-start gap-4 xl:grid-cols-[1fr_0.92fr]">
+        <DarkCard title="نبض المؤشرات الاقتصادية" subtitle="أقل عدد ممكن من المؤشرات ذات القيمة">
+          <div className="h-[360px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={economyData}>
+                <CartesianGrid stroke="rgba(255,255,255,0.09)" vertical={false} />
+                <XAxis dataKey="name" tickLine={false} axisLine={false} stroke="rgba(255,255,255,0.42)" />
+                <YAxis tickLine={false} axisLine={false} stroke="rgba(255,255,255,0.42)" />
+                <Tooltip />
+                <Area type="monotone" dataKey="value" stroke="#1D3F8F" fill="rgba(35,63,143,0.25)" strokeWidth={2} />
+              </AreaChart>
+            </ResponsiveContainer>
           </div>
-        ))}
+        </DarkCard>
+
+        <DarkCard title="توزيع الجاهزية" subtitle="حالة المسار داخل اللوحة">
+          <div className="h-[360px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <RadialBarChart data={readinessData} innerRadius="54%" outerRadius="92%" cx="50%" cy="52%" startAngle={90} endAngle={-270}>
+                <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
+                <RadialBar dataKey="value" background={{ fill: "rgba(255,255,255,0.08)" }} cornerRadius={14} />
+              </RadialBarChart>
+            </ResponsiveContainer>
+          </div>
+        </DarkCard>
       </div>
     </div>
   );
@@ -471,9 +590,9 @@ export function IntelligenceSpatialReference() {
   return (
     <div className="space-y-4">
       <div className="grid items-start gap-4 xl:grid-cols-[0.32fr_1fr_0.28fr]">
-        <DarkCard title="فلترة التحليل" className="self-start">
+        <DarkCard title="فلترة التحليل">
           <div className="space-y-4">
-            {["اختيار الحي", "أمر التشغيل", "نوع الاستخدام", "أمر القرار"].map((item) => (
+            {["اختيار الحي", "أمر التنفيذ", "نوع الاستخدام", "أمر القرار"].map((item) => (
               <button key={item} className="flex w-full items-center justify-between rounded-[1rem] border border-white/10 bg-white/[0.03] px-4 py-4 text-sm font-semibold text-white/76">
                 <ChevronDown size={18} />
                 {item}
@@ -488,11 +607,11 @@ export function IntelligenceSpatialReference() {
           </div>
         </DarkCard>
 
-        <DarkCard title="خريطة الأولويات المكانية" subtitle="تحليل الأحياء" className="self-start">
+        <DarkCard title="خريطة الأولويات المكانية" subtitle="تحليل الأحياء">
           <ExecutiveMap />
         </DarkCard>
 
-        <DarkCard title="طبقات الخريطة" className="self-start">
+        <DarkCard title="طبقات الخريطة">
           <div className="space-y-3 text-right">
             {[
               ["مؤشر الجاذبية المكانية", "#39D56E"],
@@ -515,7 +634,9 @@ export function IntelligenceSpatialReference() {
         {spatialNeighborhoodCards.map((card) => (
           <div key={card.name} className="rounded-[1.3rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,45,0.98)_0%,rgba(10,23,38,0.98)_100%)] px-5 py-5 text-right">
             <div className="flex items-center justify-between">
-              <span className={`rounded-full px-3 py-1 text-xs font-black ${card.tone === "green" ? "bg-[#173C2A] text-[#4FE07C]" : card.tone === "amber" ? "bg-[#3B3120] text-[#F3C04F]" : "bg-[#3F2226] text-[#FF6B72]"}`}>{card.state}</span>
+              <span className={`rounded-full px-3 py-1 text-xs font-black ${card.tone === "green" ? "bg-[#173C2A] text-[#4FE07C]" : card.tone === "amber" ? "bg-[#3B3120] text-[#F3C04F]" : "bg-[#3F2226] text-[#FF6B72]"}`}>
+                {card.state}
+              </span>
               <h3 className="font-['Tajawal'] text-[1.2rem] font-black text-white">{card.name}</h3>
             </div>
             <div className="mt-4 grid grid-cols-2 gap-3 text-sm text-white/66">
@@ -548,10 +669,12 @@ export function IntelligenceOpportunitiesReference() {
   return (
     <div className="space-y-4">
       <div className="rounded-[1.6rem] border border-white/8 bg-[linear-gradient(180deg,rgba(10,23,38,0.98)_0%,rgba(8,19,32,0.98)_100%)] p-5">
-        <div className="mb-4 flex items-center justify-between gap-3">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap gap-2">
-            {["الكل (24)", "جاهزة للطرح", "قيد الدراسة (6)", "قيد المراجعة (5)", "معتمدة (3)", "مؤرشفة (2)"].map((chip, index) => (
-              <button key={chip} className={`rounded-[0.9rem] border px-4 py-2 text-sm font-bold ${index === 0 ? "border-[#D0A243]/35 bg-[#C79C45]/14 text-[#E8C36B]" : "border-white/10 bg-white/[0.03] text-white/72"}`}>{chip}</button>
+            {["الكل (24)", "جاهزة للطرح", "قيد الدراسة (8)", "قيد المراجعة (5)", "معتمدة (3)", "مؤرشفة (2)"].map((chip, index) => (
+              <button key={chip} className={`rounded-[0.9rem] border px-4 py-2 text-sm font-bold ${index === 0 ? "border-[#D0A243]/35 bg-[#C79C45]/14 text-[#E8C36B]" : "border-white/10 bg-white/[0.03] text-white/72"}`}>
+                {chip}
+              </button>
             ))}
           </div>
           <div className="flex flex-wrap gap-2">
@@ -562,7 +685,7 @@ export function IntelligenceOpportunitiesReference() {
           </div>
         </div>
 
-        <div className="grid items-start gap-4 xl:grid-cols-[1fr_0.28fr]">
+        <div className="grid items-start gap-4 xl:grid-cols-[1fr_0.3fr]">
           <div className="overflow-hidden rounded-[1.4rem] border border-white/8 bg-white/[0.02]">
             <table className="w-full text-right">
               <thead className="bg-white/[0.04] text-[13px] text-white/56">
@@ -588,7 +711,9 @@ export function IntelligenceOpportunitiesReference() {
                     <td className="px-4 py-5">{row.value}</td>
                     <td className="px-4 py-5">{row.roi}</td>
                     <td className="px-4 py-5">
-                      <span className={`rounded-full px-3 py-1 text-xs font-black ${row.stage === "جاهزة للطرح" ? "bg-[#173C2A] text-[#59D776]" : row.stage === "قيد المراجعة" ? "bg-[#3B3120] text-[#F0B846]" : row.stage === "معتمدة" ? "bg-[#14384B] text-[#7BC9FF]" : "bg-white/[0.05] text-white/74"}`}>{row.stage}</span>
+                      <span className={`rounded-full px-3 py-1 text-xs font-black ${row.stage === "جاهزة للطرح" ? "bg-[#173C2A] text-[#59D776]" : row.stage === "قيد المراجعة" ? "bg-[#3B3120] text-[#F0B846]" : row.stage === "معتمدة" ? "bg-[#14384B] text-[#7BC9FF]" : "bg-white/[0.05] text-white/74"}`}>
+                        {row.stage}
+                      </span>
                     </td>
                     <td className="px-4 py-5 text-white/52">{row.updated}</td>
                     <td className="px-4 py-5">
@@ -676,7 +801,9 @@ export function AdminBottomSupport() {
             ["✓", "فكرة مكتملة", "#10C98B"],
           ].map(([value, label, bg]) => (
             <div key={label}>
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full text-[1.8rem] font-black text-white" style={{ background: bg }}>{value}</div>
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full text-[1.8rem] font-black text-white" style={{ background: bg }}>
+                {value}
+              </div>
               <p className="mt-3 text-sm text-white/68">{label}</p>
             </div>
           ))}
@@ -686,7 +813,9 @@ export function AdminBottomSupport() {
         </div>
         <div className="mt-6 grid grid-cols-4 gap-3">
           {["2", "3", "8", "1"].map((item) => (
-            <div key={item} className="rounded-[1rem] border border-white/8 bg-white/[0.03] px-3 py-4 text-center text-[1.1rem] font-black text-white">{item}</div>
+            <div key={item} className="rounded-[1rem] border border-white/8 bg-white/[0.03] px-3 py-4 text-center text-[1.1rem] font-black text-white">
+              {item}
+            </div>
           ))}
         </div>
       </DarkCard>
