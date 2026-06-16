@@ -191,7 +191,7 @@ function DarkCard({
 }) {
   return (
     <section
-      className={`rounded-[1.35rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,45,0.98)_0%,rgba(10,23,38,0.98)_100%)] p-4 shadow-[0_18px_42px_rgba(0,0,0,0.18)] ${className}`}
+      className={`rounded-[1.35rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.14),transparent_28%),radial-gradient(circle_at_top_left,rgba(61,211,128,0.1),transparent_24%),linear-gradient(180deg,rgba(11,27,45,0.98)_0%,rgba(10,23,38,0.98)_100%)] p-4 shadow-[0_18px_42px_rgba(0,0,0,0.18)] ${className}`}
     >
       <div className="mb-3 flex items-start justify-between gap-3">
         <div className="text-right">
@@ -288,6 +288,15 @@ function ExecutiveMap({ compact = false }: { compact?: boolean }) {
 }
 
 export function AdminReferenceDashboard() {
+  const metricCardThemes = [
+    "bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.18),transparent_34%),linear-gradient(180deg,rgba(20,38,60,0.96)_0%,rgba(12,28,47,0.98)_100%)]",
+    "bg-[radial-gradient(circle_at_top_right,rgba(78,163,255,0.16),transparent_34%),linear-gradient(180deg,rgba(20,38,60,0.96)_0%,rgba(12,28,47,0.98)_100%)]",
+    "bg-[radial-gradient(circle_at_top_right,rgba(61,211,128,0.15),transparent_34%),linear-gradient(180deg,rgba(20,38,60,0.96)_0%,rgba(12,28,47,0.98)_100%)]",
+    "bg-[radial-gradient(circle_at_top_right,rgba(188,125,255,0.14),transparent_34%),linear-gradient(180deg,rgba(20,38,60,0.96)_0%,rgba(12,28,47,0.98)_100%)]",
+    "bg-[radial-gradient(circle_at_top_right,rgba(255,124,124,0.14),transparent_34%),linear-gradient(180deg,rgba(20,38,60,0.96)_0%,rgba(12,28,47,0.98)_100%)]",
+    "bg-[radial-gradient(circle_at_top_right,rgba(245,196,92,0.17),transparent_34%),linear-gradient(180deg,rgba(20,38,60,0.96)_0%,rgba(12,28,47,0.98)_100%)]",
+  ];
+
   const chartData = [
     { month: "يناير", projected: 62, approved: 39 },
     { month: "فبراير", projected: 116, approved: 74 },
@@ -319,10 +328,10 @@ export function AdminReferenceDashboard() {
     <div className="space-y-3">
       <div className="grid items-start gap-3 2xl:grid-cols-[minmax(0,1fr)_320px]">
         <div className="grid items-start gap-3 md:grid-cols-3 2xl:grid-cols-6">
-          {executiveMetrics.map((metric) => (
+          {executiveMetrics.map((metric, index) => (
             <article
               key={metric.label}
-              className="rounded-[1.2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(20,38,60,0.96)_0%,rgba(12,28,47,0.98)_100%)] px-4 py-4 shadow-[0_16px_32px_rgba(0,0,0,0.16)]"
+              className={`rounded-[1.2rem] border border-white/8 px-4 py-4 shadow-[0_16px_32px_rgba(0,0,0,0.16)] ${metricCardThemes[index % metricCardThemes.length]}`}
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex h-11 w-11 items-center justify-center rounded-[1rem] border border-[#D0A243]/38 bg-white/[0.04]">
@@ -340,7 +349,7 @@ export function AdminReferenceDashboard() {
         </div>
 
         <DarkCard title="توصية جاهزة" subtitle="الذكاء التنفيذي يقترح" className="h-full">
-          <div className="rounded-[1.2rem] border border-white/8 bg-white/[0.03] p-4 text-right">
+          <div className="rounded-[1.2rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.16),transparent_36%),linear-gradient(180deg,rgba(24,39,58,0.96)_0%,rgba(15,28,44,0.98)_100%)] p-4 text-right">
             <div className="flex items-center justify-between gap-3">
               <span className="rounded-full bg-[#263848] px-4 py-2 text-xs font-black text-[#EFCF81]">AI</span>
               <p className="text-sm text-white/48">يوصى بالإسراع في اعتماد الفرصة</p>
@@ -405,7 +414,7 @@ export function AdminReferenceDashboard() {
                 <ChevronDown size={18} />
                 حي الجامعيين
               </button>
-              <div className="rounded-[1.15rem] border border-white/10 bg-white/[0.03] p-4 text-right">
+              <div className="rounded-[1.15rem] border border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(78,163,255,0.14),transparent_40%),linear-gradient(180deg,rgba(18,34,52,0.96)_0%,rgba(11,23,37,0.98)_100%)] p-4 text-right">
                 <p className="mb-3 font-['Tajawal'] text-[1.05rem] font-black text-white">حالة الأحياء</p>
                 <div className="space-y-3 text-sm text-white/78">
                   <div className="flex items-center justify-between">
@@ -422,7 +431,7 @@ export function AdminReferenceDashboard() {
                   </div>
                 </div>
               </div>
-              <div className="rounded-[1.15rem] border border-white/10 bg-white/[0.03] p-4 text-right">
+              <div className="rounded-[1.15rem] border border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(61,211,128,0.14),transparent_40%),linear-gradient(180deg,rgba(18,34,52,0.96)_0%,rgba(11,23,37,0.98)_100%)] p-4 text-right">
                 <p className="text-sm text-white/46">الحي المحدد</p>
                 <p className="mt-2 font-['Tajawal'] text-[1.5rem] font-black text-white">حي الجامعيين</p>
                 <p className="mt-2 text-sm text-white/56">آخر تحديث: 28-03-2026</p>

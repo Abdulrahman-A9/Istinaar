@@ -63,13 +63,15 @@ function SupportShortcut({
   title,
   description,
   icon,
+  toneClass,
 }: {
   title: string;
   description: string;
   icon: React.ReactNode;
+  toneClass: string;
 }) {
   return (
-    <div className="rounded-[1.05rem] border border-white/8 bg-white/[0.03] px-4 py-4 text-right">
+    <div className={`rounded-[1.05rem] border border-white/8 px-4 py-4 text-right shadow-[0_14px_32px_rgba(15,23,42,0.14)] ${toneClass}`}>
       <div className="flex items-center justify-between gap-3">
         <span className="flex h-10 w-10 items-center justify-center rounded-[0.95rem] border border-[#D0A243]/28 bg-white/[0.03] text-[#D7B45E]">
           {icon}
@@ -88,7 +90,7 @@ export default function AdminPage() {
 
   if (!currentUser || currentUser.role !== "authority") {
     return (
-      <div className="min-h-screen bg-[radial-gradient(circle_at_top,#13263c_0%,#091420_42%,#07111c_100%)] px-6 py-16 text-white">
+      <div className="min-h-screen bg-[#F5F1E8] px-6 py-16 text-white">
         <div className="mx-auto max-w-5xl rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,45,0.98)_0%,rgba(8,19,31,0.98)_100%)] p-10 text-right shadow-[0_24px_60px_rgba(0,0,0,0.24)]">
           <p className="font-['IBM_Plex_Sans_Arabic'] text-sm text-[#D8B46A]">غرفة قيادة الاستثمار الحضري</p>
           <h1 className="mt-3 font-['Tajawal'] text-[3rem] font-black text-white">الوصول يتطلب حساب أمانة مخول</h1>
@@ -110,7 +112,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,#13263B_0%,#09131E_42%,#06101A_100%)] text-white">
+    <div className="min-h-screen bg-[#F5F1E8] text-[#0B1726]">
       <div
         className="mx-auto grid max-w-[1880px] grid-cols-1 gap-3 px-3 py-3 xl:grid-cols-[minmax(0,1fr)_352px]"
         style={{ direction: "ltr" }}
@@ -151,11 +153,11 @@ export default function AdminPage() {
           <AdminReferenceDashboard />
 
           <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-5">
-            <SupportShortcut title="تصدير تقرير" description="تقرير الأداء الشهري" icon={<FileCheck2 size={18} />} />
-            <SupportShortcut title="اجتماع لجنة الاستثمار" description="غداً - 10:00 ص" icon={<Building2 size={18} />} />
-            <SupportShortcut title="توقيع إلكتروني" description="3 مستندات بانتظار التوقيع" icon={<FileText size={18} />} />
-            <SupportShortcut title="مركز المساعدة" description="الدعم والمساندة" icon={<ShieldCheck size={18} />} />
-            <SupportShortcut title="اسأل مساعد استنار الذكي" description="اكتب استفسارك هنا..." icon={<Sparkles size={18} />} />
+            <SupportShortcut title="تصدير تقرير" description="تقرير الأداء الشهري" icon={<FileCheck2 size={18} />} toneClass="bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.18),transparent_38%),linear-gradient(180deg,rgba(13,31,51,0.98)_0%,rgba(9,22,37,0.98)_100%)]" />
+            <SupportShortcut title="اجتماع لجنة الاستثمار" description="غداً - 10:00 ص" icon={<Building2 size={18} />} toneClass="bg-[radial-gradient(circle_at_top_right,rgba(61,211,128,0.16),transparent_38%),linear-gradient(180deg,rgba(13,31,51,0.98)_0%,rgba(9,22,37,0.98)_100%)]" />
+            <SupportShortcut title="توقيع إلكتروني" description="3 مستندات بانتظار التوقيع" icon={<FileText size={18} />} toneClass="bg-[radial-gradient(circle_at_top_right,rgba(78,163,255,0.18),transparent_38%),linear-gradient(180deg,rgba(13,31,51,0.98)_0%,rgba(9,22,37,0.98)_100%)]" />
+            <SupportShortcut title="مركز المساعدة" description="الدعم والمساندة" icon={<ShieldCheck size={18} />} toneClass="bg-[radial-gradient(circle_at_top_right,rgba(188,125,255,0.14),transparent_38%),linear-gradient(180deg,rgba(13,31,51,0.98)_0%,rgba(9,22,37,0.98)_100%)]" />
+            <SupportShortcut title="اسأل مساعد استنار الذكي" description="اكتب استفسارك هنا..." icon={<Sparkles size={18} />} toneClass="bg-[radial-gradient(circle_at_top_right,rgba(255,124,124,0.14),transparent_38%),linear-gradient(180deg,rgba(13,31,51,0.98)_0%,rgba(9,22,37,0.98)_100%)]" />
           </div>
         </main>
 
