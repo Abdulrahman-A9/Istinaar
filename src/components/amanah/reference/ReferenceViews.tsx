@@ -167,7 +167,7 @@ function ExecutiveMap({ compact = false }: { compact?: boolean }) {
       <div className="absolute inset-[8%] rounded-[50%] border border-[#83622A]/30" />
       <div className="absolute inset-[18%] rounded-[50%] border border-[#83622A]/28" />
       <div className="absolute inset-[28%] rounded-[50%] border border-[#83622A]/24" />
-      <svg className={`relative z-10 w-full ${compact ? "h-[300px]" : "h-[390px]"}`} viewBox="0 0 780 430" fill="none">
+      <svg className={`relative z-10 w-full ${compact ? "h-[240px] sm:h-[300px]" : "h-[260px] sm:h-[330px] 2xl:h-[390px]"}`} viewBox="0 0 780 430" fill="none">
         <path d="M76 225C156 151 250 98 356 84C493 66 607 103 706 191" stroke="#61513A" strokeOpacity=".48" strokeWidth="4" />
         <path d="M87 293C181 254 278 220 389 210C515 199 607 218 712 285" stroke="#61513A" strokeOpacity=".42" strokeWidth="3" />
         <path d="M167 97L628 334" stroke="#564A38" strokeOpacity=".35" strokeWidth="3" />
@@ -237,7 +237,7 @@ export function AdminReferenceDashboard() {
 
   return (
     <div className="space-y-3">
-      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-7">
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
         {executiveMetrics.map((metric, index) => (
           <article
             key={metric.label}
@@ -274,7 +274,7 @@ export function AdminReferenceDashboard() {
         </article>
       </div>
 
-      <div className="grid items-start gap-3 xl:grid-cols-[1.14fr_0.86fr]">
+      <div className="grid items-start gap-3 2xl:grid-cols-[1.14fr_0.86fr]">
         <DarkCard
           title="خريطة أولويات الأحياء"
           subtitle="التحليل المكاني المباشر"
@@ -341,7 +341,7 @@ export function AdminReferenceDashboard() {
         </DarkCard>
       </div>
 
-      <div className="grid items-stretch gap-3 xl:grid-cols-[0.88fr_0.88fr_1fr]">
+      <div className="grid items-stretch gap-3 2xl:grid-cols-[0.88fr_0.88fr_1fr]">
         <DarkCard title="مؤشرات الأداء الرئيسية" className="h-full">
           <div className="grid grid-cols-2 gap-3">
             {kpis.map(([value, label], index) => (
@@ -373,7 +373,7 @@ export function AdminReferenceDashboard() {
                 </div>
               ))}
             </div>
-            <div className="mt-5 grid grid-cols-3 gap-2 xl:grid-cols-6">
+            <div className="mt-5 grid grid-cols-3 gap-2 2xl:grid-cols-6">
               {["1 تشغيل", "8 تحليل", "3 اعتماد", "كل الإنجاز", "2 طرح", "1 تشغيل"].map((item) => (
                 <div key={item} className="rounded-[1rem] border border-white/8 bg-white/[0.03] px-3 py-3 text-center text-sm font-bold text-white/78">
                   {item}
@@ -511,7 +511,7 @@ export function IntelligenceSpatialReference() {
   return (
     <div className="space-y-4">
       <DarkCard title="خريطة الأولويات المكانية" subtitle="تحليل الأحياء">
-        <div className="grid items-start gap-4 xl:grid-cols-[minmax(0,1.24fr)_340px]">
+        <div className="grid items-start gap-4 2xl:grid-cols-[minmax(0,1.24fr)_340px]">
           <ExecutiveMap />
           <div className="space-y-4">
             <div className="rounded-[1.1rem] border border-white/8 bg-white/[0.03] p-4">
@@ -554,7 +554,7 @@ export function IntelligenceSpatialReference() {
         </div>
       </DarkCard>
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {neighborhoodCards.map((card) => (
           <div key={card.name} className="rounded-[1rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(78,163,255,0.12),transparent_36%),linear-gradient(180deg,rgba(11,27,45,0.98)_0%,rgba(10,23,38,0.98)_100%)] px-4 py-4 text-right shadow-[0_16px_36px_rgba(0,0,0,0.16)]">
             <div className="flex items-center justify-between">
