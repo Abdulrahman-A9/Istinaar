@@ -6,7 +6,7 @@ import type { ReactNode } from "react";
 import ExecutiveSidebar from "@/components/amanah/ExecutiveSidebar";
 import { useAppStore } from "@/store/appStore";
 
-type PageKey = "overview" | "spatial" | "opportunities";
+type PageKey = "overview" | "spatial" | "opportunities" | "approvals" | "partners" | "reports" | "settings";
 
 const pageMeta: Record<PageKey, { title: string; subtitle: string; chips: string[] }> = {
   overview: {
@@ -23,6 +23,26 @@ const pageMeta: Record<PageKey, { title: string; subtitle: string; chips: string
     title: "الفرص الاستثمارية",
     subtitle: "لوحة إدارة الفرص مع سجل موحد للجاهزية والقيمة والعائد والمسار الإجرائي.",
     chips: ["24 فرصة فعالة", "فلترة تشغيلية", "حالة الطرح", "ملخص القيمة"],
+  },
+  approvals: {
+    title: "الاعتمادات والموافقات",
+    subtitle: "مسار موحد لمراجعة الملفات الاستثمارية واعتمادها ونشر القرارات التنفيذية.",
+    chips: ["124 اعتماداً", "32 قيد المراجعة", "12 ملفاً متأخراً", "سجل تدقيق موحد"],
+  },
+  partners: {
+    title: "الشركاء والمستثمرون",
+    subtitle: "إدارة علاقات المستثمرين والشراكات وربطها بالفرص ذات الأولوية داخل الأمانة.",
+    chips: ["256 مستثمراً", "38 شراكة قائمة", "91% نجاح مطابقة", "64 فرصة مرتبطة"],
+  },
+  reports: {
+    title: "التقارير واللوحات",
+    subtitle: "مكتبة تنفيذية تجمع التقارير الجاهزة، لوحات المتابعة، وجدولة النشر القيادي.",
+    chips: ["18 تقريراً جاهزاً", "12 لوحة تنفيذية", "6 قيد المراجعة", "جدولة أسبوعية"],
+  },
+  settings: {
+    title: "إعدادات الإدارة",
+    subtitle: "ضبط هوية مساحة الأمانة، الصلاحيات، التنبيهات، وسياسات العمل الداخلية.",
+    chips: ["42 مستخدماً", "4 مستويات وصول", "تدقيق مفعل", "حماية متقدمة"],
   },
 };
 

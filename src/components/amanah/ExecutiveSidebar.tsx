@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import type { ReactNode } from "react";
 
-type ExecutiveSidebarPage = "admin" | "overview" | "spatial" | "opportunities";
+type ExecutiveSidebarPage = "admin" | "overview" | "spatial" | "opportunities" | "approvals" | "partners" | "reports" | "settings";
 
 function SidebarLink({
   href,
@@ -90,10 +90,10 @@ export default function ExecutiveSidebar({ page }: { page: ExecutiveSidebarPage 
         <div className="border-t border-white/8 pt-3">
           <p className="mb-2 text-right text-[10px] font-bold text-white/38">الإدارة والمتابعة</p>
           <div className="space-y-1.5">
-            <SidebarLink href="#" label="الاعتمادات والموافقات" hint="الرفع والاعتماد" icon={<FileCheck2 size={18} />} />
-            <SidebarLink href="#" label="الشركاء والمستثمرون" hint="الأطراف ذات العلاقة" icon={<Users size={18} />} />
-            <SidebarLink href="#" label="التقارير واللوحات" hint="العروض التنفيذية" icon={<LineChart size={18} />} />
-            <SidebarLink href="#" label="الإعدادات" hint="التفضيلات والصلاحيات" icon={<Settings size={18} />} />
+            <SidebarLink href="/investment-intelligence?tab=approvals" label="الاعتمادات والموافقات" hint="الرفع والاعتماد" icon={<FileCheck2 size={18} />} active={page === "approvals"} />
+            <SidebarLink href="/investment-intelligence?tab=partners" label="الشركاء والمستثمرون" hint="الأطراف ذات العلاقة" icon={<Users size={18} />} active={page === "partners"} />
+            <SidebarLink href="/investment-intelligence?tab=reports" label="التقارير واللوحات" hint="العروض التنفيذية" icon={<LineChart size={18} />} active={page === "reports"} />
+            <SidebarLink href="/investment-intelligence?tab=settings" label="الإعدادات" hint="التفضيلات والصلاحيات" icon={<Settings size={18} />} active={page === "settings"} />
           </div>
         </div>
 
@@ -113,17 +113,21 @@ export default function ExecutiveSidebar({ page }: { page: ExecutiveSidebarPage 
         </div>
       </aside>
 
-      <nav className="fixed inset-x-3 bottom-3 z-40 grid grid-cols-4 rounded-[1.15rem] border border-white/10 bg-[#0B1C2E]/95 p-1.5 shadow-[0_18px_40px_rgba(0,0,0,0.3)] backdrop-blur xl:hidden" dir="rtl">
+      <nav className="fixed inset-x-3 bottom-3 z-40 flex gap-1 overflow-x-auto rounded-[1.15rem] border border-white/10 bg-[#0B1C2E]/95 p-1.5 shadow-[0_18px_40px_rgba(0,0,0,0.3)] backdrop-blur xl:hidden" dir="rtl">
         {[
           { href: "/admin", label: "الرئيسية", icon: <LayoutDashboard size={17} />, active: page === "admin" },
           { href: "/investment-intelligence", label: "الذكاء", icon: <Sparkles size={17} />, active: page === "overview" },
           { href: "/investment-intelligence?tab=spatial", label: "المكاني", icon: <MapPin size={17} />, active: page === "spatial" },
           { href: "/investment-intelligence?tab=opportunities", label: "الفرص", icon: <BriefcaseBusiness size={17} />, active: page === "opportunities" },
+          { href: "/investment-intelligence?tab=approvals", label: "الاعتمادات", icon: <FileCheck2 size={17} />, active: page === "approvals" },
+          { href: "/investment-intelligence?tab=partners", label: "الشركاء", icon: <Users size={17} />, active: page === "partners" },
+          { href: "/investment-intelligence?tab=reports", label: "التقارير", icon: <LineChart size={17} />, active: page === "reports" },
+          { href: "/investment-intelligence?tab=settings", label: "الإعدادات", icon: <Settings size={17} />, active: page === "settings" },
         ].map((item) => (
           <Link
             key={item.href}
             href={item.href}
-            className={`flex min-w-0 flex-col items-center gap-1 rounded-[0.85rem] px-2 py-2 text-[10px] font-bold ${item.active ? "bg-[#D0A243] text-[#09121D]" : "text-white/68"}`}
+            className={`flex min-w-[68px] shrink-0 flex-col items-center gap-1 rounded-[0.85rem] px-2 py-2 text-[10px] font-bold ${item.active ? "bg-[#D0A243] text-[#09121D]" : "text-white/68"}`}
           >
             {item.icon}
             <span className="truncate">{item.label}</span>

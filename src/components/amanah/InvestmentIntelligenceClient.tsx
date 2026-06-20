@@ -8,13 +8,19 @@ import {
   IntelligenceOverviewReference,
   IntelligenceSpatialReference,
 } from "@/components/amanah/reference/ReferenceViews";
+import {
+  ApprovalsReference,
+  PartnersReference,
+  ReportsReference,
+  SettingsReference,
+} from "@/components/amanah/reference/ManagementViews";
 import { useAppStore } from "@/store/appStore";
 
 type InvestmentIntelligenceClientProps = {
   initialTab?: string;
 };
 
-type SupportedTab = "overview" | "spatial" | "opportunities";
+type SupportedTab = "overview" | "spatial" | "opportunities" | "approvals" | "partners" | "reports" | "settings";
 
 function resolveTab(tab?: string): SupportedTab {
   if (tab === "spatial") {
@@ -22,6 +28,9 @@ function resolveTab(tab?: string): SupportedTab {
   }
   if (tab === "opportunities") {
     return "opportunities";
+  }
+  if (tab === "approvals" || tab === "partners" || tab === "reports" || tab === "settings") {
+    return tab;
   }
   return "overview";
 }
@@ -72,6 +81,10 @@ export default function InvestmentIntelligenceClient({
       {activeTab === "overview" ? <IntelligenceOverviewReference /> : null}
       {activeTab === "spatial" ? <IntelligenceSpatialReference /> : null}
       {activeTab === "opportunities" ? <IntelligenceOpportunitiesReference /> : null}
+      {activeTab === "approvals" ? <ApprovalsReference /> : null}
+      {activeTab === "partners" ? <PartnersReference /> : null}
+      {activeTab === "reports" ? <ReportsReference /> : null}
+      {activeTab === "settings" ? <SettingsReference /> : null}
     </ReferenceShell>
   );
 }

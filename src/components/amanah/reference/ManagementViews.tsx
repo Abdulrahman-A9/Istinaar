@@ -1,0 +1,121 @@
+"use client";
+
+import type { ReactNode } from "react";
+import {
+  BadgeCheck,
+  BellRing,
+  Building2,
+  CalendarClock,
+  CheckCircle2,
+  Clock3,
+  FileCheck2,
+  FileText,
+  Handshake,
+  KeyRound,
+  LineChart,
+  LockKeyhole,
+  Settings2,
+  ShieldCheck,
+  SlidersHorizontal,
+  UsersRound,
+  Workflow,
+} from "lucide-react";
+
+type Tone = "gold" | "green" | "blue" | "red";
+
+function Surface({ title, subtitle, action, children, className = "" }: { title: string; subtitle?: string; action?: ReactNode; children: ReactNode; className?: string }) {
+  return <section className={`rounded-[1.35rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.12),transparent_28%),linear-gradient(180deg,rgba(12,28,46,0.98)_0%,rgba(10,23,38,0.98)_100%)] p-4 shadow-[0_18px_42px_rgba(0,0,0,0.18)] ${className}`}><div className="mb-4 flex items-start justify-between gap-3"><div className="text-right">{subtitle ? <p className="text-[11px] font-semibold text-[#D0A243]">{subtitle}</p> : null}<h2 className="mt-1 font-['Tajawal'] text-[1.25rem] font-black text-white sm:text-[1.45rem]">{title}</h2></div>{action}</div>{children}</section>;
+}
+
+function Status({ children, tone = "green" }: { children: ReactNode; tone?: Tone }) {
+  const styles: Record<Tone, string> = { green: "bg-[#173C2A] text-[#59D776]", gold: "bg-[#3B3120] text-[#F0B846]", red: "bg-[#3F2226] text-[#FF7C82]", blue: "bg-[#15384B] text-[#7BC9FF]" };
+  return <span className={`rounded-full px-3 py-1 text-[11px] font-black ${styles[tone]}`}>{children}</span>;
+}
+
+function MetricCard({ label, value, note, icon, tone = "gold" }: { label: string; value: string; note: string; icon: ReactNode; tone?: Tone }) {
+  const styles: Record<Tone, string> = { gold: "from-[#C79C45]/22 via-[#17304A]/90 to-[#0E2237] text-[#E9C673]", green: "from-[#38C976]/20 via-[#153A32]/90 to-[#0E2237] text-[#51E184]", blue: "from-[#579EFF]/20 via-[#163A59]/90 to-[#0E2237] text-[#86BEFF]", red: "from-[#FF7272]/18 via-[#412633]/90 to-[#0E2237] text-[#FF8A8F]" };
+  return <article className={`rounded-[1.15rem] border border-white/8 bg-gradient-to-br ${styles[tone]} px-4 py-4 shadow-[0_16px_30px_rgba(0,0,0,0.14)]`}><div className="flex items-start justify-between gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-[0.9rem] border border-current/25 bg-white/[0.04]">{icon}</span><div className="text-right"><p className="text-[11px] text-white/58">{label}</p><p className="mt-2 font-['Tajawal'] text-[1.8rem] font-black leading-none text-white">{value}</p></div></div><p className="mt-4 text-right text-[11px] font-bold">{note}</p></article>;
+}
+
+const approvalRows = [
+  ["APP-2024-125", "تطوير موقع حي مشار", "فرصة استثمارية", "إدارة الاستثمار", "مراجعة فنية", "اليوم", "gold"],
+  ["APP-2024-124", "مشروع السوق المركزي", "شراكة استثمارية", "إدارة الشراكات", "توقيع نهائي", "أمس", "blue"],
+  ["APP-2024-123", "تأهيل واجهة المدينة", "مشروع بلدي", "إدارة المشاريع", "مراجعة إدارية", "منذ يومين", "gold"],
+  ["APP-2024-122", "تشغيل مرافق موسمية", "تشغيل موقع", "إدارة الأصول", "مكتمل", "منذ 3 أيام", "green"],
+] as const;
+
+export function ApprovalsReference() {
+  const stages = ["تقديم مبدئي", "مراجعة إدارية", "مراجعة فنية", "اعتماد نهائي", "توقيع ونشر"];
+  return <div className="space-y-4">
+    <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
+      <MetricCard label="إجمالي الاعتمادات" value="124" note="+18% عن الشهر الماضي" icon={<FileCheck2 size={20} />} />
+      <MetricCard label="قيد المراجعة" value="32" note="8 ملفات تحتاج قراراً اليوم" icon={<Clock3 size={20} />} />
+      <MetricCard label="مكتملة" value="62" note="+12% عن الشهر الماضي" icon={<CheckCircle2 size={20} />} tone="green" />
+      <MetricCard label="متأخرة" value="12" note="3 ملفات تجاوزت الإطار الزمني" icon={<CalendarClock size={20} />} tone="red" />
+      <MetricCard label="متوسط زمن القرار" value="18" note="تحسن 5 أيام عن الدورة السابقة" icon={<Workflow size={20} />} tone="blue" />
+    </div>
+    <Surface title="مسار الاعتماد السريع" subtitle="حالة الملف الحالي: تطوير موقع حي مشار">
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">{stages.map((stage, index) => { const done = index < 3; const current = index === 3; return <div key={stage} className={`rounded-[1rem] border px-4 py-4 text-right ${current ? "border-[#D0A243]/50 bg-[#D0A243]/12" : done ? "border-[#42DD71]/25 bg-[#173C2A]/45" : "border-white/8 bg-white/[0.025]"}`}><span className={`mb-3 flex h-8 w-8 items-center justify-center rounded-full border text-xs font-black ${current ? "border-[#D0A243] bg-[#C79C45] text-[#0B1726]" : done ? "border-[#42DD71] bg-[#173C2A] text-[#42DD71]" : "border-white/12 text-white/40"}`}>{done ? "✓" : index + 1}</span><p className="text-sm font-black text-white">{stage}</p><p className="mt-1 text-[11px] text-white/44">{done ? "مكتمل" : current ? "قيد التنفيذ" : "بانتظار الدور"}</p></div>; })}</div>
+    </Surface>
+    <Surface title="الاعتمادات الأخيرة" subtitle="سجل موحد للتدقيق والمتابعة" action={<button className="text-sm font-black text-[#E4C982]">عرض السجل الكامل</button>}>
+      <div className="overflow-x-auto rounded-[1rem] border border-white/8"><table className="min-w-[860px] w-full text-right"><thead className="bg-white/[0.04] text-[11px] text-white/48"><tr>{["رقم الاعتماد", "العنوان", "النوع", "الجهة", "الحالة", "آخر تحديث", "إجراء"].map((title) => <th key={title} className="px-4 py-3 font-bold">{title}</th>)}</tr></thead><tbody>{approvalRows.map(([id, title, type, owner, status, date, tone]) => <tr key={id} className="border-t border-white/6 text-sm text-white/74"><td className="px-4 py-4 font-bold text-[#E5C876]">{id}</td><td className="px-4 py-4 font-bold text-white">{title}</td><td className="px-4 py-4">{type}</td><td className="px-4 py-4 text-white/54">{owner}</td><td className="px-4 py-4"><Status tone={tone}>{status}</Status></td><td className="px-4 py-4 text-white/44">{date}</td><td className="px-4 py-4"><button className="rounded-[0.8rem] border border-[#D0A243]/30 px-3 py-2 text-xs font-bold text-[#E5C876]">فتح الملف</button></td></tr>)}</tbody></table></div>
+    </Surface>
+  </div>;
+}
+
+const partnerRows = [
+  ["شركة مستقبل العقارية", "تطوير عمراني", "320 مليون ر.س", "نشط", "green"],
+  ["صندوق آفاق للاستثمار", "تمويل وتشغيل", "210 مليون ر.س", "نشط", "green"],
+  ["مؤسسة المجد العمراني", "تشغيل تجاري", "150 مليون ر.س", "قيد المراجعة", "gold"],
+  ["شركة البنيان العقاري", "مستثمر استراتيجي", "120 مليون ر.س", "نشط", "green"],
+] as const;
+
+export function PartnersReference() {
+  return <div className="space-y-4">
+    <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
+      <MetricCard label="إجمالي المستثمرين" value="256" note="+22% عن الشهر الماضي" icon={<UsersRound size={20} />} />
+      <MetricCard label="مستثمرون نشطون" value="146" note="56% من قاعدة المستثمرين" icon={<BadgeCheck size={20} />} tone="green" />
+      <MetricCard label="شراكات قائمة" value="38" note="5 شراكات جديدة هذا الشهر" icon={<Handshake size={20} />} tone="blue" />
+      <MetricCard label="قيمة الاستثمارات" value="1.24" note="+28% عن الشهر الماضي" icon={<Building2 size={20} />} />
+      <MetricCard label="الفرص المرتبطة" value="64" note="+15% عن الشهر الماضي" icon={<LineChart size={20} />} tone="blue" />
+    </div>
+    <div className="grid gap-4 2xl:grid-cols-[0.72fr_1.28fr]">
+      <Surface title="توزيع المستثمرين" subtitle="حسب القطاع والاهتمام"><div className="flex flex-col items-center justify-center gap-5 sm:flex-row 2xl:flex-col"><div className="h-40 w-40 rounded-full border border-white/10" style={{ background: "conic-gradient(#D0A243 0deg 128deg,#2D78B8 128deg 214deg,#39A75C 214deg 293deg,#5A3C9A 293deg 360deg)" }}><div className="m-[27px] flex h-[106px] w-[106px] items-center justify-center rounded-full bg-[#0C1D2F] font-['Tajawal'] text-[1.7rem] font-black text-white">256</div></div><div className="space-y-2 text-right text-sm text-white/68">{[['تجاري', '32%', '#D0A243'], ['سكني', '24%', '#2D78B8'], ['ضيافة', '22%', '#39A75C'], ['ترفيهي', '22%', '#A78BFA']].map(([label, value, color]) => <div key={label} className="flex items-center justify-between gap-8"><span style={{ color }}>{value}</span><span>{label}</span></div>)}</div></div></Surface>
+      <Surface title="أبرز المستثمرين" subtitle="جاهزية العلاقة وفرص المطابقة" action={<button className="text-sm font-black text-[#E4C982]">عرض جميع المستثمرين</button>}><div className="grid gap-3 sm:grid-cols-2">{partnerRows.map(([name, specialty, value, status, tone]) => <article key={name} className="rounded-[1rem] border border-white/8 bg-white/[0.025] p-4 text-right"><div className="flex items-start justify-between gap-3"><Status tone={tone}>{status}</Status><div><p className="font-black text-white">{name}</p><p className="mt-1 text-[11px] text-white/44">{specialty}</p></div></div><div className="mt-4 flex items-center justify-between border-t border-white/8 pt-3"><button className="text-xs font-bold text-[#E4C982]">ملف المستثمر</button><p className="text-sm font-black text-white">{value}</p></div></article>)}</div></Surface>
+    </div>
+    <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">{[['معدل نجاح المطابقة', '91%', 'ارتفاع 6% عن الشهر الماضي', 'green'], ['متوسط زمن الاستجابة', '2.4 يوم', 'تحسن 0.8 يوم', 'blue'], ['معدل تحويل الفرص', '28%', 'ارتفاع 9% عن الشهر الماضي', 'gold'], ['عدد الاجتماعات', '48', '+8 عن الشهر الماضي', 'red']].map(([label, value, note, tone]) => <MetricCard key={label} label={label} value={value} note={note} icon={<UsersRound size={19} />} tone={tone as Tone} />)}</div>
+  </div>;
+}
+
+export function ReportsReference() {
+  const reports = [["تقرير الأداء الاستثماري", "شهري", "مكتمل", "اليوم 09:20", "gold"], ["لوحة متابعة الجاهزية", "تنفيذي", "جاهز للنشر", "أمس 15:40", "green"], ["تحليل النشاط المكاني", "مكاني", "قيد المراجعة", "منذ يومين", "blue"], ["ملخص لجنة الاستثمار", "اجتماع", "مسودة", "غداً 10:00", "red"]] as const;
+  return <div className="space-y-4"><div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4"><MetricCard label="تقارير جاهزة" value="18" note="4 تقارير بانتظار النشر" icon={<FileText size={20} />} tone="green" /><MetricCard label="لوحات تنفيذية" value="12" note="آخر تحديث قبل 18 دقيقة" icon={<LineChart size={20} />} tone="blue" /><MetricCard label="تقارير قيد المراجعة" value="6" note="2 تحتاج اعتماداً" icon={<Clock3 size={20} />} /><MetricCard label="موعد اللجنة القادم" value="غداً" note="10:00 ص - قاعة الاستثمار" icon={<CalendarClock size={20} />} tone="red" /></div><div className="grid gap-4 2xl:grid-cols-[1.1fr_0.9fr]"><Surface title="مكتبة التقارير التنفيذية" subtitle="إصدارات جاهزة للقيادة" action={<button className="rounded-[0.9rem] bg-[#C79C45] px-4 py-2 text-sm font-black text-[#09121D]">إنشاء تقرير</button>}><div className="space-y-3">{reports.map(([title, category, state, updated, tone]) => <div key={title} className="flex flex-wrap items-center justify-between gap-3 rounded-[1rem] border border-white/8 bg-white/[0.025] px-4 py-4"><div className="flex gap-2"><button className="rounded-[0.8rem] border border-white/10 px-3 py-2 text-xs text-white/68">تصدير</button><button className="rounded-[0.8rem] border border-[#D0A243]/30 px-3 py-2 text-xs font-bold text-[#E4C982]">فتح</button></div><div className="text-right"><div className="flex items-center justify-end gap-2"><Status tone={tone}>{state}</Status><p className="font-black text-white">{title}</p></div><p className="mt-2 text-[11px] text-white/44">{category} · {updated}</p></div></div>)}</div></Surface><Surface title="جدولة النشر" subtitle="الأولوية للأيام السبعة القادمة"><div className="space-y-3">{[['اليوم', 'تحديث لوحة الأداء الشهرية', '09:20 ص'], ['غداً', 'ملخص لجنة الاستثمار', '10:00 ص'], ['الأحد', 'تقرير الجاهزية التنظيمية', '01:30 م'], ['الثلاثاء', 'قراءة فرص الربع القادم', '11:00 ص']].map(([day, title, time]) => <div key={title} className="grid grid-cols-[68px_minmax(0,1fr)] gap-3 rounded-[1rem] border border-white/8 bg-white/[0.025] p-4 text-right"><div className="rounded-[0.85rem] bg-[#D0A243]/14 px-2 py-3 text-center text-xs font-black text-[#E8C36B]">{day}</div><div><p className="font-bold text-white">{title}</p><p className="mt-1 text-[11px] text-white/44">{time}</p></div></div>)}</div></Surface></div></div>;
+}
+
+export function SettingsReference() {
+  const permissions = [["عرض اللوحات", "42 مستخدماً", "green"], ["تحرير المسودات", "18 مستخدماً", "blue"], ["مراجعة الاعتمادات", "8 مستخدمين", "gold"], ["اعتماد ونشر", "4 مستخدمين", "red"]] as const;
+  const securityItems = [
+    ["تسجيل الدخول الثنائي", "مفعل لجميع الحسابات الإدارية", ShieldCheck, "green"],
+    ["سجل التدقيق", "احتفاظ كامل بعمليات الواجهة", LockKeyhole, "blue"],
+    ["مفاتيح الربط", "3 مفاتيح نشطة ضمن البيئة", KeyRound, "gold"],
+    ["تفضيلات النظام", "آخر تعديل اليوم 08:45 ص", Settings2, "red"],
+  ] as const;
+  const adminTools = [
+    ["إدارة الأدوار", "تحديث الصلاحيات حسب الوحدة", UsersRound],
+    ["سياسات الاعتماد", "ضبط مستويات المراجعة", SlidersHorizontal],
+    ["إعدادات التنبيهات", "قنوات الإشعار والمتابعة", BellRing],
+    ["أرشفة السجلات", "سياسات الاحتفاظ والتصدير", FileCheck2],
+  ] as const;
+
+  return <div className="space-y-4">
+    <div className="grid gap-4 2xl:grid-cols-[0.9fr_1.1fr]">
+      <Surface title="هوية مساحة الأمانة" subtitle="إعدادات العرض والتنظيم"><div className="space-y-3">{[['اسم الجهة', 'أمانة منطقة حائل'], ['وحدة التشغيل', 'مكتب دعم القرار الاستثماري'], ['نمط العرض القيادي', 'مفعل'], ['المنطقة الزمنية', 'Asia/Riyadh']].map(([label, value]) => <div key={label} className="flex items-center justify-between rounded-[1rem] border border-white/8 bg-white/[0.025] px-4 py-3"><span className="text-sm font-bold text-white">{value}</span><span className="text-[11px] text-white/44">{label}</span></div>)}</div></Surface>
+      <Surface title="تنبيهات ومسارات العمل" subtitle="إعدادات قيد التطبيق"><div className="grid gap-3 sm:grid-cols-2">{[['تنبيه تأخر الاعتماد', 'عند تجاوز الإطار الزمني', true], ['إشعار تحديث فرصة', 'عند تغيير الجاهزية أو الحالة', true], ['موجز اللجنة الأسبوعي', 'قبل الاجتماع بيوم واحد', true], ['نسخة تنفيذية داخلية', 'مرئية للقيادة فقط', false]].map(([label, note, enabled]) => <div key={label as string} className="rounded-[1rem] border border-white/8 bg-white/[0.025] p-4 text-right"><div className="flex items-center justify-between"><span className={`flex h-6 w-11 items-center rounded-full px-1 ${enabled ? "justify-end bg-[#2C9B53]" : "justify-start bg-white/12"}`}><span className="h-4 w-4 rounded-full bg-white" /></span><p className="font-bold text-white">{label}</p></div><p className="mt-3 text-[11px] leading-6 text-white/44">{note}</p></div>)}</div></Surface>
+    </div>
+    <div className="grid gap-4 2xl:grid-cols-[1.12fr_0.88fr]">
+      <Surface title="الصلاحيات والأدوار" subtitle="مصفوفة الوصول الحالية" action={<button className="text-sm font-black text-[#E4C982]">إدارة المستخدمين</button>}><div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">{permissions.map(([label, value, tone]) => <div key={label} className="rounded-[1rem] border border-white/8 bg-white/[0.025] p-4 text-right"><Status tone={tone}>{label}</Status><p className="mt-4 font-['Tajawal'] text-[1.5rem] font-black text-white">{value}</p><p className="mt-2 text-[11px] text-white/44">مستوى وصول مراجع</p></div>)}</div></Surface>
+      <Surface title="حالة الحماية" subtitle="مراجعة أمنية مختصرة"><div className="space-y-3">{securityItems.map(([label, note, Icon, tone]) => <div key={label} className="flex items-center justify-between rounded-[1rem] border border-white/8 bg-white/[0.025] p-4 text-right"><Status tone={tone}>سليم</Status><div><p className="font-bold text-white">{label}</p><p className="mt-1 text-[11px] text-white/44">{note}</p></div><Icon size={18} className="text-[#D0A243]" /></div>)}</div></Surface>
+    </div>
+    <Surface title="أدوات الإدارة" subtitle="إجراءات تشغيلية محكومة"><div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">{adminTools.map(([label, note, Icon]) => <button key={label} className="flex items-center justify-between rounded-[1rem] border border-white/8 bg-white/[0.025] p-4 text-right transition hover:border-[#D0A243]/35 hover:bg-white/[0.05]"><Icon size={20} className="text-[#D0A243]" /><span><span className="block font-bold text-white">{label}</span><span className="mt-1 block text-[11px] text-white/44">{note}</span></span></button>)}</div></Surface>
+  </div>;
+}
