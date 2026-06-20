@@ -132,7 +132,7 @@ function DarkCard({
 }) {
   return (
     <section
-      className={`rounded-[1.35rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.14),transparent_28%),radial-gradient(circle_at_top_left,rgba(61,211,128,0.08),transparent_24%),linear-gradient(180deg,rgba(12,28,46,0.98)_0%,rgba(10,23,38,0.98)_100%)] p-4 shadow-[0_18px_42px_rgba(0,0,0,0.18)] ${className}`}
+      className={`executive-card-glow glow-gold rounded-[1.35rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.14),transparent_28%),radial-gradient(circle_at_top_left,rgba(61,211,128,0.08),transparent_24%),linear-gradient(180deg,rgba(12,28,46,0.98)_0%,rgba(10,23,38,0.98)_100%)] p-4 shadow-[0_18px_42px_rgba(0,0,0,0.18)] ${className}`}
     >
       <div className="mb-3 flex items-start justify-between gap-3">
         <div className="text-right">
@@ -241,7 +241,7 @@ export function AdminReferenceDashboard() {
         {executiveMetrics.map((metric, index) => (
           <article
             key={metric.label}
-            className={`min-h-[184px] rounded-[1.2rem] border border-white/8 px-4 py-4 shadow-[0_16px_32px_rgba(0,0,0,0.16)] ${metricCardThemes[index % metricCardThemes.length]}`}
+            className={`executive-card-glow ${["glow-gold", "glow-blue", "glow-green", "glow-violet", "glow-red"][index % 5]} min-h-[184px] rounded-[1.2rem] border border-white/8 px-4 py-4 shadow-[0_16px_32px_rgba(0,0,0,0.16)] ${metricCardThemes[index % metricCardThemes.length]}`}
           >
             <div className="flex items-start justify-between gap-3">
               <div className="flex h-11 w-11 items-center justify-center rounded-[1rem] border border-[#D0A243]/38 bg-white/[0.04]">
@@ -257,7 +257,7 @@ export function AdminReferenceDashboard() {
           </article>
         ))}
 
-        <article className="min-h-[184px] rounded-[1.2rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(61,211,128,0.1),transparent_24%),linear-gradient(180deg,rgba(21,39,59,0.96)_0%,rgba(12,28,47,0.98)_100%)] px-4 py-4 text-right shadow-[0_16px_32px_rgba(0,0,0,0.16)]">
+        <article className="executive-card-glow glow-gold min-h-[184px] rounded-[1.2rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(61,211,128,0.1),transparent_24%),linear-gradient(180deg,rgba(21,39,59,0.96)_0%,rgba(12,28,47,0.98)_100%)] px-4 py-4 text-right shadow-[0_16px_32px_rgba(0,0,0,0.16)]">
           <div className="flex items-center justify-between gap-3">
             <span className="rounded-full bg-[#263848] px-4 py-2 text-xs font-black text-[#EFCF81]">AI</span>
             <p className="text-sm text-white/48">الذكاء التنفيذي يقترح</p>

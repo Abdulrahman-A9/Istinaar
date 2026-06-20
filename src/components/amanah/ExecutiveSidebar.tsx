@@ -58,7 +58,7 @@ export default function ExecutiveSidebar({ page }: { page: ExecutiveSidebarPage 
   return (
     <>
       <aside
-        className="fixed inset-y-3 right-3 z-30 hidden w-[286px] overflow-y-auto overscroll-contain rounded-[1.4rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.08),transparent_22%),radial-gradient(circle_at_bottom_left,rgba(58,111,160,0.12),transparent_24%),linear-gradient(180deg,#0C1C2D_0%,#10253A_100%)] px-3 py-4 shadow-[0_24px_60px_rgba(0,0,0,0.22)] xl:block 2xl:w-[320px]"
+        className="fixed inset-y-0 right-0 z-30 hidden w-[286px] overflow-y-auto overscroll-contain border-l border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.09),transparent_22%),radial-gradient(circle_at_bottom_left,rgba(58,111,160,0.13),transparent_24%),linear-gradient(180deg,#1A3A54_0%,#16324A_24%,#122B42_52%,#10263C_76%,#0D2235_100%)] px-3 py-5 shadow-[-18px_0_48px_rgba(3,12,22,0.14)] xl:block 2xl:w-[320px]"
         dir="rtl"
       >
         <div className="space-y-3.5">

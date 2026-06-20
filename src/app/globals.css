@@ -304,6 +304,56 @@ h1, h2, h3, h4, .display-title {
   background: linear-gradient(180deg, rgba(182,145,62,0.18) 0%, rgba(182,145,62,0.9) 58%, rgba(182,145,62,0.22) 100%);
 }
 
+.executive-header {
+  position: relative;
+  overflow: hidden;
+}
+
+.executive-header::after {
+  content: "";
+  position: absolute;
+  inset: auto -6% -130% 42%;
+  height: 220px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(208, 162, 67, 0.18) 0%, rgba(208, 162, 67, 0.04) 38%, transparent 70%);
+  filter: blur(16px);
+  pointer-events: none;
+}
+
+.executive-card-glow {
+  isolation: isolate;
+  position: relative;
+  overflow: hidden;
+}
+
+.executive-card-glow::before {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 72% 28%, var(--card-glow, rgba(208, 162, 67, 0.3)) 0%, transparent 31%);
+  filter: blur(22px);
+  opacity: 0.12;
+  animation: executive-card-breathe 5s ease-in-out infinite;
+}
+
+.executive-card-glow > * {
+  position: relative;
+  z-index: 1;
+}
+
+.glow-gold { --card-glow: rgba(232, 190, 94, 0.42); }
+.glow-blue { --card-glow: rgba(95, 175, 255, 0.4); }
+.glow-green { --card-glow: rgba(77, 221, 139, 0.36); }
+.glow-violet { --card-glow: rgba(186, 135, 255, 0.34); }
+.glow-red { --card-glow: rgba(255, 120, 128, 0.32); }
+
+@keyframes executive-card-breathe {
+  0%, 100% { opacity: 0.08; transform: scale(0.9); }
+  48% { opacity: 0.54; transform: scale(1.06); }
+}
+
 @keyframes rise-in {
   from {
     opacity: 0;
@@ -347,6 +397,11 @@ h1, h2, h3, h4, .display-title {
     animation: none !important;
     transition: none !important;
     transform: none !important;
+  }
+
+  .executive-card-glow::before {
+    animation: none !important;
+    opacity: 0.12;
   }
 }
 

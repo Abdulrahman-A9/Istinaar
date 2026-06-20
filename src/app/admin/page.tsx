@@ -2,15 +2,13 @@
 
 import Link from "next/link";
 import {
-  Bell,
   Building2,
   FileCheck2,
   FileText,
-  Mail,
   ShieldCheck,
   Sparkles,
-  UserCircle2,
 } from "lucide-react";
+import ExecutiveHeader from "@/components/amanah/ExecutiveHeader";
 import ExecutiveSidebar from "@/components/amanah/ExecutiveSidebar";
 import { AdminReferenceDashboard } from "@/components/amanah/reference/ReferenceViews";
 import { useAppStore } from "@/store/appStore";
@@ -28,7 +26,7 @@ function SupportShortcut({
 }) {
   return (
     <div
-      className={`rounded-[1rem] border border-white/8 px-3.5 py-3 text-right shadow-[0_12px_28px_rgba(15,23,42,0.14)] ${toneClass}`}
+      className={`executive-card-glow rounded-[1rem] border border-white/8 px-3.5 py-3 text-right shadow-[0_12px_28px_rgba(15,23,42,0.14)] ${toneClass}`}
     >
       <div className="flex items-center justify-between gap-3">
         <span className="flex h-9 w-9 items-center justify-center rounded-[0.9rem] border border-[#D0A243]/28 bg-white/[0.03] text-[#D7B45E]">
@@ -76,39 +74,9 @@ export default function AdminPage() {
         <div className="absolute inset-0 bg-[linear-gradient(125deg,transparent_0%,rgba(255,255,255,0.06)_38%,transparent_52%),linear-gradient(305deg,transparent_0%,rgba(255,255,255,0.045)_42%,transparent_58%)] opacity-20 animate-pulse [animation-duration:12s]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(255,255,255,0.16),transparent_12%),radial-gradient(circle_at_74%_24%,rgba(255,255,255,0.12),transparent_10%),radial-gradient(circle_at_52%_72%,rgba(255,255,255,0.1),transparent_13%)] opacity-30 blur-3xl animate-pulse [animation-duration:8s]" />
       </div>
-      <div className="relative z-10 mx-auto max-w-[1880px] px-3 py-3 pb-24 xl:pr-[312px] xl:pb-3 2xl:pr-[346px]">
+      <div className="relative z-10 mx-auto max-w-[1880px] px-3 py-3 pb-24 xl:pr-[286px] xl:pb-3 2xl:pr-[320px]">
         <main className="min-w-0 space-y-3" dir="rtl">
-          <header className="rounded-[1.45rem] border border-white/8 bg-[linear-gradient(180deg,rgba(8,19,31,0.94)_0%,rgba(9,23,38,0.98)_100%)] px-5 py-4 shadow-[0_18px_44px_rgba(0,0,0,0.2)]">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div className="text-right">
-                <h1 className="font-['Tajawal'] text-[1.7rem] font-black leading-none text-white sm:text-[2.1rem] 2xl:text-[2.35rem]">غرفة قيادة الاستثمار الحضري</h1>
-                <p className="mt-2 text-[13px] text-white/52">مركز القرار التنفيذي - أمانة منطقة حائل</p>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-3">
-                <div className="border-r border-white/10 pr-4 text-right">
-                  <p className="font-['Tajawal'] text-[0.98rem] font-black text-[#E4C982]">مكتب دعم القرار الاستثماري</p>
-                  <p className="mt-1 text-[12px] text-white/44">غرفة المتابعة التنفيذية</p>
-                </div>
-                <div className="border-r border-white/10 pr-4 text-right">
-                  <p className="text-[12px] text-white/52">الأربعاء 05/01/1448 هـ</p>
-                  <p className="mt-1 font-['Tajawal'] text-[1.1rem] font-black text-white">10:30 AM</p>
-                </div>
-                <button className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04]">
-                  <Mail size={18} />
-                </button>
-                <button className="relative flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04]">
-                  <Bell size={18} />
-                  <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#FF434A] text-[11px] font-black text-white">
-                    3
-                  </span>
-                </button>
-                <button className="flex h-12 w-12 items-center justify-center rounded-full bg-[radial-gradient(circle_at_top,#F0E3BA_0%,#C89C45_100%)] text-[#0B1726] shadow-[0_14px_28px_rgba(208,162,67,0.22)]">
-                  <UserCircle2 size={20} />
-                </button>
-              </div>
-            </div>
-          </header>
+          <ExecutiveHeader title="المركز التنفيذي" subtitle="لوحة القيادة والمتابعة الداخلية" displayName={currentUser.fullName} />
 
           <AdminReferenceDashboard />
 
