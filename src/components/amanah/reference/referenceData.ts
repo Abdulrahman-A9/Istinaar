@@ -155,7 +155,7 @@ export const recommendationFeed = [
 ];
 
 export const spatialNeighborhoodCards = [
-  { name: "حي الجامعة", score: "42%", opportunities: "1", value: "1.6", state: "جاهزية منخفضة", tone: "red" },
+  { name: "حي المنتزه", score: "62%", opportunities: "2", value: "7.4", state: "قابلية نمو", tone: "amber" },
   { name: "حي الوسيطاء", score: "65%", opportunities: "2", value: "8.7", state: "جاهزية متوسطة", tone: "amber" },
   { name: "حي النقرة", score: "71%", opportunities: "3", value: "15.2", state: "جاهزية جيدة", tone: "green" },
   { name: "حي الجامعيين", score: "83%", opportunities: "6", value: "32.5", state: "جاهزة للطرح", tone: "green" },

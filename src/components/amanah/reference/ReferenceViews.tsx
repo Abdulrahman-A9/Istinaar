@@ -84,7 +84,7 @@ const mapPoints = [
 ];
 
 const neighborhoodCards = [
-  { name: "حي الجامعة", score: "42%", opportunities: "1", value: "1.6", state: "جاهزية منخفضة", tone: "red" },
+  { name: "حي المنتزه", score: "62%", opportunities: "2", value: "7.4", state: "قابلية نمو", tone: "amber" },
   { name: "حي الوسيطاء", score: "65%", opportunities: "2", value: "8.7", state: "جاهزية متوسطة", tone: "amber" },
   { name: "حي النقرة", score: "71%", opportunities: "3", value: "15.2", state: "جاهزية جيدة", tone: "green" },
   { name: "حي الجامعيين", score: "83%", opportunities: "6", value: "32.5", state: "جاهزة للطرح", tone: "green" },
@@ -554,7 +554,7 @@ export function IntelligenceSpatialReference() {
         </div>
       </DarkCard>
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {neighborhoodCards.map((card) => (
           <div key={card.name} className="rounded-[1rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(78,163,255,0.12),transparent_36%),linear-gradient(180deg,rgba(11,27,45,0.98)_0%,rgba(10,23,38,0.98)_100%)] px-4 py-4 text-right shadow-[0_16px_36px_rgba(0,0,0,0.16)]">
             <div className="flex items-center justify-between">
@@ -570,9 +570,13 @@ export function IntelligenceSpatialReference() {
         ))}
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <section className="rounded-[1.4rem] border border-[#D0A243]/22 bg-[linear-gradient(135deg,rgba(208,162,67,0.07),rgba(8,24,40,0.74)_46%,rgba(78,163,255,0.06))] p-4 shadow-[0_20px_48px_rgba(0,0,0,0.16)]">
+        <div className="mb-4 text-right">
+          <p className="text-[11px] font-bold text-[#D0A243]">مخرجات قابلة للرفع</p>
+          <h2 className="mt-1 font-['Noto_Kufi_Arabic'] text-[1.2rem] font-bold text-white">مؤشرات القرار المكاني</h2>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {[
-          ["خلاصة القرار المكاني", "حي الجامعة", "فجوة جاهزية تحتاج معالجة تنظيمية قبل الرفع", "#FF5A5F"],
           ["خلاصة القرار المكاني", "حي النقرة", "جاهزية جيدة مع فرصتين قابلتين للتطوير السريع", "#F0B846"],
           ["خلاصة القرار المكاني", "حي الجامعيين", "الأعلى قيمةً والأقرب لقرار الرفع التنفيذي", "#42DD71"],
           ["الأحياء الجاهزة", "6 أحياء", "أولوية رفع مباشرة", "#42DD71"],
@@ -582,13 +586,14 @@ export function IntelligenceSpatialReference() {
           ["الواجهات الواعدة", "3 مواقع", "أثر موسمي أعلى هذا الشهر", "#A78BFA"],
           ["الفرص سريعة الرفع", "5 فرص", "قابلة للتنفيذ بعد مراجعة خفيفة", "#FF8A5B"],
         ].map(([label, value, note, color]) => (
-          <div key={`${label}-${value}`} className="rounded-[1.2rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(78,163,255,0.12),transparent_36%),linear-gradient(180deg,rgba(11,27,45,0.98)_0%,rgba(10,23,38,0.98)_100%)] px-5 py-5 text-right shadow-[0_16px_36px_rgba(0,0,0,0.16)]">
+          <div key={`${label}-${value}`} className="executive-card-glow glow-blue min-h-[148px] rounded-[1.1rem] border border-[#7BC9FF]/18 bg-[radial-gradient(circle_at_top_left,rgba(208,162,67,0.09),transparent_42%),linear-gradient(145deg,rgba(19,43,65,0.98),rgba(8,22,36,0.98))] px-4 py-4 text-right shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_14px_30px_rgba(0,0,0,0.16)]">
             <p className="text-[12px] text-white/42">{label}</p>
             <p className="mt-2 font-['Tajawal'] text-[1.55rem] font-black text-white">{value}</p>
             <p className="mt-2 text-[12px]" style={{ color: String(color) }}>{note}</p>
           </div>
         ))}
-      </div>
+        </div>
+      </section>
     </div>
   );
 }

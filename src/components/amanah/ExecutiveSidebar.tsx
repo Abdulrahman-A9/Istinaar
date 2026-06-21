@@ -8,12 +8,14 @@ import {
   LayoutDashboard,
   LineChart,
   LogOut,
+  Menu,
   MapPin,
   Settings,
   Sparkles,
   Users,
+  X,
 } from "lucide-react";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 
 type ExecutiveSidebarPage = "admin" | "overview" | "spatial" | "opportunities" | "approvals" | "partners" | "reports" | "settings";
 
@@ -55,11 +57,25 @@ function SidebarLink({
 }
 
 export default function ExecutiveSidebar({ page }: { page: ExecutiveSidebarPage }) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <>
+      {isOpen ? <button aria-label="إغلاق القائمة" className="fixed inset-0 z-40 bg-[#04101C]/70 backdrop-blur-sm xl:hidden" onClick={() => setIsOpen(false)} /> : null}
+      <button
+        aria-label={isOpen ? "إغلاق القائمة" : "فتح القائمة"}
+        aria-expanded={isOpen}
+        className="fixed right-3 top-3 z-[60] flex h-11 w-11 items-center justify-center rounded-[0.9rem] border border-white/12 bg-[#102B43]/95 text-[#E5C876] shadow-[0_14px_32px_rgba(0,0,0,0.28)] backdrop-blur xl:hidden"
+        onClick={() => setIsOpen((current) => !current)}
+      >
+        {isOpen ? <X size={20} /> : <Menu size={20} />}
+      </button>
       <aside
-        className="fixed inset-y-0 right-0 z-30 hidden w-[286px] overflow-y-auto overscroll-contain border-l border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.09),transparent_22%),radial-gradient(circle_at_bottom_left,rgba(58,111,160,0.13),transparent_24%),linear-gradient(180deg,#1A3A54_0%,#16324A_24%,#122B42_52%,#10263C_76%,#0D2235_100%)] px-3 py-5 shadow-[-18px_0_48px_rgba(3,12,22,0.14)] xl:block 2xl:w-[320px]"
+        className={`fixed inset-y-0 right-0 z-50 w-[min(88vw,320px)] overflow-y-auto overscroll-contain border-l border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.09),transparent_22%),radial-gradient(circle_at_bottom_left,rgba(58,111,160,0.13),transparent_24%),linear-gradient(180deg,#1A3A54_0%,#16324A_24%,#122B42_52%,#10263C_76%,#0D2235_100%)] px-3 py-5 shadow-[-18px_0_48px_rgba(3,12,22,0.22)] transition-transform duration-300 ease-out xl:z-30 xl:w-[286px] xl:translate-x-0 2xl:w-[320px] ${isOpen ? "translate-x-0" : "translate-x-full"}`}
         dir="rtl"
+        onClick={(event) => {
+          if ((event.target as HTMLElement).closest("a")) setIsOpen(false);
+        }}
       >
         <div className="space-y-3.5">
         <div className="flex items-start justify-between">
@@ -113,27 +129,6 @@ export default function ExecutiveSidebar({ page }: { page: ExecutiveSidebarPage 
         </div>
       </aside>
 
-      <nav className="fixed inset-x-3 bottom-3 z-40 flex gap-1 overflow-x-auto rounded-[1.15rem] border border-white/10 bg-[#0B1C2E]/95 p-1.5 shadow-[0_18px_40px_rgba(0,0,0,0.3)] backdrop-blur xl:hidden" dir="rtl">
-        {[
-          { href: "/admin", label: "الرئيسية", icon: <LayoutDashboard size={17} />, active: page === "admin" },
-          { href: "/investment-intelligence", label: "الذكاء", icon: <Sparkles size={17} />, active: page === "overview" },
-          { href: "/investment-intelligence?tab=spatial", label: "المكاني", icon: <MapPin size={17} />, active: page === "spatial" },
-          { href: "/investment-intelligence?tab=opportunities", label: "الفرص", icon: <BriefcaseBusiness size={17} />, active: page === "opportunities" },
-          { href: "/investment-intelligence?tab=approvals", label: "الاعتمادات", icon: <FileCheck2 size={17} />, active: page === "approvals" },
-          { href: "/investment-intelligence?tab=partners", label: "الشركاء", icon: <Users size={17} />, active: page === "partners" },
-          { href: "/investment-intelligence?tab=reports", label: "التقارير", icon: <LineChart size={17} />, active: page === "reports" },
-          { href: "/investment-intelligence?tab=settings", label: "الإعدادات", icon: <Settings size={17} />, active: page === "settings" },
-        ].map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={`flex min-w-[68px] shrink-0 flex-col items-center gap-1 rounded-[0.85rem] px-2 py-2 text-[10px] font-bold ${item.active ? "bg-[#D0A243] text-[#09121D]" : "text-white/68"}`}
-          >
-            {item.icon}
-            <span className="truncate">{item.label}</span>
-          </Link>
-        ))}
-      </nav>
     </>
   );
 }
