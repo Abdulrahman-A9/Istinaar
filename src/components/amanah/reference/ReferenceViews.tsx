@@ -154,101 +154,49 @@ function MapStateDot({ state }: { state: "ready" | "review" | "blocked" }) {
 function ExecutiveMap({ compact = false }: { compact?: boolean }) {
   return (
     <div
-      className={`relative overflow-hidden rounded-[1.05rem] border border-white/8 bg-[radial-gradient(circle_at_24%_22%,rgba(78,141,194,0.16),transparent_30%),radial-gradient(circle_at_72%_64%,rgba(208,162,67,0.13),transparent_32%),linear-gradient(145deg,#102337_0%,#0B1A2A_48%,#07121F_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${compact ? "p-2.5" : "p-3"}`}
+      className={`relative overflow-hidden rounded-[1rem] border border-white/10 bg-[#0c121b] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] ${compact ? "h-[390px]" : "h-[420px]"}`}
     >
-      <div
-        className="absolute inset-0 opacity-40"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)",
-          backgroundSize: compact ? "30px 30px" : "34px 34px",
-        }}
+      <img
+        alt="خريطة أولويات أحياء حائل"
+        className="absolute inset-0 h-full w-full object-cover opacity-60"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbwRmAZR6AKKmxMOkHePKVDDYeQWBvl_mYvoTKbR4UWeB9bfABdi795oEplrhzM-46I0EzzJVTvuvTYobDIDzZnji4aXlgTHkRdt86OI55NEOmeP4n5ABHgtJmXxDQGISanVVHftFh2nzxGZDd2ayPRfvTVCsZHsO2JkqF_5k8jMX2u4PQBrY-qhniNmBxafUWJGQ5M4rcCPNvm8kyQYXjxtCeHmn1c6_FK-QnP2yAtg8CQu7YkE-c-mrEhHongQsGGq4ArggB4ZM"
       />
-      <div className="absolute inset-x-3 top-3 z-20 flex items-start justify-between gap-3">
-        <button className="flex min-w-[132px] items-center justify-between rounded-[0.65rem] border border-white/10 bg-[#0B1726]/86 px-3 py-2 text-[11px] font-bold text-white/70 shadow-[0_10px_24px_rgba(0,0,0,0.24)]">
-          <ChevronDown size={14} />
-          جميع الأحياء
-        </button>
-        <div className="rounded-[0.85rem] border border-white/10 bg-[#07121F]/78 px-3 py-2 text-right shadow-[0_10px_24px_rgba(0,0,0,0.24)]">
-          <div className="flex items-center justify-end gap-2 text-[11px] font-bold text-white/74"><span>جاهزة للطرح</span><MapStateDot state="ready" /></div>
-          <div className="mt-2 flex items-center justify-end gap-2 text-[11px] font-bold text-white/74"><span>قيد المراجعة</span><MapStateDot state="review" /></div>
-          <div className="mt-2 flex items-center justify-end gap-2 text-[11px] font-bold text-white/74"><span>متعثرة</span><MapStateDot state="blocked" /></div>
-        </div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(13,28,43,0.04),rgba(5,12,21,0.5)_76%),linear-gradient(180deg,rgba(4,11,19,0.12),rgba(4,11,19,0.42))]" />
+      <div className="absolute right-4 top-4 z-20 flex min-w-[132px] items-center justify-between rounded-[0.55rem] border border-white/10 bg-[#111923]/82 px-3 py-2 text-[10px] font-bold text-white/78 backdrop-blur-md">
+        <ChevronDown size={12} />
+        جميع الأحياء
       </div>
-      <svg className={`relative z-10 w-full ${compact ? "h-[270px] sm:h-[330px]" : "h-[360px] sm:h-[470px] 2xl:h-[520px]"}`} viewBox="0 0 860 500" fill="none">
-        <defs>
-          <filter id="hailMapGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="5" result="blur" />
-            <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.58 0 0 0 0 0.78 0 0 0 0 1 0 0 0 0.35 0" />
-            <feBlend in="SourceGraphic" />
-          </filter>
-          <filter id="roadGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="1.4" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-          <linearGradient id="cityCore" x1="70" y1="68" x2="812" y2="438" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#1B334A" stopOpacity=".88" />
-            <stop offset=".52" stopColor="#13283E" stopOpacity=".9" />
-            <stop offset="1" stopColor="#0B1928" stopOpacity=".94" />
-          </linearGradient>
-        </defs>
-
-        <path d="M68 156C154 59 329 37 501 60C665 82 805 178 828 300C847 401 717 465 542 467C346 470 156 396 72 275C40 229 38 190 68 156Z" fill="url(#cityCore)" stroke="#607487" strokeOpacity=".12" />
-
-        <g opacity=".28">
-          {Array.from({ length: 13 }).map((_, index) => (
-            <path key={`minor-h-${index}`} d={`M${70 + index * 42} 86C${130 + index * 34} 156 ${140 + index * 28} 315 ${86 + index * 48} 450`} stroke="#7990A5" strokeWidth="1" strokeOpacity=".36" />
-          ))}
-          {Array.from({ length: 10 }).map((_, index) => (
-            <path key={`minor-v-${index}`} d={`M78 ${112 + index * 34}C220 ${86 + index * 22} 520 ${126 + index * 18} 806 ${90 + index * 31}`} stroke="#7990A5" strokeWidth="1" strokeOpacity=".28" />
-          ))}
-        </g>
-
-        <g filter="url(#roadGlow)">
-          <path d="M80 286C202 205 315 170 441 174C582 178 701 221 820 308" stroke="#C49B4A" strokeOpacity=".48" strokeWidth="5" />
-          <path d="M101 365C231 292 373 255 517 270C634 282 728 340 806 408" stroke="#C49B4A" strokeOpacity=".38" strokeWidth="4" />
-          <path d="M47 205C176 174 326 145 486 156C638 166 745 217 832 277" stroke="#8EA1B1" strokeOpacity=".28" strokeWidth="3" />
-          <path d="M199 52L676 458" stroke="#8EA1B1" strokeOpacity=".3" strokeWidth="4" />
-          <path d="M167 447L744 97" stroke="#8EA1B1" strokeOpacity=".29" strokeWidth="4" />
-          <path d="M337 42C361 148 374 285 349 461" stroke="#8EA1B1" strokeOpacity=".24" strokeWidth="2.5" />
-          <path d="M525 53C499 170 499 304 534 454" stroke="#8EA1B1" strokeOpacity=".22" strokeWidth="2.5" />
-          <path d="M137 147C258 94 443 81 606 128C734 165 802 246 786 333C769 428 614 462 439 431C256 398 113 306 111 217C110 190 117 165 137 147Z" stroke="#C49B4A" strokeOpacity=".25" strokeWidth="2" />
-          <path d="M190 183C285 141 429 138 556 168C665 194 733 257 723 323C712 395 601 425 462 406C317 386 205 323 184 252C176 225 176 201 190 183Z" stroke="#C49B4A" strokeOpacity=".2" strokeWidth="2" />
-          <path d="M261 215C347 184 475 190 581 225C660 252 704 304 679 353C646 418 494 420 364 372C270 337 224 263 261 215Z" stroke="#C49B4A" strokeOpacity=".18" strokeWidth="2" />
-        </g>
-
-        <g filter="url(#hailMapGlow)" opacity=".72">
-          <path d="M151 132L257 100L344 137L302 212L177 210Z" fill="#23374D" stroke="#6B7E8D" strokeOpacity=".38" />
-          <path d="M354 100L497 70L604 115L559 211L388 196Z" fill="#263B59" stroke="#718496" strokeOpacity=".34" />
-          <path d="M622 123L709 87L797 137L820 223L719 263L632 215Z" fill="#203549" stroke="#718496" strokeOpacity=".34" />
-          <path d="M278 239L416 171L516 251L449 351L305 325Z" fill="#544B31" stroke="#F3B942" strokeOpacity=".7" strokeWidth="2" />
-          <path d="M521 246L637 217L743 299L686 386L528 350Z" fill="#21384E" stroke="#718496" strokeOpacity=".3" />
-          <path d="M207 336L327 331L397 408L305 456L185 421Z" fill="#1C3D3A" stroke="#45D873" strokeOpacity=".28" />
-          <path d="M430 356L546 330L638 385L596 459L455 456Z" fill="#1B3350" stroke="#57A0FF" strokeOpacity=".28" />
-        </g>
-      </svg>
+      <div className="absolute left-4 top-4 z-20 rounded-[0.65rem] border border-white/10 bg-[#111923]/82 p-2.5 text-right backdrop-blur-md">
+        {[
+          ["جاهزة للطرح", "ready"],
+          ["قيد المراجعة", "review"],
+          ["متعثرة", "blocked"],
+        ].map(([label, state]) => (
+          <div key={label} className="flex items-center justify-end gap-2 py-0.5 text-[10px] font-bold text-white/78">
+            <span>{label}</span>
+            <MapStateDot state={state as "ready" | "review" | "blocked"} />
+          </div>
+        ))}
+      </div>
 
       {mapPoints.map((point) => (
         <div key={point.label} className="absolute z-20 text-center" style={{ top: point.top, right: point.right }}>
-          <div className="mx-auto mb-2 flex h-7 w-7 items-center justify-center rounded-full bg-[#102438]/90 shadow-[0_0_0_8px_rgba(255,255,255,0.04)]">
+          <div className="mx-auto mb-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-[#101A25]/92 shadow-[0_0_0_8px_rgba(255,255,255,0.055)]">
             <MapStateDot state={point.state as "ready" | "review" | "blocked"} />
           </div>
-          <span className="rounded-full bg-[#091521]/88 px-2.5 py-1 text-[11px] font-bold text-white/88">{point.label}</span>
+          <span className="rounded-full bg-[#07101B]/88 px-2 py-1 text-[10px] font-bold text-white/88 shadow-[0_8px_18px_rgba(0,0,0,0.32)]">{point.label}</span>
         </div>
       ))}
 
-      <div className="absolute bottom-4 right-4 flex flex-col gap-2">
-        <button className="flex h-9 w-9 items-center justify-center rounded-[0.72rem] border border-white/10 bg-[#132338]/88 text-white/84">
+      <div className="absolute bottom-4 left-4 z-20 flex flex-col gap-2">
+        <button className="flex h-8 w-8 items-center justify-center rounded-[0.45rem] border border-white/10 bg-[#111923]/82 text-white/84 backdrop-blur-md">
           <Plus size={16} />
         </button>
-        <button className="flex h-9 w-9 items-center justify-center rounded-[0.72rem] border border-white/10 bg-[#132338]/88 text-white/84">
+        <button className="flex h-8 w-8 items-center justify-center rounded-[0.45rem] border border-white/10 bg-[#111923]/82 text-white/84 backdrop-blur-md">
           <Minus size={16} />
         </button>
       </div>
-      <button className="absolute bottom-4 left-4 z-20 rounded-[0.78rem] border border-[#D0A243]/28 bg-white/[0.08] px-4 py-2 text-[12px] font-black text-[#E8C36B] shadow-[0_10px_24px_rgba(0,0,0,0.2)]">
+      <button className="absolute bottom-4 right-4 z-20 rounded-[0.55rem] border border-[#C29B4F]/28 bg-[#111923]/82 px-3 py-2 text-[10px] font-black text-[#E8C36B] shadow-[0_10px_24px_rgba(0,0,0,0.2)] backdrop-blur-md">
         عرض طبقات الخريطة
       </button>
     </div>
@@ -285,191 +233,206 @@ export function AdminReferenceDashboard() {
     ["91%", "رضا المستثمرين"],
     ["68%", "استغلال الأراضي"],
   ];
-  const metricCardThemes = [
-    "bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.18),transparent_34%),linear-gradient(180deg,rgba(20,38,60,0.96)_0%,rgba(12,28,47,0.98)_100%)]",
-    "bg-[radial-gradient(circle_at_top_right,rgba(78,163,255,0.16),transparent_34%),linear-gradient(180deg,rgba(20,38,60,0.96)_0%,rgba(12,28,47,0.98)_100%)]",
-    "bg-[radial-gradient(circle_at_top_right,rgba(61,211,128,0.15),transparent_34%),linear-gradient(180deg,rgba(20,38,60,0.96)_0%,rgba(12,28,47,0.98)_100%)]",
-    "bg-[radial-gradient(circle_at_top_right,rgba(188,125,255,0.14),transparent_34%),linear-gradient(180deg,rgba(20,38,60,0.96)_0%,rgba(12,28,47,0.98)_100%)]",
-    "bg-[radial-gradient(circle_at_top_right,rgba(255,124,124,0.14),transparent_34%),linear-gradient(180deg,rgba(20,38,60,0.96)_0%,rgba(12,28,47,0.98)_100%)]",
-  ];
 
   return (
-    <div className="space-y-3">
-      <div className="grid gap-2.5 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
+    <div className="space-y-4">
+      <section className="grid gap-4 xl:grid-cols-5">
         {executiveMetrics.map((metric, index) => (
-          <article
-            key={metric.label}
-            className={`executive-card-glow ${["glow-gold", "glow-blue", "glow-green", "glow-violet", "glow-red"][index % 5]} min-h-[126px] rounded-[1rem] border border-white/8 px-4 py-3 shadow-[0_14px_28px_rgba(0,0,0,0.14)] ${metricCardThemes[index % metricCardThemes.length]}`}
-          >
+          <article key={metric.label} className={`executive-card-glow ${["glow-gold", "glow-blue", "glow-green", "glow-violet", "glow-red"][index % 5]} flex min-h-[118px] flex-col justify-between rounded-xl border border-white/10 bg-[#161c26]/92 p-4 shadow-[0_14px_28px_rgba(0,0,0,0.14)] transition hover:bg-[#1c2431]`}>
             <div className="flex items-start justify-between gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-[0.8rem] border border-[#D0A243]/38 bg-white/[0.04]">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#C29B4F]/10 text-[#C29B4F]">
                 <MetricIcon type={metric.icon} />
               </div>
               <div className="text-right">
-                <p className="text-[11px] leading-5 text-white/68">{metric.label}</p>
-                <p className="mt-1.5 font-['Tajawal'] text-[1.75rem] font-black leading-none text-white">{metric.value}</p>
-                {metric.unit ? <p className="mt-1.5 text-[11px] text-white/44">{metric.unit}</p> : null}
+                <p className="text-[11px] leading-5 text-white/58">{metric.label}</p>
+                <div className="mt-1 flex items-baseline justify-end gap-1">
+                  <span className="font-['Tajawal'] text-[1.9rem] font-black leading-none text-white">{metric.value}</span>
+                  {metric.unit ? <span className="text-[10px] text-white/44">{metric.unit}</span> : null}
+                </div>
               </div>
             </div>
-            <p className="mt-3 text-right text-[11px] font-bold text-[#28F0AE]">{metric.delta}</p>
+            <p className="text-[10px] font-bold text-[#28F0AE]">{metric.delta}</p>
           </article>
         ))}
+      </section>
 
-        <article className="executive-card-glow glow-gold min-h-[126px] rounded-[1rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(61,211,128,0.1),transparent_24%),linear-gradient(180deg,rgba(21,39,59,0.96)_0%,rgba(12,28,47,0.98)_100%)] px-4 py-3 text-right shadow-[0_14px_28px_rgba(0,0,0,0.14)]">
-          <div className="flex items-center justify-between gap-3">
-            <span className="rounded-full bg-[#263848] px-3 py-1.5 text-[11px] font-black text-[#EFCF81]">AI</span>
-            <p className="text-[11px] text-white/48">الذكاء التنفيذي يقترح</p>
-          </div>
-          <h3 className="mt-2 font-['Tajawal'] text-[1.25rem] font-black leading-[1.4] text-white">توصية جاهزة</h3>
-          <p className="mt-1.5 line-clamp-2 text-[12px] leading-6 text-white/62">اعتماد فرصة تطوير موقع حي مشار مع جاهزية تنظيمية عالية.</p>
-          <div className="mt-2.5 flex items-center justify-between">
-            <span className="text-[12px] font-black text-[#42DD71]">83%</span>
-            <span className="text-[11px] text-white/50">نسبة الجاهزية</span>
-          </div>
-          <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-white/10">
-            <div className="h-full w-[83%] rounded-full bg-[#42DD71]" />
-          </div>
-        </article>
-      </div>
-
-      <div className="grid items-start gap-3 2xl:grid-cols-[1.22fr_0.78fr]">
-        <DarkCard
-          title="خريطة أولويات الأحياء"
-          subtitle="التحليل المكاني المباشر"
-          action={<button className="rounded-[1rem] border border-[#D0A243]/30 bg-white/[0.03] px-5 py-3 text-sm font-bold text-[#E4C982]">عرض طبقات الخريطة</button>}
-        >
-          <div className="grid items-start gap-3 lg:grid-cols-[210px_minmax(0,1fr)]">
-            <div className="space-y-3">
-              <button className="flex w-full items-center justify-between rounded-[0.9rem] border border-white/10 bg-white/[0.03] px-4 py-3 text-[12px] font-bold text-white">
-                <ChevronDown size={18} />
-                حي الجامعيين
-              </button>
-              <div className="rounded-[1rem] border border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(78,163,255,0.14),transparent_40%),linear-gradient(180deg,rgba(18,34,52,0.96)_0%,rgba(11,23,37,0.98)_100%)] p-3 text-right">
-                <p className="mb-2 font-['Tajawal'] text-[0.95rem] font-black text-white">حالة الأحياء</p>
-                <div className="space-y-2.5 text-[12px] text-white/78">
-                  <div className="flex items-center justify-between"><MapStateDot state="ready" /><span>جاهزة للطرح</span></div>
-                  <div className="flex items-center justify-between"><MapStateDot state="review" /><span>قيد المراجعة</span></div>
-                  <div className="flex items-center justify-between"><MapStateDot state="blocked" /><span>متعثرة</span></div>
-                </div>
-              </div>
-              <div className="rounded-[1rem] border border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(61,211,128,0.14),transparent_40%),linear-gradient(180deg,rgba(18,34,52,0.96)_0%,rgba(11,23,37,0.98)_100%)] p-3 text-right">
-                <p className="text-[11px] text-white/46">الحي المحدد</p>
-                <p className="mt-1.5 font-['Tajawal'] text-[1.25rem] font-black text-white">حي الجامعيين</p>
-                <p className="mt-1.5 text-[11px] text-white/56">آخر تحديث: 28-03-2026</p>
-              </div>
+      <section className="grid gap-4 xl:grid-cols-12">
+        <div className="rounded-2xl border border-white/10 bg-[#161c26]/92 p-4 xl:col-span-5">
+          <div className="mb-3 flex items-center justify-between">
+            <button className="rounded-lg border border-[#C29B4F]/30 bg-[#C29B4F]/8 px-4 py-2 text-[10px] font-bold text-[#EBC070]">عرض طبقات الخريطة</button>
+            <div className="text-right">
+              <p className="text-[10px] font-bold text-[#C29B4F]">التحليل المكاني المباشر</p>
+              <h2 className="mt-1 text-lg font-black text-white">خريطة أولويات الأحياء</h2>
             </div>
-            <ExecutiveMap compact />
           </div>
-
-          <div className="mt-3 grid gap-3 md:grid-cols-3">
+          <ExecutiveMap compact />
+          <div className="mt-3 grid grid-cols-3 gap-3">
             {[
-              ["الأحياء الجاهزة", "6 أحياء", "أولوية رفع مباشرة", "#42DD71"],
-              ["المعوقات المتكررة", "3 عناصر", "تحتاج متابعة تنظيمية", "#F0B846"],
-              ["قيمة الفرص المكانية", "67.9", "مليون ريال متوقع", "#D0A243"],
-            ].map(([label, value, note, color]) => (
-              <div key={String(label)} className="rounded-[1rem] border border-white/8 bg-white/[0.03] px-4 py-4 text-right">
-                <p className="text-[12px] text-white/42">{label}</p>
-                <p className="mt-2 font-['Tajawal'] text-[1.45rem] font-black text-white">{value}</p>
-                <p className="mt-2 text-[12px]" style={{ color: String(color) }}>{note}</p>
+              ["الأحياء الجاهزة", "6", "رفع مباشر"],
+              ["المعوقات", "3", "متابعة تنظيمية"],
+              ["القيمة", "67.9", "مليون ريال"],
+            ].map(([label, value, note]) => (
+              <div key={label} className="rounded-xl border border-white/10 bg-white/[0.025] p-3 text-right">
+                <p className="text-[10px] text-white/42">{label}</p>
+                <p className="mt-1 text-xl font-black text-white">{value}</p>
+                <p className="mt-1 text-[10px] text-[#EBC070]">{note}</p>
               </div>
             ))}
           </div>
-        </DarkCard>
-
-        <DarkCard title="أهم القرارات اليوم" action={<button className="text-sm font-black text-[#D0A243]">عرض الكل</button>}>
-          <div className="space-y-3">
-            {executiveDecisions.map((decision) => (
-              <div key={decision.title} className="rounded-[1.1rem] border border-white/8 bg-white/[0.03] p-4">
-                <div className="flex items-start justify-between gap-3">
-                  <button className="rounded-[0.95rem] border border-[#D0A243]/28 bg-white/[0.03] px-4 py-3 text-sm font-bold text-white/84">
-                    {decision.action}
-                  </button>
-                  <div className="min-w-0 flex-1 text-right">
-                    <h3 className="font-['Tajawal'] text-[1.04rem] font-black leading-8 text-white">{decision.title}</h3>
-                    <p className="mt-1 text-sm text-white/48">{decision.subtitle}</p>
-                    <div className="mt-3 flex items-center justify-end gap-3">
-                      <span className={`rounded-full px-3 py-1 text-xs font-black ${cardTone(decision.tone)}`}>{decision.status}</span>
-                      <span className="text-xs text-white/36">{decision.age}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </DarkCard>
-      </div>
-
-      <div className="grid items-stretch gap-3 2xl:grid-cols-[0.88fr_0.88fr_1fr]">
-        <DarkCard title="مؤشرات الأداء الرئيسية" className="h-full">
-          <div className="grid grid-cols-2 gap-3">
-            {kpis.map(([value, label], index) => (
-              <div key={label} className="text-center">
-                <div className="mx-auto h-20 w-20">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RadialBarChart data={[{ value: Number(value.replace("%", "")) }]} innerRadius="72%" outerRadius="100%" startAngle={90} endAngle={-270}>
-                      <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
-                      <RadialBar dataKey="value" cornerRadius={12} fill={index === 0 || index === 3 ? "#D8B25A" : "#85E26E"} background={{ fill: "rgba(255,255,255,0.1)" }} />
-                    </RadialBarChart>
-                  </ResponsiveContainer>
-                </div>
-                <p className="mt-2 text-[1.45rem] font-black text-white">{value}</p>
-                <p className="mt-1 text-[12px] leading-6 text-white/58">{label}</p>
-              </div>
-            ))}
-          </div>
-        </DarkCard>
-
-        <div className="grid h-full gap-3">
-          <DarkCard title="رحلة الفرصة الاستثمارية" className="h-full">
-            <div className="flex items-start justify-between gap-2">
-              {stages.map((stage) => (
-                <div key={stage.label} className="flex-1 text-center">
-                  <div className={`mx-auto flex h-11 w-11 items-center justify-center rounded-full border ${stage.active ? (stage.gold ? "border-[#D0A243] bg-[#C79C45]" : "border-[#39D56E] bg-[#173C2A]") : "border-white/12 bg-white/[0.04]"}`}>
-                    {stage.active ? <Check size={18} className={stage.gold ? "text-white" : "text-[#39D56E]"} /> : <span className="h-2.5 w-2.5 rounded-full bg-white/28" />}
-                  </div>
-                  <p className={`mt-2 text-[12px] font-bold ${stage.active ? (stage.gold ? "text-[#E6C16A]" : "text-[#56DD77]") : "text-white/54"}`}>{stage.label}</p>
-                </div>
-              ))}
-            </div>
-            <div className="mt-5 grid grid-cols-3 gap-2 2xl:grid-cols-6">
-              {["1 تشغيل", "8 تحليل", "3 اعتماد", "كل الإنجاز", "2 طرح", "1 تشغيل"].map((item) => (
-                <div key={item} className="rounded-[1rem] border border-white/8 bg-white/[0.03] px-3 py-3 text-center text-sm font-bold text-white/78">
-                  {item}
-                </div>
-              ))}
-            </div>
-          </DarkCard>
-
-          <DarkCard title="تنبيهات ذكية" className="h-full">
-            <div className="space-y-3">
-              {[
-                ["فرصة تجاوزت مدة الاعتماد المستهدفة في حي النقرة", "#FF5A5F"],
-                ["دراسة ميدانية لمشروع حي الوسيطاء تحتاج تحديثاً عاجلاً", "#F0B846"],
-              ].map(([text, color]) => (
-                <div key={text} className="flex items-center justify-between rounded-[1rem] border border-white/8 bg-white/[0.03] px-4 py-4 text-right">
-                  <span className="h-3.5 w-3.5 rounded-full" style={{ background: color }} />
-                  <p className="text-sm leading-8 text-white/78">{text}</p>
-                </div>
-              ))}
-            </div>
-          </DarkCard>
         </div>
 
-        <DarkCard title="الأثر الاقتصادي المتوقع" action={<button className="text-sm font-black text-[#D0A243]">عرض التقرير</button>} className="h-full">
-          <div className="h-[310px]">
+        <div className="rounded-2xl border border-white/10 bg-[#161c26]/92 p-4 xl:col-span-4">
+          <div className="mb-4 flex items-center justify-between">
+            <button className="text-[10px] font-bold text-[#C29B4F]">عرض الكل</button>
+            <h3 className="text-sm font-black text-white">أهم القرارات اليوم</h3>
+          </div>
+          <div className="space-y-3">
+            {executiveDecisions.map((decision) => (
+              <div key={decision.title} className={`flex items-center justify-between gap-3 rounded-xl border p-3 transition hover:border-[#C29B4F]/50 ${decision.tone === "red" ? "border-red-500/20 bg-red-500/5" : "border-white/10 bg-[#1c2431]/70"}`}>
+                <button className="shrink-0 rounded-lg border border-white/10 bg-[#0e141e] px-3 py-2 text-[10px] font-bold text-white/86">{decision.action}</button>
+                <div className="min-w-0 text-right">
+                  <h4 className="truncate text-[12px] font-black text-white">{decision.title}</h4>
+                  <p className="mt-1 truncate text-[10px] text-white/48">{decision.subtitle}</p>
+                  <div className="mt-2 flex items-center justify-end gap-2">
+                    <span className={`rounded px-2 py-0.5 text-[9px] font-black ${cardTone(decision.tone)}`}>{decision.status}</span>
+                    <span className="text-[9px] text-white/36">{decision.age}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-white/10 bg-[#161c26]/92 p-4 xl:col-span-3">
+          <div className="mb-4 flex items-center justify-between">
+            <span className="rounded bg-[#C29B4F] px-2 py-1 text-[9px] font-black text-white">AI</span>
+            <p className="text-[11px] font-bold text-white/58">الذكاء التنفيذي يقترح</p>
+          </div>
+          <div className="border-b border-white/10 pb-4 text-center">
+            <p className="text-[10px] text-white/44">يوصى بالإسراع في اعتماد فرصة</p>
+            <h3 className="mt-2 text-lg font-black text-[#EBC070]">تطوير موقع حي مشار</h3>
+            <div className="mt-4 flex items-center justify-center gap-2">
+              <span className="text-xs font-black text-[#42DD71]">83%</span>
+              <div className="h-1.5 w-20 overflow-hidden rounded-full bg-white/10">
+                <div className="h-full w-[83%] rounded-full bg-[#42DD71]" />
+              </div>
+              <span className="text-[9px] text-white/44">نسبة الجاهزية</span>
+            </div>
+            <p className="mt-4 text-[10px] leading-6 text-white/56">عائد استثماري متوقع مرتفع، وجاهزية تنظيمية عالية.</p>
+            <button className="mt-4 w-full rounded-xl bg-[#C29B4F] py-3 text-sm font-black text-white shadow-[0_12px_26px_rgba(194,155,79,0.22)]">مراجعة الآن</button>
+          </div>
+          <button className="mt-3 flex w-full items-center justify-between text-[10px] text-white/52">
+            <span>عرض جميع التوصيات</span>
+            <span>‹</span>
+          </button>
+          <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.025] p-3 text-right">
+            <div className="mb-1 flex items-center justify-between">
+              <span className="rounded-full bg-[#C29B4F]/20 px-2 py-0.5 text-[10px] font-black text-[#EBC070]">6</span>
+              <p className="text-[10px] font-bold text-white/52">القرارات المطلوبة</p>
+            </div>
+            <p className="text-[10px] text-white/42">تحتاج إلى إجراء فوري</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="grid gap-4 xl:grid-cols-12">
+        <div className="rounded-2xl border border-white/10 bg-[#161c26]/92 p-4 xl:col-span-3">
+          <div className="mb-4 flex items-center justify-between">
+            <button className="text-[10px] font-bold text-[#C29B4F]">عرض الكل</button>
+            <h3 className="text-sm font-black text-white">مؤشرات الأداء الرئيسية</h3>
+          </div>
+          <div className="grid grid-cols-2 gap-y-5">
+            {kpis.map(([value, label], index) => (
+              <div key={label} className="flex flex-col items-center">
+                <div className="relative flex h-16 w-16 items-center justify-center">
+                  <div className="absolute inset-0 rounded-full border-[6px] border-white/10" />
+                  <div className={`absolute inset-0 rounded-full border-[6px] ${index % 2 === 0 ? "border-[#78E66D]" : "border-[#C29B4F]"} border-l-transparent border-b-transparent`} />
+                  <span className="text-sm font-black text-white">{value}</span>
+                </div>
+                <p className="mt-2 text-center text-[10px] text-white/50">{label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-white/10 bg-[#161c26]/92 p-4 xl:col-span-3">
+          <div className="mb-4 flex items-center justify-between">
+            <button className="text-[10px] font-bold text-[#C29B4F]">عرض الكل</button>
+            <h3 className="text-sm font-black text-white">تنبيهات ذكية</h3>
+          </div>
+          <div className="space-y-3">
+            {[
+              ["فرصة تجاوزت مدة الاعتماد", "مشروع تطوير حي النقرة", "#FF5A5F"],
+              ["دراسة تحتاج تحديث", "دراسة حي الوسيطاء", "#F3B942"],
+              ["مستندات شريك مفقودة", "شركة رواد البناء", "#EBC070"],
+              ["فرصة جاهزة للطرح", "تطوير واجهة طريق الملك خالد", "#42DD71"],
+            ].map(([title, note, color]) => (
+              <div key={title} className="flex items-center justify-between rounded-xl border border-white/10 bg-[#1c2431]/72 p-2.5 text-right">
+                <span className="h-2.5 w-2.5 rounded-full" style={{ background: color }} />
+                <div>
+                  <p className="text-[10px] font-bold text-white">{title}</p>
+                  <p className="mt-0.5 text-[9px] text-white/42">{note}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-white/10 bg-[#161c26]/92 p-4 xl:col-span-3">
+          <div className="mb-5 flex items-center justify-between">
+            <button className="text-[10px] font-bold text-[#C29B4F]">عرض الكل</button>
+            <h3 className="text-sm font-black text-white">رحلة الفرصة الاستثمارية</h3>
+          </div>
+          <div className="flex justify-between gap-2">
+            {stages.map((stage) => (
+              <div key={stage.label} className="flex min-w-0 flex-col items-center gap-2">
+                <div className={`flex h-7 w-7 items-center justify-center rounded-full border ${stage.active ? stage.gold ? "border-[#C29B4F] bg-[#C29B4F] text-[#0B1726]" : "border-[#2BD96B] bg-[#113523] text-[#42DD71]" : "border-white/12 bg-white/[0.03] text-white/36"}`}>
+                  {stage.active ? <Check size={14} /> : <span className="h-1.5 w-1.5 rounded-full bg-white/30" />}
+                </div>
+                <p className={`text-center text-[9px] font-bold ${stage.active ? stage.gold ? "text-[#C29B4F]" : "text-[#42DD71]" : "text-white/36"}`}>{stage.label}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 grid grid-cols-3 gap-2">
+            {["1 تشغيل", "8 تحليل", "3 اعتماد", "كل الإنجاز", "2 طرح", "1 تشغيل"].map((item) => (
+              <div key={item} className="rounded-lg border border-white/10 bg-white/[0.025] px-2 py-2 text-center text-[10px] font-black text-white">{item}</div>
+            ))}
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-white/10 bg-[#161c26]/92 p-4 xl:col-span-3">
+          <div className="mb-3 flex items-center justify-between">
+            <button className="text-[10px] font-bold text-[#C29B4F]">عرض التقرير</button>
+            <h3 className="text-sm font-black text-white">الأثر الاقتصادي المتوقع</h3>
+          </div>
+          <div className="h-[170px]">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData}>
                 <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
-                <XAxis dataKey="month" tickLine={false} axisLine={false} stroke="rgba(255,255,255,0.4)" />
-                <YAxis tickLine={false} axisLine={false} stroke="rgba(255,255,255,0.35)" />
+                <XAxis dataKey="month" tickLine={false} axisLine={false} stroke="rgba(255,255,255,0.4)" fontSize={10} />
+                <YAxis tickLine={false} axisLine={false} stroke="rgba(255,255,255,0.35)" fontSize={10} />
                 <Tooltip />
                 <Line type="monotone" dataKey="projected" stroke="#54E070" strokeWidth={3} dot={false} />
                 <Line type="monotone" dataKey="approved" stroke="#D7A84F" strokeWidth={3} dot={false} />
               </LineChart>
             </ResponsiveContainer>
           </div>
-        </DarkCard>
-      </div>
+        </div>
+      </section>
+
+      <footer className="grid gap-3 lg:grid-cols-4">
+        {[
+          ["تصدير تقرير", "تقرير الأداء الشهري"],
+          ["اجتماع لجنة الاستثمار", "غداً - 10:00 ص"],
+          ["توقيع إلكتروني", "3 مستندات بانتظار التوقيع"],
+          ["مركز المساعدة", "الدعم والمساندة"],
+        ].map(([title, note]) => (
+          <div key={title} className="rounded-xl border border-white/10 bg-[#161c26]/92 p-3 text-right transition hover:bg-[#1c2431]">
+            <p className="text-[12px] font-black text-white">{title}</p>
+            <p className="mt-1 text-[10px] text-white/42">{note}</p>
+          </div>
+        ))}
+      </footer>
     </div>
   );
 }

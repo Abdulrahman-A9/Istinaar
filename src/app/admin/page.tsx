@@ -33,14 +33,14 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="relative isolate min-h-screen overflow-x-clip bg-[radial-gradient(circle_at_top_left,rgba(94,145,194,0.26),transparent_24%),radial-gradient(circle_at_top_right,rgba(61,122,176,0.24),transparent_28%),radial-gradient(circle_at_50%_100%,rgba(42,96,144,0.18),transparent_34%),linear-gradient(180deg,#1A3A54_0%,#16324A_24%,#122B42_52%,#10263C_76%,#0D2235_100%)] text-[#0B1726]">
+    <div className="relative isolate min-h-screen overflow-x-clip bg-[radial-gradient(circle_at_18%_0%,rgba(47,92,124,0.32),transparent_28%),radial-gradient(circle_at_66%_18%,rgba(194,155,79,0.09),transparent_32%),linear-gradient(180deg,#0c1724_0%,#0d1b2a_48%,#102a40_100%)] text-white">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.038)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.038)_1px,transparent_1px)] bg-[size:88px_88px] opacity-20 animate-pulse [animation-duration:10s]" />
         <div className="absolute inset-0 bg-[linear-gradient(125deg,transparent_0%,rgba(255,255,255,0.06)_38%,transparent_52%),linear-gradient(305deg,transparent_0%,rgba(255,255,255,0.045)_42%,transparent_58%)] opacity-20 animate-pulse [animation-duration:12s]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(255,255,255,0.16),transparent_12%),radial-gradient(circle_at_74%_24%,rgba(255,255,255,0.12),transparent_10%),radial-gradient(circle_at_52%_72%,rgba(255,255,255,0.1),transparent_13%)] opacity-30 blur-3xl animate-pulse [animation-duration:8s]" />
       </div>
-      <div className="relative z-10 mx-auto max-w-[1880px] px-3 py-3 pb-24 xl:pr-[286px] xl:pb-3 2xl:pr-[320px]">
-        <main className="min-w-0 space-y-3" dir="rtl">
+      <div className="relative z-10 mx-auto max-w-[1880px] px-3 py-3 pb-24 xl:pr-[272px] xl:pb-3">
+        <main className="min-w-0 space-y-4" dir="rtl">
           <ExecutiveHeader title="المركز التنفيذي" subtitle="لوحة القيادة والمتابعة الداخلية" displayName={currentUser.fullName} />
 
           <AdminReferenceDashboard />
