@@ -154,52 +154,80 @@ function MapStateDot({ state }: { state: "ready" | "review" | "blocked" }) {
 function ExecutiveMap({ compact = false }: { compact?: boolean }) {
   return (
     <div
-      className={`relative overflow-hidden rounded-[1.3rem] border border-white/8 bg-[radial-gradient(circle_at_24%_20%,rgba(90,156,220,0.24),transparent_28%),radial-gradient(circle_at_75%_70%,rgba(208,162,67,0.18),transparent_30%),linear-gradient(145deg,#173A56_0%,#102C46_45%,#0B1B2B_100%)] ${compact ? "p-3" : "p-4"}`}
+      className={`relative overflow-hidden rounded-[1.05rem] border border-white/8 bg-[radial-gradient(circle_at_24%_22%,rgba(78,141,194,0.16),transparent_30%),radial-gradient(circle_at_72%_64%,rgba(208,162,67,0.13),transparent_32%),linear-gradient(145deg,#102337_0%,#0B1A2A_48%,#07121F_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] ${compact ? "p-2.5" : "p-3"}`}
     >
       <div
-        className="absolute inset-0 opacity-55"
+        className="absolute inset-0 opacity-40"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px)",
-          backgroundSize: compact ? "34px 34px" : "38px 38px",
+            "linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)",
+          backgroundSize: compact ? "30px 30px" : "34px 34px",
         }}
       />
-      <div className="absolute inset-x-4 top-4 z-20 flex items-center justify-between gap-3 text-[10px] font-bold text-white/54">
-        <span className="rounded-full border border-white/10 bg-[#091521]/70 px-3 py-1">شمال حائل</span>
-        <span className="rounded-full border border-[#D0A243]/25 bg-[#D0A243]/12 px-3 py-1 text-[#E7C46F]">خريطة أحياء حائل</span>
+      <div className="absolute inset-x-3 top-3 z-20 flex items-start justify-between gap-3">
+        <button className="flex min-w-[132px] items-center justify-between rounded-[0.65rem] border border-white/10 bg-[#0B1726]/86 px-3 py-2 text-[11px] font-bold text-white/70 shadow-[0_10px_24px_rgba(0,0,0,0.24)]">
+          <ChevronDown size={14} />
+          جميع الأحياء
+        </button>
+        <div className="rounded-[0.85rem] border border-white/10 bg-[#07121F]/78 px-3 py-2 text-right shadow-[0_10px_24px_rgba(0,0,0,0.24)]">
+          <div className="flex items-center justify-end gap-2 text-[11px] font-bold text-white/74"><span>جاهزة للطرح</span><MapStateDot state="ready" /></div>
+          <div className="mt-2 flex items-center justify-end gap-2 text-[11px] font-bold text-white/74"><span>قيد المراجعة</span><MapStateDot state="review" /></div>
+          <div className="mt-2 flex items-center justify-end gap-2 text-[11px] font-bold text-white/74"><span>متعثرة</span><MapStateDot state="blocked" /></div>
+        </div>
       </div>
-      <svg className={`relative z-10 w-full ${compact ? "h-[260px] sm:h-[320px]" : "h-[300px] sm:h-[380px] 2xl:h-[430px]"}`} viewBox="0 0 860 500" fill="none">
+      <svg className={`relative z-10 w-full ${compact ? "h-[270px] sm:h-[330px]" : "h-[360px] sm:h-[470px] 2xl:h-[520px]"}`} viewBox="0 0 860 500" fill="none">
         <defs>
           <filter id="hailMapGlow" x="-20%" y="-20%" width="140%" height="140%">
             <feGaussianBlur stdDeviation="5" result="blur" />
             <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.58 0 0 0 0 0.78 0 0 0 0 1 0 0 0 0.35 0" />
             <feBlend in="SourceGraphic" />
           </filter>
-          <linearGradient id="cityCore" x1="130" y1="90" x2="720" y2="420" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#2B4B64" stopOpacity=".82" />
-            <stop offset=".55" stopColor="#1A344C" stopOpacity=".78" />
-            <stop offset="1" stopColor="#10263D" stopOpacity=".88" />
+          <filter id="roadGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="1.4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <linearGradient id="cityCore" x1="70" y1="68" x2="812" y2="438" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#1B334A" stopOpacity=".88" />
+            <stop offset=".52" stopColor="#13283E" stopOpacity=".9" />
+            <stop offset="1" stopColor="#0B1928" stopOpacity=".94" />
           </linearGradient>
         </defs>
 
-        <path d="M158 84C240 43 351 37 459 54C602 76 716 161 759 280C786 354 735 420 636 450C533 481 390 468 267 414C156 366 90 287 98 208C103 154 119 106 158 84Z" fill="url(#cityCore)" stroke="#6A7F8F" strokeOpacity=".18" />
-        <path d="M177 117C270 73 403 78 517 104C636 131 719 205 731 297C742 383 637 432 505 426C350 420 206 361 151 273C111 208 126 141 177 117Z" stroke="#D0A243" strokeOpacity=".2" strokeWidth="2" />
+        <path d="M68 156C154 59 329 37 501 60C665 82 805 178 828 300C847 401 717 465 542 467C346 470 156 396 72 275C40 229 38 190 68 156Z" fill="url(#cityCore)" stroke="#607487" strokeOpacity=".12" />
 
-        <path d="M127 255C220 193 313 156 430 151C560 145 661 184 746 264" stroke="#D0A243" strokeOpacity=".44" strokeWidth="5" />
-        <path d="M112 339C239 293 352 260 474 262C596 264 687 298 778 366" stroke="#D0A243" strokeOpacity=".32" strokeWidth="4" />
-        <path d="M220 64L651 449" stroke="#91AABD" strokeOpacity=".23" strokeWidth="4" />
-        <path d="M196 430L704 112" stroke="#91AABD" strokeOpacity=".22" strokeWidth="4" />
-        <path d="M350 52V462" stroke="#91AABD" strokeOpacity=".18" strokeWidth="2" />
-        <path d="M514 63V444" stroke="#91AABD" strokeOpacity=".16" strokeWidth="2" />
+        <g opacity=".28">
+          {Array.from({ length: 13 }).map((_, index) => (
+            <path key={`minor-h-${index}`} d={`M${70 + index * 42} 86C${130 + index * 34} 156 ${140 + index * 28} 315 ${86 + index * 48} 450`} stroke="#7990A5" strokeWidth="1" strokeOpacity=".36" />
+          ))}
+          {Array.from({ length: 10 }).map((_, index) => (
+            <path key={`minor-v-${index}`} d={`M78 ${112 + index * 34}C220 ${86 + index * 22} 520 ${126 + index * 18} 806 ${90 + index * 31}`} stroke="#7990A5" strokeWidth="1" strokeOpacity=".28" />
+          ))}
+        </g>
 
-        <g filter="url(#hailMapGlow)">
-          <path d="M132 143L221 116L303 147L265 214L169 210Z" fill="#204F5B" fillOpacity=".68" stroke="#65D98B" strokeOpacity=".45" />
-          <path d="M319 105L451 76L546 117L505 202L361 188Z" fill="#243E62" fillOpacity=".7" stroke="#7BC9FF" strokeOpacity=".42" />
-          <path d="M573 128L667 91L752 140L781 236L689 277L596 224Z" fill="#243A54" fillOpacity=".72" stroke="#E2B857" strokeOpacity=".42" />
-          <path d="M266 241L399 178L486 253L424 350L289 323Z" fill="#665631" fillOpacity=".56" stroke="#F3B942" strokeOpacity=".76" strokeWidth="2" />
-          <path d="M497 247L612 216L718 300L664 386L507 349Z" fill="#253E57" fillOpacity=".72" stroke="#91AABD" strokeOpacity=".34" />
-          <path d="M210 333L318 332L389 408L303 459L190 424Z" fill="#1E493D" fillOpacity=".62" stroke="#45D873" strokeOpacity=".36" />
-          <path d="M412 360L520 329L605 386L569 462L440 456Z" fill="#1D3A58" fillOpacity=".68" stroke="#57A0FF" strokeOpacity=".38" />
+        <g filter="url(#roadGlow)">
+          <path d="M80 286C202 205 315 170 441 174C582 178 701 221 820 308" stroke="#C49B4A" strokeOpacity=".48" strokeWidth="5" />
+          <path d="M101 365C231 292 373 255 517 270C634 282 728 340 806 408" stroke="#C49B4A" strokeOpacity=".38" strokeWidth="4" />
+          <path d="M47 205C176 174 326 145 486 156C638 166 745 217 832 277" stroke="#8EA1B1" strokeOpacity=".28" strokeWidth="3" />
+          <path d="M199 52L676 458" stroke="#8EA1B1" strokeOpacity=".3" strokeWidth="4" />
+          <path d="M167 447L744 97" stroke="#8EA1B1" strokeOpacity=".29" strokeWidth="4" />
+          <path d="M337 42C361 148 374 285 349 461" stroke="#8EA1B1" strokeOpacity=".24" strokeWidth="2.5" />
+          <path d="M525 53C499 170 499 304 534 454" stroke="#8EA1B1" strokeOpacity=".22" strokeWidth="2.5" />
+          <path d="M137 147C258 94 443 81 606 128C734 165 802 246 786 333C769 428 614 462 439 431C256 398 113 306 111 217C110 190 117 165 137 147Z" stroke="#C49B4A" strokeOpacity=".25" strokeWidth="2" />
+          <path d="M190 183C285 141 429 138 556 168C665 194 733 257 723 323C712 395 601 425 462 406C317 386 205 323 184 252C176 225 176 201 190 183Z" stroke="#C49B4A" strokeOpacity=".2" strokeWidth="2" />
+          <path d="M261 215C347 184 475 190 581 225C660 252 704 304 679 353C646 418 494 420 364 372C270 337 224 263 261 215Z" stroke="#C49B4A" strokeOpacity=".18" strokeWidth="2" />
+        </g>
+
+        <g filter="url(#hailMapGlow)" opacity=".72">
+          <path d="M151 132L257 100L344 137L302 212L177 210Z" fill="#23374D" stroke="#6B7E8D" strokeOpacity=".38" />
+          <path d="M354 100L497 70L604 115L559 211L388 196Z" fill="#263B59" stroke="#718496" strokeOpacity=".34" />
+          <path d="M622 123L709 87L797 137L820 223L719 263L632 215Z" fill="#203549" stroke="#718496" strokeOpacity=".34" />
+          <path d="M278 239L416 171L516 251L449 351L305 325Z" fill="#544B31" stroke="#F3B942" strokeOpacity=".7" strokeWidth="2" />
+          <path d="M521 246L637 217L743 299L686 386L528 350Z" fill="#21384E" stroke="#718496" strokeOpacity=".3" />
+          <path d="M207 336L327 331L397 408L305 456L185 421Z" fill="#1C3D3A" stroke="#45D873" strokeOpacity=".28" />
+          <path d="M430 356L546 330L638 385L596 459L455 456Z" fill="#1B3350" stroke="#57A0FF" strokeOpacity=".28" />
         </g>
       </svg>
 
@@ -213,13 +241,16 @@ function ExecutiveMap({ compact = false }: { compact?: boolean }) {
       ))}
 
       <div className="absolute bottom-4 right-4 flex flex-col gap-2">
-        <button className="flex h-9 w-9 items-center justify-center rounded-[0.85rem] border border-white/10 bg-[#132338]/88">
+        <button className="flex h-9 w-9 items-center justify-center rounded-[0.72rem] border border-white/10 bg-[#132338]/88 text-white/84">
           <Plus size={16} />
         </button>
-        <button className="flex h-9 w-9 items-center justify-center rounded-[0.85rem] border border-white/10 bg-[#132338]/88">
+        <button className="flex h-9 w-9 items-center justify-center rounded-[0.72rem] border border-white/10 bg-[#132338]/88 text-white/84">
           <Minus size={16} />
         </button>
       </div>
+      <button className="absolute bottom-4 left-4 z-20 rounded-[0.78rem] border border-[#D0A243]/28 bg-white/[0.08] px-4 py-2 text-[12px] font-black text-[#E8C36B] shadow-[0_10px_24px_rgba(0,0,0,0.2)]">
+        عرض طبقات الخريطة
+      </button>
     </div>
   );
 }
@@ -264,67 +295,67 @@ export function AdminReferenceDashboard() {
 
   return (
     <div className="space-y-3">
-      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
+      <div className="grid gap-2.5 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
         {executiveMetrics.map((metric, index) => (
           <article
             key={metric.label}
-            className={`executive-card-glow ${["glow-gold", "glow-blue", "glow-green", "glow-violet", "glow-red"][index % 5]} min-h-[184px] rounded-[1.2rem] border border-white/8 px-4 py-4 shadow-[0_16px_32px_rgba(0,0,0,0.16)] ${metricCardThemes[index % metricCardThemes.length]}`}
+            className={`executive-card-glow ${["glow-gold", "glow-blue", "glow-green", "glow-violet", "glow-red"][index % 5]} min-h-[126px] rounded-[1rem] border border-white/8 px-4 py-3 shadow-[0_14px_28px_rgba(0,0,0,0.14)] ${metricCardThemes[index % metricCardThemes.length]}`}
           >
             <div className="flex items-start justify-between gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-[1rem] border border-[#D0A243]/38 bg-white/[0.04]">
+              <div className="flex h-9 w-9 items-center justify-center rounded-[0.8rem] border border-[#D0A243]/38 bg-white/[0.04]">
                 <MetricIcon type={metric.icon} />
               </div>
               <div className="text-right">
-                <p className="text-[12px] leading-6 text-white/68">{metric.label}</p>
-                <p className="mt-2 font-['Tajawal'] text-[1.95rem] font-black leading-none text-white">{metric.value}</p>
-                {metric.unit ? <p className="mt-2 text-[12px] text-white/44">{metric.unit}</p> : null}
+                <p className="text-[11px] leading-5 text-white/68">{metric.label}</p>
+                <p className="mt-1.5 font-['Tajawal'] text-[1.75rem] font-black leading-none text-white">{metric.value}</p>
+                {metric.unit ? <p className="mt-1.5 text-[11px] text-white/44">{metric.unit}</p> : null}
               </div>
             </div>
-            <p className="mt-4 text-right text-[12px] font-bold text-[#28F0AE]">{metric.delta}</p>
+            <p className="mt-3 text-right text-[11px] font-bold text-[#28F0AE]">{metric.delta}</p>
           </article>
         ))}
 
-        <article className="executive-card-glow glow-gold min-h-[184px] rounded-[1.2rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(61,211,128,0.1),transparent_24%),linear-gradient(180deg,rgba(21,39,59,0.96)_0%,rgba(12,28,47,0.98)_100%)] px-4 py-4 text-right shadow-[0_16px_32px_rgba(0,0,0,0.16)]">
+        <article className="executive-card-glow glow-gold min-h-[126px] rounded-[1rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.18),transparent_34%),radial-gradient(circle_at_bottom_left,rgba(61,211,128,0.1),transparent_24%),linear-gradient(180deg,rgba(21,39,59,0.96)_0%,rgba(12,28,47,0.98)_100%)] px-4 py-3 text-right shadow-[0_14px_28px_rgba(0,0,0,0.14)]">
           <div className="flex items-center justify-between gap-3">
-            <span className="rounded-full bg-[#263848] px-4 py-2 text-xs font-black text-[#EFCF81]">AI</span>
-            <p className="text-sm text-white/48">الذكاء التنفيذي يقترح</p>
+            <span className="rounded-full bg-[#263848] px-3 py-1.5 text-[11px] font-black text-[#EFCF81]">AI</span>
+            <p className="text-[11px] text-white/48">الذكاء التنفيذي يقترح</p>
           </div>
-          <h3 className="mt-4 font-['Tajawal'] text-[1.55rem] font-black leading-[1.55] text-white">توصية جاهزة</h3>
-          <p className="mt-2 text-sm leading-8 text-white/62">يوصى بالإسراع في اعتماد فرصة تطوير موقع حي مشار مع جاهزية تنظيمية عالية.</p>
-          <div className="mt-4 flex items-center justify-between">
-            <span className="text-sm font-black text-[#42DD71]">83%</span>
-            <span className="text-sm text-white/50">نسبة الجاهزية</span>
+          <h3 className="mt-2 font-['Tajawal'] text-[1.25rem] font-black leading-[1.4] text-white">توصية جاهزة</h3>
+          <p className="mt-1.5 line-clamp-2 text-[12px] leading-6 text-white/62">اعتماد فرصة تطوير موقع حي مشار مع جاهزية تنظيمية عالية.</p>
+          <div className="mt-2.5 flex items-center justify-between">
+            <span className="text-[12px] font-black text-[#42DD71]">83%</span>
+            <span className="text-[11px] text-white/50">نسبة الجاهزية</span>
           </div>
-          <div className="mt-2 h-2.5 overflow-hidden rounded-full bg-white/10">
+          <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-white/10">
             <div className="h-full w-[83%] rounded-full bg-[#42DD71]" />
           </div>
         </article>
       </div>
 
-      <div className="grid items-start gap-3 2xl:grid-cols-[1.14fr_0.86fr]">
+      <div className="grid items-start gap-3 2xl:grid-cols-[1.22fr_0.78fr]">
         <DarkCard
           title="خريطة أولويات الأحياء"
           subtitle="التحليل المكاني المباشر"
           action={<button className="rounded-[1rem] border border-[#D0A243]/30 bg-white/[0.03] px-5 py-3 text-sm font-bold text-[#E4C982]">عرض طبقات الخريطة</button>}
         >
-          <div className="grid items-start gap-3 lg:grid-cols-[250px_minmax(0,1fr)]">
+          <div className="grid items-start gap-3 lg:grid-cols-[210px_minmax(0,1fr)]">
             <div className="space-y-3">
-              <button className="flex w-full items-center justify-between rounded-[1rem] border border-white/10 bg-white/[0.03] px-4 py-4 text-sm font-bold text-white">
+              <button className="flex w-full items-center justify-between rounded-[0.9rem] border border-white/10 bg-white/[0.03] px-4 py-3 text-[12px] font-bold text-white">
                 <ChevronDown size={18} />
                 حي الجامعيين
               </button>
-              <div className="rounded-[1.15rem] border border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(78,163,255,0.14),transparent_40%),linear-gradient(180deg,rgba(18,34,52,0.96)_0%,rgba(11,23,37,0.98)_100%)] p-4 text-right">
-                <p className="mb-3 font-['Tajawal'] text-[1.05rem] font-black text-white">حالة الأحياء</p>
-                <div className="space-y-3 text-sm text-white/78">
+              <div className="rounded-[1rem] border border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(78,163,255,0.14),transparent_40%),linear-gradient(180deg,rgba(18,34,52,0.96)_0%,rgba(11,23,37,0.98)_100%)] p-3 text-right">
+                <p className="mb-2 font-['Tajawal'] text-[0.95rem] font-black text-white">حالة الأحياء</p>
+                <div className="space-y-2.5 text-[12px] text-white/78">
                   <div className="flex items-center justify-between"><MapStateDot state="ready" /><span>جاهزة للطرح</span></div>
                   <div className="flex items-center justify-between"><MapStateDot state="review" /><span>قيد المراجعة</span></div>
                   <div className="flex items-center justify-between"><MapStateDot state="blocked" /><span>متعثرة</span></div>
                 </div>
               </div>
-              <div className="rounded-[1.15rem] border border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(61,211,128,0.14),transparent_40%),linear-gradient(180deg,rgba(18,34,52,0.96)_0%,rgba(11,23,37,0.98)_100%)] p-4 text-right">
-                <p className="text-sm text-white/46">الحي المحدد</p>
-                <p className="mt-2 font-['Tajawal'] text-[1.5rem] font-black text-white">حي الجامعيين</p>
-                <p className="mt-2 text-sm text-white/56">آخر تحديث: 28-03-2026</p>
+              <div className="rounded-[1rem] border border-white/10 bg-[radial-gradient(circle_at_top_right,rgba(61,211,128,0.14),transparent_40%),linear-gradient(180deg,rgba(18,34,52,0.96)_0%,rgba(11,23,37,0.98)_100%)] p-3 text-right">
+                <p className="text-[11px] text-white/46">الحي المحدد</p>
+                <p className="mt-1.5 font-['Tajawal'] text-[1.25rem] font-black text-white">حي الجامعيين</p>
+                <p className="mt-1.5 text-[11px] text-white/56">آخر تحديث: 28-03-2026</p>
               </div>
             </div>
             <ExecutiveMap compact />
