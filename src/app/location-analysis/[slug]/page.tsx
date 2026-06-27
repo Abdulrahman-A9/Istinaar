@@ -1,8 +1,10 @@
 "use client";
+
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { ArrowLeft, MapPinned, Star, Store } from "lucide-react";
+import { ArrowLeft, Layers3, MapPinned, Star, Store, TrendingUp } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 interface NeighborhoodPlace {
   id: string;
@@ -12,6 +14,8 @@ interface NeighborhoodPlace {
   userRatingsTotal: number;
   address: string;
   mapPoint: { x: number; y: number };
+  lat: number;
+  lng: number;
   isOperational: boolean;
 }
 
@@ -19,9 +23,10 @@ interface NeighborhoodDetailPayload {
   neighborhood: {
     slug: string;
     name: string;
+    city: string;
     districtCluster: string;
     landAreaKm2: number;
-    polygon: Array<{ x: number; y: number }>;
+    center: { lat: number; lng: number };
     lastVerifiedAt: string;
   };
   places: NeighborhoodPlace[];
@@ -39,16 +44,24 @@ interface NeighborhoodDetailPayload {
 }
 
 const categoryColors: Record<string, string> = {
-  "مقاهٍ": "#0A2342",
-  "مطاعم": "#C9A84C",
-  "مخابز": "#F97316",
+  "مقاهٍ": "#7C5CFF",
+  "مطاعم": "#F97316",
+  "مخابز": "#16A34A",
   "تجزئة": "#2563EB",
-  "عيادات": "#16A34A",
+  "عيادات": "#0EA5E9",
   "مغاسل": "#7C3AED",
   "صيدليات": "#14B8A6",
   "خدمات": "#64748B",
   "وجهات": "#DC2626",
 };
+
+function buildOpenStreetMapUrl(center?: { lat: number; lng: number }) {
+  const lat = center?.lat ?? 27.5231;
+  const lng = center?.lng ?? 41.6884;
+  const delta = 0.018;
+  const bbox = [lng - delta, lat - delta, lng + delta, lat + delta].join("%2C");
+  return `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat}%2C${lng}`;
+}
 
 export default function NeighborhoodDetailPage() {
   const params = useParams<{ slug: string }>();
@@ -63,171 +76,158 @@ export default function NeighborhoodDetailPage() {
         return;
       }
 
-      const detail = await response.json();
+      const detail = (await response.json()) as NeighborhoodDetailPayload;
       setPayload(detail);
       setActivePlaceId(detail.places?.[0]?.id ?? null);
     }
 
-    if (params.slug) {
-      void loadDetail();
-    }
+    if (params.slug) void loadDetail();
   }, [params.slug]);
 
-  const polygonPoints = useMemo(
-    () => payload?.neighborhood.polygon.map((point) => `${point.x},${point.y}`).join(" ") ?? "",
-    [payload]
-  );
   const activePlace = payload?.places.find((place) => place.id === activePlaceId) ?? payload?.places[0] ?? null;
+  const mapUrl = useMemo(() => buildOpenStreetMapUrl(payload?.neighborhood.center), [payload?.neighborhood.center]);
 
   return (
-    <div className="min-h-screen" style={{ background: "#F8F9FB" }}>
-      <section className="px-4 py-12" style={{ background: "linear-gradient(135deg, #061629 0%, #0A2342 60%, #17355F 100%)" }}>
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[1.02fr_0.98fr] gap-8 items-start text-right text-white">
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold mb-5" style={{ backgroundColor: "rgba(201,168,76,0.15)", color: "#F5D88E" }}>
-              <MapPinned size={16} />
-              خريطة الحي التفاعلية
-            </span>
-            <h1 className="text-4xl font-black leading-tight mb-4">{payload?.neighborhood.name ?? "جار التحميل..."}</h1>
-            <p className="text-white/75 leading-8 max-w-3xl mr-0 ml-auto">تعرض هذه الصفحة الأنشطة المرصودة داخل الحي، توزعها المكاني التقريبي، ومتوسط التقييم والمنافسة والفئة المسيطرة حتى تستخدمها مباشرة في قرار الفرصة أو الاستشارة.</p>
-          </div>
-          <div className="glass-panel rounded-[1.6rem] p-6">
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { label: "الأنشطة", value: `${payload?.analytics?.totalPlaces ?? 0}` },
-                { label: "متوسط التقييم", value: `${payload?.analytics?.averageRating ?? 0} / 5` },
-                { label: "درجة المنافسة", value: `${payload?.analytics?.competitionScore ?? 0}%` },
-                { label: "المساحة", value: `${payload?.neighborhood.landAreaKm2 ?? 0} كم²` },
-              ].map((item) => (
-                <div key={item.label} className="rounded-2xl p-4" style={{ backgroundColor: "rgba(255,255,255,0.08)" }}>
-                  <p className="text-2xl font-black">{item.value}</p>
-                  <p className="text-sm text-white/65 mt-1">{item.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+    <div className="min-h-screen bg-[linear-gradient(180deg,#F7F9FC_0%,#EEF3F8_100%)] text-[#0A2342]" dir="rtl">
+      <header className="border-b border-slate-200 bg-white/88 px-4 py-4 shadow-[0_10px_35px_rgba(10,35,66,0.05)] backdrop-blur">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3">
+          <Link href="/location-analysis" className="rounded-full border border-slate-200 px-4 py-2 text-sm font-bold text-[#0A2342] hover:bg-slate-50">
+            العودة إلى تحليل الأحياء
+          </Link>
+          <nav className="flex items-center gap-5 text-sm font-bold text-slate-500">
+            <Link href="/dashboard">لوحة التحكم</Link>
+            <Link href="/opportunities">الفرص الاستثمارية</Link>
+            <Link href="/consulting/request">الاستشارات</Link>
+          </nav>
+          <Link href="/" className="text-xl font-black">استنار</Link>
         </div>
-      </section>
+      </header>
 
-      <section className="px-4 py-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 xl:grid-cols-[1.08fr_0.92fr] gap-6">
-          <div className="card p-6 text-right">
-            <div className="flex items-center justify-between mb-5">
-              <Link href="/location-analysis" className="btn-outline text-sm px-5 py-3">
-                العودة إلى تحليل الأحياء
-              </Link>
-              <div>
-                <h2 className="text-2xl font-black text-navy">الخريطة التشغيلية للحي</h2>
-                <p className="text-sm text-gray-500 mt-1">نقاط الأنشطة موزعة داخل حدود الحي بشكل تفاعلي أولي</p>
+      <main className="mx-auto max-w-7xl px-4 py-8">
+        <section className="mb-6 text-center">
+          <p className="text-sm font-bold text-[#B88D35]">تحليل حي تفصيلي</p>
+          <h1 className="mt-3 text-4xl font-black md:text-5xl">{payload?.neighborhood.name ?? "جار التحميل..."}</h1>
+          <p className="mx-auto mt-4 max-w-3xl text-sm leading-8 text-slate-500">
+            قراءة مكانية تجمع الأنشطة المرصودة، التنافس، الطلب، وتوزيع الفئات داخل الحي لمساعدة المستثمر على فهم الموقع قبل طلب الاستشارة أو مقارنة الفرص.
+          </p>
+        </section>
+
+        <section className="mb-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {([
+            ["الأنشطة", payload?.analytics?.totalPlaces ?? 0, Layers3, "#EEF4FF"],
+            ["متوسط التقييم", `${payload?.analytics?.averageRating ?? 0} / 5`, Star, "#FFF7E1"],
+            ["درجة المنافسة", `${payload?.analytics?.competitionScore ?? 0}%`, TrendingUp, "#ECFDF5"],
+            ["المساحة", `${payload?.neighborhood.landAreaKm2 ?? 0} كم²`, MapPinned, "#F5F3FF"],
+          ] as Array<[string, string | number, LucideIcon, string]>).map(([label, value, Icon, surface]) => (
+            <article key={label} className="rounded-[1.35rem] border border-slate-200 bg-white p-5 text-right shadow-[0_16px_40px_rgba(10,35,66,0.06)]">
+              <span className="mb-5 flex h-12 w-12 items-center justify-center rounded-[1rem]" style={{ backgroundColor: surface }}>
+                <Icon size={22} />
+              </span>
+              <p className="text-2xl font-black">{value}</p>
+              <p className="mt-1 text-sm text-slate-500">{label}</p>
+            </article>
+          ))}
+        </section>
+
+        <section className="grid gap-5 xl:grid-cols-[1fr_360px]">
+          <div className="overflow-hidden rounded-[1.6rem] border border-slate-200 bg-white shadow-[0_22px_55px_rgba(10,35,66,0.08)]">
+            <div className="relative h-[560px] bg-slate-100">
+              <iframe
+                title={`خريطة ${payload?.neighborhood.name ?? "الحي"}`}
+                src={mapUrl}
+                className="h-full w-full border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+              <div className="absolute left-5 top-5 rounded-[1.1rem] border border-slate-200 bg-white/92 p-4 text-right shadow-[0_12px_35px_rgba(10,35,66,0.12)] backdrop-blur">
+                <p className="mb-3 text-sm font-black">الفئات</p>
+                <div className="grid gap-2 text-xs text-slate-600">
+                  {Object.entries(payload?.analytics?.categoryCounts ?? {}).slice(0, 6).map(([category, count]) => (
+                    <button key={category} className="flex items-center justify-between gap-8 rounded-xl bg-slate-50 px-3 py-2">
+                      <span>{count}</span>
+                      <span className="flex items-center gap-2">
+                        <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: categoryColors[category] ?? "#0A2342" }} />
+                        {category}
+                      </span>
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
-            <div className="rounded-[1.5rem] border border-slate-200 bg-[linear-gradient(180deg,#F8FBFF_0%,#EEF4FF_100%)] p-5">
-              <svg viewBox="0 0 100 100" className="w-full h-[420px] rounded-[1.25rem] bg-white/70">
-                <defs>
-                  <linearGradient id="neighborhoodFill" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stopColor="#DCEBFF" />
-                    <stop offset="100%" stopColor="#EEF6FF" />
-                  </linearGradient>
-                </defs>
-                <polygon points={polygonPoints} fill="url(#neighborhoodFill)" stroke="#0A2342" strokeWidth="1.2" />
-                {payload?.places.map((place) => {
-                  const isActive = place.id === activePlaceId;
-                  const color = categoryColors[place.mappedBusinessType] ?? "#0A2342";
-
-                  return (
-                    <g key={place.id} onMouseEnter={() => setActivePlaceId(place.id)} style={{ cursor: "pointer" }}>
-                      <circle cx={place.mapPoint.x} cy={place.mapPoint.y} r={isActive ? 4.6 : 3.4} fill={color} opacity={0.92} />
-                      <circle cx={place.mapPoint.x} cy={place.mapPoint.y} r={isActive ? 8 : 0} fill={color} opacity={0.12} />
-                    </g>
-                  );
-                })}
-              </svg>
-            </div>
           </div>
 
-          <div className="space-y-6">
-            <div className="card p-6 text-right">
-              <h2 className="text-2xl font-black text-navy mb-4">ملف النشاط المحدد</h2>
+          <aside className="space-y-4">
+            <section className="rounded-[1.6rem] border border-slate-200 bg-white p-5 text-right shadow-[0_18px_45px_rgba(10,35,66,0.06)]">
+              <p className="text-sm font-bold text-[#B88D35]">ملف النشاط المحدد</p>
               {activePlace ? (
-                <div className="rounded-2xl bg-gray-50 p-5 space-y-3">
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="rounded-full px-3 py-1 text-xs font-semibold text-white" style={{ backgroundColor: categoryColors[activePlace.mappedBusinessType] ?? "#0A2342" }}>
-                      {activePlace.mappedBusinessType}
-                    </span>
-                    <p className="font-black text-navy">{activePlace.name}</p>
-                  </div>
-                  <p className="text-sm text-gray-500">{activePlace.address}</p>
-                  <div className="grid grid-cols-2 gap-3 text-sm">
-                    <div className="rounded-xl bg-white p-4">
-                      <p className="text-gray-400 mb-1">التقييم</p>
-                      <p className="font-black text-navy">{activePlace.rating} / 5</p>
+                <div className="mt-4">
+                  <span className="rounded-full px-3 py-1 text-xs font-bold text-white" style={{ backgroundColor: categoryColors[activePlace.mappedBusinessType] ?? "#0A2342" }}>
+                    {activePlace.mappedBusinessType}
+                  </span>
+                  <h2 className="mt-4 text-2xl font-black">{activePlace.name}</h2>
+                  <p className="mt-2 text-sm leading-7 text-slate-500">{activePlace.address}</p>
+                  <div className="mt-4 grid grid-cols-2 gap-3">
+                    <div className="rounded-[1rem] bg-slate-50 p-4">
+                      <p className="text-xs text-slate-400">التقييم</p>
+                      <p className="mt-1 text-xl font-black">{activePlace.rating} / 5</p>
                     </div>
-                    <div className="rounded-xl bg-white p-4">
-                      <p className="text-gray-400 mb-1">عدد المراجعات</p>
-                      <p className="font-black text-navy">{activePlace.userRatingsTotal}</p>
+                    <div className="rounded-[1rem] bg-slate-50 p-4">
+                      <p className="text-xs text-slate-400">المراجعات</p>
+                      <p className="mt-1 text-xl font-black">{activePlace.userRatingsTotal}</p>
                     </div>
                   </div>
                 </div>
-              ) : (
-                <div className="rounded-2xl bg-gray-50 p-5 text-sm text-gray-500">لا توجد أماكن مرصودة حالياً.</div>
-              )}
-            </div>
+              ) : <p className="mt-4 text-sm text-slate-500">لا توجد أنشطة مرصودة حالياً.</p>}
+            </section>
 
-            <div className="card p-6 text-right">
-              <h2 className="text-2xl font-black text-navy mb-4">الفئات والهيكلة التنافسية</h2>
-              <div className="space-y-3">
-                {Object.entries(payload?.analytics?.categoryCounts ?? {}).map(([category, count]) => (
-                  <div key={category} className="rounded-xl bg-gray-50 px-4 py-3 flex items-center justify-between gap-3">
-                    <span className="font-black text-navy">{count}</span>
-                    <div className="flex items-center gap-2">
-                      <span className="w-3 h-3 rounded-full" style={{ backgroundColor: categoryColors[category] ?? "#0A2342" }} />
-                      <span className="text-sm text-gray-600">{category}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="rounded-2xl bg-gray-50 p-4 mt-4 text-sm text-gray-600 leading-7">
-                الفئة المسيطرة حالياً: <span className="font-black text-navy">{payload?.analytics?.topCategory ?? "-"}</span>. التغطية الحالية للمصادر: <span className="font-black text-navy">{payload?.analytics?.sourceCoverage ?? "-"}</span>.
-              </div>
-            </div>
-
-            <div className="card p-6 text-right">
-              <h2 className="text-2xl font-black text-navy mb-4">روابط القرار التالية</h2>
-              <div className="grid grid-cols-1 gap-3">
-                <Link href={`/consulting/request?neighborhood=${encodeURIComponent(payload?.neighborhood.name ?? "")}`} className="btn-primary w-full justify-center">
-                  افتح طلب استشاري لهذا الحي
+            <section className="rounded-[1.6rem] border border-slate-200 bg-white p-5 text-right shadow-[0_18px_45px_rgba(10,35,66,0.06)]">
+              <p className="mb-3 text-sm font-bold text-[#B88D35]">روابط القرار التالية</p>
+              <div className="grid gap-2">
+                <Link href={`/consulting/request?neighborhood=${encodeURIComponent(payload?.neighborhood.name ?? "")}`} className="btn-primary justify-center">
+                  افتح طلب استشاري
                   <ArrowLeft size={16} />
                 </Link>
-                <Link href="/opportunities" className="btn-gold w-full justify-center">
-                  قارن مع الفرص الاستثمارية
+                <Link href="/opportunities" className="btn-gold justify-center">
+                  قارن مع الفرص
                   <ArrowLeft size={16} />
                 </Link>
               </div>
-            </div>
+            </section>
+          </aside>
+        </section>
 
-            <div className="card p-6 text-right">
-              <h2 className="text-2xl font-black text-navy mb-4">قائمة الأنشطة</h2>
-              <div className="space-y-3 max-h-[420px] overflow-auto pl-1">
-                {payload?.places.map((place) => (
-                  <button key={place.id} onClick={() => setActivePlaceId(place.id)} className={`w-full rounded-xl border px-4 py-3 text-right ${place.id === activePlaceId ? "border-navy bg-blue-50" : "border-gray-100 bg-white"}`}>
-                    <div className="flex items-center justify-between gap-3 mb-1">
-                      <div className="inline-flex items-center gap-1 text-xs text-amber-500">
-                        <Star size={12} fill="currentColor" />
-                        {place.rating}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Store size={14} color={categoryColors[place.mappedBusinessType] ?? "#0A2342"} />
-                        <span className="font-bold text-navy text-sm">{place.name}</span>
-                      </div>
-                    </div>
-                    <p className="text-xs text-gray-500">{place.mappedBusinessType} • {place.userRatingsTotal} مراجعة</p>
-                  </button>
-                ))}
-              </div>
-            </div>
+        <section className="mt-6 rounded-[1.6rem] border border-slate-200 bg-white p-5 shadow-[0_18px_45px_rgba(10,35,66,0.06)]">
+          <div className="mb-4 text-right">
+            <h2 className="text-2xl font-black">قائمة الأنشطة</h2>
+            <p className="mt-1 text-sm text-slate-500">اختر أي نشاط لتحديث بطاقة التفاصيل.</p>
           </div>
-        </div>
-      </section>
+          <div className="grid gap-3 lg:grid-cols-2">
+            {payload?.places.map((place) => (
+              <button
+                key={place.id}
+                onClick={() => setActivePlaceId(place.id)}
+                className={`flex items-center justify-between gap-4 rounded-[1.1rem] border p-3 text-right transition ${
+                  place.id === activePlaceId ? "border-[#7C5CFF] bg-[#F5F3FF]" : "border-slate-200 bg-slate-50 hover:bg-white"
+                }`}
+              >
+                <div className="flex items-center gap-5 text-sm text-slate-500">
+                  <span className="font-black text-[#0A2342]">{place.rating}</span>
+                  <span>{place.userRatingsTotal} مراجعة</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div>
+                    <p className="font-black">{place.name}</p>
+                    <p className="mt-1 text-xs text-slate-500">{place.mappedBusinessType}</p>
+                  </div>
+                  <span className="flex h-10 w-10 items-center justify-center rounded-[0.9rem] bg-white text-[#0A2342]">
+                    <Store size={17} />
+                  </span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </section>
+      </main>
     </div>
   );
 }

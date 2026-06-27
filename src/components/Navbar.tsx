@@ -10,7 +10,6 @@ const navLinks = [
   { href: "/", label: "الرئيسية" },
   { href: "/lands", label: "الأراضي" },
   { href: "/opportunities", label: "الفرص" },
-  { href: "/investment-intelligence", label: "لوحة الذكاء الاستثماري" },
   { href: "/investor-journey", label: "رحلة المستثمر" },
   { href: "/consulting", label: "الاستشارات" },
 ];

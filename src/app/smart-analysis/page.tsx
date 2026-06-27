@@ -160,8 +160,7 @@ export default function SmartAnalysisPage() {
                 لوحة التحليل الذكي لاتخاذ القرار الاستثماري
               </span>
               <h1 className="text-4xl md:text-5xl font-black text-white leading-tight mb-4">
-                قراءة تنفيذية جاهزة
-                <span style={{ color: "#C9A84C" }}> أمام الأمانة</span>
+                قراءة تنفيذية للفرص الاستثمارية
               </h1>
               <p className="text-white/75 leading-8 max-w-3xl mr-0 ml-auto mb-8">
                 هذه الصفحة تجمع الصورة الكلية للفرص الموسمية في حائل: أين يتركز الطلب، ما الأحياء الأكثر جاهزية،
@@ -181,7 +180,7 @@ export default function SmartAnalysisPage() {
             <div className="glass-panel rounded-[1.5rem] p-5 text-white">
               <div className="flex items-center justify-between mb-5">
                 <span className="text-sm text-white/60">التوصية التنفيذية الحالية</span>
-                <span className="badge-available">جاهز للعرض</span>
+                <span className="badge-available">أولوية متابعة</span>
               </div>
               <div className="space-y-4">
                 <div className="soft-card p-4 text-right">
@@ -202,9 +201,9 @@ export default function SmartAnalysisPage() {
                   ))}
                 </div>
                 <div className="rounded-2xl p-4 text-right" style={{ backgroundColor: "rgba(201,168,76,0.12)" }}>
-                  <p className="text-sm font-bold" style={{ color: "#F5D88E" }}>الخلاصة الرسمية</p>
+                  <p className="text-sm font-bold" style={{ color: "#F5D88E" }}>خلاصة القرار</p>
                   <p className="text-sm text-white/75 leading-7 mt-2">
-                    المؤشرات الحالية ترجّح أن الأولوية في العرض والترويج ينبغي أن تذهب إلى المواقع ذات الطلب المرتفع
+                    المؤشرات الحالية ترجّح أن الأولوية التشغيلية ينبغي أن تذهب إلى المواقع ذات الطلب المرتفع
                     والمنافسة المنخفضة في `مشار` و`النقرة`، مع إبقاء المواقع ذات المنافسة الأعلى ضمن حزمة طرح موجهة لشريحة مختلفة من المستثمرين.
                   </p>
                 </div>
@@ -220,7 +219,7 @@ export default function SmartAnalysisPage() {
             { label: "فرص قيد التحليل", value: rankedLands.length, icon: <Building2 size={18} /> },
             { label: "مؤشر الجاهزية الكلي", value: `${Math.round((averageProfitability + averageFeasibility) / 2)}%`, icon: <ShieldCheck size={18} /> },
             { label: "أعلى طلب موسمي", value: `${Math.max(...lands.map((land) => land.marketDemand))}%`, icon: <LineChart size={18} /> },
-            { label: "أولوية العرض", value: bestLand?.neighborhood ?? "-", icon: <MapPinned size={18} /> },
+            { label: "أولوية المتابعة", value: bestLand?.neighborhood ?? "-", icon: <MapPinned size={18} /> },
           ].map((stat) => (
             <div key={stat.label} className="soft-card p-5 text-right">
               <div className="flex items-center justify-between mb-4">
@@ -292,7 +291,7 @@ export default function SmartAnalysisPage() {
               <p className="text-sm font-black text-navy">{bestLand?.name}</p>
               <p className="text-sm text-gray-500 mt-2 leading-7">
                 الموقع يجمع بين طلب مرتفع وربحية أعلى من المتوسط، مع مخاطر تشغيلية قابلة للإدارة،
-                لذلك يصلح كواجهة أولى في العرض الرسمي أمام المستثمرين والجهات المانحة للتراخيص.
+                لذلك يصلح كأولوية مبكرة في المتابعة والتسويق للمستثمرين المناسبين.
               </p>
             </div>
           </div>
@@ -304,7 +303,7 @@ export default function SmartAnalysisPage() {
           <div className="card p-6">
             <div className="text-right mb-5">
               <h2 className="text-xl font-black text-navy">منحنى الطلب والجاهزية خلال الموسم</h2>
-              <p className="text-sm text-gray-500">قراءة استباقية تساعد الأمانة على توقيت الطرح والتسويق للمواقع</p>
+              <p className="text-sm text-gray-500">قراءة استباقية تساعد على توقيت الطرح والتسويق للمواقع</p>
             </div>
             <div className="h-80">
               {chartsReady ? (
@@ -370,11 +369,11 @@ export default function SmartAnalysisPage() {
         <div className="max-w-7xl mx-auto card p-6">
           <div className="flex items-center justify-between mb-5">
             <span className="text-xs px-3 py-1 rounded-full" style={{ backgroundColor: "#FFF7E5", color: "#A16207" }}>
-              تحديث مخصص للعرض التنفيذي
+              تحديث تحليلي
             </span>
             <div className="text-right">
               <h2 className="text-xl font-black text-navy">قائمة الأولويات المقترحة للطرح</h2>
-              <p className="text-sm text-gray-500">ترتيب موحد يساعد على تقديم سردية واضحة أمام الأمانة والمستثمرين</p>
+              <p className="text-sm text-gray-500">ترتيب موحد يساعد على فهم الأولويات وربطها بالمستثمرين المناسبين</p>
             </div>
           </div>
           <div className="space-y-3">
@@ -406,10 +405,10 @@ export default function SmartAnalysisPage() {
           <div className="rounded-2xl p-4 mt-5 text-right" style={{ backgroundColor: "#FFF9EC", border: "1px solid rgba(201,168,76,0.24)" }}>
             <p className="font-bold flex items-center justify-end gap-2 text-sm" style={{ color: "#9A6700" }}>
               <CircleAlert size={16} />
-              توصية ختامية للعرض الرسمي
+              توصية ختامية
             </p>
             <p className="text-sm text-gray-700 leading-7 mt-2">
-              أفضل مسار للعرض أمام الأمانة هو إبراز أن المنصة لا تكرر إجراءات `فرص`، بل ترفع جودة القرار قبل التقديم عبر
+              أفضل مسار تشغيلي هو إبراز أن المنصة لا تكرر إجراءات `فرص`، بل ترفع جودة القرار قبل التقديم عبر
               تحليل الطلب، مقارنة الأحياء، وإبراز أولويات الطرح والاستثمار بشكل مرئي قابل للفهم خلال دقائق.
             </p>
           </div>

@@ -48,7 +48,7 @@ export default function AccountPage() {
 
   const roleLabel = currentUser?.role === "authority" ? "مسؤول أمانة" : currentUser?.role === "consultant" ? "مستشار" : "مستثمر";
   const primaryWorkspaceHref = currentUser?.role === "authority" ? "/investment-intelligence" : "/dashboard";
-  const primaryWorkspaceLabel = currentUser?.role === "authority" ? "افتح لوحة الذكاء الاستثماري" : "افتح لوحة المستثمر";
+  const primaryWorkspaceLabel = currentUser?.role === "authority" ? "افتح مركز الإدارة" : "افتح لوحة المستثمر";
 
   return (
     <div className="min-h-screen px-4 py-12" style={{ background: "linear-gradient(180deg, #F5F7FB 0%, #EEF2F7 100%)" }}>
@@ -67,8 +67,8 @@ export default function AccountPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               {[
                 { title: "ملف موحد بحسب الدور", desc: "تجميع الطلبات، المحفوظات، والتنبيهات أو خدمات القرار المؤسسي داخل حساب واحد." },
-                { title: "جاهزية تشغيلية", desc: "انتقال مباشر بين الحساب، المسار الاستثماري، ولوحة الذكاء الاستثماري دون تشتت." },
-                { title: "دخول تجريبي منضبط", desc: "إمكانية عرض النسخة التنفيذية أو المؤسسية بسرعة دون كسر المسار الرسمي." },
+                { title: "جاهزية تشغيلية", desc: "انتقال مباشر بين الحساب، المسار الاستثماري، ومركز الإدارة دون تشتت." },
+                { title: "دخول تجريبي منضبط", desc: "إمكانية الدخول إلى المسارات الداخلية بسرعة دون كسر المسار الرسمي." },
                 { title: "توافق بصري كامل", desc: "هيكل واضح للمستثمر والجهة التنظيمية ضمن لغة مؤسسية موحدة." },
               ].map((item) => (
                 <div key={item.title} className="glass-panel rounded-2xl p-4">
@@ -94,7 +94,7 @@ export default function AccountPage() {
 
         <section className="rounded-[2rem] border border-slate-200 bg-white p-6 md:p-8 shadow-[0_22px_60px_rgba(10,35,66,0.08)]">
           <div className="flex items-center justify-between gap-4 mb-6">
-            <div className="flex gap-2">
+            {!currentUser ? <div className="flex gap-2">
               <button
                 onClick={() => setMode("register")}
                 className="px-4 py-2 rounded-xl text-sm font-bold"
@@ -107,7 +107,7 @@ export default function AccountPage() {
                 style={mode === "login" ? { backgroundColor: "#0A2342", color: "white" } : { backgroundColor: "#F3F6FB", color: "#526071" }}>
                 دخول
               </button>
-            </div>
+            </div> : <div />}
             <div className="text-right">
               <p className="text-xs text-slate-400 mb-1">Account Access</p>
               <h2 className="text-2xl font-black text-navy">{currentUser ? "ملفك الحالي" : "ابدأ من بوابة واضحة"}</h2>
@@ -155,7 +155,7 @@ export default function AccountPage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {[
                   currentUser.role === "authority"
-                    ? { title: "لوحة الذكاء الاستثماري", desc: "الدخول إلى التحليل، الاستدلال، الجهات التنظيمية، والتقارير التنفيذية داخل منصة واحدة.", href: "/investment-intelligence", icon: <LayoutDashboard size={18} /> }
+                    ? { title: "مركز الإدارة", desc: "الدخول إلى التحليل، الاستدلال، الجهات التنظيمية، والتقارير التنفيذية داخل منصة واحدة.", href: "/investment-intelligence", icon: <LayoutDashboard size={18} /> }
                     : { title: "لوحة المستثمر", desc: "متابعة الطلبات والاستشارات والتنبيهات التنفيذية.", href: "/dashboard", icon: <LayoutDashboard size={18} /> },
                   currentUser.role === "authority"
                     ? { title: "الفرص الاستثمارية", desc: "مراجعة الفرص الحالية وربطها بمسار التقييم الداخلي قبل الطرح.", href: "/opportunities", icon: <FileBadge2 size={18} /> }
@@ -191,7 +191,7 @@ export default function AccountPage() {
                   </div>
                   <div>
                     <p className="font-black text-navy">مسار دخول واضح</p>
-                    <p className="text-sm text-gray-500">ادخل إلى الملف الحالي أو فعّل الحساب التجريبي للعرض التنفيذي.</p>
+                    <p className="text-sm text-gray-500">ادخل إلى الملف الحالي أو فعّل الحساب التجريبي للاستعراض الداخلي.</p>
                   </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
@@ -229,11 +229,11 @@ export default function AccountPage() {
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style={{ backgroundColor: "#FFF7E1", color: "#C2891B" }}>
                     <Sparkles size={18} />
                   </div>
-                  <p className="font-black text-navy mb-2">حسابات العرض</p>
-                  <p className="text-sm text-gray-500 leading-7 mb-4">استخدمها للعروض السريعة أو لاختبار مسار الموافقات دون إنشاء حساب جديد.</p>
+                  <p className="font-black text-navy mb-2">حسابات تجريبية</p>
+                  <p className="text-sm text-gray-500 leading-7 mb-4">استخدمها لاختبار مسار الطلبات والموافقات دون إنشاء حساب جديد.</p>
                   <div className="space-y-3 text-sm mb-4">
                     <div className="rounded-xl bg-white p-3 border border-slate-200">
-                      <p>البريد: mohammad@hailinvest.sa</p>
+                      <p>البريد: abdulrahman@hailinvest.sa</p>
                       <p>المرور: 123456</p>
                     </div>
                     <div className="rounded-xl bg-white p-3 border border-slate-200">

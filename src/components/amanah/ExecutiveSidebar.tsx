@@ -4,7 +4,7 @@ import Link from "next/link";
 import {
   BriefcaseBusiness,
   FileCheck2,
-  HelpCircle,
+  Home,
   LayoutDashboard,
   LineChart,
   LogOut,
@@ -116,8 +116,8 @@ export default function ExecutiveSidebar({ page }: { page: ExecutiveSidebarPage 
         <div className="border-t border-white/8 pt-3">
           <p className="mb-2 text-right text-[10px] font-bold text-white/38">الخدمات السريعة</p>
           <div className="space-y-1.5">
-            <SidebarLink href="#" label="مركز المساعدة" hint="الدعم والمساندة" icon={<HelpCircle size={18} />} />
-            <SidebarLink href="#" label="تسجيل الخروج" hint="العودة للبوابة" icon={<LogOut size={18} />} />
+            <SidebarLink href="/" label="الرئيسية العامة" hint="العودة لواجهة المنصة" icon={<Home size={18} />} />
+            <SidebarLink href="/account" label="تسجيل الخروج" hint="إدارة الحساب" icon={<LogOut size={18} />} />
           </div>
         </div>
 

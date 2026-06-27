@@ -204,10 +204,10 @@ interface AppStore {
 
 const defaultUser: UserAccount = {
   id: "USR001",
-  fullName: "محمد الرمالي",
-  email: "mohammad@hailinvest.sa",
+  fullName: "عبدالرحمن الشمري",
+  email: "abdulrahman@hailinvest.sa",
   phone: "0551234567",
-  company: "الرمالي للاستثمار",
+  company: "الشمري للاستثمار",
   city: "حائل",
   role: "investor",
   password: "123456",
@@ -390,7 +390,7 @@ export const useAppStore = create<AppStore>()(persist((set, get) => ({
     {
       id: "APP001",
       landId: "L003",
-      landName: "أرض فعاليات الشتاء - حي النقرة",
+      landName: "حي النقرة",
       neighborhood: "حي النقرة",
       activityType: "فعاليات ترفيهية",
       submittedAt: "2025-05-12",
@@ -399,7 +399,7 @@ export const useAppStore = create<AppStore>()(persist((set, get) => ({
     {
       id: "APP002",
       landId: "L006",
-      landName: "مساحة مطاعم سريعة - حي النقرة",
+      landName: "حي النقرة",
       neighborhood: "حي النقرة",
       activityType: "مطعم",
       submittedAt: "2025-04-28",
@@ -408,7 +408,7 @@ export const useAppStore = create<AppStore>()(persist((set, get) => ({
     {
       id: "APP003",
       landId: "L012",
-      landName: "ركن الحرف البدوية - وسط المدينة",
+      landName: "وسط المدينة",
       neighborhood: "وسط المدينة",
       activityType: "تسوق وترفيه",
       submittedAt: "2025-04-15",
@@ -495,7 +495,7 @@ export const useAppStore = create<AppStore>()(persist((set, get) => ({
           profileId: "PART001",
           accountId: defaultUser.id,
           email: defaultUser.email,
-          name: "محمد الرمالي",
+          name: "عبدالرحمن الشمري",
           role: "owner",
           contribution: 240000,
           equityShare: 55,
@@ -529,7 +529,7 @@ export const useAppStore = create<AppStore>()(persist((set, get) => ({
         {
           id: "PA001",
           partnerId: "AP001-P1",
-          actorName: "محمد الرمالي",
+          actorName: "عبدالرحمن الشمري",
           action: "invited",
           note: "تم إنشاء الملف الشراكي وإضافة الشريك التشغيلي.",
           createdAt: "2026-03-20 09:15",
@@ -553,7 +553,7 @@ export const useAppStore = create<AppStore>()(persist((set, get) => ({
       projectId: "ADV001",
       projectName: "كوفي درايف ثرو حي الجامعيين",
       fromAccountId: defaultUser.id,
-      fromName: "محمد الرمالي",
+      fromName: "عبدالرحمن الشمري",
       toPartnerId: "PART003",
       message: "نرغب في إشراككم كمشغل وشريك تشغيل بنسبة عادلة مقابل مساهمة تشغيلية وتمويلية.",
       proposedContribution: 140000,
@@ -942,7 +942,7 @@ export const useAppStore = create<AppStore>()(persist((set, get) => ({
   getAdvisoryRequestById: (id) => get().advisoryRequests.find((request) => request.id === id),
 }), {
   name: "hail-platform-store",
-  version: 6,
+  version: 7,
   migrate: (persistedState, version) => {
     const state = persistedState as Partial<AppStore> | undefined;
 
@@ -1028,6 +1028,63 @@ export const useAppStore = create<AppStore>()(persist((set, get) => ({
         partnerProfiles: state.partnerProfiles ?? partnerProfilesSeed,
         partnershipRequests: state.partnershipRequests ?? [],
         advisoryRequests: (state.advisoryRequests ?? []).map((request) => sanitizeAdvisoryRequest(request, users)),
+      } as AppStore;
+    }
+
+    if (version < 7) {
+      const users = (state.users ?? [defaultUser, partnerUser, specialistUser, authorityUser]).map((user) =>
+        user.id === defaultUser.id ? defaultUser : user
+      );
+      const landNamesById: Record<string, string> = {
+        APP001: "حي النقرة",
+        APP002: "حي النقرة",
+        APP003: "وسط المدينة",
+      };
+
+      return {
+        ...state,
+        currentUser: state.currentUser?.id === defaultUser.id ? defaultUser : state.currentUser ?? null,
+        users,
+        applications: (state.applications ?? []).map((application) => ({
+          ...application,
+          landName: landNamesById[application.id] ?? application.landName,
+        })),
+        advisoryRequests: (state.advisoryRequests ?? []).map((request) =>
+          request.accountId === defaultUser.id
+            ? sanitizeAdvisoryRequest(
+                {
+                  ...request,
+                  partners: (request.partners ?? []).map((partner) =>
+                    partner.accountId === defaultUser.id
+                      ? {
+                          ...partner,
+                          email: defaultUser.email,
+                          name: defaultUser.fullName,
+                        }
+                      : partner
+                  ),
+                  partnerApprovalHistory: (request.partnerApprovalHistory ?? []).map((event) =>
+                    event.partnerId.includes("OWNER")
+                      ? {
+                          ...event,
+                          actorName: defaultUser.fullName,
+                        }
+                      : event
+                  ),
+                },
+                users
+              )
+            : sanitizeAdvisoryRequest(request, users)
+        ),
+        partnershipRequests: (state.partnershipRequests ?? []).map((request) =>
+          request.fromAccountId === defaultUser.id
+            ? {
+                ...request,
+                fromName: defaultUser.fullName,
+              }
+            : request
+        ),
+        alerts: state.alerts ?? [],
       } as AppStore;
     }
 

@@ -1,45 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import {
-  Building2,
-  FileCheck2,
-  FileText,
-  ShieldCheck,
-  Sparkles,
-} from "lucide-react";
 import ExecutiveHeader from "@/components/amanah/ExecutiveHeader";
 import ExecutiveSidebar from "@/components/amanah/ExecutiveSidebar";
 import { AdminReferenceDashboard } from "@/components/amanah/reference/ReferenceViews";
 import { useAppStore } from "@/store/appStore";
-
-function SupportShortcut({
-  title,
-  description,
-  icon,
-  toneClass,
-}: {
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-  toneClass: string;
-}) {
-  return (
-    <div
-      className={`executive-card-glow rounded-[1rem] border border-white/8 px-3.5 py-3 text-right shadow-[0_12px_28px_rgba(15,23,42,0.14)] ${toneClass}`}
-    >
-      <div className="flex items-center justify-between gap-3">
-        <span className="flex h-9 w-9 items-center justify-center rounded-[0.9rem] border border-[#D0A243]/28 bg-white/[0.03] text-[#D7B45E]">
-          {icon}
-        </span>
-        <div>
-          <p className="font-['Tajawal'] text-[0.9rem] font-black text-white">{title}</p>
-          <p className="mt-1 text-[11px] text-white/46">{description}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export default function AdminPage() {
   const currentUser = useAppStore((state) => state.currentUser);
@@ -59,7 +24,7 @@ export default function AdminPage() {
               الحساب الموحد
             </Link>
             <Link href="/investment-intelligence" className="rounded-[1rem] bg-[#C79C45] px-6 py-3 text-sm font-black text-[#0B1726]">
-              لوحة الذكاء الاستثماري
+              مركز الإدارة
             </Link>
           </div>
         </div>
@@ -79,39 +44,6 @@ export default function AdminPage() {
           <ExecutiveHeader title="المركز التنفيذي" subtitle="لوحة القيادة والمتابعة الداخلية" displayName={currentUser.fullName} />
 
           <AdminReferenceDashboard />
-
-          <div className="grid gap-2.5 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5">
-            <SupportShortcut
-              title="تصدير تقرير"
-              description="تقرير الأداء الشهري"
-              icon={<FileCheck2 size={18} />}
-              toneClass="bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.18),transparent_38%),linear-gradient(180deg,rgba(13,31,51,0.98)_0%,rgba(9,22,37,0.98)_100%)]"
-            />
-            <SupportShortcut
-              title="اجتماع لجنة الاستثمار"
-              description="غداً - 10:00 ص"
-              icon={<Building2 size={18} />}
-              toneClass="bg-[radial-gradient(circle_at_top_right,rgba(61,211,128,0.16),transparent_38%),linear-gradient(180deg,rgba(13,31,51,0.98)_0%,rgba(9,22,37,0.98)_100%)]"
-            />
-            <SupportShortcut
-              title="توقيع إلكتروني"
-              description="3 مستندات بانتظار التوقيع"
-              icon={<FileText size={18} />}
-              toneClass="bg-[radial-gradient(circle_at_top_right,rgba(78,163,255,0.18),transparent_38%),linear-gradient(180deg,rgba(13,31,51,0.98)_0%,rgba(9,22,37,0.98)_100%)]"
-            />
-            <SupportShortcut
-              title="مركز المساعدة"
-              description="الدعم والمساندة"
-              icon={<ShieldCheck size={18} />}
-              toneClass="bg-[radial-gradient(circle_at_top_right,rgba(188,125,255,0.14),transparent_38%),linear-gradient(180deg,rgba(13,31,51,0.98)_0%,rgba(9,22,37,0.98)_100%)]"
-            />
-            <SupportShortcut
-              title="اسأل مساعد استنار الذكي"
-              description="اكتب استفسارك هنا..."
-              icon={<Sparkles size={18} />}
-              toneClass="bg-[radial-gradient(circle_at_top_right,rgba(255,124,124,0.14),transparent_38%),linear-gradient(180deg,rgba(13,31,51,0.98)_0%,rgba(9,22,37,0.98)_100%)]"
-            />
-          </div>
         </main>
 
         <ExecutiveSidebar page="admin" />

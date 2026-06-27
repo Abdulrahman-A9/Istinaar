@@ -499,7 +499,7 @@ export function IntelligenceOverviewReference() {
           <div key={String(label)} className="rounded-[1.25rem] border border-white/8 bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.14),transparent_36%),linear-gradient(180deg,rgba(11,27,45,0.98)_0%,rgba(10,23,38,0.98)_100%)] px-5 py-5 text-right shadow-[0_16px_36px_rgba(0,0,0,0.16)]">
             <p className="text-sm text-white/46">{label}</p>
             <p className="mt-3 font-['Tajawal'] text-[2rem] font-black text-white">{value}</p>
-            <p className="mt-3 text-sm font-bold" style={{ color: String(color) }}>قراءة تنفيذية جاهزة للعرض</p>
+            <p className="mt-3 text-sm font-bold" style={{ color: String(color) }}>قراءة تنفيذية قابلة للمتابعة</p>
           </div>
         ))}
       </div>

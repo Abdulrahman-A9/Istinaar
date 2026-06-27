@@ -439,7 +439,7 @@ export default function HomePage() {
             {[
               { icon: <TrendingUp size={22} color="#C9A84C" />, title: "تحليل ذكي للجدوى", desc: "مؤشرات ربحية وجدوى واضحة لكل فرصة مع تحليل المنافسة والطلب السوقي في كل حي." },
               { icon: <Shield size={22} color="#C9A84C" />, title: "تقييم المخاطر", desc: "محرك مخاطر متقدم يحلل كثافة المنافسة، مستوى التشبع، والطلب السوقي في منطقتك." },
-              { icon: <CircleGauge size={22} color="#C9A84C" />, title: "لوحات قرار جاهزة للعرض", desc: "رسوم بيانية ومؤشرات مختصرة يمكن عرضها مباشرة أمام الأمانة والمستثمرين دون شرح تقني طويل." },
+              { icon: <CircleGauge size={22} color="#C9A84C" />, title: "لوحات قرار تنفيذية", desc: "رسوم بيانية ومؤشرات مختصرة تساعد على قراءة الأولويات والفرص دون شرح تقني طويل." },
             ].map((item, i) => (
               <motion.div key={i} variants={fadeUp} whileHover={{ y: -6 }} className="card p-6">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: "#0A2342" }}>

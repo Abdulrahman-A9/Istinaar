@@ -18,7 +18,7 @@ export const partnerProfilesSeed: PartnerProfileData[] = [
   {
     id: "PART001",
     accountId: "USR001",
-    displayName: "محمد الرمالي",
+    displayName: "عبدالرحمن الشمري",
     role: "investor",
     city: "حائل",
     bio: "مستثمر يبحث عن فرص تشغيل وضيافة ومشاريع موسمية أو شبه موسمية في حائل.",

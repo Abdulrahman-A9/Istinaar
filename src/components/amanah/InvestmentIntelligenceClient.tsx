@@ -48,7 +48,7 @@ export default function InvestmentIntelligenceClient({
           <section className="rounded-[2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(11,27,45,0.98)_0%,rgba(8,19,31,0.98)_100%)] p-10 shadow-[0_24px_60px_rgba(0,0,0,0.24)]">
             <span className="inline-flex items-center gap-2 rounded-full border border-[#D0A243]/28 bg-[#D0A243]/14 px-4 py-2 text-sm font-bold text-[#E9CF8A]">
               <Landmark size={16} />
-              لوحة الذكاء الاستثماري
+              مركز الذكاء الاستثماري
             </span>
             <h1 className="mt-6 font-['Tajawal'] text-[3rem] font-black leading-tight text-white">الوصول يتطلب حساب أمانة مخول</h1>
             <p className="mt-5 max-w-3xl text-base leading-9 text-white/68">

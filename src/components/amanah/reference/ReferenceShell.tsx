@@ -10,7 +10,7 @@ type PageKey = "overview" | "spatial" | "opportunities" | "approvals" | "partner
 
 const pageMeta: Record<PageKey, { title: string; subtitle: string; chips: string[] }> = {
   overview: {
-    title: "لوحة الذكاء الاستثماري",
+    title: "مركز الذكاء الاستثماري",
     subtitle: "قراءة تنفيذية موحدة تجمع التنبيهات والقرار والأثر الاقتصادي في مساحة واحدة.",
     chips: ["7 تبويبات تشغيلية", "قراءة قرار فورية", "أولوية حي اليوم", "دليل المنطقة"],
   },
@@ -75,7 +75,7 @@ export default function ReferenceShell({
                   href="/investment-intelligence"
                   className={`shrink-0 rounded-[0.9rem] px-4 py-2.5 text-sm font-bold ${page === "overview" ? "bg-[#D0A243] text-[#0B1726]" : "text-white/84"}`}
                 >
-                  لوحة الذكاء الاستثماري
+                  المركز التنفيذي
                 </Link>
                 <Link
                   href="/investment-intelligence?tab=spatial"
