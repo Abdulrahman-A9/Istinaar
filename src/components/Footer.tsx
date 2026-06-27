@@ -71,10 +71,10 @@ export default function Footer() {
         <div className="border-t border-white/10 mt-8 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-white/50 text-sm">© ٢٠٢٦ أمانة منطقة حائل. جميع الحقوق محفوظة.</p>
           <div className="flex gap-4">
-            <Link href="#" className="text-white/50 hover:text-white text-sm transition-colors">عن المنصة</Link>
-            <Link href="#" className="text-white/50 hover:text-white text-sm transition-colors">سياسة الخصوصية</Link>
-            <Link href="#" className="text-white/50 hover:text-white text-sm transition-colors">الشروط والأحكام</Link>
-            <Link href="#" className="text-white/50 hover:text-white text-sm transition-colors">الأسئلة الشائعة</Link>
+            <Link href="/how-it-works" className="text-white/50 hover:text-white text-sm transition-colors">عن المنصة</Link>
+            <Link href="/apply-guide" className="text-white/50 hover:text-white text-sm transition-colors">دليل التقديم</Link>
+            <Link href="/investor-journey" className="text-white/50 hover:text-white text-sm transition-colors">رحلة المستثمر</Link>
+            <Link href="/consulting" className="text-white/50 hover:text-white text-sm transition-colors">الاستشارات</Link>
           </div>
         </div>
       </div>

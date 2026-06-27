@@ -73,14 +73,14 @@ const executiveDecisions: Decision[] = [
 ];
 
 const mapPoints = [
-  { label: "حي الشفاء", state: "ready", top: "18%", right: "76%" },
-  { label: "حي الزبارة", state: "ready", top: "22%", right: "18%" },
-  { label: "حي النقرة", state: "blocked", top: "34%", right: "58%" },
-  { label: "حي الجامعة", state: "review", top: "46%", right: "40%" },
-  { label: "حي الجامعيين", state: "review", top: "58%", right: "44%" },
-  { label: "حي الوسيطاء", state: "ready", top: "64%", right: "74%" },
-  { label: "حي مشار", state: "ready", top: "65%", right: "54%" },
-  { label: "حي السلام", state: "blocked", top: "74%", right: "22%" },
+  { label: "حي الشفاء", state: "ready", top: "25%", right: "77%" },
+  { label: "حي الزبارة", state: "ready", top: "30%", right: "18%" },
+  { label: "حي النقرة", state: "ready", top: "42%", right: "58%" },
+  { label: "حي الجامعة", state: "blocked", top: "50%", right: "33%" },
+  { label: "حي الجامعيين", state: "review", top: "58%", right: "45%" },
+  { label: "حي الوسيطاء", state: "review", top: "64%", right: "74%" },
+  { label: "حي مشار", state: "ready", top: "70%", right: "54%" },
+  { label: "حي السلام", state: "blocked", top: "75%", right: "20%" },
 ];
 
 const neighborhoodCards = [
@@ -154,26 +154,53 @@ function MapStateDot({ state }: { state: "ready" | "review" | "blocked" }) {
 function ExecutiveMap({ compact = false }: { compact?: boolean }) {
   return (
     <div
-      className={`relative overflow-hidden rounded-[1.3rem] border border-white/8 bg-[radial-gradient(circle_at_top,#18314A_0%,#10263A_58%,#0B1B2B_100%)] ${compact ? "p-3" : "p-4"}`}
+      className={`relative overflow-hidden rounded-[1.3rem] border border-white/8 bg-[radial-gradient(circle_at_24%_20%,rgba(90,156,220,0.24),transparent_28%),radial-gradient(circle_at_75%_70%,rgba(208,162,67,0.18),transparent_30%),linear-gradient(145deg,#173A56_0%,#102C46_45%,#0B1B2B_100%)] ${compact ? "p-3" : "p-4"}`}
     >
       <div
-        className="absolute inset-0 opacity-50"
+        className="absolute inset-0 opacity-55"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
-          backgroundSize: compact ? "30px 30px" : "34px 34px",
+            "linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px)",
+          backgroundSize: compact ? "34px 34px" : "38px 38px",
         }}
       />
-      <div className="absolute inset-[8%] rounded-[50%] border border-[#83622A]/30" />
-      <div className="absolute inset-[18%] rounded-[50%] border border-[#83622A]/28" />
-      <div className="absolute inset-[28%] rounded-[50%] border border-[#83622A]/24" />
-      <svg className={`relative z-10 w-full ${compact ? "h-[240px] sm:h-[300px]" : "h-[260px] sm:h-[330px] 2xl:h-[390px]"}`} viewBox="0 0 780 430" fill="none">
-        <path d="M76 225C156 151 250 98 356 84C493 66 607 103 706 191" stroke="#61513A" strokeOpacity=".48" strokeWidth="4" />
-        <path d="M87 293C181 254 278 220 389 210C515 199 607 218 712 285" stroke="#61513A" strokeOpacity=".42" strokeWidth="3" />
-        <path d="M167 97L628 334" stroke="#564A38" strokeOpacity=".35" strokeWidth="3" />
-        <path d="M169 327L613 124" stroke="#564A38" strokeOpacity=".3" strokeWidth="3" />
-        <path d="M244 56V368" stroke="#63533B" strokeOpacity=".25" />
-        <path d="M443 34V391" stroke="#63533B" strokeOpacity=".22" />
+      <div className="absolute inset-x-4 top-4 z-20 flex items-center justify-between gap-3 text-[10px] font-bold text-white/54">
+        <span className="rounded-full border border-white/10 bg-[#091521]/70 px-3 py-1">شمال حائل</span>
+        <span className="rounded-full border border-[#D0A243]/25 bg-[#D0A243]/12 px-3 py-1 text-[#E7C46F]">خريطة أحياء حائل</span>
+      </div>
+      <svg className={`relative z-10 w-full ${compact ? "h-[260px] sm:h-[320px]" : "h-[300px] sm:h-[380px] 2xl:h-[430px]"}`} viewBox="0 0 860 500" fill="none">
+        <defs>
+          <filter id="hailMapGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="5" result="blur" />
+            <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.58 0 0 0 0 0.78 0 0 0 0 1 0 0 0 0.35 0" />
+            <feBlend in="SourceGraphic" />
+          </filter>
+          <linearGradient id="cityCore" x1="130" y1="90" x2="720" y2="420" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#2B4B64" stopOpacity=".82" />
+            <stop offset=".55" stopColor="#1A344C" stopOpacity=".78" />
+            <stop offset="1" stopColor="#10263D" stopOpacity=".88" />
+          </linearGradient>
+        </defs>
+
+        <path d="M158 84C240 43 351 37 459 54C602 76 716 161 759 280C786 354 735 420 636 450C533 481 390 468 267 414C156 366 90 287 98 208C103 154 119 106 158 84Z" fill="url(#cityCore)" stroke="#6A7F8F" strokeOpacity=".18" />
+        <path d="M177 117C270 73 403 78 517 104C636 131 719 205 731 297C742 383 637 432 505 426C350 420 206 361 151 273C111 208 126 141 177 117Z" stroke="#D0A243" strokeOpacity=".2" strokeWidth="2" />
+
+        <path d="M127 255C220 193 313 156 430 151C560 145 661 184 746 264" stroke="#D0A243" strokeOpacity=".44" strokeWidth="5" />
+        <path d="M112 339C239 293 352 260 474 262C596 264 687 298 778 366" stroke="#D0A243" strokeOpacity=".32" strokeWidth="4" />
+        <path d="M220 64L651 449" stroke="#91AABD" strokeOpacity=".23" strokeWidth="4" />
+        <path d="M196 430L704 112" stroke="#91AABD" strokeOpacity=".22" strokeWidth="4" />
+        <path d="M350 52V462" stroke="#91AABD" strokeOpacity=".18" strokeWidth="2" />
+        <path d="M514 63V444" stroke="#91AABD" strokeOpacity=".16" strokeWidth="2" />
+
+        <g filter="url(#hailMapGlow)">
+          <path d="M132 143L221 116L303 147L265 214L169 210Z" fill="#204F5B" fillOpacity=".68" stroke="#65D98B" strokeOpacity=".45" />
+          <path d="M319 105L451 76L546 117L505 202L361 188Z" fill="#243E62" fillOpacity=".7" stroke="#7BC9FF" strokeOpacity=".42" />
+          <path d="M573 128L667 91L752 140L781 236L689 277L596 224Z" fill="#243A54" fillOpacity=".72" stroke="#E2B857" strokeOpacity=".42" />
+          <path d="M266 241L399 178L486 253L424 350L289 323Z" fill="#665631" fillOpacity=".56" stroke="#F3B942" strokeOpacity=".76" strokeWidth="2" />
+          <path d="M497 247L612 216L718 300L664 386L507 349Z" fill="#253E57" fillOpacity=".72" stroke="#91AABD" strokeOpacity=".34" />
+          <path d="M210 333L318 332L389 408L303 459L190 424Z" fill="#1E493D" fillOpacity=".62" stroke="#45D873" strokeOpacity=".36" />
+          <path d="M412 360L520 329L605 386L569 462L440 456Z" fill="#1D3A58" fillOpacity=".68" stroke="#57A0FF" strokeOpacity=".38" />
+        </g>
       </svg>
 
       {mapPoints.map((point) => (
