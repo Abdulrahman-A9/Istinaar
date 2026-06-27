@@ -412,10 +412,10 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-[linear-gradient(180deg,#F5F7FB_0%,#EEF2F7_100%)] p-3 text-[#0A2342] md:p-4" dir="rtl">
-      <div className="mx-auto grid max-w-[1760px] gap-4 lg:grid-cols-[minmax(0,1fr)_292px]">
-        <main className="min-w-0 space-y-4">
-          <section className="relative overflow-hidden rounded-[1.7rem] border border-slate-200 bg-white p-5 shadow-[0_20px_60px_rgba(10,35,66,0.07)]">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(208,162,67,0.16),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(10,35,66,0.06),transparent_35%)]" />
+      <div className="mx-auto grid max-w-[1760px] gap-4 lg:grid-cols-[minmax(0,1fr)_292px]" dir="ltr">
+        <main className="min-w-0 space-y-4" dir="rtl">
+          <section className="relative overflow-hidden rounded-[1.7rem] border border-[#0A2342]/10 bg-[linear-gradient(135deg,#07192E_0%,#0A2342_52%,#143656_100%)] p-5 text-white shadow-[0_20px_60px_rgba(10,35,66,0.12)]">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.1),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(76,132,180,0.18),transparent_32%)]" />
             <div className="relative flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div className="flex max-w-full gap-2 overflow-x-auto pb-1 lg:hidden">
                 {investorNav.map((item) => {
@@ -437,10 +437,10 @@ export default function DashboardPage() {
                 })}
               </div>
               <div className="text-right">
-                <p className="mb-1 text-xs font-bold text-[#B88D35]">ملف المستثمر</p>
+                <p className="mb-1 text-xs font-bold text-[#E4C36A]">ملف المستثمر</p>
                 <h1 className="text-2xl font-black md:text-3xl">{activeNav.label}</h1>
-                <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-500">
-                  مرحباً، {investorName}. كل تبويب يعرض بياناتك المرتبطة بالخدمة نفسها، مع رابط منفصل لإنشاء طلب أو استعراض جديد.
+                <p className="mt-2 max-w-3xl text-sm leading-7 text-white/68">
+                  مرحباً، {investorName}. هنا تتابع طلباتك ومحفوظاتك وشراكاتك من مساحة واحدة واضحة ومرتبة.
                 </p>
               </div>
             </div>
