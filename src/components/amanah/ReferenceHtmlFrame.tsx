@@ -57,7 +57,8 @@ function buildUnifiedStyles() {
         radial-gradient(circle at 16% 0%, rgba(59,71,90,0.58), transparent 28%),
         radial-gradient(circle at 76% 20%, rgba(176,139,65,0.14), transparent 32%),
         linear-gradient(180deg, #101c2c 0%, #0e141a 54%, #080f14 100%) !important;
-      overflow: hidden !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
       position: relative;
     }
     body.istinaar-reference-body::before {
@@ -97,6 +98,7 @@ function buildUnifiedStyles() {
       50% { opacity: .34; transform: scale(1.02); }
     }
     aside.istinaar-shell-sidebar {
+      position: fixed !important;
       width: var(--istinaar-sidebar-width) !important;
       right: 0 !important;
       left: auto !important;
@@ -117,11 +119,11 @@ function buildUnifiedStyles() {
       flex: none !important;
       margin-right: var(--istinaar-sidebar-width) !important;
       margin-left: 0 !important;
-      width: calc(100vw - var(--istinaar-sidebar-width)) !important;
-      max-width: calc(100vw - var(--istinaar-sidebar-width)) !important;
+      width: calc(100% - var(--istinaar-sidebar-width)) !important;
+      max-width: calc(100% - var(--istinaar-sidebar-width)) !important;
       min-height: 100vh !important;
-      height: 100vh !important;
-      overflow: auto !important;
+      height: auto !important;
+      overflow: visible !important;
       background: transparent !important;
       position: relative !important;
       padding-bottom: 32px !important;
@@ -133,6 +135,7 @@ function buildUnifiedStyles() {
       z-index: 55;
       margin: 8px 8px 0;
       padding: 18px 24px;
+      width: calc(100% - 16px);
       border-radius: 28px;
       border: 1px solid rgba(255,255,255,0.1);
       background:
@@ -455,6 +458,35 @@ function buildUnifiedStyles() {
       border: 1px solid rgba(255,255,255,0.08);
       background: rgba(255,255,255,0.04) !important;
     }
+    body.istinaar-page-partners main > .flex.flex-col.gap-lg.animate-fade-in {
+      gap: 18px !important;
+      padding: 8px 8px 28px !important;
+    }
+    body.istinaar-page-partners main > .flex.flex-col.gap-lg.animate-fade-in > .grid.grid-cols-5 {
+      gap: 14px !important;
+    }
+    body.istinaar-page-partners main > .flex.flex-col.gap-lg.animate-fade-in > .grid.grid-cols-5 > div {
+      min-height: 136px !important;
+      padding: 18px 16px 14px !important;
+      border-radius: 22px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+    }
+    body.istinaar-page-partners main > .flex.flex-col.gap-lg.animate-fade-in > .grid.grid-cols-5 > div .text-headline-lg {
+      font-size: 28px !important;
+      line-height: 1.15 !important;
+    }
+    body.istinaar-page-partners main > .flex.flex-col.gap-lg.animate-fade-in > .grid.grid-cols-12 {
+      min-height: 520px !important;
+      height: auto !important;
+    }
+    body.istinaar-page-partners main > .flex.flex-col.gap-lg.animate-fade-in > .grid.grid-cols-4 > div {
+      min-height: 140px !important;
+    }
+    body.istinaar-page-partners main .fixed.bottom-lg.left-lg {
+      display: none !important;
+    }
     @media (max-width: 1400px) {
       .istinaar-spatial-cards-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -715,6 +747,16 @@ function injectUnifiedScript(doc: Document) {
 
       const dateLabel = document.getElementById("istinaar-date-label");
       const timeLabel = document.getElementById("istinaar-time-label");
+      const reportHeight = () => {
+        const height = Math.max(
+          document.body ? document.body.scrollHeight : 0,
+          document.documentElement ? document.documentElement.scrollHeight : 0,
+          document.body ? document.body.offsetHeight : 0,
+          document.documentElement ? document.documentElement.offsetHeight : 0,
+          window.innerHeight
+        );
+        window.parent.postMessage({ type: "istinaar-resize", height }, "*");
+      };
       const timeFormatter = new Intl.DateTimeFormat("en-US", {
         timeZone: "Asia/Riyadh",
         hour: "2-digit",
@@ -736,9 +778,19 @@ function injectUnifiedScript(doc: Document) {
       updateClock();
       window.setInterval(updateClock, 30000);
       window.addEventListener("resize", applyResponsiveShell);
+      window.addEventListener("resize", reportHeight);
+      window.addEventListener("load", reportHeight);
+
+      if (typeof ResizeObserver !== "undefined") {
+        const resizeObserver = new ResizeObserver(() => reportHeight());
+        resizeObserver.observe(document.body);
+      }
 
       bindNav();
       applyResponsiveShell();
+      reportHeight();
+      window.setTimeout(reportHeight, 250);
+      window.setTimeout(reportHeight, 1000);
     })();
   `;
   doc.body.appendChild(script);
@@ -767,14 +819,7 @@ function transformSpatialLayout(doc: Document) {
     stageBackground.classList.add("map-overlay-gradient");
   }
 
-  const cardStrip = Array.from(main.querySelectorAll("div")).find((element) => {
-    const className = element.className ?? "";
-    return (
-      className.includes("grid-cols-5") ||
-      (element.querySelector("h5")?.textContent?.includes("حي") ?? false) ||
-      false
-    );
-  }) as HTMLElement | null;
+  const cardStrip = main.querySelector("div.grid.grid-cols-5") as HTMLElement | null;
 
   if (cardStrip) {
     cardStrip.className = "istinaar-spatial-cards-grid";
@@ -837,7 +882,7 @@ function transformHtml(rawHtml: string, page: ReferenceHtmlFrameProps["page"], d
   }
   viewportMeta.setAttribute("content", "width=device-width, initial-scale=1, viewport-fit=cover");
 
-  body.classList.add("istinaar-reference-body");
+  body.classList.add("istinaar-reference-body", `istinaar-page-${page}`);
   const styleNode = doc.createElement("style");
   styleNode.id = "istinaar-unified-shell-style";
   styleNode.textContent = buildUnifiedStyles();
@@ -856,8 +901,9 @@ function transformHtml(rawHtml: string, page: ReferenceHtmlFrameProps["page"], d
 
   const header = doc.querySelector("header");
   if (header) {
-    header.outerHTML = buildHeaderMarkup(page, displayName);
-  } else if (main) {
+    header.remove();
+  }
+  if (main) {
     main.insertAdjacentHTML("afterbegin", buildHeaderMarkup(page, displayName));
   }
 
@@ -891,6 +937,7 @@ export default function ReferenceHtmlFrame({ page, displayName = "أ. محمد �
   const router = useRouter();
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const [html, setHtml] = useState<string | null>(pageCache.get(getCacheKey(page, displayName)) ?? null);
+  const [frameHeight, setFrameHeight] = useState(1200);
 
   const allRoutes = useMemo(
     () => executiveShellItems.map((item) => item.href),
@@ -935,6 +982,14 @@ export default function ReferenceHtmlFrame({ page, displayName = "أ. محمد �
     const handleMessage = (event: MessageEvent) => {
       if (event.source !== iframeRef.current?.contentWindow) return;
       if (!event.data) return;
+      if (event.data.type === "istinaar-resize") {
+        const nextHeight =
+          typeof event.data.height === "number" && Number.isFinite(event.data.height)
+            ? Math.max(event.data.height, 900)
+            : 1200;
+        setFrameHeight(nextHeight);
+        return;
+      }
       if (event.data.type === "istinaar-logout") {
         try {
           const raw = window.localStorage.getItem("hail-platform-store");
@@ -976,7 +1031,8 @@ export default function ReferenceHtmlFrame({ page, displayName = "أ. محمد �
         ref={iframeRef}
         title={`استنار - ${page}`}
         srcDoc={html}
-        className="block h-screen w-full border-0 bg-[#0e141a]"
+        style={{ height: `${frameHeight}px` }}
+        className="block w-full border-0 bg-[#0e141a]"
       />
     </div>
   );
