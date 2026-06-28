@@ -1,0 +1,522 @@
+﻿<!DOCTYPE html>
+
+<html class="dark" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>الفرص الاستثمارية - Istithmar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration Verbatim -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#dde3eb",
+                    "surface-variant": "#2f353c",
+                    "on-primary-fixed-variant": "#5d4200",
+                    "secondary-fixed": "#d7e3fb",
+                    "error": "#ffb4ab",
+                    "on-primary-fixed": "#261900",
+                    "on-primary": "#412d00",
+                    "inverse-on-surface": "#2b3137",
+                    "surface-tint": "#eac170",
+                    "outline-variant": "#4e4638",
+                    "inverse-surface": "#dde3eb",
+                    "tertiary-fixed": "#d7e3f9",
+                    "on-tertiary-fixed": "#101c2c",
+                    "background": "#0e141a",
+                    "primary-fixed-dim": "#eac170",
+                    "surface-container-lowest": "#080f14",
+                    "on-surface": "#dde3eb",
+                    "on-secondary-fixed": "#101c2d",
+                    "on-secondary-container": "#a9b6cc",
+                    "primary-fixed": "#ffdea4",
+                    "secondary-container": "#3b475a",
+                    "on-primary-container": "#382700",
+                    "surface-dim": "#0e141a",
+                    "primary-container": "#b08b41",
+                    "on-error": "#690005",
+                    "surface-container-high": "#242b31",
+                    "surface": "#0e141a",
+                    "on-tertiary-fixed-variant": "#3c4759",
+                    "error-container": "#93000a",
+                    "surface-bright": "#333a40",
+                    "inverse-primary": "#785912",
+                    "secondary-fixed-dim": "#bbc7de",
+                    "surface-container-highest": "#2f353c",
+                    "on-surface-variant": "#d1c5b3",
+                    "tertiary": "#bbc7dd",
+                    "primary": "#eac170",
+                    "outline": "#9a8f7f",
+                    "on-secondary-fixed-variant": "#3b475a",
+                    "on-tertiary-container": "#1f2a3b",
+                    "tertiary-fixed-dim": "#bbc7dd",
+                    "surface-container": "#1a2026",
+                    "secondary": "#bbc7de",
+                    "surface-container-low": "#161c22",
+                    "on-secondary": "#253143",
+                    "on-error-container": "#ffdad6",
+                    "tertiary-container": "#8591a6",
+                    "on-tertiary": "#253142"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "lg": "24px",
+                    "md": "16px",
+                    "xs": "4px",
+                    "gutter": "24px",
+                    "xxl": "64px",
+                    "margin-desktop": "48px",
+                    "sm": "8px",
+                    "unit": "4px",
+                    "xl": "40px"
+            },
+            "fontFamily": {
+                    "headline-md": ["IBM Plex Sans"],
+                    "headline-lg": ["IBM Plex Sans"],
+                    "headline-xl-mobile": ["IBM Plex Sans"],
+                    "body-lg": ["IBM Plex Sans"],
+                    "label-sm": ["IBM Plex Sans"],
+                    "label-md": ["IBM Plex Sans"],
+                    "headline-lg-mobile": ["IBM Plex Sans"],
+                    "body-md": ["IBM Plex Sans"],
+                    "headline-xl": ["IBM Plex Sans"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "headline-xl-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background-color: #0e141a;
+            color: #dde3eb;
+            overflow-x: hidden;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .tonal-layer {
+            background: linear-gradient(135deg, rgba(59, 71, 90, 0.4) 0%, rgba(59, 71, 90, 0.1) 100%);
+            border: 1px solid rgba(226, 232, 240, 0.1);
+        }
+    </style>
+</head>
+<body class="flex min-h-screen bg-background">
+<!-- SideNavBar (Shared Component Execution) -->
+<aside class="fixed right-0 top-0 h-full flex flex-col z-40 border-l border-white/5 bg-secondary-container w-[280px] transition-all duration-200 ease-in-out">
+<!-- Profile Header -->
+<div class="p-lg flex items-center gap-md border-b border-white/5">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary/20">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a middle-aged Saudi executive with a trimmed beard, wearing a traditional white thobe and ghutra. The lighting is soft and corporate, set against a blurred modern office background with deep navy and slate blue tones. The portrait conveys authority, leadership, and professional excellence in a high-stakes investment environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5i3oFxl7bIus4WKF_DkIghQFEvv7EUensqwORdy3834qj9GBkj8lZgnssCSmuSpZoQxdwVhNwr9FY06D3x6QnIQTGbUGCqRm7RxsMzx36pfa8kynqoHX-CnOwlqUea32fCPyjIIfy8HOhg9DTaRcReMgT4rqvKTCZEHgcGWnRI0473t80kl0KLCib3eNcKGhjiyKU8pyklTbrUrTFY8i_HbsusRG-9vam21bwaRb4Ey-wEiuK86UZHbZFPMmssVmjs01yVFrmgnI"/>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-primary">محمد الشهري</h3>
+<p class="text-[10px] text-on-secondary-container/70 opacity-80">الرئيس التنفيذي</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 py-md overflow-y-auto scrollbar-hide">
+<ul class="space-y-xs">
+<li><a class="flex items-center gap-md px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all duration-200" href="#"><span class="material-symbols-outlined">dashboard</span> <span class="font-label-md text-label-md">الرئيسية</span></a></li>
+<li><a class="flex items-center gap-md px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all duration-200" href="#"><span class="material-symbols-outlined">insights</span> <span class="font-label-md text-label-md">الذكاء الاستثماري</span></a></li>
+<li><a class="flex items-center gap-md px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all duration-200" href="#"><span class="material-symbols-outlined">map</span> <span class="font-label-md text-label-md">التحليل المكاني</span></a></li>
+<!-- Active State (Direct Match: الفرص الاستثمارية) -->
+<li><a class="flex items-center gap-md px-lg py-md text-primary border-r-4 border-primary bg-on-secondary-fixed-variant/10 transition-all duration-200" href="#"><span class="material-symbols-outlined">monetization_on</span> <span class="font-label-md text-label-md">الفرص الاستثمارية</span></a></li>
+<li><a class="flex items-center gap-md px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all duration-200" href="#"><span class="material-symbols-outlined">assignment</span> <span class="font-label-md text-label-md">الإدارة والمتابعة</span></a></li>
+<li><a class="flex items-center gap-md px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all duration-200" href="#"><span class="material-symbols-outlined">fact_check</span> <span class="font-label-md text-label-md">الاعتمادات والموافقات</span></a></li>
+<li><a class="flex items-center gap-md px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all duration-200" href="#"><span class="material-symbols-outlined">handshake</span> <span class="font-label-md text-label-md">الشركاء والمستثمرون</span></a></li>
+<li><a class="flex items-center gap-md px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all duration-200" href="#"><span class="material-symbols-outlined">analytics</span> <span class="font-label-md text-label-md">التقارير واللوحات</span></a></li>
+<li><a class="flex items-center gap-md px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all duration-200" href="#"><span class="material-symbols-outlined">settings</span> <span class="font-label-md text-label-md">الإعدادات</span></a></li>
+</ul>
+</nav>
+<!-- Footer Actions -->
+<div class="mt-auto border-t border-white/5 p-md">
+<a class="flex items-center gap-md px-md py-sm text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 transition-all duration-200 mb-2" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="font-label-md text-label-md">الدعم الفني</span>
+</a>
+<button class="w-full flex items-center justify-center gap-md py-md bg-primary text-on-primary-container rounded-lg font-label-md transition-transform active:scale-95 duration-100">
+<span class="material-symbols-outlined">logout</span>
+<span>خروج</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 mr-[280px] flex flex-col h-screen overflow-hidden">
+<!-- TopNavBar (Shared Component Execution) -->
+<header class="flex justify-between items-center w-full px-lg py-md sticky top-0 z-50 bg-surface-container border-b border-white/10">
+<div class="flex items-center gap-xl">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-3xl">account_balance</span>
+<h1 class="font-headline-lg text-headline-lg text-primary font-bold">Istithmar</h1>
+</div>
+<div class="relative w-96 hidden md:block">
+<input class="w-full bg-surface-variant border-none rounded-lg px-xl py-sm text-on-surface focus:ring-1 focus:ring-primary font-body-md text-body-md" placeholder="بحث في الفرص الاستثمارية..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-on-surface-variant">search</span>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="bg-primary px-lg py-md rounded-lg text-on-primary-container font-label-md transition-all active:scale-95 duration-100 flex items-center gap-sm">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Add Investment Opportunity</span>
+</button>
+<div class="flex items-center gap-sm px-md border-r border-white/10">
+<button class="p-sm rounded-full text-on-surface-variant hover:bg-surface-variant transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-sm rounded-full text-on-surface-variant hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined">calendar_today</span>
+</button>
+</div>
+<div class="text-left">
+<p class="font-label-md text-label-md text-on-surface">الأربعاء، 05 / 1448 هـ</p>
+<p class="text-[10px] text-on-surface-variant text-right">10:30 AM</p>
+</div>
+</div>
+</header>
+<!-- Scrollable Canvas -->
+<section class="flex-1 overflow-y-auto p-lg space-y-lg">
+<!-- Page Header Area -->
+<div class="flex justify-between items-end">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-background mb-1">الفرص الاستثمارية</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">إدارة ومتابعة جميع الفرص الاستثمارية في المدينة</p>
+</div>
+<div class="flex gap-sm">
+<button class="flex items-center gap-xs px-md py-sm bg-surface-container rounded-lg border border-white/5 hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+<span class="font-label-md">الفلاتر</span>
+</button>
+<button class="flex items-center gap-xs px-md py-sm bg-surface-container rounded-lg border border-white/5 hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[20px]">file_download</span>
+<span class="font-label-md">تصدير</span>
+</button>
+</div>
+</div>
+<!-- Dashboard Summary - Bento Grid Style -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<!-- Main Status Card -->
+<div class="md:col-span-1 p-lg rounded-xl bg-secondary-container flex flex-col justify-between border border-white/5 shadow-lg relative overflow-hidden">
+<div class="relative z-10">
+<p class="font-label-md text-on-secondary-container/80 mb-2">إجمالي الفرص</p>
+<h3 class="font-headline-xl text-headline-xl text-primary">24</h3>
+<p class="text-label-sm text-on-surface-variant mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-green-400 text-sm">trending_up</span>
+<span>+8% عن الشهر الماضي</span>
+</p>
+</div>
+<div class="mt-lg space-y-sm relative z-10">
+<div class="flex justify-between items-center text-label-sm">
+<span class="text-on-secondary-container/70">جاهزة للطرح</span>
+<span class="text-primary font-bold">25%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 25%"></div>
+</div>
+</div>
+<!-- Decorative Element -->
+<div class="absolute -bottom-4 -right-4 opacity-5">
+<span class="material-symbols-outlined text-[120px]">monetization_on</span>
+</div>
+</div>
+<!-- Metrics Grid -->
+<div class="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="p-lg rounded-xl tonal-layer flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-md text-on-surface-variant mb-1">متوسط زمن الاعتماد</p>
+<h4 class="font-headline-md text-headline-md text-on-surface">14 يوم</h4>
+</div>
+<span class="material-symbols-outlined text-primary-container p-sm bg-primary/10 rounded-lg">timer</span>
+</div>
+<p class="text-label-sm text-on-surface-variant mt-4">2 يوم أقل من الشهر الماضي</p>
+</div>
+<div class="p-lg rounded-xl tonal-layer flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-md text-on-surface-variant mb-1">العائد على الاستثمار المتوقع</p>
+<h4 class="font-headline-md text-headline-md text-on-surface">27%</h4>
+</div>
+<span class="material-symbols-outlined text-primary-container p-sm bg-primary/10 rounded-lg">insights</span>
+</div>
+<p class="text-label-sm text-green-400 mt-4 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">north</span>
+<span>+5% عن الشهر الماضي</span>
+</p>
+</div>
+<div class="p-lg rounded-xl tonal-layer flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-md text-on-surface-variant mb-1">إجمالي قيمة الاستثمار</p>
+<h4 class="font-headline-md text-headline-md text-on-surface">67.9 <span class="text-label-sm">مليار</span></h4>
+</div>
+<span class="material-symbols-outlined text-primary-container p-sm bg-primary/10 rounded-lg">payments</span>
+</div>
+<p class="text-label-sm text-on-surface-variant mt-4">استثمارات عقارية وتجارية</p>
+</div>
+</div>
+</div>
+<!-- Tabs Section -->
+<div class="flex border-b border-white/10 gap-lg overflow-x-auto scrollbar-hide">
+<button class="pb-md px-md font-label-md text-primary border-b-2 border-primary whitespace-nowrap">الكل (24)</button>
+<button class="pb-md px-md font-label-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap">جاهزة للطرح (6)</button>
+<button class="pb-md px-md font-label-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap">قيد المراجعة (5)</button>
+<button class="pb-md px-md font-label-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap">قيد الدراسة (8)</button>
+<button class="pb-md px-md font-label-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap">معتمدة (3)</button>
+<button class="pb-md px-md font-label-md text-on-surface-variant hover:text-on-surface transition-colors whitespace-nowrap">متوقفة (2)</button>
+</div>
+<!-- Investment Opportunities Table -->
+<div class="bg-surface-container rounded-xl border border-white/5 overflow-hidden shadow-2xl">
+<table class="w-full text-right">
+<thead class="bg-secondary-container/50 border-b border-white/10">
+<tr>
+<th class="px-lg py-md font-label-md text-on-surface-variant">الفرصة الاستثمارية</th>
+<th class="px-lg py-md font-label-md text-on-surface-variant">التصنيف</th>
+<th class="px-lg py-md font-label-md text-on-surface-variant">الموقع</th>
+<th class="px-lg py-md font-label-md text-on-surface-variant">نسبة الجاهزية</th>
+<th class="px-lg py-md font-label-md text-on-surface-variant">قيمة الاستثمار</th>
+<th class="px-lg py-md font-label-md text-on-surface-variant">العائد المتوقع</th>
+<th class="px-lg py-md font-label-md text-on-surface-variant">المرحلة</th>
+<th class="px-lg py-md font-label-md text-on-surface-variant">الإجراءات</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<!-- Row 1 -->
+<tr class="hover:bg-on-secondary-fixed-variant/5 transition-colors group">
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg overflow-hidden bg-slate-700">
+<img class="w-full h-full object-cover" data-alt="A modern commercial architectural development site with steel foundations and scaffolding against a clear twilight sky. The scene is shot in a high-end architectural photography style, with professional lighting accentuating the slate blue and deep navy tones, complemented by the warm golden glow of onsite construction lights. It represents a premium investment opportunity in a growing urban center." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD72slilB1hjL8RT3mkvcp1PI1Gc8F-klDhb9aJzZzoU5kF9Ek6ygJ3jiiBs2fV3BUQJO_jIwNSzPuYF3-bWENBl-YR9acr7Wq2ncds4q3T0clQa0-TEtYRYvbx0fcyrv3pQYr9h_XT3pmR96iMp8zo4p5ykb4A-HeDNJMk0I9-V4bM7rwY22kxV3YPnYYXEHdeRUkit3KTZGxPny_RS57VeA9sP0wxx4o849XAjAUt3XaGIK6p0vJYhJXd5oXrKr0CGR3lhSGogvk"/>
+</div>
+<div>
+<div class="font-label-md text-on-surface">تطوير موقع حي مشار</div>
+<div class="text-[10px] text-on-surface-variant mt-1">تحديث منذ يومين</div>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg font-body-md text-primary">تجاري</td>
+<td class="px-lg py-lg font-body-md text-on-surface-variant">حي مشار - شمال حائل</td>
+<td class="px-lg py-lg">
+<div class="flex items-center gap-sm">
+<span class="font-body-md text-on-surface">83%</span>
+<div class="w-16 h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-green-500" style="width: 83%"></div>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg font-label-md text-on-surface">28.5 مليون ر.س</td>
+<td class="px-lg py-lg font-label-md text-green-400">27%</td>
+<td class="px-lg py-lg">
+<span class="px-md py-1 bg-primary/10 text-primary border border-primary/20 rounded-full text-label-sm">جاهزة للطرح</span>
+</td>
+<td class="px-lg py-lg">
+<div class="flex gap-sm opacity-50 group-hover:opacity-100 transition-opacity">
+<button class="p-sm hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
+<button class="p-sm hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-sm hover:text-error transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-on-secondary-fixed-variant/5 transition-colors group">
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg overflow-hidden bg-slate-700">
+<img class="w-full h-full object-cover" data-alt="Luxurious residential villas under development in a high-end gated community. The architectural style is minimalist contemporary with large glass facades. The lighting captures the 'golden hour', bathing the slate blue exterior walls in a warm amber light. The composition highlights the premium nature of the real estate investment, emphasizing privacy, prestige, and modern living standards." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCg5fmZJajmx0Q306u3RjaNRBWRWvIF22m532i0Lghzz4jB1XRnu3KbKqPnbU-G5wmNGarI1tLTcZVWWUGqDJpWdQxWwx6TD6UeKeqVFYR_2LTQ2v7H6U7S3cwVCa5fOZi02WKi8v6khzbCFFI3qbwrBsQX64Se6iSFqoHesgI2fsbMyK0ueb3_Ipm5z4d_BODR8C9JR0_NLJXevcj1aWNGoUZ2F0VZXXWrsZ_-wxL0QFzGDimbQeFUmhMqcYLey9SO8WHAT92HLNM"/>
+</div>
+<div>
+<div class="font-label-md text-on-surface">تطوير حي النقرة</div>
+<div class="text-[10px] text-on-surface-variant mt-1">تحديث منذ 5 أيام</div>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg font-body-md text-primary">سكني</td>
+<td class="px-lg py-lg font-body-md text-on-surface-variant">حي النقرة - غرب حائل</td>
+<td class="px-lg py-lg">
+<div class="flex items-center gap-sm">
+<span class="font-body-md text-on-surface">71%</span>
+<div class="w-16 h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 71%"></div>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg font-label-md text-on-surface">15.2 مليون ر.س</td>
+<td class="px-lg py-lg font-label-md text-green-400">23%</td>
+<td class="px-lg py-lg">
+<span class="px-md py-1 bg-surface-variant text-on-surface-variant border border-white/10 rounded-full text-label-sm">قيد الدراسة</span>
+</td>
+<td class="px-lg py-lg">
+<div class="flex gap-sm opacity-50 group-hover:opacity-100 transition-opacity">
+<button class="p-sm hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
+<button class="p-sm hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-sm hover:text-error transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-on-secondary-fixed-variant/5 transition-colors group">
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg overflow-hidden bg-slate-700">
+<img class="w-full h-full object-cover" data-alt="A sprawling commercial infrastructure project featuring wide paved avenues and modern landscaping designs. The aesthetic is clean and corporate, dominated by slate blue pavement and structured green areas. The lighting is bright and even, suggesting a professional midday atmosphere. This represents a large-scale commercial hub investment with high growth potential and strategic urban importance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs6LJTS8NHDz4UzSjDLbpsG7lnU0ZZDbi8usWGe1-lZ1ke1cYimB56NoFa5WmUkdlEw6a68UKN3LPn4h1ZjEIjmd8qrl4eSLiKs_Ua9hpkKFz95XjFGJFEg-3t-YQN8F9J86bjX_rFiwLp6pa2CaZrJbhEvpT2L6ZXeOL-DLYCeBHxANStCN4LHRVt55nXqVPWSB4ON_I8zf5XYHanAncJzO6AbQp27i5NIvf9am1qhaMUpQWHP-6UadrHMqeU-uNTDl8CDk1akYA"/>
+</div>
+<div>
+<div class="font-label-md text-on-surface">مشروع الوسيطاء التجاري</div>
+<div class="text-[10px] text-on-surface-variant mt-1">تحديث منذ أسبوع</div>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg font-body-md text-primary">تجاري</td>
+<td class="px-lg py-lg font-body-md text-on-surface-variant">حي الوسيطاء - جنوب حائل</td>
+<td class="px-lg py-lg">
+<div class="flex items-center gap-sm">
+<span class="font-body-md text-on-surface">65%</span>
+<div class="w-16 h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 65%"></div>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg font-label-md text-on-surface">8.7 مليون ر.س</td>
+<td class="px-lg py-lg font-label-md text-green-400">19%</td>
+<td class="px-lg py-lg">
+<span class="px-md py-1 bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 rounded-full text-label-sm">قيد المراجعة</span>
+</td>
+<td class="px-lg py-lg">
+<div class="flex gap-sm opacity-50 group-hover:opacity-100 transition-opacity">
+<button class="p-sm hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
+<button class="p-sm hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-sm hover:text-error transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-on-secondary-fixed-variant/5 transition-colors group">
+<td class="px-lg py-lg">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg overflow-hidden bg-slate-700">
+<img class="w-full h-full object-cover" data-alt="A futuristic urban technology center with a facade made of geometric glass panels and metallic framing. The scene is illuminated by cool-toned interior lighting that spills onto the dark pavement outside, creating a high-tech boardroom atmosphere. The overall palette is a sophisticated mix of deep navy, slate blue, and sharp white accents, symbolizing digital innovation and smart city investment opportunities." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiUCFCSKg2GSie7QwYd16VNgyLr40IUYJD7He8K4OuXY98q7RhD_MGkBf_CF5nn2SrFnKkrhjueQCeLyyBsaVPBykCW0PeYss47fQ1Cg38YRomZo53VLWqiKdVad9sI4n8WGe6Qim3xrKtVoqLEVC3Fcl8MTduLkdO4WDEQwHpAS8K6pSmmhYRNHgNKpXZAlz7j2RUAg_5-9LHF-e8Coo4x6PVKY5cGsyukAR_TCmV5TSyB6HcQZwfQPxj3z1fFrxx4p0IwPt8c_c"/>
+</div>
+<div>
+<div class="font-label-md text-on-surface">مركز تجاري حي الجامعة</div>
+<div class="text-[10px] text-on-surface-variant mt-1">تحديث منذ أسبوعين</div>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg font-body-md text-primary">تجاري</td>
+<td class="px-lg py-lg font-body-md text-on-surface-variant">حي الجامعة - شرق حائل</td>
+<td class="px-lg py-lg">
+<div class="flex items-center gap-sm">
+<span class="font-body-md text-on-surface">42%</span>
+<div class="w-16 h-1.5 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-error" style="width: 42%"></div>
+</div>
+</div>
+</td>
+<td class="px-lg py-lg font-label-md text-on-surface">3.1 مليون ر.س</td>
+<td class="px-lg py-lg font-label-md text-green-400">14%</td>
+<td class="px-lg py-lg">
+<span class="px-md py-1 bg-surface-variant text-on-surface-variant border border-white/10 rounded-full text-label-sm">قيد الدراسة</span>
+</td>
+<td class="px-lg py-lg">
+<div class="flex gap-sm opacity-50 group-hover:opacity-100 transition-opacity">
+<button class="p-sm hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">visibility</span></button>
+<button class="p-sm hover:text-primary transition-colors"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+<button class="p-sm hover:text-error transition-colors"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination -->
+<div class="bg-secondary-container/30 px-lg py-md flex justify-between items-center border-t border-white/5">
+<span class="text-label-sm text-on-surface-variant">عرض 1 - 4 من أصل 24 فرصة</span>
+<div class="flex gap-xs">
+<button class="w-8 h-8 flex items-center justify-center rounded bg-surface-container border border-white/5 hover:bg-surface-variant"><span class="material-symbols-outlined text-[18px]">chevron_right</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-on-primary-container font-label-sm">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-surface-container border border-white/5 hover:bg-surface-variant font-label-sm">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-surface-container border border-white/5 hover:bg-surface-variant font-label-sm">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-surface-container border border-white/5 hover:bg-surface-variant"><span class="material-symbols-outlined text-[18px]">chevron_left</span></button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Floating Action Button Logic -->
+<!-- (Suppressed as per requirements for specific Details/Settings screens, but kept for main lists as implied) -->
+<button class="fixed bottom-lg left-lg w-14 h-14 bg-primary text-on-primary-container rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50 md:hidden">
+<span class="material-symbols-outlined">add</span>
+</button>
+<script>
+        // Simple interactivity for demonstration
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', () => {
+                // Future navigation logic
+                console.log('Row clicked');
+            });
+        });
+    </script>
+<style>
+  @media (max-width: 1024px) {
+    body { overflow: auto !important; }
+    aside { width: 238px !important; transform: translateX(0); }
+    main { margin-right: 238px !important; min-width: 860px; }
+  }
+  @media (max-width: 760px) {
+    body { min-width: 1024px; }
+  }
+</style>
+<script>
+(function(){
+  const routes = {
+    "الرئيسية": "/admin",
+    "لوحة القيادة": "/admin",
+    "الذكاء الاستثماري": "/investment-intelligence",
+    "التحليل المكاني": "/investment-intelligence?tab=spatial",
+    "الفرص الاستثمارية": "/investment-intelligence?tab=opportunities",
+    "الإدارة والمتابعة": "/investment-intelligence?tab=approvals",
+    "الاعتمادات والموافقات": "/investment-intelligence?tab=approvals",
+    "الشركاء والمستثمرون": "/investment-intelligence?tab=partners",
+    "التقارير واللوحات": "/investment-intelligence?tab=reports",
+    "الأداء والمؤشرات": "/investment-intelligence?tab=performance",
+    "الإعدادات": "/investment-intelligence?tab=settings"
+  };
+  function wire(){
+    document.querySelectorAll('a,button').forEach(function(el){
+      const text = (el.textContent || '').replace(/\s+/g,' ').trim();
+      const route = routes[text];
+      if(!route || el.dataset.istinaarWired) return;
+      el.dataset.istinaarWired = '1';
+      if(el.tagName === 'A') el.setAttribute('href', route);
+      el.addEventListener('click', function(event){ event.preventDefault(); window.top.location.href = route; });
+    });
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wire); else wire();
+})();
+</script>
+</body></html>

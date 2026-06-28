@@ -1,0 +1,473 @@
+﻿<!DOCTYPE html>
+
+<html class="dark" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Istithmar - الشركاء والمستثمرون</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#dde3eb",
+                        "surface-variant": "#2f353c",
+                        "on-primary-fixed-variant": "#5d4200",
+                        "secondary-fixed": "#d7e3fb",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed": "#261900",
+                        "on-primary": "#412d00",
+                        "inverse-on-surface": "#2b3137",
+                        "surface-tint": "#eac170",
+                        "outline-variant": "#4e4638",
+                        "inverse-surface": "#dde3eb",
+                        "tertiary-fixed": "#d7e3f9",
+                        "on-tertiary-fixed": "#101c2c",
+                        "background": "#0e141a",
+                        "primary-fixed-dim": "#eac170",
+                        "surface-container-lowest": "#080f14",
+                        "on-surface": "#dde3eb",
+                        "on-secondary-fixed": "#101c2d",
+                        "on-secondary-container": "#a9b6cc",
+                        "primary-fixed": "#ffdea4",
+                        "secondary-container": "#3b475a",
+                        "on-primary-container": "#382700",
+                        "surface-dim": "#0e141a",
+                        "primary": "#eac170",
+                        "outline": "#9a8f7f",
+                        "on-secondary-fixed-variant": "#3b475a",
+                        "surface-container": "#1a2026",
+                        "secondary": "#bbc7de",
+                        "on-secondary": "#253143",
+                        "tertiary-container": "#8591a6",
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["IBM Plex Sans"],
+                        "headline-lg": ["IBM Plex Sans"],
+                        "body-md": ["IBM Plex Sans"],
+                        "label-md": ["IBM Plex Sans"],
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'IBM Plex Sans', sans-serif; background-color: #0e141a; color: #dde3eb; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-card { background: rgba(59, 71, 90, 0.4); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .chart-ring { transform: rotate(-90deg); transform-origin: center; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0e141a; }
+        ::-webkit-scrollbar-thumb { background: #3b475a; border-radius: 10px; }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<!-- SideNavBar (from JSON) -->
+<aside class="fixed right-0 top-0 h-full w-[280px] bg-secondary-container flex flex-col z-40 border-l border-white/5 shadow-2xl transition-all duration-200 ease-in-out">
+<div class="p-lg flex items-center gap-md border-b border-white/10 mb-md">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary">
+<img class="w-full h-full object-cover" data-alt="A professional corporate portrait of an executive male in his late 40s wearing a high-end business suit, set against a blurred luxurious office background with deep navy and muted gold tones. The lighting is sophisticated and directional, highlighting features with a premium mission-control center aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYZWERSH_WM24p7J1cEndusXkZmpgFNxvHSbRKUUUzwmsFndRzjZ3XbXqm06imXiUieuE0weA5kMpVeCXnN-j9mMpFbRkkCaqE30zqFD9gy2gdlRo1m9L6OTOCKvq-49TQv_f9Nwl-A6KpXhtM9JD7XXT0natl1Mums0HkvAEheOQouZqwQ4IIE_rUcAwSRrwwANEGBPgEPnvAJv3xAXtUhGrguwPE5hkkUp4rNeonsmiUQjUBXkQW2KjcFDHhBIvxJGGQsMsyiDE"/>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-primary">محمد الشهري</h3>
+<p class="text-xs text-on-surface-variant">الرئيس التنفيذي</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto px-sm space-y-xs">
+<a class="flex items-center gap-md px-md py-sm font-label-md text-label-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>الرئيسية</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm font-label-md text-label-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span>الذكاء الاستثماري</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm font-label-md text-label-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">map</span>
+<span>التحليل المكاني</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm font-label-md text-label-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">monetization_on</span>
+<span>الفرص الاستثمارية</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm font-label-md text-label-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span>الإدارة والمتابعة</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm font-label-md text-label-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">fact_check</span>
+<span>الاعتمادات والموافقات</span>
+</a>
+<!-- Active Navigation -->
+<a class="flex items-center gap-md px-md py-sm font-label-md text-label-md text-primary border-r-4 border-primary bg-on-secondary-fixed-variant/10 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">handshake</span>
+<span>الشركاء والمستثمرون</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm font-label-md text-label-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>التقارير واللوحات</span>
+</a>
+<a class="flex items-center gap-md px-md py-sm font-label-md text-label-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>الإعدادات</span>
+</a>
+</nav>
+<div class="p-md border-t border-white/5 space-y-xs">
+<button class="w-full flex items-center justify-center gap-sm bg-primary text-on-primary-container font-label-md text-label-md py-md rounded hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">add_circle</span>
+<span>فرصة جديدة</span>
+</button>
+<div class="flex flex-col pt-md space-y-sm">
+<a class="flex items-center gap-md px-md text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="text-label-md">الدعم الفني</span>
+</a>
+<a class="flex items-center gap-md px-md text-error hover:opacity-80 transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-label-md">خروج</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="mr-[280px] w-full min-h-screen p-lg flex flex-col gap-lg">
+<!-- TopAppBar (from JSON) -->
+<header class="sticky top-0 z-50 bg-surface-container border-b border-white/10 px-lg py-md flex justify-between items-center w-full">
+<div class="flex items-center gap-xl">
+<h1 class="font-headline-lg text-headline-lg text-primary font-bold">Istithmar</h1>
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-full py-sm pr-11 pl-md text-on-surface focus:outline-none focus:border-primary" placeholder="البحث عن شريك أو مستثمر..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="flex items-center gap-sm bg-primary/10 border border-primary/20 text-primary px-lg py-sm rounded-lg hover:bg-primary/20 transition-all font-label-md text-label-md">
+<span class="material-symbols-outlined">add_business</span>
+<span>Add Investment Opportunity</span>
+</button>
+<div class="flex items-center gap-sm ml-lg border-r border-white/10 pr-lg">
+<button class="p-sm rounded-full hover:bg-surface-variant transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-sm rounded-full hover:bg-surface-variant transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">calendar_today</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Page Content: الشركاء والمستثمرون -->
+<div class="flex flex-col gap-lg animate-fade-in">
+<!-- Hero Stats Row -->
+<div class="grid grid-cols-5 gap-md">
+<div class="glass-card p-lg rounded-xl flex flex-col gap-sm">
+<span class="text-on-surface-variant font-label-md text-label-md">إجمالي المستثمرين</span>
+<div class="flex items-end justify-between">
+<span class="text-headline-lg font-headline-lg text-on-surface">256</span>
+<div class="text-emerald-400 flex items-center text-xs font-bold mb-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> 22%
+                        </div>
+</div>
+<div class="h-1 w-full bg-white/5 rounded-full mt-sm overflow-hidden">
+<div class="h-full bg-primary w-[70%]"></div>
+</div>
+</div>
+<div class="glass-card p-lg rounded-xl flex flex-col gap-sm">
+<span class="text-on-surface-variant font-label-md text-label-md">مستثمرون نشطون</span>
+<div class="flex items-end justify-between">
+<span class="text-headline-lg font-headline-lg text-on-surface">146</span>
+<div class="text-emerald-400 flex items-center text-xs font-bold mb-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> 16%
+                        </div>
+</div>
+<div class="h-1 w-full bg-white/5 rounded-full mt-sm overflow-hidden">
+<div class="h-full bg-secondary w-[55%]"></div>
+</div>
+</div>
+<div class="glass-card p-lg rounded-xl flex flex-col gap-sm">
+<span class="text-on-surface-variant font-label-md text-label-md">شراكات قائمة</span>
+<div class="flex items-end justify-between">
+<span class="text-headline-lg font-headline-lg text-on-surface">38</span>
+<div class="text-emerald-400 flex items-center text-xs font-bold mb-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> 5+
+                        </div>
+</div>
+<div class="h-1 w-full bg-white/5 rounded-full mt-sm overflow-hidden">
+<div class="h-full bg-primary-container w-[40%]"></div>
+</div>
+</div>
+<div class="glass-card p-lg rounded-xl flex flex-col gap-sm">
+<span class="text-on-surface-variant font-label-md text-label-md">قيمة الاستثمارات</span>
+<div class="flex items-end justify-between">
+<span class="text-headline-lg font-headline-lg text-on-surface">1.24 <span class="text-body-md">مليار</span></span>
+<div class="text-emerald-400 flex items-center text-xs font-bold mb-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> 28%
+                        </div>
+</div>
+<div class="h-1 w-full bg-white/5 rounded-full mt-sm overflow-hidden">
+<div class="h-full bg-primary w-[85%]"></div>
+</div>
+</div>
+<div class="glass-card p-lg rounded-xl flex flex-col gap-sm">
+<span class="text-on-surface-variant font-label-md text-label-md">الفرص المرتبطة</span>
+<div class="flex items-end justify-between">
+<span class="text-headline-lg font-headline-lg text-on-surface">64</span>
+<div class="text-emerald-400 flex items-center text-xs font-bold mb-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> 15%
+                        </div>
+</div>
+<div class="h-1 w-full bg-white/5 rounded-full mt-sm overflow-hidden">
+<div class="h-full bg-secondary-fixed-dim w-[62%]"></div>
+</div>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-12 gap-lg h-[480px]">
+<!-- Distribution by Sector -->
+<div class="col-span-4 glass-card rounded-xl p-lg flex flex-col">
+<div class="flex justify-between items-center mb-xl">
+<h2 class="font-headline-md text-headline-md text-on-surface">توزيع المستثمرين حسب القطاع</h2>
+<button class="text-primary hover:bg-primary/10 p-sm rounded-full transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center relative">
+<svg class="chart-ring" height="200" viewbox="0 0 100 100" width="200">
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#2f353c" stroke-width="12"></circle>
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#eac170" stroke-dasharray="251.2" stroke-dashoffset="155" stroke-width="12"></circle>
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#bbc7de" stroke-dasharray="251.2" stroke-dashoffset="190" stroke-width="12"></circle>
+<circle cx="50" cy="50" fill="transparent" r="40" stroke="#3b475a" stroke-dasharray="251.2" stroke-dashoffset="230" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-headline-md font-bold">256</span>
+<span class="text-xs text-on-surface-variant">إجمالي</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-md mt-lg">
+<div class="flex items-center gap-sm">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="text-label-md">العقاري 38%</span>
+</div>
+<div class="flex items-center gap-sm">
+<div class="w-3 h-3 rounded-full bg-secondary"></div>
+<span class="text-label-md">التجاري 24%</span>
+</div>
+<div class="flex items-center gap-sm">
+<div class="w-3 h-3 rounded-full bg-on-secondary-fixed-variant"></div>
+<span class="text-label-md">البنية التحتية 16%</span>
+</div>
+<div class="flex items-center gap-sm">
+<div class="w-2 h-2 rounded-full bg-surface-variant"></div>
+<span class="text-label-md">أخرى 12%</span>
+</div>
+</div>
+</div>
+<!-- Top Partners List -->
+<div class="col-span-5 glass-card rounded-xl p-lg flex flex-col">
+<div class="flex justify-between items-center mb-xl">
+<h2 class="font-headline-md text-headline-md text-on-surface">أبرز المستثمرين</h2>
+<a class="text-primary text-label-md flex items-center gap-xs" href="#">
+                            عرض جميع المستثمرين <span class="material-symbols-outlined text-sm">arrow_back</span>
+</a>
+</div>
+<div class="flex-1 space-y-md">
+<div class="flex items-center justify-between p-md bg-surface-container/50 rounded-lg border border-white/5 hover:border-primary/30 transition-all cursor-pointer">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined">domain</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md">شركة مستقبل العقارية</h4>
+<span class="text-xs text-on-surface-variant">شريك استراتيجي</span>
+</div>
+</div>
+<div class="text-left">
+<p class="text-primary font-bold">320 مليون ر.س</p>
+<span class="px-sm py-xs bg-emerald-500/10 text-emerald-400 text-[10px] rounded-full uppercase">نشط</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-md bg-surface-container/50 rounded-lg border border-white/5 hover:border-primary/30 transition-all cursor-pointer">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">corporate_fare</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md">مجموعة الراحة للاستثمار</h4>
+<span class="text-xs text-on-surface-variant">شريك استراتيجي</span>
+</div>
+</div>
+<div class="text-left">
+<p class="text-primary font-bold">210 مليون ر.س</p>
+<span class="px-sm py-xs bg-emerald-500/10 text-emerald-400 text-[10px] rounded-full uppercase">نشط</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-md bg-surface-container/50 rounded-lg border border-white/5 hover:border-primary/30 transition-all cursor-pointer">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">apartment</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md">شركة الإنماء العمراني</h4>
+<span class="text-xs text-on-surface-variant">مستثمر</span>
+</div>
+</div>
+<div class="text-left">
+<p class="text-primary font-bold">150 مليون ر.س</p>
+<span class="px-sm py-xs bg-emerald-500/10 text-emerald-400 text-[10px] rounded-full uppercase">نشط</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Partnerships Timeline -->
+<div class="col-span-3 glass-card rounded-xl p-lg flex flex-col">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-xl">الشراكات الحديثة</h2>
+<div class="flex-1 relative pr-sm">
+<div class="absolute right-[19px] top-4 bottom-4 w-px bg-white/10"></div>
+<div class="space-y-xl">
+<div class="relative pr-xl">
+<div class="absolute right-0 top-1.5 w-10 h-10 -mr-[5px] bg-primary rounded-full border-4 border-background flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-background text-sm">history_edu</span>
+</div>
+<div class="text-xs text-on-surface-variant mb-1">1446/01/01</div>
+<h4 class="text-label-md font-bold text-on-surface">شراكة تطوير حي مشارف</h4>
+<p class="text-[11px] text-on-surface-variant">شراكة استراتيجية</p>
+</div>
+<div class="relative pr-xl">
+<div class="absolute right-0 top-1.5 w-10 h-10 -mr-[5px] bg-secondary-container rounded-full border-4 border-background flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-on-surface text-sm">handshake</span>
+</div>
+<div class="text-xs text-on-surface-variant mb-1">1445/12/28</div>
+<h4 class="text-label-md font-bold text-on-surface">مشروع السوق المركزي</h4>
+<p class="text-[11px] text-on-surface-variant">شراكة تشغيل</p>
+</div>
+<div class="relative pr-xl">
+<div class="absolute right-0 top-1.5 w-10 h-10 -mr-[5px] bg-surface-variant rounded-full border-4 border-background flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">architecture</span>
+</div>
+<div class="text-xs text-on-surface-variant mb-1">1445/12/25</div>
+<h4 class="text-label-md font-bold text-on-surface">تأهيل واجهة المدينة</h4>
+<p class="text-[11px] text-on-surface-variant">شراكة تطوير</p>
+</div>
+</div>
+</div>
+<button class="mt-lg w-full py-sm border border-white/10 rounded-lg text-xs hover:bg-white/5 transition-all">عرض جميع الشراكات</button>
+</div>
+</div>
+<!-- Bottom Metrics Grid -->
+<div class="grid grid-cols-4 gap-lg">
+<div class="glass-card rounded-xl p-lg flex flex-col justify-between h-32 relative overflow-hidden">
+<div>
+<span class="text-on-surface-variant text-xs mb-md block">معدل رضا المستثمرين</span>
+<span class="text-headline-md font-headline-md text-on-surface">91%</span>
+</div>
+<div class="text-emerald-400 text-xs flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">trending_up</span> 5%+ عن الشهر الماضي
+                    </div>
+<span class="material-symbols-outlined absolute -bottom-4 -left-4 text-white/5 text-[100px]" style="font-variation-settings: 'FILL' 1;">sentiment_very_satisfied</span>
+</div>
+<div class="glass-card rounded-xl p-lg flex flex-col justify-between h-32 relative overflow-hidden">
+<div>
+<span class="text-on-surface-variant text-xs mb-md block">متوسط زمن الاستجابة</span>
+<span class="text-headline-md font-headline-md text-on-surface">2.4 يوم</span>
+</div>
+<div class="text-emerald-400 text-xs flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">trending_down</span> 0.8- يوم عن الشهر الماضي
+                    </div>
+<span class="material-symbols-outlined absolute -bottom-4 -left-4 text-white/5 text-[100px]" style="font-variation-settings: 'FILL' 1;">timer</span>
+</div>
+<div class="glass-card rounded-xl p-lg flex flex-col justify-between h-32 relative overflow-hidden">
+<div>
+<span class="text-on-surface-variant text-xs mb-md block">معدل تحويل الفرص</span>
+<span class="text-headline-md font-headline-md text-on-surface">28%</span>
+</div>
+<div class="text-emerald-400 text-xs flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">trending_up</span> 3%+ عن الشهر الماضي
+                    </div>
+<span class="material-symbols-outlined absolute -bottom-4 -left-4 text-white/5 text-[100px]" style="font-variation-settings: 'FILL' 1;">sync_alt</span>
+</div>
+<div class="glass-card rounded-xl p-lg flex flex-col justify-between h-32 relative overflow-hidden">
+<div>
+<span class="text-on-surface-variant text-xs mb-md block">عدد الاجتماعات</span>
+<span class="text-headline-md font-headline-md text-on-surface">48 اجتماع</span>
+</div>
+<div class="text-emerald-400 text-xs flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm">trending_up</span> 8+ عن الشهر الماضي
+                    </div>
+<span class="material-symbols-outlined absolute -bottom-4 -left-4 text-white/5 text-[100px]" style="font-variation-settings: 'FILL' 1;">groups</span>
+</div>
+</div>
+</div>
+<!-- Floating Action Button Contextual Suppression: Suppressed for Details Page (Not applicable here as it's a dashboard) -->
+<!-- But per instructions: Suppression of FAB on Details screen. This is a main dashboard, so keeping it. -->
+<div class="fixed bottom-lg left-lg">
+<button class="bg-primary text-on-primary shadow-xl w-14 h-14 rounded-full flex items-center justify-center hover:scale-105 transition-transform duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 28px;">add_business</span>
+</button>
+</div>
+</main>
+<script>
+        // Micro-interactions and hover effects
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.borderColor = 'rgba(234, 193, 112, 0.2)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+            });
+        });
+    </script>
+<style>
+  @media (max-width: 1024px) {
+    body { overflow: auto !important; }
+    aside { width: 238px !important; transform: translateX(0); }
+    main { margin-right: 238px !important; min-width: 860px; }
+  }
+  @media (max-width: 760px) {
+    body { min-width: 1024px; }
+  }
+</style>
+<script>
+(function(){
+  const routes = {
+    "الرئيسية": "/admin",
+    "لوحة القيادة": "/admin",
+    "الذكاء الاستثماري": "/investment-intelligence",
+    "التحليل المكاني": "/investment-intelligence?tab=spatial",
+    "الفرص الاستثمارية": "/investment-intelligence?tab=opportunities",
+    "الإدارة والمتابعة": "/investment-intelligence?tab=approvals",
+    "الاعتمادات والموافقات": "/investment-intelligence?tab=approvals",
+    "الشركاء والمستثمرون": "/investment-intelligence?tab=partners",
+    "التقارير واللوحات": "/investment-intelligence?tab=reports",
+    "الأداء والمؤشرات": "/investment-intelligence?tab=performance",
+    "الإعدادات": "/investment-intelligence?tab=settings"
+  };
+  function wire(){
+    document.querySelectorAll('a,button').forEach(function(el){
+      const text = (el.textContent || '').replace(/\s+/g,' ').trim();
+      const route = routes[text];
+      if(!route || el.dataset.istinaarWired) return;
+      el.dataset.istinaarWired = '1';
+      if(el.tagName === 'A') el.setAttribute('href', route);
+      el.addEventListener('click', function(event){ event.preventDefault(); window.top.location.href = route; });
+    });
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wire); else wire();
+})();
+</script>
+</body></html>

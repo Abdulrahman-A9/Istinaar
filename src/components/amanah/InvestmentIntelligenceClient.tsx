@@ -2,19 +2,7 @@
 
 import Link from "next/link";
 import { Landmark } from "lucide-react";
-import ReferenceShell from "@/components/amanah/reference/ReferenceShell";
-import {
-  IntelligenceOpportunitiesReference,
-  IntelligenceOverviewReference,
-  IntelligenceSpatialReference,
-} from "@/components/amanah/reference/ReferenceViews";
-import {
-  ApprovalsReference,
-  PartnersReference,
-  PerformanceReference,
-  ReportsReference,
-  SettingsReference,
-} from "@/components/amanah/reference/ManagementViews";
+import ReferenceHtmlFrame from "@/components/amanah/ReferenceHtmlFrame";
 import { useAppStore } from "@/store/appStore";
 
 type InvestmentIntelligenceClientProps = {
@@ -77,16 +65,5 @@ export default function InvestmentIntelligenceClient({
     );
   }
 
-  return (
-    <ReferenceShell page={activeTab}>
-      {activeTab === "overview" ? <IntelligenceOverviewReference /> : null}
-      {activeTab === "spatial" ? <IntelligenceSpatialReference /> : null}
-      {activeTab === "opportunities" ? <IntelligenceOpportunitiesReference /> : null}
-      {activeTab === "approvals" ? <ApprovalsReference /> : null}
-      {activeTab === "partners" ? <PartnersReference /> : null}
-      {activeTab === "reports" ? <ReportsReference /> : null}
-      {activeTab === "performance" ? <PerformanceReference /> : null}
-      {activeTab === "settings" ? <SettingsReference /> : null}
-    </ReferenceShell>
-  );
+  return <ReferenceHtmlFrame page={activeTab} />;
 }

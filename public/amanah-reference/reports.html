@@ -1,0 +1,440 @@
+﻿<!DOCTYPE html>
+
+<html class="dark" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background-color: #0e141a;
+            color: #dde3eb;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #1a2026; }
+        ::-webkit-scrollbar-thumb { background: #3b475a; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94722a; }
+
+        .glass-card {
+            background: rgba(59, 71, 90, 0.4);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .hero-gradient {
+            background: radial-gradient(circle at top right, rgba(234, 193, 112, 0.05) 0%, transparent 70%);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#dde3eb",
+                        "surface-variant": "#2f353c",
+                        "on-primary-fixed-variant": "#5d4200",
+                        "secondary-fixed": "#d7e3fb",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed": "#261900",
+                        "on-primary": "#412d00",
+                        "inverse-on-surface": "#2b3137",
+                        "surface-tint": "#eac170",
+                        "outline-variant": "#4e4638",
+                        "inverse-surface": "#dde3eb",
+                        "tertiary-fixed": "#d7e3f9",
+                        "on-tertiary-fixed": "#101c2c",
+                        "background": "#0e141a",
+                        "primary-fixed-dim": "#eac170",
+                        "surface-container-lowest": "#080f14",
+                        "on-surface": "#dde3eb",
+                        "on-secondary-fixed": "#101c2d",
+                        "on-secondary-container": "#a9b6cc",
+                        "primary-fixed": "#ffdea4",
+                        "secondary-container": "#3b475a",
+                        "on-secondary-container": "#a9b6cc",
+                        "primary-container": "#b08b41",
+                        "on-error": "#690005",
+                        "surface-container-high": "#242b31",
+                        "surface": "#0e141a",
+                        "on-tertiary-fixed-variant": "#3c4759",
+                        "error-container": "#93000a",
+                        "surface-bright": "#333a40",
+                        "inverse-primary": "#785912",
+                        "secondary-fixed-dim": "#bbc7de",
+                        "surface-container-highest": "#2f353c",
+                        "on-surface-variant": "#d1c5b3",
+                        "tertiary": "#bbc7dd",
+                        "primary": "#eac170",
+                        "outline": "#9a8f7f",
+                        "on-secondary-fixed-variant": "#3b475a",
+                        "on-tertiary-container": "#1f2a3b",
+                        "tertiary-fixed-dim": "#bbc7dd",
+                        "surface-container": "#1a2026",
+                        "secondary": "#bbc7de",
+                        "surface-container-low": "#161c22",
+                        "on-secondary": "#253143",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-container": "#8591a6",
+                        "on-tertiary": "#253142"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "lg": "24px",
+                        "md": "16px",
+                        "xs": "4px",
+                        "gutter": "24px",
+                        "xxl": "64px",
+                        "margin-desktop": "48px",
+                        "sm": "8px",
+                        "unit": "4px",
+                        "xl": "40px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["IBM Plex Sans"],
+                        "headline-lg": ["IBM Plex Sans"],
+                        "body-lg": ["IBM Plex Sans"],
+                        "label-sm": ["IBM Plex Sans"],
+                        "label-md": ["IBM Plex Sans"],
+                        "body-md": ["IBM Plex Sans"],
+                        "headline-xl": ["IBM Plex Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background">
+<!-- Sidebar Component (Mapped from JSON) -->
+<aside class="fixed right-0 top-0 h-full flex flex-col z-40 border-l border-white/5 bg-secondary-container dark:bg-secondary-container w-[280px] docked transition-all duration-200 ease-in-out">
+<div class="p-lg flex flex-col items-center border-b border-white/10">
+<div class="relative w-20 h-20 mb-md">
+<img class="w-full h-full rounded-full border-2 border-primary object-cover" data-alt="A professional headshot of an executive in a traditional Saudi thobe, lit with soft studio lighting against a dark corporate background, maintaining a premium and authoritative tone." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdwYytLHWuulG72YEgnyWbpeCMGmlNeeDOGsdlmLTT_v08IZy4vzho5MKLU4xkb1uiHny2cmQrY_kXmszFMlNxZF4SS5ffdGrt26xthPSDG7xObvshh43On9XqH1VeA7pZx85_BFizJ2HblWf2xi9qSndhiq7GsaJolk_9AlxU-a1ZdmePuAzJaIEe-4LluH6ECtu1_5ia0aBb86vvf4UnE_C0lCiR30DizE8cvRouLRwXloy1-fGW38SwqJJi0fbB0a5RYLcaeug"/>
+<div class="absolute bottom-0 right-0 w-5 h-5 bg-green-500 rounded-full border-2 border-secondary-container"></div>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary">محمد الشهري</h2>
+<p class="font-label-md text-label-md text-on-surface-variant">الرئيس التنفيذي</p>
+</div>
+<nav class="flex-1 overflow-y-auto py-md">
+<ul class="space-y-1">
+<!-- Navigation Tabs from JSON -->
+<li>
+<a class="flex items-center px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined ml-md">dashboard</span>
+<span class="font-label-md text-label-md">الرئيسية</span>
+</a>
+</li>
+<li>
+<a class="flex items-center px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined ml-md">insights</span>
+<span class="font-label-md text-label-md">الذكاء الاستثماري</span>
+</a>
+</li>
+<li>
+<a class="flex items-center px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined ml-md">map</span>
+<span class="font-label-md text-label-md">التحليل المكاني</span>
+</a>
+</li>
+<li>
+<a class="flex items-center px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined ml-md">monetization_on</span>
+<span class="font-label-md text-label-md">الفرص الاستثمارية</span>
+</a>
+</li>
+<li>
+<!-- Active State for 'التقارير واللوحات' -->
+<a class="flex items-center px-lg py-md text-primary bg-on-secondary-fixed-variant/10 border-r-4 border-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined ml-md">analytics</span>
+<span class="font-label-md text-label-md">التقارير واللوحات</span>
+</a>
+</li>
+<li>
+<a class="flex items-center px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 hover:text-primary transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined ml-md">settings</span>
+<span class="font-label-md text-label-md">الإعدادات</span>
+</a>
+</li>
+</ul>
+</nav>
+<div class="p-lg mt-auto border-t border-white/5">
+<a class="flex items-center px-md py-sm text-on-secondary-container hover:text-error transition-colors" href="#">
+<span class="material-symbols-outlined ml-md">logout</span>
+<span class="font-label-md text-label-md">خروج</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="mr-[280px] min-h-screen hero-gradient relative">
+<!-- TopAppBar (Mapped from JSON) -->
+<header class="flex justify-between items-center w-full px-xxl py-md sticky top-0 z-50 bg-surface-container/80 backdrop-blur-md border-b border-white/10">
+<div class="flex items-center gap-xl">
+<h1 class="font-headline-lg text-headline-lg text-primary font-bold">استثمار</h1>
+<div class="relative group">
+<span class="absolute inset-y-0 right-3 flex items-center text-outline">
+<span class="material-symbols-outlined">search</span>
+</span>
+<input class="bg-surface-container-low border border-outline-variant rounded-full pr-10 pl-md py-xs text-on-surface focus:outline-none focus:border-primary transition-colors w-64" placeholder="البحث في التقارير..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-lg">
+<button class="bg-primary text-on-secondary-fixed px-lg py-sm rounded-full font-label-md hover:brightness-110 transition-all active:scale-95 duration-100 flex items-center">
+<span class="material-symbols-outlined ml-xs">add</span>
+                    إضافة فرصة استثمارية
+                </button>
+<div class="flex items-center gap-md">
+<button class="p-sm rounded-full hover:bg-surface-variant text-on-surface-variant transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-sm rounded-full hover:bg-surface-variant text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">calendar_today</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Dashboard Layout -->
+<section class="max-w-[1440px] mx-auto p-xxl">
+<!-- Breadcrumbs & Section Title -->
+<div class="flex justify-between items-end mb-xl">
+<div>
+<nav class="flex text-on-surface-variant font-label-md mb-xs">
+<span class="hover:text-primary cursor-pointer">الرئيسية</span>
+<span class="mx-xs">/</span>
+<span class="text-primary">التقارير واللوحات</span>
+</nav>
+<h2 class="font-headline-lg text-headline-lg">التقارير والتحليلات</h2>
+</div>
+<div class="flex gap-sm">
+<button class="bg-surface-container-high border border-primary text-primary px-lg py-xs rounded-lg font-label-md hover:bg-primary hover:text-on-primary-fixed transition-all">التقارير</button>
+<button class="bg-surface-container-low border border-white/10 text-on-surface-variant px-lg py-xs rounded-lg font-label-md hover:border-primary/50 transition-all">لوحات البيانات</button>
+</div>
+</div>
+<!-- Report Categories Grid -->
+<div class="grid grid-cols-2 md:grid-cols-5 gap-gutter mb-xxl">
+<div class="glass-card p-lg rounded-xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-primary/50 group transition-all">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-md group-hover:bg-primary transition-all">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary-fixed text-4xl">handshake</span>
+</div>
+<span class="font-label-md text-label-md">تقارير الشركاء</span>
+</div>
+<div class="glass-card p-lg rounded-xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-primary/50 group transition-all">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-md group-hover:bg-primary transition-all">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary-fixed text-4xl">trending_up</span>
+</div>
+<span class="font-label-md text-label-md">تقارير الأداء</span>
+</div>
+<div class="glass-card p-lg rounded-xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-primary/50 group transition-all">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-md group-hover:bg-primary transition-all">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary-fixed text-4xl">receipt_long</span>
+</div>
+<span class="font-label-md text-label-md">تقارير الفرص</span>
+</div>
+<div class="glass-card p-lg rounded-xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-primary/50 group transition-all">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-md group-hover:bg-primary transition-all">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary-fixed text-4xl">account_balance</span>
+</div>
+<span class="font-label-md text-label-md">التقارير المالية</span>
+</div>
+<div class="glass-card p-lg rounded-xl flex flex-col items-center justify-center text-center cursor-pointer hover:border-primary/50 group transition-all border-primary">
+<div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center mb-md">
+<span class="material-symbols-outlined text-on-primary-fixed text-4xl">groups</span>
+</div>
+<span class="font-label-md text-label-md text-primary font-bold">تقارير العملاء</span>
+</div>
+</div>
+<!-- Executive Reports Section -->
+<div class="mb-xxl">
+<h3 class="font-headline-md text-headline-md mb-lg border-r-4 border-primary pr-md">التقارير التنفيذية</h3>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<!-- Report Card 1 -->
+<div class="glass-card rounded-xl overflow-hidden group hover:-translate-y-2 transition-all duration-300">
+<div class="h-40 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A clean, minimalist data visualization dashboard showing multiple financial line graphs and bar charts in a deep slate blue and gold palette, shot with a slight macro angle to emphasize high-end UI details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDibyeG0XDpejVCqfZb2yZ_-5F8APv85w_7POTbBk6iMP1KBPyYzs1e_IuH9-tsWjpuKYObnIvVoA8xK9OUn2O2fXguf5At_o3MMfIlhcjzLCcUxYKjs5xp_MhLAxdrFg5heFAcBsnx0EgaR80jGH78hcbuYRgREV3dUz8BQXqW4lHdI_Pp8R4a_dN73HLdA86dw4EgXuLUx-s9Pv4-DsSr0ATSykuLOYLaUWN3EZnJJ1EzpHQ7oIS_WZvJ1glzW10MyZZcdlzd1rg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60"></div>
+</div>
+<div class="p-lg">
+<h4 class="font-label-md text-label-md font-bold mb-xs">التقرير التنفيذي الشهري</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-lg">ملخص شامل لأداء الاستثمار والفرص والمستهدفات الرئيسية.</p>
+<div class="flex justify-between items-center">
+<button class="flex items-center text-on-surface-variant hover:text-primary transition-colors text-sm">
+<span class="material-symbols-outlined ml-xs text-lg">picture_as_pdf</span>
+                                    PDF
+                                </button>
+<button class="bg-surface-variant/30 p-xs rounded hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined text-primary">download</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Report Card 2 -->
+<div class="glass-card rounded-xl overflow-hidden group hover:-translate-y-2 transition-all duration-300">
+<div class="h-40 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A sophisticated satellite-style map visualization of a city grid at night, with areas highlighted in glowing emerald and amber tones, representing investment opportunity heatmaps. Premium, dark, mission-control aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQQlgTu_kqpgEXwxVJptEJvcCTHCCxE4dtQZ4ihlyOMO5N6sbE8B6e_xclSdjnYYquOBPOexOIgOHZktfw_lAPcoR5Ch2sft4oitGNvKfCJoxHxCzZH66d5I-0RbvvOIwqIxWlN_-6B_p2PFroGa6nUfrj4a4MkyjcHUDoPkvO1CPtwlt131Hy8Q-IOL3XGCzMW7YVXxqLaLsUYzCcuScdvfrmK3hjJ6tFRutTaRM__zKy9hQprDAwX-RSqi_BegRqRmQkeM6gERY"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60"></div>
+</div>
+<div class="p-lg">
+<h4 class="font-label-md text-label-md font-bold mb-xs">تقرير الفرص الاستثمارية</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-lg">تفاصيل الفرص المتاحة والمغلقة والفرص قيد الدراسة والتقييم.</p>
+<div class="flex justify-between items-center">
+<button class="flex items-center text-on-surface-variant hover:text-primary transition-colors text-sm">
+<span class="material-symbols-outlined ml-xs text-lg" style="color: #4CAF50;">table_chart</span>
+                                    XLSX
+                                </button>
+<button class="bg-surface-variant/30 p-xs rounded hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined text-primary">download</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Report Card 3 -->
+<div class="glass-card rounded-xl overflow-hidden group hover:-translate-y-2 transition-all duration-300">
+<div class="h-40 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="An abstract 3D visualization of interconnected nodes and data points forming a crystalline structure. The colors are muted navy and shimmering gold, with soft bokeh depth of field and professional studio lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTMCDbqVhYKkuEtj9X3RzTlvNygKCpk3sDal5HHO4ebWwmdPdovY4QJIha7UiMuUB8mMoQLOOaoUt9LJy-AGiq6B9gh3sZqBGO_18Divq8krIuoK1gzuoK0Dc11attHA4AoXr8rgm3fXP6l0cnMGsaxl19zPcTG-2WIBe3XzSW4nAVUcBdzZCw8fcWO7myeN55aGmoLtPtlZuzjG_NDZFBpqE6gW-ByRNK91chzoVCTs6_bHuO6FmpDDgKk24_6FMzmF7yvIMlb50"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60"></div>
+</div>
+<div class="p-lg">
+<h4 class="font-label-md text-label-md font-bold mb-xs">تقرير التحليل المكاني</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-lg">تحليل شامل للمناطق الجغرافية وتوزيع الفرص والكثافة السكانية.</p>
+<div class="flex justify-between items-center">
+<button class="flex items-center text-on-surface-variant hover:text-primary transition-colors text-sm">
+<span class="material-symbols-outlined ml-xs text-lg">picture_as_pdf</span>
+                                    PDF
+                                </button>
+<button class="bg-surface-variant/30 p-xs rounded hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined text-primary">download</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Report Card 4 -->
+<div class="glass-card rounded-xl overflow-hidden group hover:-translate-y-2 transition-all duration-300">
+<div class="h-40 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A clean business report layout with complex data tables and circular progress indicators. The design is modern corporate with deep blue backgrounds and crisp white text, featuring gold accent bars for hierarchy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoEDYdkoxDLFaM3818pIn8PKn-3sUqFIx5u4_21La6OiUEoXUUwlOwGVODESk_7NpNQEJ42KPrTYHVKVaBGlE0vgnnkLvLg27lZT2NIVMk3I0S0zEJY1XB1ochzb_jzsZFuGARhUneEd7xZZXzNFzeyY5Kz0tOe83Aa0HhrPaWuGDgxFPL7Giz59Epmbo12ywPPRJlj6loKN_7z41Uaq9rFLaU3HNjFhqw_POcOH41b0GQa9JHW7DuzK58PZPvCEhQaYjuEHPGhIA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60"></div>
+</div>
+<div class="p-lg">
+<h4 class="font-label-md text-label-md font-bold mb-xs">تقرير الشركاء والمستثمرين</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-lg">أداء الشركاء وحجم الاستثمارات الملتزم بها ونسب الإنجاز المحققة.</p>
+<div class="flex justify-between items-center">
+<button class="flex items-center text-on-surface-variant hover:text-primary transition-colors text-sm">
+<span class="material-symbols-outlined ml-xs text-lg" style="color: #4CAF50;">table_chart</span>
+                                    XLSX
+                                </button>
+<button class="bg-surface-variant/30 p-xs rounded hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined text-primary">download</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Data Dashboards Section -->
+<section>
+<h3 class="font-headline-md text-headline-md mb-lg border-r-4 border-primary pr-md">لوحات البيانات</h3>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="bg-surface-container border border-white/5 p-lg rounded-xl text-center group cursor-pointer hover:border-primary transition-all">
+<h5 class="font-label-md text-label-md mb-md text-on-surface-variant group-hover:text-primary">لوحة الأداء الشاملة</h5>
+<button class="w-full bg-surface-variant/20 border border-white/10 py-sm rounded-lg font-label-sm hover:bg-primary/10 hover:border-primary transition-all">عرض اللوحة</button>
+</div>
+<div class="bg-surface-container border border-white/5 p-lg rounded-xl text-center group cursor-pointer hover:border-primary transition-all">
+<h5 class="font-label-md text-label-md mb-md text-on-surface-variant group-hover:text-primary">لوحة الفرص الاستثمارية</h5>
+<button class="w-full bg-surface-variant/20 border border-white/10 py-sm rounded-lg font-label-sm hover:bg-primary/10 hover:border-primary transition-all">عرض اللوحة</button>
+</div>
+<div class="bg-surface-container border border-white/5 p-lg rounded-xl text-center group cursor-pointer hover:border-primary transition-all">
+<h5 class="font-label-md text-label-md mb-md text-on-surface-variant group-hover:text-primary">لوحة التحليل المكاني</h5>
+<button class="w-full bg-surface-variant/20 border border-white/10 py-sm rounded-lg font-label-sm hover:bg-primary/10 hover:border-primary transition-all">عرض اللوحة</button>
+</div>
+<div class="bg-surface-container border border-white/5 p-lg rounded-xl text-center group cursor-pointer hover:border-primary transition-all">
+<h5 class="font-label-md text-label-md mb-md text-on-surface-variant group-hover:text-primary">لوحة الشركاء والمستثمرين</h5>
+<button class="w-full bg-surface-variant/20 border border-white/10 py-sm rounded-lg font-label-sm hover:bg-primary/10 hover:border-primary transition-all">عرض اللوحة</button>
+</div>
+</div>
+</section>
+</section>
+</main>
+<!-- Floating Action for Quick Report -->
+<button class="fixed bottom-lg left-lg w-16 h-16 bg-primary text-on-primary-fixed rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined text-3xl">add_chart</span>
+</button>
+<script>
+        // Micro-interaction for cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                // Potential for subtle JS driven animations if needed
+            });
+        });
+
+        // Search bar activation effect
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('ring-2', 'ring-primary/20');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('ring-2', 'ring-primary/20');
+        });
+    </script>
+<style>
+  @media (max-width: 1024px) {
+    body { overflow: auto !important; }
+    aside { width: 238px !important; transform: translateX(0); }
+    main { margin-right: 238px !important; min-width: 860px; }
+  }
+  @media (max-width: 760px) {
+    body { min-width: 1024px; }
+  }
+</style>
+<script>
+(function(){
+  const routes = {
+    "الرئيسية": "/admin",
+    "لوحة القيادة": "/admin",
+    "الذكاء الاستثماري": "/investment-intelligence",
+    "التحليل المكاني": "/investment-intelligence?tab=spatial",
+    "الفرص الاستثمارية": "/investment-intelligence?tab=opportunities",
+    "الإدارة والمتابعة": "/investment-intelligence?tab=approvals",
+    "الاعتمادات والموافقات": "/investment-intelligence?tab=approvals",
+    "الشركاء والمستثمرون": "/investment-intelligence?tab=partners",
+    "التقارير واللوحات": "/investment-intelligence?tab=reports",
+    "الأداء والمؤشرات": "/investment-intelligence?tab=performance",
+    "الإعدادات": "/investment-intelligence?tab=settings"
+  };
+  function wire(){
+    document.querySelectorAll('a,button').forEach(function(el){
+      const text = (el.textContent || '').replace(/\s+/g,' ').trim();
+      const route = routes[text];
+      if(!route || el.dataset.istinaarWired) return;
+      el.dataset.istinaarWired = '1';
+      if(el.tagName === 'A') el.setAttribute('href', route);
+      el.addEventListener('click', function(event){ event.preventDefault(); window.top.location.href = route; });
+    });
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wire); else wire();
+})();
+</script>
+</body></html>
