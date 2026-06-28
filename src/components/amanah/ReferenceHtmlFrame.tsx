@@ -96,7 +96,7 @@ function buildUnifiedStyles() {
       0%, 100% { opacity: .18; transform: scale(1); }
       50% { opacity: .34; transform: scale(1.02); }
     }
-    aside {
+    aside.istinaar-shell-sidebar {
       width: var(--istinaar-sidebar-width) !important;
       right: 0 !important;
       left: auto !important;
@@ -105,8 +105,8 @@ function buildUnifiedStyles() {
       height: 100vh !important;
       padding: 24px 18px !important;
       background:
-        radial-gradient(circle at 48% 0%, rgba(234,193,112,0.12), transparent 26%),
-        linear-gradient(180deg, #06101b 0%, #0f1c2d 42%, #26303a 74%, #5f646b 100%) !important;
+        radial-gradient(circle at 60% 0%, rgba(234,193,112,0.1), transparent 22%),
+        linear-gradient(135deg, rgba(6,16,27,0.98), rgba(12,24,38,0.96)) !important;
       border-left: 1px solid rgba(255,255,255,0.1) !important;
       box-shadow: -24px 0 54px rgba(2, 9, 16, 0.36) !important;
       overflow-y: auto !important;
@@ -366,6 +366,27 @@ function buildUnifiedStyles() {
       font-size: 10px;
       line-height: 1.8;
     }
+    .istinaar-logout-button {
+      display: flex;
+      min-height: 54px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.025);
+      color: rgba(255,255,255,0.82);
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+      cursor: pointer;
+    }
+    .istinaar-logout-button:hover {
+      transform: translateX(-3px);
+      border-color: rgba(255,99,99,0.3);
+      background: rgba(255,255,255,0.06);
+    }
     .istinaar-sidebar-toggle {
       display: none;
       position: fixed;
@@ -441,7 +462,7 @@ function buildUnifiedStyles() {
     }
     @media (max-width: 1120px) {
       :root { --istinaar-sidebar-width: 248px; }
-      aside { padding: 18px 12px !important; }
+      aside.istinaar-shell-sidebar { padding: 18px 12px !important; }
       .istinaar-sidebar-title { font-size: 22px; }
       .istinaar-sidebar-link { min-height: 52px; }
       header.istinaar-unified-header { margin: 6px 6px 0; padding: 16px 18px; }
@@ -464,11 +485,11 @@ function buildUnifiedStyles() {
         overflow: visible !important;
         padding: 8px 0 28px !important;
       }
-      aside {
+      aside.istinaar-shell-sidebar {
         transform: translateX(102%) !important;
         transition: transform .24s ease !important;
       }
-      body.istinaar-sidebar-open aside { transform: translateX(0) !important; }
+      body.istinaar-sidebar-open aside.istinaar-shell-sidebar { transform: translateX(0) !important; }
       .istinaar-sidebar-toggle { display: grid; place-items: center; }
       header.istinaar-unified-header { margin: 60px 8px 0; }
       .istinaar-header-meta { justify-content: flex-end; }
@@ -507,6 +528,18 @@ function buildUnifiedStyles() {
         grid-template-columns: 1fr !important;
         margin-inline: 8px !important;
       }
+      main [class*="grid-cols-12"] {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+      main [class*="grid-cols-5"],
+      main [class*="grid-cols-4"],
+      main [class*="grid-cols-3"],
+      main [class*="grid-cols-2"] {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+      main [class*="col-span-"] {
+        grid-column: 1 / -1 !important;
+      }
     }
   `;
 }
@@ -542,6 +575,10 @@ function buildSidebarMarkup(page: ExecutiveShellPage) {
     <nav class="istinaar-sidebar-list">${renderItems(primaryItems)}</nav>
     <div class="istinaar-sidebar-group-title">الإدارة والمتابعة</div>
     <nav class="istinaar-sidebar-list">${renderItems(managementItems)}</nav>
+    <button type="button" class="istinaar-logout-button" data-istinaar-action="logout">
+      <span class="istinaar-sidebar-text"><strong>تسجيل الخروج</strong><span>إنهاء الجلسة الحالية</span></span>
+      <span class="istinaar-sidebar-icon material-symbols-outlined">logout</span>
+    </button>
     <div class="istinaar-sidebar-footer">© 2024 استنار<br/>جميع الحقوق محفوظة</div>
   `;
 }
@@ -589,6 +626,7 @@ function injectUnifiedScript(doc: Document) {
   script.textContent = `
     (function () {
       const nav = (href) => window.parent.postMessage({ type: "istinaar-nav", href }, "*");
+      const logout = () => window.parent.postMessage({ type: "istinaar-logout" }, "*");
       const bindNav = () => {
         document.querySelectorAll("[data-istinaar-nav]").forEach((node) => {
           node.addEventListener("click", (event) => {
@@ -597,12 +635,18 @@ function injectUnifiedScript(doc: Document) {
             if (href) nav(href);
           });
         });
+        document.querySelectorAll("[data-istinaar-action='logout']").forEach((node) => {
+          node.addEventListener("click", (event) => {
+            event.preventDefault();
+            logout();
+          });
+        });
       };
 
       const applyResponsiveShell = () => {
         const compact = window.innerWidth <= 860;
         const main = document.querySelector("main");
-        const aside = document.querySelector("aside");
+        const aside = document.querySelector(".istinaar-shell-sidebar");
         const body = document.body;
         const stage = document.querySelector(".istinaar-spatial-stage");
         const stageTabs = stage?.querySelector(".absolute.top-lg.left-1\\/2");
@@ -702,41 +746,81 @@ function injectUnifiedScript(doc: Document) {
 
 function transformSpatialLayout(doc: Document) {
   const main = doc.querySelector("main");
-  const stage = doc.querySelector("main > div.flex-1.relative") as HTMLElement | null;
+  const stage = Array.from(doc.querySelectorAll("main div")).find((element) => {
+    const className = (element as HTMLElement).className ?? "";
+    return className.includes("relative") && className.includes("glass") && className.includes("h-[600px]");
+  }) as HTMLElement | null;
   if (!main || !stage) return;
 
   main.classList.add("istinaar-spatial-main");
-  stage.className = "istinaar-spatial-stage";
+  stage.className = `${stage.className} istinaar-spatial-stage`;
+
+  const stageImage = stage.querySelector("img") as HTMLImageElement | null;
+  if (stageImage) {
+    stageImage.src = "/amanah-reference/hail-map-dark.svg";
+    stageImage.removeAttribute("data-alt");
+    stageImage.alt = "خريطة أولويات استثمارية لأحياء حائل";
+  }
 
   const stageBackground = stage.querySelector("div.absolute.inset-0.z-0") as HTMLElement | null;
   if (stageBackground) {
-    stageBackground.style.backgroundImage = "url('/amanah-reference/hail-map-dark.svg')";
-    stageBackground.setAttribute("data-location", "Hail, Saudi Arabia");
-    stageBackground.removeAttribute("data-alt");
+    stageBackground.classList.add("map-overlay-gradient");
   }
 
-  const directChildren = Array.from(stage.children) as HTMLElement[];
-  const cardStrip = directChildren.find((element) => {
+  const cardStrip = Array.from(main.querySelectorAll("div")).find((element) => {
     const className = element.className ?? "";
     return (
-      className.includes("overflow-x-auto") ||
-      element.getAttribute("style")?.includes("mask-image") ||
-      element.querySelector("h4")?.textContent?.includes("حي") ||
+      className.includes("grid-cols-5") ||
+      (element.querySelector("h5")?.textContent?.includes("حي") ?? false) ||
       false
     );
-  });
+  }) as HTMLElement | null;
+
   if (cardStrip) {
     cardStrip.className = "istinaar-spatial-cards-grid";
     cardStrip.removeAttribute("style");
-    main.appendChild(cardStrip);
   }
 
-  const shells = Array.from(doc.querySelectorAll("h4"));
-  shells.forEach((heading) => {
-    if (heading.textContent?.trim() === "حي الجامعة") {
-      heading.textContent = "حي الجامعيين";
+  const replacements: Record<string, string> = {
+    "حي الجامعة": "حي الجامعيين",
+    "حي الملقا": "حي مشار",
+    "حي الصحافة": "حي القيروان",
+    "حي الياسمين": "حي الزبارة",
+    "حي حطين": "حي السويفاء",
+    "حي النرجس": "حي النقرة",
+    "حي العارض": "حي الوسيطاء",
+    "متروبوليتان": "حائل",
+  };
+
+  Array.from(doc.querySelectorAll("h4, h5, p, span, option")).forEach((node) => {
+    const text = node.textContent?.trim();
+    if (text && replacements[text]) {
+      node.textContent = replacements[text];
     }
   });
+}
+
+function transformSettingsLayout(doc: Document) {
+  const main = doc.querySelector("main");
+  if (!main || doc.getElementById("istinaar-settings-logout")) return;
+
+  const section = doc.createElement("section");
+  section.id = "istinaar-settings-logout";
+  section.setAttribute("dir", "rtl");
+  section.innerHTML = `
+    <div style="margin:16px 8px 0;border:1px solid rgba(255,255,255,0.08);border-radius:24px;padding:22px;background:linear-gradient(180deg,rgba(20,34,52,0.82),rgba(10,18,28,0.92));">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+        <div style="text-align:right;">
+          <strong style="display:block;font-size:20px;line-height:1.4;color:#fff;">إنهاء الجلسة</strong>
+          <span style="display:block;margin-top:6px;font-size:12px;line-height:1.8;color:rgba(255,255,255,0.55);">تسجيل خروج آمن من مساحة الإدارة التنفيذية.</span>
+        </div>
+        <button type="button" data-istinaar-action="logout" style="min-height:48px;padding:0 22px;border-radius:14px;border:1px solid rgba(234,193,112,0.35);background:linear-gradient(135deg,#eac170,#b08b41);color:#261900;font-weight:900;cursor:pointer;">
+          تسجيل الخروج
+        </button>
+      </div>
+    </div>
+  `;
+  main.appendChild(section);
 }
 
 function transformHtml(rawHtml: string, page: ReferenceHtmlFrameProps["page"], displayName: string) {
@@ -766,6 +850,7 @@ function transformHtml(rawHtml: string, page: ReferenceHtmlFrameProps["page"], d
 
   const aside = doc.querySelector("aside");
   if (aside) {
+    aside.className = "istinaar-shell-sidebar";
     aside.innerHTML = buildSidebarMarkup(page);
   }
 
@@ -778,6 +863,9 @@ function transformHtml(rawHtml: string, page: ReferenceHtmlFrameProps["page"], d
 
   if (page === "spatial") {
     transformSpatialLayout(doc);
+  }
+  if (page === "settings") {
+    transformSettingsLayout(doc);
   }
 
   injectUnifiedScript(doc);
@@ -811,7 +899,10 @@ export default function ReferenceHtmlFrame({ page, displayName = "أ. محمد �
 
   useEffect(() => {
     let active = true;
-    setHtml(pageCache.get(getCacheKey(page, displayName)) ?? null);
+    const cached = pageCache.get(getCacheKey(page, displayName));
+    if (cached) {
+      setHtml(cached);
+    }
 
     loadPageMarkup(page, displayName).then((markup) => {
       if (active) {
@@ -843,7 +934,26 @@ export default function ReferenceHtmlFrame({ page, displayName = "أ. محمد �
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       if (event.source !== iframeRef.current?.contentWindow) return;
-      if (!event.data || event.data.type !== "istinaar-nav") return;
+      if (!event.data) return;
+      if (event.data.type === "istinaar-logout") {
+        try {
+          const raw = window.localStorage.getItem("hail-platform-store");
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed?.state) {
+              parsed.state.currentUser = null;
+              window.localStorage.setItem("hail-platform-store", JSON.stringify(parsed));
+            } else {
+              window.localStorage.removeItem("hail-platform-store");
+            }
+          }
+        } catch {
+          window.localStorage.removeItem("hail-platform-store");
+        }
+        router.push("/account");
+        return;
+      }
+      if (event.data.type !== "istinaar-nav") return;
       if (typeof event.data.href !== "string") return;
       router.push(event.data.href);
     };

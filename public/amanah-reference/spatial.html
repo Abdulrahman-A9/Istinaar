@@ -1,439 +1,614 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html class="dark" dir="rtl" lang="ar"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>استنار - التحليل المكاني</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "on-background": "#dde3eb",
-                        "surface-variant": "#2f353c",
-                        "on-primary-fixed-variant": "#5d4200",
-                        "secondary-fixed": "#d7e3fb",
-                        "error": "#ffb4ab",
-                        "on-primary-fixed": "#261900",
-                        "on-primary": "#412d00",
-                        "inverse-on-surface": "#2b3137",
-                        "surface-tint": "#eac170",
-                        "outline-variant": "#4e4638",
-                        "inverse-surface": "#dde3eb",
-                        "tertiary-fixed": "#d7e3f9",
-                        "on-tertiary-fixed": "#101c2c",
-                        "background": "#0e141a",
-                        "primary-fixed-dim": "#eac170",
-                        "surface-container-lowest": "#080f14",
-                        "on-surface": "#dde3eb",
-                        "on-secondary-fixed": "#101c2d",
-                        "on-secondary-container": "#a9b6cc",
-                        "primary-fixed": "#ffdea4",
-                        "secondary-container": "#3b475a",
-                        "on-primary-container": "#382700",
-                        "surface-dim": "#0e141a",
-                        "primary-container": "#b08b41",
-                        "on-error": "#690005",
-                        "surface-container-high": "#242b31",
-                        "surface": "#0e141a",
-                        "on-tertiary-fixed-variant": "#3c4759",
-                        "error-container": "#93000a",
-                        "surface-bright": "#333a40",
-                        "inverse-primary": "#785912",
-                        "secondary-fixed-dim": "#bbc7de",
-                        "surface-container-highest": "#2f353c",
-                        "on-surface-variant": "#d1c5b3",
-                        "tertiary": "#bbc7dd",
-                        "primary": "#eac170",
-                        "outline": "#9a8f7f",
-                        "on-secondary-fixed-variant": "#3b475a",
-                        "on-tertiary-container": "#1f2a3b",
-                        "tertiary-fixed-dim": "#bbc7dd",
-                        "surface-container": "#1a2026",
-                        "secondary": "#bbc7de",
-                        "surface-container-low": "#161c22",
-                        "on-secondary": "#253143",
-                        "on-error-container": "#ffdad6",
-                        "tertiary-container": "#8591a6",
-                        "on-tertiary": "#253142"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                    "spacing": {
-                        "margin-mobile": "16px",
-                        "lg": "24px",
-                        "md": "16px",
-                        "xs": "4px",
-                        "gutter": "24px",
-                        "xxl": "64px",
-                        "margin-desktop": "48px",
-                        "sm": "8px",
-                        "unit": "4px",
-                        "xl": "40px"
-                    },
-                    "fontFamily": {
-                        "headline-md": ["IBM Plex Sans"],
-                        "headline-lg": ["IBM Plex Sans"],
-                        "headline-xl-mobile": ["IBM Plex Sans"],
-                        "body-lg": ["IBM Plex Sans"],
-                        "label-sm": ["IBM Plex Sans"],
-                        "label-md": ["IBM Plex Sans"],
-                        "headline-lg-mobile": ["IBM Plex Sans"],
-                        "body-md": ["IBM Plex Sans"],
-                        "headline-xl": ["IBM Plex Sans"]
-                    },
-                    "fontSize": {
-                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
-                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
-                        "headline-xl-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
-                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
-                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500"}],
-                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
-                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                        "headline-xl": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
-                    }
-                },
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-primary-fixed-variant": "#5e410b",
+                "surface-tint": "#ebc07e",
+                "secondary-fixed-dim": "#4edea3",
+                "on-tertiary-fixed": "#410004",
+                "surface-container-highest": "#2d3449",
+                "on-background": "#dae2fd",
+                "on-secondary-fixed": "#002113",
+                "surface-container": "#171f33",
+                "tertiary-container": "#ff7b74",
+                "on-surface-variant": "#d2c4b5",
+                "outline": "#9b8f81",
+                "inverse-on-surface": "#283044",
+                "primary-fixed": "#ffddae",
+                "inverse-surface": "#dae2fd",
+                "on-tertiary-fixed-variant": "#930013",
+                "tertiary-fixed": "#ffdad7",
+                "on-secondary-container": "#00311f",
+                "background": "#0b1326",
+                "surface-container-low": "#131b2e",
+                "on-primary-fixed": "#281800",
+                "outline-variant": "#4e4539",
+                "on-error-container": "#ffdad6",
+                "error-container": "#93000a",
+                "on-primary": "#432c00",
+                "on-secondary-fixed-variant": "#005236",
+                "primary": "#ebc07e",
+                "surface-variant": "#2d3449",
+                "primary-container": "#c59d5f",
+                "on-error": "#690005",
+                "secondary-container": "#00a572",
+                "on-tertiary": "#68000a",
+                "secondary-fixed": "#6ffbbe",
+                "surface-container-lowest": "#060e20",
+                "error": "#ffb4ab",
+                "surface-container-high": "#222a3d",
+                "on-surface": "#dae2fd",
+                "primary-fixed-dim": "#ebc07e",
+                "tertiary-fixed-dim": "#ffb3ad",
+                "inverse-primary": "#795921",
+                "tertiary": "#ffb3ad",
+                "on-secondary": "#003824",
+                "surface-dim": "#0b1326",
+                "on-tertiary-container": "#7a000e",
+                "surface": "#0b1326",
+                "secondary": "#4edea3",
+                "surface-bright": "#31394d",
+                "on-primary-container": "#4f3400"
             },
-        }
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "section-gap": "32px",
+                "container-margin": "24px",
+                "widget-gap": "12px",
+                "card-padding": "20px",
+                "gutter": "16px"
+            },
+            "fontFamily": {
+                "body-md": ["Be Vietnam Pro"],
+                "label-sm": ["Be Vietnam Pro"],
+                "headline-md": ["Be Vietnam Pro"],
+                "headline-sm": ["Be Vietnam Pro"],
+                "label-md": ["Be Vietnam Pro"],
+                "body-lg": ["Be Vietnam Pro"],
+                "display-lg": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                "body-lg": ["18px", {"lineHeight": "26px", "fontWeight": "400"}],
+                "display-lg": ["36px", {"lineHeight": "44px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
     </script>
 <style>
-        body { font-family: 'IBM Plex Sans', sans-serif; background-color: #0e141a; overflow: hidden; }
-        .map-overlay-gradient { background: linear-gradient(180deg, rgba(14, 20, 26, 0.9) 0%, rgba(14, 20, 26, 0) 20%, rgba(14, 20, 26, 0) 80%, rgba(14, 20, 26, 0.9) 100%); }
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #3b475a; border-radius: 10px; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .glass {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .map-container {
+            mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b1326;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4e4539;
+            border-radius: 10px;
+        }
+        @keyframes pulse-gold {
+            0% { box-shadow: 0 0 0 0 rgba(197, 157, 95, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(197, 157, 95, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(197, 157, 95, 0); }
+        }
+        .active-marker {
+            animation: pulse-gold 2s infinite;
+        }
     </style>
 </head>
-<body class="bg-background text-on-surface h-screen flex flex-row">
-<!-- SideNavBar (Authority: JSON) -->
-<aside class="fixed right-0 top-0 h-full flex flex-col z-40 border-l border-white/5 bg-secondary-container dark:bg-secondary-container w-[280px]">
-<div class="p-lg flex flex-col gap-md items-center border-b border-white/10">
-<div class="w-20 h-20 rounded-full border-2 border-primary overflow-hidden">
-<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a high-ranking executive, Mohammad Al-Shehri, against a minimalist dark grey background. He is wearing traditional Saudi attire with a red and white ghutra and a black bisht with gold embroidery. The lighting is sophisticated, with soft Rembrandt lighting highlighting his features, creating an atmosphere of authority and corporate leadership. High-end photography style with sharp focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeJM_X2HQ7vyC3cNZB2mtleNAG4CVH4jzNkGLULTgcScbJHhEJXHzo4P12QDP_uUQGwp3zU0HfB921hs4AR-aUDZ21ETappsCnhKv2_qk0tTVor2X1jiqJ4XtxQe5newr5eDfWQP_V1vxmx_aRGuKyv_vchLKlc0tZm-koxCGuro3pLtJpihdvDun9Hh863ftkYi3uqlxTzfRPSsVdpjTzfNMxF-3jlS0hnH9Rx6FroLdMpRYvS_okdW8XQ_uLOR5LIFzKqigQRiQ"/>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- Sidebar Navigation -->
+<aside class="fixed right-0 top-0 h-full w-[260px] flex flex-col border-l border-outline-variant bg-surface-container-low z-50 p-container-margin gap-widget-gap rtl">
+<div class="flex flex-col gap-2 mb-8">
+<h1 class="font-display-lg text-display-lg font-bold text-primary">استنار</h1>
+<p class="font-label-md text-label-md text-on-surface-variant">منصة الذكاء الاستثماري</p>
 </div>
-<div class="text-center">
-<h2 class="font-headline-md text-headline-md text-primary">محمد الشهري</h2>
-<p class="font-body-md text-body-md text-on-surface-variant">الرئيس التنفيذي</p>
-</div>
-</div>
-<nav class="flex-1 py-md overflow-y-auto custom-scrollbar">
-<div class="px-md mb-sm">
-<button class="w-full py-sm px-md bg-primary text-on-primary font-label-md text-label-md rounded-lg flex items-center justify-center gap-xs hover:bg-primary-fixed-dim transition-colors">
-<span class="material-symbols-outlined text-lg">add</span>
-                    فرصة جديدة
-                </button>
-</div>
-<ul class="space-y-xs">
-<li><a class="flex items-center gap-md px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 transition-all duration-200" href="#"><span class="material-symbols-outlined">dashboard</span> <span class="font-label-md text-label-md">الرئيسية</span></a></li>
-<li><a class="flex items-center gap-md px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 transition-all duration-200" href="#"><span class="material-symbols-outlined">insights</span> <span class="font-label-md text-label-md">الذكاء الاستثماري</span></a></li>
-<!-- Active Tab: التحليل المكاني -->
-<li><a class="flex items-center gap-md px-lg py-md text-primary border-r-4 border-primary bg-on-secondary-fixed-variant/10 transition-all duration-200" href="#"><span class="material-symbols-outlined">map</span> <span class="font-label-md text-label-md">التحليل المكاني</span></a></li>
-<li><a class="flex items-center gap-md px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 transition-all duration-200" href="#"><span class="material-symbols-outlined">monetization_on</span> <span class="font-label-md text-label-md">الفرص الاستثمارية</span></a></li>
-<li><a class="flex items-center gap-md px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 transition-all duration-200" href="#"><span class="material-symbols-outlined">assignment</span> <span class="font-label-md text-label-md">الإدارة والمتابعة</span></a></li>
-<li><a class="flex items-center gap-md px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 transition-all duration-200" href="#"><span class="material-symbols-outlined">fact_check</span> <span class="font-label-md text-label-md">الاعتمادات والموافقات</span></a></li>
-<li><a class="flex items-center gap-md px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 transition-all duration-200" href="#"><span class="material-symbols-outlined">handshake</span> <span class="font-label-md text-label-md">الشركاء والمستثمرون</span></a></li>
-<li><a class="flex items-center gap-md px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 transition-all duration-200" href="#"><span class="material-symbols-outlined">analytics</span> <span class="font-label-md text-label-md">التقارير واللوحات</span></a></li>
-<li><a class="flex items-center gap-md px-lg py-md text-on-secondary-container hover:bg-on-secondary-fixed-variant/5 transition-all duration-200" href="#"><span class="material-symbols-outlined">settings</span> <span class="font-label-md text-label-md">الإعدادات</span></a></li>
-</ul>
+<nav class="flex-1 flex flex-col gap-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">لوحة القيادة</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-label-md text-label-md">الذكاء الاستثماري</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg font-bold" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-label-md text-label-md">التحليل المكاني</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-label-md text-label-md">الفرص الاستثمارية</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="font-label-md text-label-md">الاعتمادات والموافقات</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-md text-label-md">الشركاء والمستثمرين</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-label-md text-label-md">الطلبات والاعتراضات</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">التقارير واللوحات</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg" href="#">
+<span class="material-symbols-outlined">speed</span>
+<span class="font-label-md text-label-md">الأداء والمؤشرات</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200 rounded-lg mt-auto" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">الإعدادات</span>
+</a>
 </nav>
-<div class="mt-auto border-t border-white/5 py-md">
-<a class="flex items-center gap-md px-lg py-md text-on-secondary-container hover:text-primary transition-colors" href="#"><span class="material-symbols-outlined">support_agent</span> <span class="font-label-md text-label-md">الدعم الفني</span></a>
-<a class="flex items-center gap-md px-lg py-md text-on-secondary-container hover:text-error transition-colors" href="#"><span class="material-symbols-outlined">logout</span> <span class="font-label-md text-label-md">خروج</span></a>
+<div class="mt-4 pt-4 border-t border-outline-variant">
+<button class="w-full flex items-center gap-3 px-4 py-3 text-error hover:bg-error-container/10 transition-colors duration-200 rounded-lg scale-95 active:scale-90">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">تسجيل الخروج</span>
+</button>
 </div>
 </aside>
-<!-- Main Content Canvas -->
-<main class="flex-1 mr-[280px] h-screen flex flex-col relative overflow-hidden">
-<!-- TopNavBar (Authority: JSON) -->
-<header class="flex justify-between items-center w-full px-lg py-md sticky top-0 z-50 bg-surface-container dark:bg-surface-container border-b border-white/10">
-<div class="flex items-center gap-lg">
-<div class="flex items-center gap-xs">
-<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">account_balance</span>
-<h1 class="font-headline-lg text-headline-lg text-primary font-bold">استنار</h1>
+<!-- Top App Bar -->
+<header class="fixed top-0 right-[260px] left-0 h-[80px] z-40 bg-surface border-b border-outline-variant flex justify-between items-center px-container-margin rtl">
+<div class="flex items-center gap-6">
+<div class="relative">
+<span class="absolute right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">search</span>
+<input class="bg-surface-container-low border border-outline-variant rounded-full pr-10 pl-4 py-2 w-64 focus:outline-none focus:border-primary text-label-md transition-all" placeholder="بحث عن المواقع أو الفرص..." type="text"/>
 </div>
-<div class="h-8 w-[1px] bg-white/10 mx-md"></div>
-<div>
-<h2 class="font-headline-md text-headline-md text-on-surface">التحليل المكاني</h2>
-<p class="font-label-md text-label-md text-on-surface-variant">تحليل جغرافي ذكي لدعم قرارات الاستثمار وتحديد المواقع المثلى</p>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<span class="font-label-md">الأربعاء، 1448/01/05 هـ</span>
+<span class="font-label-md">10:30 AM</span>
 </div>
 </div>
-<div class="flex items-center gap-lg">
-<div class="flex items-center gap-sm bg-surface-container-low px-md py-sm rounded-lg border border-white/5">
-<span class="material-symbols-outlined text-on-surface-variant">calendar_today</span>
-<span class="font-label-md text-label-md">الأربعاء، 1448/01/05 هـ</span>
-<span class="text-on-surface-variant">|</span>
-<span class="font-label-md text-label-md">10:30 AM</span>
-</div>
-<div class="flex items-center gap-md">
-<button class="p-sm rounded-full hover:bg-surface-variant transition-colors relative">
-<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
-<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<button class="p-2 hover:bg-surface-container-high rounded-full relative transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
 </button>
-<button class="p-sm rounded-full hover:bg-surface-variant transition-colors">
-<span class="material-symbols-outlined text-on-surface-variant">help_outline</span>
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">mail</span>
 </button>
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">calendar_today</span>
+</button>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-3">
+<div class="text-left rtl:text-right">
+<p class="font-label-md font-bold text-primary leading-tight">أ. محمد الشمري</p>
+<p class="font-label-sm text-on-surface-variant">مدير إدارة الاستثمار</p>
+</div>
+<div class="w-10 h-10 rounded-full border border-primary/30 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a middle-aged Arab businessman in traditional attire, set against a blurred corporate office background. The lighting is soft and flattering, emphasizing authority and professionalism. The color palette is composed of rich browns, deep blues, and subtle gold accents to match the investment platform's premium aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTlBl8L8yEKS84sZ3rcYt7q1M5Dsj1QlWGUDtW4WeaNHBFEC2l-EM40_QvsJ1kxelUsB5b-CcIK4anXWminbmlH06Ei4CZjafiWgABc6a1Yam1BBvROZoxLxsslhbTwZGVy3u07kTLGMUVSFxA7c6_-eImQp-D3Hzfy8zz24esYakdni_bPzJL_LxL2Z_4VHQ9j4kmeKj1lfL-DNHCjEp2_0zwgPxvqOfpMLQojFBXw2LenPMw5V6Ejj9LXl-P2yactf0y51aGCQ"/>
+</div>
 </div>
 </div>
 </header>
-<!-- Dynamic Map Canvas -->
-<div class="flex-1 relative">
-<!-- Map Background Placeholder -->
-<div class="absolute inset-0 z-0" data-alt="A sophisticated dark-themed interactive heat map of Riyadh city center at night. The map displays a detailed urban grid with glowing data overlays in shades of gold, amber, and deep green, representing investment intensity and property value clusters. Street lights and building footprints are visible as subtle bioluminescent structures. The aesthetic is high-tech corporate, similar to a tactical mission control display, with precise digital markers and flowing lines indicating traffic and connectivity. Cinema-grade detail and deep tonal range." data-location="Riyadh, Saudi Arabia" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBO_TdZE4uoDPwG0vQRRXLsTDf-2aXbny-Ytk6CvzALOFuM0MAkShXtNIV2z-g0PAjbCMCnvTamfCYpmutWyZ7iX1o6t_766MKkVq9HduN17TACfPDMCwoVbaZYGnC2q-kbdgzys3R6DIbHE3jZaNiG8POKJx-s_djb17ZkO9v_iCae7qsn1bY2pOcrHff40Mhy4S7sA_NUCxkEsTQWZ7JMg0pZa7MUT2SKhawM4fFeFMFThc-urHf2L0MKQowc49z8W3uZ9GVUT-4')"></div>
-<!-- Map Overlay Gradient -->
-<div class="absolute inset-0 z-10 map-overlay-gradient pointer-events-none"></div>
-<!-- Dashboard Sub-Navigation (Tabs) -->
-<div class="absolute top-lg left-1/2 -translate-x-1/2 z-20 flex bg-surface-container-high/80 backdrop-blur-md p-xs rounded-full border border-white/10">
-<button class="px-lg py-sm rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors">نظرة عامة</button>
-<button class="px-lg py-sm rounded-full font-label-md text-label-md bg-primary text-on-primary">تحليل الأحياء</button>
-<button class="px-lg py-sm rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors">خرائط الفرص</button>
-<button class="px-lg py-sm rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors">تحليل البنية التحتية</button>
-<button class="px-lg py-sm rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors">المؤشرات المكانية</button>
+<!-- Main Content Area -->
+<main class="mr-[260px] pt-[80px] min-h-screen bg-background rtl overflow-x-hidden">
+<!-- Header Section -->
+<section class="p-container-margin">
+<div class="flex justify-between items-end mb-6">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary mb-1">التحليل المكاني</h2>
+<p class="text-on-surface-variant font-body-md">تحليل جغرافي ذكي لدعم قرارات الاستثمار وتحديد المواقع المثلى</p>
 </div>
-<!-- Floating Controls (Left) -->
-<div class="absolute top-lg left-lg z-20 flex flex-col gap-sm">
-<div class="bg-surface-container-high/90 backdrop-blur-sm p-xs rounded-lg border border-white/10 flex flex-col items-center">
-<button class="p-sm hover:bg-surface-variant rounded transition-colors"><span class="material-symbols-outlined text-on-surface">add</span></button>
-<div class="w-full h-[1px] bg-white/10 my-xs"></div>
-<button class="p-sm hover:bg-surface-variant rounded transition-colors"><span class="material-symbols-outlined text-on-surface">remove</span></button>
+<div class="flex gap-2">
+<button class="px-6 py-2 bg-surface-container-high text-on-surface border border-outline-variant rounded-lg font-label-md hover:bg-surface-bright transition-colors">نظرة عامة</button>
+<button class="px-6 py-2 bg-primary-container text-on-primary-container rounded-lg font-label-md font-bold shadow-sm">تحليل الأحياء</button>
+<button class="px-6 py-2 bg-surface-container-high text-on-surface border border-outline-variant rounded-lg font-label-md hover:bg-surface-bright transition-colors">خرائط الفرص</button>
+<button class="px-6 py-2 bg-surface-container-high text-on-surface border border-outline-variant rounded-lg font-label-md hover:bg-surface-bright transition-colors">المؤشرات المكانية</button>
 </div>
-<button class="bg-surface-container-high/90 backdrop-blur-sm p-sm rounded-lg border border-white/10 flex items-center justify-center hover:bg-surface-variant transition-colors">
-<span class="material-symbols-outlined text-on-surface">my_location</span>
-</button>
-<button class="bg-surface-container-high/90 backdrop-blur-sm p-sm rounded-lg border border-white/10 flex items-center justify-center hover:bg-surface-variant transition-colors">
-<span class="material-symbols-outlined text-on-surface">layers</span>
-</button>
 </div>
-<!-- Filter Panel (Right Sidebar on Map) -->
-<div class="absolute top-lg right-lg bottom-lg w-80 z-20 bg-surface-container-high/90 backdrop-blur-xl border border-white/10 rounded-xl flex flex-col shadow-2xl">
-<div class="p-lg border-b border-white/10 flex items-center justify-between">
-<h3 class="font-headline-md text-headline-md text-primary">فلترة التحليل</h3>
-<span class="material-symbols-outlined text-on-surface-variant">filter_alt</span>
-</div>
-<div class="flex-1 overflow-y-auto p-lg space-y-lg custom-scrollbar">
-<!-- Filter: Classification -->
-<div class="space-y-sm">
-<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">تصنيف الفرصة</label>
-<div class="relative">
-<select class="w-full bg-background/50 border border-secondary-container rounded-lg py-md px-md text-on-surface focus:border-primary outline-none appearance-none">
+<!-- Dashboard Layout Grid -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Filters Panel -->
+<aside class="col-span-3 flex flex-col gap-widget-gap">
+<div class="glass border border-outline-variant rounded-xl p-card-padding">
+<h3 class="font-label-md font-bold text-primary mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined">filter_list</span>
+                            فلترة التحليل
+                        </h3>
+<div class="space-y-6">
+<div class="space-y-2">
+<label class="text-label-sm text-on-surface-variant block">تصنيف الفرصة</label>
+<select class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2 text-label-md focus:border-primary focus:ring-0">
 <option>اختر التصنيف</option>
 <option>تجاري</option>
 <option>سكني</option>
 <option>صناعي</option>
 </select>
-<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
 </div>
-</div>
-<!-- Filter: Use Type -->
-<div class="space-y-sm">
-<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">نوع الاستخدام</label>
-<div class="relative">
-<select class="w-full bg-background/50 border border-secondary-container rounded-lg py-md px-md text-on-surface focus:border-primary outline-none appearance-none">
+<div class="space-y-2">
+<label class="text-label-sm text-on-surface-variant block">نوع الاستخدام</label>
+<select class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2 text-label-md focus:border-primary focus:ring-0">
 <option>اختر الاستخدام</option>
-<option>متعدد الاستخدامات</option>
-<option>مكتبي</option>
-<option>ترفيهي</option>
+<option>مجمع تجاري</option>
+<option>أبراج مكتبية</option>
+<option>مستودعات لوجستية</option>
 </select>
-<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
+</div>
+<div class="space-y-2">
+<label class="text-label-sm text-on-surface-variant block">نسبة الجاهزية</label>
+<div class="px-2 pt-4">
+<input class="w-full h-1 bg-surface-container-highest rounded-lg appearance-none cursor-pointer accent-primary" max="100" min="0" type="range"/>
+<div class="flex justify-between mt-2 text-[10px] text-outline">
+<span>0%</span>
+<span>50%</span>
+<span>100%</span>
 </div>
 </div>
-<!-- Filter: Readiness -->
-<div class="space-y-sm">
-<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">نسبة الجاهزية</label>
-<div class="flex items-center gap-md">
-<input class="flex-1 h-1 bg-secondary-container rounded-lg appearance-none cursor-pointer accent-primary" type="range"/>
-<span class="font-label-md text-label-md text-primary min-w-[40px]">75%</span>
+</div>
+<div class="space-y-2">
+<label class="text-label-sm text-on-surface-variant block">العائد المتوقع</label>
+<select class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2 text-label-md focus:border-primary focus:ring-0">
+<option>اختر النطاق</option>
+<option>10% - 15%</option>
+<option>15% - 20%</option>
+<option>أكثر من 20%</option>
+</select>
+</div>
+<div class="pt-4 flex flex-col gap-2">
+<button class="w-full py-3 bg-primary text-on-primary-container font-bold rounded-lg hover:brightness-110 transition-all">تطبيق الفلتر</button>
+<button class="w-full py-3 text-on-surface-variant hover:text-on-surface font-label-md transition-colors">إعادة تعيين</button>
 </div>
 </div>
-<!-- Layers Toggle -->
-<div class="space-y-sm pt-md">
-<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">طبقات الخريطة</label>
-<div class="space-y-xs">
-<label class="flex items-center gap-md p-sm rounded hover:bg-surface-variant/50 transition-colors cursor-pointer">
-<input checked="" class="w-5 h-5 rounded border-secondary-container bg-background/50 text-primary focus:ring-0" type="checkbox"/>
-<span class="font-body-md text-body-md">الفرص الاستثمارية</span>
+</div>
+<!-- Legend Widget -->
+<div class="glass border border-outline-variant rounded-xl p-card-padding">
+<h4 class="text-label-sm font-bold text-on-surface-variant mb-4">مؤشر الجاذبية المكانية</h4>
+<ul class="space-y-3">
+<li class="flex items-center gap-3">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span class="text-label-md text-on-surface">جاذبية عالية</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<span class="text-label-md text-on-surface">جاذبية متوسطة</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="w-3 h-3 rounded-full bg-error"></span>
+<span class="text-label-md text-on-surface">جاذبية منخفضة</span>
+</li>
+</ul>
+<div class="mt-6 pt-4 border-t border-outline-variant">
+<h4 class="text-label-sm font-bold text-on-surface-variant mb-4">طبقات الخريطة</h4>
+<div class="space-y-3">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-4 h-4 rounded border-outline-variant bg-surface-container text-primary focus:ring-0" type="checkbox"/>
+<span class="text-label-md text-on-surface group-hover:text-primary transition-colors">الفرص الاستثمارية</span>
 </label>
-<label class="flex items-center gap-md p-sm rounded hover:bg-surface-variant/50 transition-colors cursor-pointer">
-<input checked="" class="w-5 h-5 rounded border-secondary-container bg-background/50 text-primary focus:ring-0" type="checkbox"/>
-<span class="font-body-md text-body-md">البنية التحتية</span>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-4 h-4 rounded border-outline-variant bg-surface-container text-primary focus:ring-0" type="checkbox"/>
+<span class="text-label-md text-on-surface group-hover:text-primary transition-colors">البنية التحتية</span>
 </label>
-<label class="flex items-center gap-md p-sm rounded hover:bg-surface-variant/50 transition-colors cursor-pointer">
-<input class="w-5 h-5 rounded border-secondary-container bg-background/50 text-primary focus:ring-0" type="checkbox"/>
-<span class="font-body-md text-body-md">الكثافة السكانية</span>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 rounded border-outline-variant bg-surface-container text-primary focus:ring-0" type="checkbox"/>
+<span class="text-label-md text-on-surface group-hover:text-primary transition-colors">الكثافة السكانية</span>
 </label>
 </div>
 </div>
-<!-- Map Legend -->
-<div class="bg-surface-container/50 p-md rounded-lg border border-white/5 space-y-sm">
-<h4 class="font-label-md text-label-md text-on-surface">مؤشر الجاذبية المكانية</h4>
-<div class="space-y-xs">
-<div class="flex items-center gap-sm">
-<span class="w-3 h-3 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]"></span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">جاذبية عالية</span>
 </div>
-<div class="flex items-center gap-sm">
-<span class="w-3 h-3 rounded-full bg-primary shadow-[0_0_8px_rgba(234,193,112,0.5)]"></span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">جاذبية متوسطة</span>
+</aside>
+<!-- Map Visualization -->
+<div class="col-span-9 flex flex-col gap-gutter">
+<div class="relative glass border border-outline-variant rounded-xl overflow-hidden h-[600px] group">
+<!-- Map Placeholder -->
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover opacity-60" data-alt="A sophisticated dark-themed interactive heat map of a modern metropolitan city at night, showcasing investment potential across different districts. High-potential areas are highlighted with glowing cyan and gold gradients, while less active areas transition into deep slate and obsidian tones. The map features elegant UI overlays like pins and district boundaries, consistent with a high-end financial dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUFgbqp8a3jhfXMM4tjWT9mETq5NaCIj2Upw1RdqCmvHVgIhqaQ_sFdVNOXWhQ0Pk7JgEG9adGZ3fgdGrnT17UQo7qYzf7ko3axmuV4wOt8IFH-nfE4zdLOSfp_1xmKlW0XzR8GL91c9DTKfEYNkhSjbF07FaQNK4i2kUweMaf-qrD6QJUXfsMiApQoUUJhEEPFgsBaG5czPD8sco0o706t0j5vwZMHXZeAUqTvz9gzycHZQwJVZysL-KzaoFiXo0JEIN2EgElYQ"/>
+<!-- Overlay SVG for Heatmap zones -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" viewbox="0 0 1000 600">
+<circle cx="300" cy="250" fill="url(#grad-high)" opacity="0.3" r="100"></circle>
+<circle cx="550" cy="350" fill="url(#grad-med)" opacity="0.25" r="120"></circle>
+<circle cx="750" cy="280" fill="url(#grad-low)" opacity="0.3" r="80"></circle>
+<defs>
+<radialgradient id="grad-high">
+<stop offset="0%" stop-color="#4edea3"></stop>
+<stop offset="100%" stop-color="transparent"></stop>
+</radialgradient>
+<radialgradient id="grad-med">
+<stop offset="0%" stop-color="#ebc07e"></stop>
+<stop offset="100%" stop-color="transparent"></stop>
+</radialgradient>
+<radialgradient id="grad-low">
+<stop offset="0%" stop-color="#ffb4ab"></stop>
+<stop offset="100%" stop-color="transparent"></stop>
+</radialgradient>
+</defs>
+</svg>
 </div>
-<div class="flex items-center gap-sm">
-<span class="w-3 h-3 rounded-full bg-error shadow-[0_0_8px_rgba(255,180,171,0.5)]"></span>
-<span class="font-label-sm text-label-sm text-on-surface-variant">جاذبية منخفضة</span>
+<!-- Map Controls -->
+<div class="absolute left-4 top-4 flex flex-col gap-2 z-10">
+<button class="w-10 h-10 bg-surface-container-high text-on-surface border border-outline-variant rounded-lg flex items-center justify-center hover:bg-surface-bright transition-all shadow-lg">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="w-10 h-10 bg-surface-container-high text-on-surface border border-outline-variant rounded-lg flex items-center justify-center hover:bg-surface-bright transition-all shadow-lg">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<button class="w-10 h-10 bg-surface-container-high text-on-surface border border-outline-variant rounded-lg flex items-center justify-center hover:bg-surface-bright transition-all shadow-lg mt-4">
+<span class="material-symbols-outlined">my_location</span>
+</button>
+<button class="w-10 h-10 bg-surface-container-high text-on-surface border border-outline-variant rounded-lg flex items-center justify-center hover:bg-surface-bright transition-all shadow-lg">
+<span class="material-symbols-outlined">layers</span>
+</button>
+</div>
+<!-- Floating Legend Overlay -->
+<div class="absolute bottom-6 right-6 z-10 glass border border-outline-variant rounded-lg p-3 flex gap-4 items-center">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-[10px] font-bold">فرصة متاحة</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-[10px] font-bold">قيد الدراسة</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="text-[10px] font-bold">فرصة ملغاة</span>
 </div>
 </div>
+<!-- Pulse Marker Example -->
+<div class="absolute top-[240px] right-[290px] z-20 group/marker cursor-pointer">
+<div class="w-6 h-6 bg-secondary rounded-full border-2 border-white flex items-center justify-center active-marker">
+<span class="w-2 h-2 bg-white rounded-full"></span>
 </div>
-</div>
-<div class="p-lg border-t border-white/10 flex flex-col gap-md">
-<button class="w-full py-md bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-fixed-dim transition-all active:scale-95 duration-100">تطبيق الفلتر</button>
-<button class="w-full py-md text-on-surface-variant hover:text-on-surface transition-colors font-label-md text-label-md">إعادة تعيين</button>
-</div>
-</div>
-<!-- Bottom Metric Cards (Horizontal Scroll) -->
-<div class="absolute bottom-lg left-lg right-lg z-20 flex gap-md overflow-x-auto pb-sm custom-scrollbar" style="mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
-<!-- Card 1 -->
-<div class="min-w-[280px] bg-surface-container-high/80 backdrop-blur-md p-md rounded-xl border-t-2 border-error border-x border-b border-white/10">
-<div class="flex justify-between items-start mb-md">
-<span class="bg-error/10 text-error text-[10px] px-sm py-0.5 rounded-full font-bold">أولوية منخفضة</span>
-<span class="material-symbols-outlined text-error">analytics</span>
-</div>
-<h4 class="font-headline-md text-headline-md mb-xs">حي الجامعة</h4>
-<div class="flex justify-between text-on-surface-variant text-sm mb-xs">
-<span>عدد الفرص</span>
-<span class="text-on-surface font-bold">2</span>
-</div>
-<div class="flex justify-between text-on-surface-variant text-sm mb-md">
-<span>نسبة الجاهزية</span>
-<span class="text-on-surface font-bold">42%</span>
-</div>
-<div class="w-full h-1 bg-secondary-container rounded-full overflow-hidden mb-md">
-<div class="h-full bg-error w-[42%]"></div>
-</div>
-<button class="w-full py-sm bg-white/5 hover:bg-white/10 rounded font-label-sm text-label-sm transition-colors">عرض التفاصيل</button>
-</div>
-<!-- Card 2 -->
-<div class="min-w-[280px] bg-surface-container-high/80 backdrop-blur-md p-md rounded-xl border-t-2 border-primary border-x border-b border-white/10">
-<div class="flex justify-between items-start mb-md">
-<span class="bg-primary/10 text-primary text-[10px] px-sm py-0.5 rounded-full font-bold">أولوية متوسطة</span>
-<span class="material-symbols-outlined text-primary">analytics</span>
-</div>
-<h4 class="font-headline-md text-headline-md mb-xs">حي النزهة</h4>
-<div class="flex justify-between text-on-surface-variant text-sm mb-xs">
-<span>عدد الفرص</span>
-<span class="text-on-surface font-bold">3</span>
-</div>
-<div class="flex justify-between text-on-surface-variant text-sm mb-md">
-<span>نسبة الجاهزية</span>
-<span class="text-on-surface font-bold">65%</span>
-</div>
-<div class="w-full h-1 bg-secondary-container rounded-full overflow-hidden mb-md">
-<div class="h-full bg-primary w-[65%]"></div>
-</div>
-<button class="w-full py-sm bg-white/5 hover:bg-white/10 rounded font-label-sm text-label-sm transition-colors">عرض التفاصيل</button>
-</div>
-<!-- Card 3 -->
-<div class="min-w-[280px] bg-surface-container-high/80 backdrop-blur-md p-md rounded-xl border-t-2 border-emerald-400 border-x border-b border-white/10">
-<div class="flex justify-between items-start mb-md">
-<span class="bg-emerald-400/10 text-emerald-400 text-[10px] px-sm py-0.5 rounded-full font-bold">جاذبية عالية</span>
-<span class="material-symbols-outlined text-emerald-400">analytics</span>
-</div>
-<h4 class="font-headline-md text-headline-md mb-xs">حي مشار</h4>
-<div class="flex justify-between text-on-surface-variant text-sm mb-xs">
-<span>عدد الفرص</span>
-<span class="text-on-surface font-bold">8</span>
-</div>
-<div class="flex justify-between text-on-surface-variant text-sm mb-md">
-<span>نسبة الجاهزية</span>
-<span class="text-on-surface font-bold">84%</span>
-</div>
-<div class="w-full h-1 bg-secondary-container rounded-full overflow-hidden mb-md">
-<div class="h-full bg-emerald-400 w-[84%]"></div>
-</div>
-<button class="w-full py-sm bg-white/5 hover:bg-white/10 rounded font-label-sm text-label-sm transition-colors">عرض التفاصيل</button>
-</div>
-<!-- Card 4 -->
-<div class="min-w-[280px] bg-surface-container-high/80 backdrop-blur-md p-md rounded-xl border-t-2 border-primary border-x border-b border-white/10">
-<div class="flex justify-between items-start mb-md">
-<span class="bg-primary/10 text-primary text-[10px] px-sm py-0.5 rounded-full font-bold">أولوية متوسطة</span>
-<span class="material-symbols-outlined text-primary">analytics</span>
-</div>
-<h4 class="font-headline-md text-headline-md mb-xs">حي القيروان</h4>
-<div class="flex justify-between text-on-surface-variant text-sm mb-xs">
-<span>عدد الفرص</span>
-<span class="text-on-surface font-bold">5</span>
-</div>
-<div class="flex justify-between text-on-surface-variant text-sm mb-md">
-<span>نسبة الجاهزية</span>
-<span class="text-on-surface font-bold">71%</span>
-</div>
-<div class="w-full h-1 bg-secondary-container rounded-full overflow-hidden mb-md">
-<div class="h-full bg-primary w-[71%]"></div>
-</div>
-<button class="w-full py-sm bg-white/5 hover:bg-white/10 rounded font-label-sm text-label-sm transition-colors">عرض التفاصيل</button>
+<!-- Tooltip on hover -->
+<div class="absolute bottom-full right-1/2 translate-x-1/2 mb-2 w-48 opacity-0 group-hover/marker:opacity-100 transition-opacity pointer-events-none z-30">
+<div class="glass border border-secondary p-3 rounded-xl shadow-2xl">
+<p class="font-bold text-label-md text-secondary">حي الملقا</p>
+<p class="text-[10px] text-on-surface-variant mt-1">نسبة الجاذبية: 94%</p>
+<div class="mt-2 flex justify-between items-center">
+<span class="text-[10px] px-2 py-0.5 bg-secondary/10 text-secondary rounded">فرصة مميزة</span>
+<span class="text-[10px] font-bold">12 فرصة</span>
 </div>
 </div>
 </div>
+</div>
+</div>
+<!-- Horizontal District Summary -->
+<div class="grid grid-cols-5 gap-widget-gap">
+<div class="glass border-r-4 border-error border-y border-l border-outline-variant rounded-lg p-4 group hover:bg-surface-container-high transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<h5 class="text-label-md font-bold text-on-surface">حي الجامعة</h5>
+<span class="text-[10px] text-error font-bold">جاذبية منخفضة</span>
+</div>
+<p class="text-display-lg text-headline-sm font-bold text-on-surface mb-1">42%</p>
+<div class="flex justify-between items-center text-[10px] text-on-surface-variant">
+<span>عدد الفرص: 1</span>
+<span class="text-error">↓ 3.2%</span>
+</div>
+</div>
+<div class="glass border-r-4 border-primary border-y border-l border-outline-variant rounded-lg p-4 group hover:bg-surface-container-high transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<h5 class="text-label-md font-bold text-on-surface">حي الوسيطاء</h5>
+<span class="text-[10px] text-primary font-bold">جاذبية متوسطة</span>
+</div>
+<p class="text-display-lg text-headline-sm font-bold text-on-surface mb-1">65%</p>
+<div class="flex justify-between items-center text-[10px] text-on-surface-variant">
+<span>عدد الفرص: 3</span>
+<span class="text-primary">↑ 1.5%</span>
+</div>
+</div>
+<div class="glass border-r-4 border-primary border-y border-l border-outline-variant rounded-lg p-4 group hover:bg-surface-container-high transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<h5 class="text-label-md font-bold text-on-surface">حي النقرة</h5>
+<span class="text-[10px] text-primary font-bold">جاذبية متوسطة</span>
+</div>
+<p class="text-display-lg text-headline-sm font-bold text-on-surface mb-1">71%</p>
+<div class="flex justify-between items-center text-[10px] text-on-surface-variant">
+<span>عدد الفرص: 5</span>
+<span class="text-primary">↑ 4.2%</span>
+</div>
+</div>
+<div class="glass border-r-4 border-secondary border-y border-l border-outline-variant rounded-lg p-4 scale-105 border shadow-xl bg-surface-container-high/50 transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<h5 class="text-label-md font-bold text-primary">حي الملقا</h5>
+<span class="text-[10px] text-secondary font-bold">جاذبية عالية</span>
+</div>
+<p class="text-display-lg text-headline-sm font-bold text-on-surface mb-1">84%</p>
+<div class="flex justify-between items-center text-[10px] text-on-surface-variant">
+<span>عدد الفرص: 12</span>
+<span class="text-secondary font-bold">↑ 8.7%</span>
+</div>
+</div>
+<div class="glass border-r-4 border-secondary border-y border-l border-outline-variant rounded-lg p-4 group hover:bg-surface-container-high transition-all cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<h5 class="text-label-md font-bold text-on-surface">حي الصحافة</h5>
+<span class="text-[10px] text-secondary font-bold">جاذبية عالية</span>
+</div>
+<p class="text-display-lg text-headline-sm font-bold text-on-surface mb-1">91%</p>
+<div class="flex justify-between items-center text-[10px] text-on-surface-variant">
+<span>عدد الفرص: 8</span>
+<span class="text-secondary">↑ 5.1%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Detailed Analytics Section (Bento Style) -->
+<section class="px-container-margin pb-section-gap grid grid-cols-3 gap-gutter">
+<div class="glass border border-outline-variant rounded-xl p-card-padding">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-label-md font-bold text-primary">توزيع الاستخدامات المكانية</h4>
+<span class="material-symbols-outlined text-outline cursor-pointer hover:text-primary transition-colors">more_vert</span>
+</div>
+<div class="relative h-48 flex items-center justify-center">
+<!-- Progress Circle Placeholder -->
+<svg class="w-40 h-40 transform -rotate-90">
+<circle class="text-surface-container-highest" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-primary" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="440" stroke-dashoffset="132" stroke-width="12"></circle>
+<circle class="text-secondary" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="440" stroke-dashoffset="350" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-display-lg text-headline-md font-bold">78%</span>
+<span class="text-[10px] text-outline">استغلال تجاري</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 mt-6">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-label-sm">تجاري (65%)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-label-sm">سكني (20%)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-label-sm">ترفيهي (10%)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span class="text-label-sm">أخرى (5%)</span>
+</div>
+</div>
+</div>
+<div class="glass border border-outline-variant rounded-xl p-card-padding">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-label-md font-bold text-primary">تحليل العائد حسب المنطقة</h4>
+<button class="text-label-sm text-outline hover:text-primary transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">download</span>
+                        تقرير PDF
+                    </button>
+</div>
+<div class="space-y-5">
+<div class="space-y-1">
+<div class="flex justify-between text-label-sm mb-1">
+<span>حي الملقا</span>
+<span class="text-secondary font-bold">24%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[85%]"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-label-sm mb-1">
+<span>حي الصحافة</span>
+<span class="text-secondary font-bold">19%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[65%]"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-label-sm mb-1">
+<span>حي الياسمين</span>
+<span class="text-primary font-bold">14%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[45%]"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-label-sm mb-1">
+<span>حي حطين</span>
+<span class="text-primary font-bold">12%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[35%]"></div>
+</div>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant">
+<div class="flex justify-between items-center">
+<p class="text-label-sm text-on-surface-variant">متوسط العائد السنوي</p>
+<p class="text-label-md font-bold text-secondary">17.2%</p>
+</div>
+</div>
+</div>
+<div class="glass border border-outline-variant rounded-xl p-card-padding flex flex-col justify-between">
+<div>
+<h4 class="font-label-md font-bold text-primary mb-6">التوصية الذكية للموقع</h4>
+<div class="flex items-start gap-4 mb-6">
+<div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-3xl">lightbulb</span>
+</div>
+<div>
+<p class="font-bold text-label-md text-on-surface">مشروع مجمع تجاري متكامل</p>
+<p class="text-[10px] text-on-surface-variant mt-1 leading-relaxed">بناءً على الكثافة السكانية ومعدل الحركة، يُنصح بالاستثمار في حي الصحافة (القطاع الشمالي) لخدمة الفئة المستهدفة.</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-widget-gap">
+<div class="bg-surface-container-low p-3 rounded-lg border border-outline-variant">
+<p class="text-[10px] text-outline">القوة الشرائية</p>
+<p class="text-label-md font-bold text-secondary">عالية جداً</p>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg border border-outline-variant">
+<p class="text-[10px] text-outline">سهولة الوصول</p>
+<p class="text-label-md font-bold text-primary">ممتاز</p>
+</div>
+</div>
+</div>
+<button class="w-full py-3 mt-6 border border-primary text-primary rounded-lg font-bold hover:bg-primary/5 transition-colors group flex items-center justify-center gap-2">
+                    عرض الدراسة الكاملة
+                    <span class="material-symbols-outlined text-sm group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
+</button>
+</div>
+</section>
 </main>
-<!-- Map Cursor Interaction Layer -->
-<div class="fixed pointer-events-none z-50 mix-blend-difference hidden" id="map-cursor">
-<div class="w-8 h-8 rounded-full border-2 border-primary animate-ping opacity-75"></div>
-</div>
+<!-- Micro-interaction Scripts -->
 <script>
-        // Simple map cursor interaction
-        const map = document.querySelector('main div.flex-1');
-        const cursor = document.getElementById('map-cursor');
-
-        map.addEventListener('mouseenter', () => cursor.classList.remove('hidden'));
-        map.addEventListener('mouseleave', () => cursor.classList.add('hidden'));
-        map.addEventListener('mousemove', (e) => {
-            cursor.style.left = `${e.clientX - 16}px`;
-            cursor.style.top = `${e.clientY - 16}px`;
+        // Simple interactive handling for selection
+        document.querySelectorAll('.glass').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                if(!card.classList.contains('scale-105')) {
+                    card.classList.add('border-primary/50');
+                }
+            });
+            card.addEventListener('mouseleave', () => {
+                if(!card.classList.contains('scale-105')) {
+                    card.classList.remove('border-primary/50');
+                }
+            });
         });
 
-        // Toggle logic for active navigation could go here
+        // Simulating loading data on filter change
+        document.querySelector('button.bg-primary').addEventListener('click', function() {
+            this.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> جاري التحميل...';
+            setTimeout(() => {
+                this.innerHTML = 'تطبيق الفلتر';
+            }, 1500);
+        });
     </script>
-<style>
-  @media (max-width: 1024px) {
-    body { overflow: auto !important; }
-    aside { width: 238px !important; transform: translateX(0); }
-    main { margin-right: 238px !important; min-width: 860px; }
-  }
-  @media (max-width: 760px) {
-    body { min-width: 1024px; }
-  }
-</style>
-<script>
-(function(){
-  const routes = {
-    "الرئيسية": "/admin",
-    "لوحة القيادة": "/admin",
-    "الذكاء الاستثماري": "/investment-intelligence",
-    "التحليل المكاني": "/investment-intelligence?tab=spatial",
-    "الفرص الاستثمارية": "/investment-intelligence?tab=opportunities",
-    "الإدارة والمتابعة": "/investment-intelligence?tab=approvals",
-    "الاعتمادات والموافقات": "/investment-intelligence?tab=approvals",
-    "الشركاء والمستثمرون": "/investment-intelligence?tab=partners",
-    "التقارير واللوحات": "/investment-intelligence?tab=reports",
-    "الأداء والمؤشرات": "/investment-intelligence?tab=performance",
-    "الإعدادات": "/investment-intelligence?tab=settings"
-  };
-  function wire(){
-    document.querySelectorAll('a,button').forEach(function(el){
-      const text = (el.textContent || '').replace(/\s+/g,' ').trim();
-      const route = routes[text];
-      if(!route || el.dataset.istinaarWired) return;
-      el.dataset.istinaarWired = '1';
-      if(el.tagName === 'A') el.setAttribute('href', route);
-      el.addEventListener('click', function(event){ event.preventDefault(); window.top.location.href = route; });
-    });
-  }
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wire); else wire();
-})();
-</script>
 </body></html>

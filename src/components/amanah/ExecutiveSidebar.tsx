@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Activity,
   BriefcaseBusiness,
@@ -22,6 +23,7 @@ import {
   type ExecutiveShellItem,
   type ExecutiveShellPage,
 } from "@/components/amanah/executiveShellConfig";
+import { useAppStore } from "@/store/appStore";
 
 function resolveIcon(icon: ExecutiveShellItem["icon"]): ReactNode {
   switch (icon) {
@@ -80,7 +82,9 @@ function SidebarLink({
 }
 
 export default function ExecutiveSidebar({ page }: { page: ExecutiveShellPage }) {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const logoutAccount = useAppStore((state) => state.logoutAccount);
   const primaryItems = useMemo(
     () => executiveShellItems.filter((item) => item.group === "primary"),
     [],
@@ -89,6 +93,12 @@ export default function ExecutiveSidebar({ page }: { page: ExecutiveShellPage })
     () => executiveShellItems.filter((item) => item.group === "management"),
     [],
   );
+
+  const handleLogout = () => {
+    logoutAccount();
+    setIsOpen(false);
+    router.push("/account");
+  };
 
   return (
     <>
@@ -111,7 +121,7 @@ export default function ExecutiveSidebar({ page }: { page: ExecutiveShellPage })
 
       <aside
         dir="rtl"
-        className={`fixed inset-y-0 right-0 z-50 flex w-[min(88vw,280px)] flex-col overflow-y-auto border-l border-white/10 bg-[radial-gradient(circle_at_52%_0%,rgba(234,193,112,0.12),transparent_26%),linear-gradient(180deg,#06101b_0%,#0f1c2d_42%,#26303a_74%,#5f646b_100%)] px-4 py-6 shadow-[-24px_0_54px_rgba(2,9,16,0.36)] transition-transform duration-300 ease-out lg:z-30 lg:w-[280px] lg:translate-x-0 ${
+        className={`fixed inset-y-0 right-0 z-50 flex w-[min(88vw,280px)] flex-col overflow-y-auto border-l border-white/10 bg-[radial-gradient(circle_at_60%_0%,rgba(234,193,112,0.1),transparent_22%),linear-gradient(135deg,rgba(6,16,27,0.98),rgba(12,24,38,0.96))] px-4 py-6 shadow-[-24px_0_54px_rgba(2,9,16,0.36)] transition-transform duration-300 ease-out lg:z-30 lg:w-[280px] lg:translate-x-0 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
         onClick={(event) => {
@@ -172,12 +182,26 @@ export default function ExecutiveSidebar({ page }: { page: ExecutiveShellPage })
             >
               <div className="text-right">
                 <p className="text-[13px] font-extrabold text-white">إدارة الحساب</p>
-                <p className="mt-0.5 text-[10px] text-white/42">الملف الشخصي والخروج</p>
+                <p className="mt-0.5 text-[10px] text-white/42">الملف الشخصي وإعدادات الدخول</p>
+              </div>
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.04]">
+                <Settings size={18} />
+              </span>
+            </Link>
+
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="flex min-h-[54px] w-full items-center justify-between gap-3 rounded-[18px] border border-white/10 bg-white/[0.03] px-3 py-2.5 text-white/82 transition-all duration-200 hover:-translate-x-0.5 hover:border-[#ff8f8f]/24 hover:bg-white/[0.06] hover:text-white"
+            >
+              <div className="text-right">
+                <p className="text-[13px] font-extrabold text-white">تسجيل الخروج</p>
+                <p className="mt-0.5 text-[10px] text-white/42">إنهاء الجلسة الحالية والعودة للحساب</p>
               </div>
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.04]">
                 <LogOut size={18} />
               </span>
-            </Link>
+            </button>
           </div>
 
           <p className="mt-5 text-center text-[10px] leading-6 text-white/32">

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html class="dark" dir="rtl" lang="ar"><head>
 <meta charset="utf-8"/>
@@ -432,42 +432,4 @@
             });
         });
     </script>
-<style>
-  @media (max-width: 1024px) {
-    body { overflow: auto !important; }
-    aside { width: 238px !important; transform: translateX(0); }
-    main { margin-right: 238px !important; min-width: 860px; }
-  }
-  @media (max-width: 760px) {
-    body { min-width: 1024px; }
-  }
-</style>
-<script>
-(function(){
-  const routes = {
-    "الرئيسية": "/admin",
-    "لوحة القيادة": "/admin",
-    "الذكاء الاستثماري": "/investment-intelligence",
-    "التحليل المكاني": "/investment-intelligence?tab=spatial",
-    "الفرص الاستثمارية": "/investment-intelligence?tab=opportunities",
-    "الإدارة والمتابعة": "/investment-intelligence?tab=approvals",
-    "الاعتمادات والموافقات": "/investment-intelligence?tab=approvals",
-    "الشركاء والمستثمرون": "/investment-intelligence?tab=partners",
-    "التقارير واللوحات": "/investment-intelligence?tab=reports",
-    "الأداء والمؤشرات": "/investment-intelligence?tab=performance",
-    "الإعدادات": "/investment-intelligence?tab=settings"
-  };
-  function wire(){
-    document.querySelectorAll('a,button').forEach(function(el){
-      const text = (el.textContent || '').replace(/\s+/g,' ').trim();
-      const route = routes[text];
-      if(!route || el.dataset.istinaarWired) return;
-      el.dataset.istinaarWired = '1';
-      if(el.tagName === 'A') el.setAttribute('href', route);
-      el.addEventListener('click', function(event){ event.preventDefault(); window.top.location.href = route; });
-    });
-  }
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wire); else wire();
-})();
-</script>
 </body></html>
