@@ -150,6 +150,72 @@ export function ReportsReference() {
   </div>;
 }
 
+export function PerformanceReference() {
+  const months = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+  const details = [
+    ["معدل استغلال الأراضي", "76%", "+11%", "green"],
+    ["معدل رضا المستثمرين", "91%", "+8%", "green"],
+    ["معدل سرعة الاعتماد", "41%", "+9%", "gold"],
+    ["طلبات مكتملة رقمياً", "12.4K", "+15%", "blue"],
+    ["متوسط دورة الاعتماد", "24 يوم", "-8 أيام", "green"],
+    ["معدل تحول الفرص", "32%", "+6%", "gold"],
+  ] as const;
+
+  return <div className="space-y-4">
+    <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+      <MetricCard label="مؤشر الأداء العام" value="87%" note="+12% عن الربع السابق" icon={<TrendingUp size={20} />} tone="green" />
+      <MetricCard label="معدل تحول الفرص" value="32%" note="+6% عن الشهر الماضي" icon={<LineChart size={20} />} tone="gold" />
+      <MetricCard label="متوسط مدة الاعتماد" value="24 يوم" note="-8 أيام عن الفترة السابقة" icon={<Clock3 size={20} />} tone="blue" />
+      <MetricCard label="القيمة الاقتصادية" value="211.7" note="+18% نمو متوقع" icon={<Building2 size={20} />} />
+      <MetricCard label="نسبة جاهزية الفرص" value="83%" note="+7% عن الشهر الماضي" icon={<BadgeCheck size={20} />} tone="green" />
+    </div>
+
+    <div className="grid gap-4 2xl:grid-cols-[1.35fr_0.65fr]">
+      <Surface title="اتجاه الأداء العام" subtitle="قراءة شهرية مختصرة">
+        <div className="relative h-[320px] rounded-[1rem] border border-white/8 bg-[#080f14]/35 p-5">
+          <div className="absolute inset-x-8 bottom-12 top-8 grid grid-rows-5">
+            {[1, 2, 3, 4, 5].map((line) => <span key={line} className="border-t border-white/8" />)}
+          </div>
+          <svg className="absolute inset-5 h-[calc(100%-40px)] w-[calc(100%-40px)]" viewBox="0 0 900 260" preserveAspectRatio="none">
+            <polyline points="0,210 80,170 160,145 240,118 320,104 400,90 480,80 560,85 640,70 720,58 800,66 900,38" fill="none" stroke="#59D776" strokeWidth="5" strokeLinecap="round" />
+            <polyline points="0,230 80,205 160,176 240,158 320,139 400,120 480,112 560,103 640,91 720,82 800,75 900,52" fill="none" stroke="#EAC170" strokeWidth="5" strokeLinecap="round" />
+          </svg>
+          <div className="absolute inset-x-8 bottom-4 flex justify-between text-[11px] text-white/42">{months.map((month) => <span key={month}>{month}</span>)}</div>
+          <div className="absolute bottom-14 right-8 flex gap-4 text-[11px]"><span className="text-[#59D776]">القيمة الحالية</span><span className="text-[#EAC170]">القيمة السابقة</span></div>
+        </div>
+      </Surface>
+
+      <Surface title="توزيع الفرص حسب الحالة" subtitle="24 فرصة">
+        <div className="grid gap-4 lg:grid-cols-[0.86fr_1fr] 2xl:grid-cols-1">
+          <div className="relative mx-auto flex h-52 w-52 items-center justify-center rounded-full bg-[conic-gradient(#59D776_0_33%,#EAC170_33%_58%,#7BC9FF_58%_71%,#FF7C82_71%_84%,#3B475A_84%_100%)]">
+            <div className="flex h-32 w-32 flex-col items-center justify-center rounded-full bg-[#101C2C]">
+              <span className="font-['Tajawal'] text-4xl font-black text-white">24</span>
+              <span className="text-[11px] text-white/46">إجمالي الفرص</span>
+            </div>
+          </div>
+          <div className="space-y-3">
+            {[["جاهزة للطرح", "8", "33%", "green"], ["قيد الدراسة", "6", "25%", "gold"], ["قيد المراجعة", "5", "21%", "blue"], ["متعثرة", "3", "13%", "red"], ["مغلقة", "2", "8%", "gold"]].map(([label, count, pct, tone]) => (
+              <div key={label} className="flex items-center justify-between rounded-[0.9rem] border border-white/8 bg-white/[0.025] px-3 py-2 text-sm">
+                <Status tone={tone as Tone}>{pct}</Status>
+                <span className="text-white/62">{count} فرص</span>
+                <span className="font-bold text-white">{label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Surface>
+    </div>
+
+    <Surface title="مؤشرات تفصيلية" subtitle="قابلة للمتابعة الشهرية">
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        {details.map(([label, value, delta, tone]) => (
+          <DecisionSignal key={label} title={label} value={value} note={`${delta} مقارنة بالفترة السابقة`} action="مستقر" tone={tone as Tone} />
+        ))}
+      </div>
+    </Surface>
+  </div>;
+}
+
 export function SettingsReference() {
   const permissions = [["عرض اللوحات", "42 مستخدماً", "green"], ["تحرير المسودات", "18 مستخدماً", "blue"], ["مراجعة الاعتمادات", "8 مستخدمين", "gold"], ["اعتماد ونشر", "4 مستخدمين", "red"]] as const;
   const securityItems = [

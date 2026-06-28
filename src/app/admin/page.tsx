@@ -33,14 +33,14 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="relative isolate min-h-screen overflow-x-clip bg-[radial-gradient(circle_at_18%_0%,rgba(47,92,124,0.32),transparent_28%),radial-gradient(circle_at_66%_18%,rgba(194,155,79,0.09),transparent_32%),linear-gradient(180deg,#0c1724_0%,#0d1b2a_48%,#102a40_100%)] text-white">
+    <div className="relative isolate min-h-screen overflow-x-clip bg-[radial-gradient(circle_at_16%_0%,rgba(59,71,90,0.58),transparent_28%),radial-gradient(circle_at_76%_20%,rgba(176,139,65,0.14),transparent_32%),linear-gradient(180deg,#101C2C_0%,#0e141a_50%,#080f14_100%)] text-white">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.038)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.038)_1px,transparent_1px)] bg-[size:88px_88px] opacity-20 animate-pulse [animation-duration:10s]" />
         <div className="absolute inset-0 bg-[linear-gradient(125deg,transparent_0%,rgba(255,255,255,0.06)_38%,transparent_52%),linear-gradient(305deg,transparent_0%,rgba(255,255,255,0.045)_42%,transparent_58%)] opacity-20 animate-pulse [animation-duration:12s]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(255,255,255,0.16),transparent_12%),radial-gradient(circle_at_74%_24%,rgba(255,255,255,0.12),transparent_10%),radial-gradient(circle_at_52%_72%,rgba(255,255,255,0.1),transparent_13%)] opacity-30 blur-3xl animate-pulse [animation-duration:8s]" />
       </div>
-      <div className="relative z-10 mx-auto max-w-[1880px] px-3 py-3 pb-24 xl:pr-[272px] xl:pb-3">
-        <main className="min-w-0 space-y-4" dir="rtl">
+      <div className="relative z-10 mx-auto max-w-[1920px] px-1 py-1 pb-24 xl:pr-[280px] xl:pb-1">
+        <main className="min-w-0 space-y-3 p-2" dir="rtl">
           <ExecutiveHeader title="المركز التنفيذي" subtitle="لوحة القيادة والمتابعة الداخلية" displayName={currentUser.fullName} />
 
           <AdminReferenceDashboard />

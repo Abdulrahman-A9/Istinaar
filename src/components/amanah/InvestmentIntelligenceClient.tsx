@@ -11,6 +11,7 @@ import {
 import {
   ApprovalsReference,
   PartnersReference,
+  PerformanceReference,
   ReportsReference,
   SettingsReference,
 } from "@/components/amanah/reference/ManagementViews";
@@ -20,7 +21,7 @@ type InvestmentIntelligenceClientProps = {
   initialTab?: string;
 };
 
-type SupportedTab = "overview" | "spatial" | "opportunities" | "approvals" | "partners" | "reports" | "settings";
+type SupportedTab = "overview" | "spatial" | "opportunities" | "approvals" | "partners" | "reports" | "performance" | "settings";
 
 function resolveTab(tab?: string): SupportedTab {
   if (tab === "spatial") {
@@ -29,7 +30,7 @@ function resolveTab(tab?: string): SupportedTab {
   if (tab === "opportunities") {
     return "opportunities";
   }
-  if (tab === "approvals" || tab === "partners" || tab === "reports" || tab === "settings") {
+  if (tab === "approvals" || tab === "partners" || tab === "reports" || tab === "performance" || tab === "settings") {
     return tab;
   }
   return "overview";
@@ -84,6 +85,7 @@ export default function InvestmentIntelligenceClient({
       {activeTab === "approvals" ? <ApprovalsReference /> : null}
       {activeTab === "partners" ? <PartnersReference /> : null}
       {activeTab === "reports" ? <ReportsReference /> : null}
+      {activeTab === "performance" ? <PerformanceReference /> : null}
       {activeTab === "settings" ? <SettingsReference /> : null}
     </ReferenceShell>
   );

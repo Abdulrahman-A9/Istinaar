@@ -159,7 +159,7 @@ function ExecutiveMap({ compact = false }: { compact?: boolean }) {
       <img
         alt="خريطة أولويات أحياء حائل"
         className="absolute inset-0 h-full w-full object-cover opacity-60"
-        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbwRmAZR6AKKmxMOkHePKVDDYeQWBvl_mYvoTKbR4UWeB9bfABdi795oEplrhzM-46I0EzzJVTvuvTYobDIDzZnji4aXlgTHkRdt86OI55NEOmeP4n5ABHgtJmXxDQGISanVVHftFh2nzxGZDd2ayPRfvTVCsZHsO2JkqF_5k8jMX2u4PQBrY-qhniNmBxafUWJGQ5M4rcCPNvm8kyQYXjxtCeHmn1c6_FK-QnP2yAtg8CQu7YkE-c-mrEhHongQsGGq4ArggB4ZM"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO_TdZE4uoDPwG0vQRRXLsTDf-2aXbny-Ytk6CvzALOFuM0MAkShXtNIV2z-g0PAjbCMCnvTamfCYpmutWyZ7iX1o6t_766MKkVq9HduN17TACfPDMCwoVbaZYGnC2q-kbdgzys3R6DIbHE3jZaNiG8POKJx-s_djb17ZkO9v_iCae7qsn1bY2pOcrHff40Mhy4S7sA_NUCxkEsTQWZ7JMg0pZa7MUT2SKhawM4fFeFMFThc-urHf2L0MKQowc49z8W3uZ9GVUT-4"
       />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(13,28,43,0.04),rgba(5,12,21,0.5)_76%),linear-gradient(180deg,rgba(4,11,19,0.12),rgba(4,11,19,0.42))]" />
       <div className="absolute right-4 top-4 z-20 flex min-w-[132px] items-center justify-between rounded-[0.55rem] border border-white/10 bg-[#111923]/82 px-3 py-2 text-[10px] font-bold text-white/78 backdrop-blur-md">
@@ -236,9 +236,9 @@ export function AdminReferenceDashboard() {
 
   return (
     <div className="space-y-4">
-      <section className="grid gap-4 xl:grid-cols-5">
+      <section className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
         {executiveMetrics.map((metric, index) => (
-          <article key={metric.label} className={`executive-card-glow ${["glow-gold", "glow-blue", "glow-green", "glow-violet", "glow-red"][index % 5]} flex min-h-[118px] flex-col justify-between rounded-xl border border-white/10 bg-[#161c26]/92 p-4 shadow-[0_14px_28px_rgba(0,0,0,0.14)] transition hover:bg-[#1c2431]`}>
+          <article key={metric.label} className={`executive-card-glow ${["glow-gold", "glow-blue", "glow-green", "glow-violet", "glow-red"][index % 5]} flex min-h-[140px] flex-col justify-between rounded-lg border border-white/10 bg-[#161c22]/92 p-5 shadow-[0_14px_28px_rgba(0,0,0,0.14)] transition hover:bg-[#1a2026]`}>
             <div className="flex items-start justify-between gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#C29B4F]/10 text-[#C29B4F]">
                 <MetricIcon type={metric.icon} />
@@ -254,6 +254,20 @@ export function AdminReferenceDashboard() {
             <p className="text-[10px] font-bold text-[#28F0AE]">{metric.delta}</p>
           </article>
         ))}
+        <article className="executive-card-glow glow-gold flex min-h-[140px] flex-col justify-between rounded-lg border border-white/10 bg-[radial-gradient(circle_at_top_left,rgba(234,193,112,0.16),transparent_34%),linear-gradient(135deg,#1a2026,#161c22)] p-5 text-right shadow-[0_14px_28px_rgba(0,0,0,0.14)]">
+          <div className="flex items-start justify-between gap-3">
+            <span className="rounded-md bg-[#eac170] px-2 py-1 text-[10px] font-black text-[#261900]">AI</span>
+            <div>
+              <p className="text-[11px] text-white/58">الذكاء التنفيذي يقترح</p>
+              <h3 className="mt-2 font-['Tajawal'] text-[1.55rem] font-black text-white">توصية جاهزة</h3>
+            </div>
+          </div>
+          <p className="text-[12px] leading-6 text-white/60">اعتماد فرصة تطوير موقع حي مشار مع جاهزية تنظيمية عالية.</p>
+          <div className="flex items-center gap-3">
+            <span className="text-xs font-black text-[#59D776]">83%</span>
+            <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/10"><div className="h-full w-[83%] bg-[#59D776]" /></div>
+          </div>
+        </article>
       </section>
 
       <section className="grid gap-4 xl:grid-cols-12">

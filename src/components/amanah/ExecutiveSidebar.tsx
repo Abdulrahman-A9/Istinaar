@@ -3,6 +3,7 @@
 import Link from "next/link";
 import {
   BriefcaseBusiness,
+  Activity,
   FileCheck2,
   Home,
   LayoutDashboard,
@@ -17,7 +18,7 @@ import {
 } from "lucide-react";
 import { useState, type ReactNode } from "react";
 
-type ExecutiveSidebarPage = "admin" | "overview" | "spatial" | "opportunities" | "approvals" | "partners" | "reports" | "settings";
+type ExecutiveSidebarPage = "admin" | "overview" | "spatial" | "opportunities" | "approvals" | "partners" | "reports" | "performance" | "settings";
 
 function SidebarLink({
   href,
@@ -71,7 +72,7 @@ export default function ExecutiveSidebar({ page }: { page: ExecutiveSidebarPage 
         {isOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
       <aside
-        className={`fixed inset-y-0 right-0 z-50 w-[min(88vw,256px)] overflow-y-auto overscroll-contain border-l border-white/10 bg-[#080e18] px-3 py-5 shadow-[-18px_0_48px_rgba(3,12,22,0.32)] transition-transform duration-300 ease-out xl:z-30 xl:w-64 xl:translate-x-0 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+        className={`fixed inset-y-0 right-0 z-50 w-[min(88vw,280px)] overflow-y-auto overscroll-contain border-l border-white/10 bg-[#3B475A] px-4 py-6 shadow-[-18px_0_48px_rgba(3,12,22,0.34)] transition-transform duration-300 ease-out xl:z-30 xl:w-[280px] xl:translate-x-0 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
         dir="rtl"
         onClick={(event) => {
           if ((event.target as HTMLElement).closest("a")) setIsOpen(false);
@@ -109,6 +110,7 @@ export default function ExecutiveSidebar({ page }: { page: ExecutiveSidebarPage 
             <SidebarLink href="/investment-intelligence?tab=approvals" label="الاعتمادات والموافقات" hint="الرفع والاعتماد" icon={<FileCheck2 size={18} />} active={page === "approvals"} />
             <SidebarLink href="/investment-intelligence?tab=partners" label="الشركاء والمستثمرون" hint="الأطراف ذات العلاقة" icon={<Users size={18} />} active={page === "partners"} />
             <SidebarLink href="/investment-intelligence?tab=reports" label="التقارير واللوحات" hint="العروض التنفيذية" icon={<LineChart size={18} />} active={page === "reports"} />
+            <SidebarLink href="/investment-intelligence?tab=performance" label="الأداء والمؤشرات" hint="مؤشرات القرار" icon={<Activity size={18} />} active={page === "performance"} />
             <SidebarLink href="/investment-intelligence?tab=settings" label="الإعدادات" hint="التفضيلات والصلاحيات" icon={<Settings size={18} />} active={page === "settings"} />
           </div>
         </div>
