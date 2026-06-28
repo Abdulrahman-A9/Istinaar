@@ -7,6 +7,7 @@ import {
   executiveShellItems,
   type ExecutiveShellPage,
 } from "@/components/amanah/executiveShellConfig";
+import NativeExecutivePage from "@/components/amanah/NativeExecutivePages";
 
 type ReferenceHtmlFrameProps = {
   page:
@@ -33,6 +34,12 @@ const pageSources: Record<ReferenceHtmlFrameProps["page"], string> = {
 };
 
 const pageCache = new Map<string, string>();
+type NativeExecutiveShellPage = "spatial" | "partners";
+const nativeExecutivePages = new Set<ReferenceHtmlFrameProps["page"]>(["spatial", "partners"]);
+
+function isNativeExecutivePage(page: ReferenceHtmlFrameProps["page"]): page is NativeExecutiveShellPage {
+  return nativeExecutivePages.has(page);
+}
 
 function getCacheKey(page: ReferenceHtmlFrameProps["page"], displayName: string) {
   return `${page}::${displayName}`;
@@ -945,6 +952,10 @@ export default function ReferenceHtmlFrame({ page, displayName = "أ. محمد �
   );
 
   useEffect(() => {
+    if (isNativeExecutivePage(page)) {
+      return;
+    }
+
     let active = true;
     const cached = pageCache.get(getCacheKey(page, displayName));
     if (cached) {
@@ -970,7 +981,7 @@ export default function ReferenceHtmlFrame({ page, displayName = "أ. محمد �
     const preload = async () => {
       await Promise.all(
         (Object.keys(pageSources) as ReferenceHtmlFrameProps["page"][]).map((key) =>
-          key === page ? Promise.resolve() : loadPageMarkup(key, displayName),
+          key === page || isNativeExecutivePage(key) ? Promise.resolve() : loadPageMarkup(key, displayName),
         ),
       );
     };
@@ -1016,6 +1027,10 @@ export default function ReferenceHtmlFrame({ page, displayName = "أ. محمد �
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
   }, [router]);
+
+  if (isNativeExecutivePage(page)) {
+    return <NativeExecutivePage page={page} displayName={displayName} />;
+  }
 
   if (!html) {
     return (
