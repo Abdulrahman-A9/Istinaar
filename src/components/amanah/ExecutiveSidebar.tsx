@@ -2,135 +2,191 @@
 
 import Link from "next/link";
 import {
-  BriefcaseBusiness,
   Activity,
+  BriefcaseBusiness,
   FileCheck2,
   Home,
   LayoutDashboard,
   LineChart,
   LogOut,
-  Menu,
   MapPin,
+  Menu,
   Settings,
   Sparkles,
   Users,
   X,
 } from "lucide-react";
-import { useState, type ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
+import {
+  executiveShellItems,
+  type ExecutiveShellItem,
+  type ExecutiveShellPage,
+} from "@/components/amanah/executiveShellConfig";
 
-type ExecutiveSidebarPage = "admin" | "overview" | "spatial" | "opportunities" | "approvals" | "partners" | "reports" | "performance" | "settings";
+function resolveIcon(icon: ExecutiveShellItem["icon"]): ReactNode {
+  switch (icon) {
+    case "dashboard":
+      return <LayoutDashboard size={18} />;
+    case "insights":
+      return <Sparkles size={18} />;
+    case "map":
+      return <MapPin size={18} />;
+    case "monetization_on":
+      return <BriefcaseBusiness size={18} />;
+    case "fact_check":
+      return <FileCheck2 size={18} />;
+    case "handshake":
+      return <Users size={18} />;
+    case "analytics":
+      return <LineChart size={18} />;
+    case "monitoring":
+      return <Activity size={18} />;
+    case "settings":
+      return <Settings size={18} />;
+    default:
+      return <Home size={18} />;
+  }
+}
 
 function SidebarLink({
-  href,
-  label,
-  hint,
-  icon,
+  item,
   active,
 }: {
-  href: string;
-  label: string;
-  hint: string;
-  icon: ReactNode;
-  active?: boolean;
+  item: ExecutiveShellItem;
+  active: boolean;
 }) {
   return (
     <Link
-      href={href}
-      className={`flex items-center justify-between rounded-lg px-3 py-2.5 transition ${
+      href={item.href}
+      className={`group flex min-h-[58px] items-center justify-between gap-3 rounded-[18px] border px-3 py-2.5 transition-all duration-200 ${
         active
-          ? "bg-[#D0A243] text-[#09121D] shadow-[0_18px_38px_rgba(208,162,67,0.22)]"
-          : "border border-white/8 bg-white/[0.02] text-white/82 hover:bg-white/[0.04]"
+          ? "border-[#eac170]/70 bg-[linear-gradient(135deg,#eac170_0%,#b08b41_100%)] text-[#261900] shadow-[0_18px_34px_rgba(176,139,65,0.24)]"
+          : "border-white/10 bg-white/[0.03] text-white/82 hover:-translate-x-0.5 hover:border-[#eac170]/24 hover:bg-white/[0.06] hover:text-white"
       }`}
     >
-      <div className="text-right">
-        <p className={`text-[12px] font-bold ${active ? "text-[#09121D]" : "text-white"}`}>{label}</p>
-        <p className={`mt-0.5 hidden text-[10px] 2xl:block ${active ? "text-[#09121D]/70" : "text-white/40"}`}>{hint}</p>
+      <div className="min-w-0 text-right">
+        <p className={`text-[13px] font-extrabold leading-5 ${active ? "text-[#261900]" : "text-white"}`}>{item.label}</p>
+        <p className={`mt-0.5 text-[10px] leading-5 ${active ? "text-[#261900]/70" : "text-white/42"}`}>{item.hint}</p>
       </div>
       <span
-        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border ${
-          active ? "border-[#0B1726]/10 bg-[#0B1726]/6" : "border-white/10 bg-white/[0.03]"
+        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-[14px] border ${
+          active ? "border-[#261900]/10 bg-[#261900]/5" : "border-white/10 bg-white/[0.04]"
         }`}
       >
-        {icon}
+        {resolveIcon(item.icon)}
       </span>
     </Link>
   );
 }
 
-export default function ExecutiveSidebar({ page }: { page: ExecutiveSidebarPage }) {
+export default function ExecutiveSidebar({ page }: { page: ExecutiveShellPage }) {
   const [isOpen, setIsOpen] = useState(false);
+  const primaryItems = useMemo(
+    () => executiveShellItems.filter((item) => item.group === "primary"),
+    [],
+  );
+  const managementItems = useMemo(
+    () => executiveShellItems.filter((item) => item.group === "management"),
+    [],
+  );
 
   return (
     <>
-      {isOpen ? <button aria-label="إغلاق القائمة" className="fixed inset-0 z-40 bg-[#04101C]/70 backdrop-blur-sm xl:hidden" onClick={() => setIsOpen(false)} /> : null}
+      {isOpen ? (
+        <button
+          aria-label="إغلاق القائمة"
+          className="fixed inset-0 z-40 bg-[#04101c]/72 backdrop-blur-sm lg:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      ) : null}
+
       <button
         aria-label={isOpen ? "إغلاق القائمة" : "فتح القائمة"}
         aria-expanded={isOpen}
-        className="fixed right-3 top-3 z-[60] flex h-11 w-11 items-center justify-center rounded-[0.9rem] border border-white/12 bg-[#102B43]/95 text-[#E5C876] shadow-[0_14px_32px_rgba(0,0,0,0.28)] backdrop-blur xl:hidden"
+        className="fixed right-3 top-3 z-[70] flex h-11 w-11 items-center justify-center rounded-2xl border border-white/14 bg-[linear-gradient(135deg,#eac170_0%,#b08b41_100%)] text-[#261900] shadow-[0_14px_30px_rgba(0,0,0,0.28)] lg:hidden"
         onClick={() => setIsOpen((current) => !current)}
       >
         {isOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
+
       <aside
-        className={`fixed inset-y-0 right-0 z-50 w-[min(88vw,280px)] overflow-y-auto overscroll-contain border-l border-white/10 bg-[#3B475A] px-4 py-6 shadow-[-18px_0_48px_rgba(3,12,22,0.34)] transition-transform duration-300 ease-out xl:z-30 xl:w-[280px] xl:translate-x-0 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
         dir="rtl"
+        className={`fixed inset-y-0 right-0 z-50 flex w-[min(88vw,280px)] flex-col overflow-y-auto border-l border-white/10 bg-[radial-gradient(circle_at_52%_0%,rgba(234,193,112,0.12),transparent_26%),linear-gradient(180deg,#06101b_0%,#0f1c2d_42%,#26303a_74%,#5f646b_100%)] px-4 py-6 shadow-[-24px_0_54px_rgba(2,9,16,0.36)] transition-transform duration-300 ease-out lg:z-30 lg:w-[280px] lg:translate-x-0 ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        }`}
         onClick={(event) => {
           if ((event.target as HTMLElement).closest("a")) setIsOpen(false);
         }}
       >
-        <div className="space-y-3">
-        <div className="flex items-start justify-between">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[radial-gradient(circle_at_top,#F0E3BA_0%,#D0A243_100%)] text-[#0B1726] shadow-[0_16px_30px_rgba(208,162,67,0.2)]">
-            <Sparkles size={20} />
+        <div className="flex items-center justify-between gap-3 border-b border-white/8 pb-5">
+          <div className="grid h-[52px] w-[52px] place-items-center rounded-[18px] bg-[radial-gradient(circle_at_40%_20%,#ffedbd_0%,#d1a247_72%)] text-[#06101b] shadow-[0_18px_34px_rgba(209,162,71,0.22)]">
+            <Sparkles size={22} />
           </div>
           <div className="text-right">
-            <h2 className="font-['Tajawal'] text-[1.35rem] font-black text-white">استنار</h2>
-            <p className="mt-0.5 text-[10px] leading-5 text-white/44">منصة الذكاء الاستثماري ودعم القرار</p>
+            <h2 className="text-[26px] font-black leading-none text-white">استنار</h2>
+            <p className="mt-2 text-[11px] leading-6 text-white/50">منصة الذكاء الاستثماري ودعم القرار</p>
           </div>
         </div>
 
-        <div className="rounded-xl border border-white/10 bg-[#161c26] px-3 py-3 text-right">
-          <p className="font-['Tajawal'] text-[1rem] font-black text-white">المركز التنفيذي</p>
-          <p className="mt-1 text-[10px] leading-6 text-white/44">لوحة متابعة القيادة الداخلية</p>
+        <div className="mt-4 rounded-[22px] border border-white/10 bg-[linear-gradient(135deg,rgba(255,255,255,0.07),rgba(255,255,255,0.025))] px-4 py-5 text-right">
+          <strong className="block text-[20px] font-black leading-8 text-white">المركز التنفيذي</strong>
+          <span className="mt-2 block text-[11px] leading-6 text-white/48">لوحة القيادة والمتابعة الداخلية</span>
         </div>
 
-        <div className="border-t border-white/8 pt-3">
-          <p className="mb-2 text-right text-[10px] font-bold text-white/38">المسارات الرئيسية</p>
-          <div className="space-y-1.5">
-            <SidebarLink href="/admin" label="الرئيسية" hint="ملخص التشغيل اليومي" icon={<LayoutDashboard size={18} />} active={page === "admin"} />
-            <SidebarLink href="/investment-intelligence" label="الذكاء الاستثماري" hint="القراءة التنفيذية" icon={<Sparkles size={18} />} active={page === "overview"} />
-            <SidebarLink href="/investment-intelligence?tab=spatial" label="التحليل المكاني" hint="الأحياء والأولويات" icon={<MapPin size={18} />} active={page === "spatial"} />
-            <SidebarLink href="/investment-intelligence?tab=opportunities" label="الفرص الاستثمارية" hint="السجل والجاهزية" icon={<BriefcaseBusiness size={18} />} active={page === "opportunities"} />
+        <div className="mt-4 border-t border-white/8 pt-4">
+          <p className="mb-2 text-right text-[11px] font-bold text-white/42">المسارات الرئيسية</p>
+          <div className="space-y-2">
+            {primaryItems.map((item) => (
+              <SidebarLink key={item.page} item={item} active={item.page === page} />
+            ))}
           </div>
         </div>
 
-        <div className="border-t border-white/8 pt-3">
-          <p className="mb-2 text-right text-[10px] font-bold text-white/38">الإدارة والمتابعة</p>
-          <div className="space-y-1.5">
-            <SidebarLink href="/investment-intelligence?tab=approvals" label="الاعتمادات والموافقات" hint="الرفع والاعتماد" icon={<FileCheck2 size={18} />} active={page === "approvals"} />
-            <SidebarLink href="/investment-intelligence?tab=partners" label="الشركاء والمستثمرون" hint="الأطراف ذات العلاقة" icon={<Users size={18} />} active={page === "partners"} />
-            <SidebarLink href="/investment-intelligence?tab=reports" label="التقارير واللوحات" hint="العروض التنفيذية" icon={<LineChart size={18} />} active={page === "reports"} />
-            <SidebarLink href="/investment-intelligence?tab=performance" label="الأداء والمؤشرات" hint="مؤشرات القرار" icon={<Activity size={18} />} active={page === "performance"} />
-            <SidebarLink href="/investment-intelligence?tab=settings" label="الإعدادات" hint="التفضيلات والصلاحيات" icon={<Settings size={18} />} active={page === "settings"} />
+        <div className="mt-4 border-t border-white/8 pt-4">
+          <p className="mb-2 text-right text-[11px] font-bold text-white/42">الإدارة والمتابعة</p>
+          <div className="space-y-2">
+            {managementItems.map((item) => (
+              <SidebarLink key={item.page} item={item} active={item.page === page} />
+            ))}
           </div>
         </div>
 
-        <div className="border-t border-white/8 pt-3">
-          <p className="mb-2 text-right text-[10px] font-bold text-white/38">الخدمات السريعة</p>
-          <div className="space-y-1.5">
-            <SidebarLink href="/" label="الرئيسية العامة" hint="العودة لواجهة المنصة" icon={<Home size={18} />} />
-            <SidebarLink href="/account" label="تسجيل الخروج" hint="إدارة الحساب" icon={<LogOut size={18} />} />
-          </div>
-        </div>
+        <div className="mt-auto border-t border-white/8 pt-4">
+          <div className="space-y-2">
+            <Link
+              href="/"
+              className="flex min-h-[54px] items-center justify-between gap-3 rounded-[18px] border border-white/10 bg-white/[0.03] px-3 py-2.5 text-white/82 transition-all duration-200 hover:-translate-x-0.5 hover:border-[#eac170]/24 hover:bg-white/[0.06] hover:text-white"
+            >
+              <div className="text-right">
+                <p className="text-[13px] font-extrabold text-white">الرئيسية العامة</p>
+                <p className="mt-0.5 text-[10px] text-white/42">العودة إلى واجهة المنصة</p>
+              </div>
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.04]">
+                <Home size={18} />
+              </span>
+            </Link>
 
-        <p className="pt-1 text-center text-[10px] leading-5 text-white/30">
-          © 2024 استنار
-          <br />
-          جميع الحقوق محفوظة
-        </p>
+            <Link
+              href="/account"
+              className="flex min-h-[54px] items-center justify-between gap-3 rounded-[18px] border border-white/10 bg-white/[0.03] px-3 py-2.5 text-white/82 transition-all duration-200 hover:-translate-x-0.5 hover:border-[#eac170]/24 hover:bg-white/[0.06] hover:text-white"
+            >
+              <div className="text-right">
+                <p className="text-[13px] font-extrabold text-white">إدارة الحساب</p>
+                <p className="mt-0.5 text-[10px] text-white/42">الملف الشخصي والخروج</p>
+              </div>
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.04]">
+                <LogOut size={18} />
+              </span>
+            </Link>
+          </div>
+
+          <p className="mt-5 text-center text-[10px] leading-6 text-white/32">
+            © 2024 استنار
+            <br />
+            جميع الحقوق محفوظة
+          </p>
         </div>
       </aside>
-
     </>
   );
 }

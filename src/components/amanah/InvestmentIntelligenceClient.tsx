@@ -65,5 +65,5 @@ export default function InvestmentIntelligenceClient({
     );
   }
 
-  return <ReferenceHtmlFrame page={activeTab} />;
+  return <ReferenceHtmlFrame page={activeTab} displayName={currentUser.fullName} />;
 }

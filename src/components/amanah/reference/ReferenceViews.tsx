@@ -76,7 +76,7 @@ const mapPoints = [
   { label: "حي الشفاء", state: "ready", top: "25%", right: "77%" },
   { label: "حي الزبارة", state: "ready", top: "30%", right: "18%" },
   { label: "حي النقرة", state: "ready", top: "42%", right: "58%" },
-  { label: "حي الجامعة", state: "blocked", top: "50%", right: "33%" },
+  { label: "حي النزهة", state: "blocked", top: "50%", right: "33%" },
   { label: "حي الجامعيين", state: "review", top: "58%", right: "45%" },
   { label: "حي الوسيطاء", state: "review", top: "64%", right: "74%" },
   { label: "حي مشار", state: "ready", top: "70%", right: "54%" },
@@ -159,7 +159,7 @@ function ExecutiveMap({ compact = false }: { compact?: boolean }) {
       <img
         alt="خريطة أولويات أحياء حائل"
         className="absolute inset-0 h-full w-full object-cover opacity-60"
-        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO_TdZE4uoDPwG0vQRRXLsTDf-2aXbny-Ytk6CvzALOFuM0MAkShXtNIV2z-g0PAjbCMCnvTamfCYpmutWyZ7iX1o6t_766MKkVq9HduN17TACfPDMCwoVbaZYGnC2q-kbdgzys3R6DIbHE3jZaNiG8POKJx-s_djb17ZkO9v_iCae7qsn1bY2pOcrHff40Mhy4S7sA_NUCxkEsTQWZ7JMg0pZa7MUT2SKhawM4fFeFMFThc-urHf2L0MKQowc49z8W3uZ9GVUT-4"
+        src="/amanah-reference/hail-map-dark.svg"
       />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(13,28,43,0.04),rgba(5,12,21,0.5)_76%),linear-gradient(180deg,rgba(4,11,19,0.12),rgba(4,11,19,0.42))]" />
       <div className="absolute right-4 top-4 z-20 flex min-w-[132px] items-center justify-between rounded-[0.55rem] border border-white/10 bg-[#111923]/82 px-3 py-2 text-[10px] font-bold text-white/78 backdrop-blur-md">
