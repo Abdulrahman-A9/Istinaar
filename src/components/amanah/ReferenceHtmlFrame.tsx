@@ -150,8 +150,8 @@ function buildUnifiedStyles() {
       scroll-behavior: smooth;
     }
     header.istinaar-unified-header {
-      position: sticky !important;
-      top: 4px !important;
+      position: relative !important;
+      top: auto !important;
       z-index: 55;
       margin: 8px 8px 0;
       padding: 18px 24px;
