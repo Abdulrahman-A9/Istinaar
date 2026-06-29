@@ -628,7 +628,15 @@ function buildSidebarMarkup(page: ExecutiveShellPage) {
     <nav class="istinaar-sidebar-list">${renderItems(primaryItems)}</nav>
     <div class="istinaar-sidebar-group-title">الإدارة والمتابعة</div>
     <nav class="istinaar-sidebar-list">${renderItems(managementItems)}</nav>
-    ${settingsItem ? `<div class="istinaar-sidebar-footer-actions"><nav class="istinaar-sidebar-list">${renderItems([settingsItem])}</nav></div>` : ""}
+    <div class="istinaar-sidebar-footer-actions">
+      <nav class="istinaar-sidebar-list">
+        <a class="istinaar-sidebar-link" href="/" data-istinaar-nav="/">
+          <span class="istinaar-sidebar-text"><strong>الرئيسية العامة</strong><span>العودة إلى واجهة المنصة</span></span>
+          <span class="istinaar-sidebar-icon material-symbols-outlined">home</span>
+        </a>
+        ${settingsItem ? renderItems([settingsItem]) : ""}
+      </nav>
+    </div>
     <button type="button" class="istinaar-logout-button" data-istinaar-action="logout">
       <span class="istinaar-sidebar-text"><strong>تسجيل الخروج</strong><span>إنهاء الجلسة الحالية</span></span>
       <span class="istinaar-sidebar-icon material-symbols-outlined">logout</span>

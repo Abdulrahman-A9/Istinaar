@@ -180,19 +180,6 @@ export default function ExecutiveSidebar({ page }: { page: ExecutiveShellPage })
               </span>
             </Link>
 
-            <Link
-              href="/account"
-              className="flex min-h-[54px] items-center justify-between gap-3 rounded-[18px] border border-white/10 bg-white/[0.03] px-3 py-2.5 text-white/82 transition-all duration-200 hover:-translate-x-0.5 hover:border-[#eac170]/24 hover:bg-white/[0.06] hover:text-white"
-            >
-              <div className="text-right">
-                <p className="text-[13px] font-extrabold text-white">إدارة الحساب</p>
-                <p className="mt-0.5 text-[10px] text-white/42">الملف الشخصي وإعدادات الدخول</p>
-              </div>
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[14px] border border-white/10 bg-white/[0.04]">
-                <Settings size={18} />
-              </span>
-            </Link>
-
             {settingsItem ? (
               <SidebarLink item={settingsItem} active={settingsItem.page === page} />
             ) : null}
