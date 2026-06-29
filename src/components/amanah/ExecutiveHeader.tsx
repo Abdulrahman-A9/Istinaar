@@ -52,7 +52,7 @@ export default function ExecutiveHeader({
   }, [dateFormatter, timeFormatter]);
 
   return (
-    <header className="rounded-[28px] border border-white/10 bg-[radial-gradient(circle_at_60%_0%,rgba(234,193,112,0.1),transparent_22%),linear-gradient(135deg,rgba(6,16,27,0.98),rgba(12,24,38,0.96))] px-5 py-4 shadow-[0_18px_44px_rgba(0,0,0,0.22)] backdrop-blur-md sm:px-6">
+    <header className="sticky top-1 z-50 rounded-[28px] border border-white/10 bg-[radial-gradient(circle_at_60%_0%,rgba(234,193,112,0.1),transparent_22%),linear-gradient(135deg,#06101b,#0c1826)] px-5 py-4 shadow-[0_18px_44px_rgba(0,0,0,0.22)] sm:px-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="text-right">
           <p className="mb-1 text-[11px] font-bold text-[#e4c982]">استنار · المركز التنفيذي</p>

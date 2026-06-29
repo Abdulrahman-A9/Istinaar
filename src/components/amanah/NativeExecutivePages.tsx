@@ -90,7 +90,7 @@ function ExecutiveHeader({ page, displayName }: { page: ExecutiveShellPage; disp
   const chrome = executivePageChrome[page];
 
   return (
-    <header className={`sticky top-0 z-20 rounded-[28px] px-5 py-4 ${darkPanel} backdrop-blur-xl`}>
+    <header className="sticky top-1 z-50 rounded-[28px] border border-white/10 bg-[radial-gradient(circle_at_60%_0%,rgba(234,193,112,0.1),transparent_22%),linear-gradient(135deg,#06101b,#0c1826)] px-5 py-4 shadow-[0_18px_44px_rgba(0,0,0,0.22)]">
       <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
         <div className="text-right">
           <p className="text-[12px] font-black text-[#eac170]">{chrome.eyebrow}</p>

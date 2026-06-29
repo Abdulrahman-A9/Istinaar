@@ -150,8 +150,8 @@ function buildUnifiedStyles() {
       scroll-behavior: smooth;
     }
     header.istinaar-unified-header {
-      position: sticky;
-      top: 0;
+      position: sticky !important;
+      top: 4px !important;
       z-index: 55;
       margin: 8px 8px 0;
       padding: 18px 24px;
@@ -160,9 +160,10 @@ function buildUnifiedStyles() {
       border: 1px solid rgba(255,255,255,0.1);
       background:
         radial-gradient(circle at 60% 0%, rgba(234,193,112,0.1), transparent 22%),
-        linear-gradient(135deg, rgba(6,16,27,0.98), rgba(12,24,38,0.96));
+        linear-gradient(135deg, #06101b, #0c1826);
       box-shadow: 0 18px 44px rgba(0,0,0,0.22);
-      backdrop-filter: blur(18px);
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
     }
     .istinaar-header-row {
       display: flex;
