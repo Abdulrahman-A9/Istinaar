@@ -401,9 +401,6 @@ export default function HomePage() {
               خدمات المنصة
             </span>
             <h2 className="text-3xl font-black mb-3" style={{ color: "#0A2342" }}>خدمات مساندة لقرار استثماري أكثر انضباطاً</h2>
-            <p className="text-gray-500 max-w-3xl mx-auto leading-8">
-              جمعنا الخدمات التخصصية في مساحة واحدة داخل الصفحة الرئيسية، حتى يبقى الهيدر مركزاً على المسارات الأساسية بينما تبقى بقية الخدمات متاحة بصياغة أوضح وأكثر رسمية.
-            </p>
           </motion.div>
           <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {serviceCards.map((service) => (
