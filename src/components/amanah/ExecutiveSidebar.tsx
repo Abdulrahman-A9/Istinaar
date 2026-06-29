@@ -89,8 +89,12 @@ export default function ExecutiveSidebar({ page }: { page: ExecutiveShellPage })
     () => executiveShellItems.filter((item) => item.group === "primary"),
     [],
   );
+  const settingsItem = useMemo(
+    () => executiveShellItems.find((item) => item.page === "settings"),
+    [],
+  );
   const managementItems = useMemo(
-    () => executiveShellItems.filter((item) => item.group === "management"),
+    () => executiveShellItems.filter((item) => item.group === "management" && item.page !== "settings"),
     [],
   );
 
@@ -188,6 +192,10 @@ export default function ExecutiveSidebar({ page }: { page: ExecutiveShellPage })
                 <Settings size={18} />
               </span>
             </Link>
+
+            {settingsItem ? (
+              <SidebarLink item={settingsItem} active={settingsItem.page === page} />
+            ) : null}
 
             <button
               type="button"

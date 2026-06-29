@@ -34,8 +34,14 @@ const pageSources: Record<ReferenceHtmlFrameProps["page"], string> = {
 };
 
 const pageCache = new Map<string, string>();
-type NativeExecutiveShellPage = "spatial" | "partners";
-const nativeExecutivePages = new Set<ReferenceHtmlFrameProps["page"]>(["spatial", "partners"]);
+type NativeExecutiveShellPage = "overview" | "spatial" | "partners" | "performance" | "settings";
+const nativeExecutivePages = new Set<ReferenceHtmlFrameProps["page"]>([
+  "overview",
+  "spatial",
+  "partners",
+  "performance",
+  "settings",
+]);
 
 function isNativeExecutivePage(page: ReferenceHtmlFrameProps["page"]): page is NativeExecutiveShellPage {
   return nativeExecutivePages.has(page);
@@ -105,6 +111,8 @@ function buildUnifiedStyles() {
       50% { opacity: .34; transform: scale(1.02); }
     }
     aside.istinaar-shell-sidebar {
+      display: flex !important;
+      flex-direction: column !important;
       position: fixed !important;
       width: var(--istinaar-sidebar-width) !important;
       right: 0 !important;
@@ -120,6 +128,11 @@ function buildUnifiedStyles() {
       box-shadow: -24px 0 54px rgba(2, 9, 16, 0.36) !important;
       overflow-y: auto !important;
       z-index: 60 !important;
+    }
+    .istinaar-sidebar-footer-actions {
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.08);
     }
     main {
       display: block !important;
@@ -585,7 +598,8 @@ function buildUnifiedStyles() {
 
 function buildSidebarMarkup(page: ExecutiveShellPage) {
   const primaryItems = executiveShellItems.filter((item) => item.group === "primary");
-  const managementItems = executiveShellItems.filter((item) => item.group === "management");
+  const settingsItem = executiveShellItems.find((item) => item.page === "settings");
+  const managementItems = executiveShellItems.filter((item) => item.group === "management" && item.page !== "settings");
 
   const renderItems = (items: typeof executiveShellItems) =>
     items
@@ -614,6 +628,7 @@ function buildSidebarMarkup(page: ExecutiveShellPage) {
     <nav class="istinaar-sidebar-list">${renderItems(primaryItems)}</nav>
     <div class="istinaar-sidebar-group-title">الإدارة والمتابعة</div>
     <nav class="istinaar-sidebar-list">${renderItems(managementItems)}</nav>
+    ${settingsItem ? `<div class="istinaar-sidebar-footer-actions"><nav class="istinaar-sidebar-list">${renderItems([settingsItem])}</nav></div>` : ""}
     <button type="button" class="istinaar-logout-button" data-istinaar-action="logout">
       <span class="istinaar-sidebar-text"><strong>تسجيل الخروج</strong><span>إنهاء الجلسة الحالية</span></span>
       <span class="istinaar-sidebar-icon material-symbols-outlined">logout</span>
